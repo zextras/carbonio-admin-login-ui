@@ -1,0 +1,59 @@
+### auth SUPPORTED
+GET /zx/auth/supported?domain=zimbra.com HTTP/1.1
+Host: {{host}}
+
+> {%
+client.test("'supported' executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.contentType.mimeType === "application/json", "Content-type is not json")
+  client.assert(response.body.hasOwnProperty("minApiVersion"), "Response don't have minApiVersion");
+  client.assert(typeof response.body.minApiVersion == 'number', "maxApiVersion is not a number");
+  client.assert(response.body.hasOwnProperty("maxApiVersion"), "Response don't have maxApiVersion");
+  client.assert(typeof response.body.maxApiVersion == 'number', "maxApiVersion is not a number");
+  client.assert(response.body.hasOwnProperty("authMethods"), "Response don't have authMethods");
+  client.assert(Array.isArray(response.body.authMethods), "authMethods is not an array");
+});
+if(response.body.hasOwnProperty("maxApiVersion")) {
+    client.global.set("version", response.body.minApiVersion);
+}
+%}
+
+### V1 LOGIN successful
+POST /zx/auth/v{{version}}/login
+Host: {{host}}
+Content-Type: application/json
+X-Device-Model: Apple iPhone/iOS 13.2.3
+X-Service: ZimbraUI
+X-Device-Id: 1231231231412
+
+{
+  "auth_method": "password",
+  "user": "luca.allegro",
+  "password": "ciaociaociao"
+}
+
+> {%
+client.test("'auth v1 LOGIN' executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not OK");
+});
+ %}
+
+### V1 LOGIN not successful
+POST /zx/auth/v{{version}}/login
+Host: {{host}}
+Content-Type: application/json
+X-Device-Model: Apple iPhone/iOS 13.2.3
+X-Service: ZimbraUI
+X-Device-Id: 1231231231412
+
+{
+  "auth_method": "PASSWORD",
+  "user": "not luca.allegro",
+  "password": "ciaociaociao"
+}
+
+> {%
+client.test("'auth v1 LOGIN' executed successfully", function() {
+  client.assert(response.status === 401, "Response status is not Unauthorized");
+});
+ %}

@@ -1,0 +1,39 @@
+### login SUPPORTED
+GET {{host}}/zx/login/supported HTTP/1.1
+
+> {%
+client.test("'supported' executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.contentType.mimeType === "application/json", "Content-type is not json")
+  client.assert(response.body.hasOwnProperty("minApiVersion"), "Response don't have minApiVersion");
+  client.assert(response.body.hasOwnProperty("maxApiVersion"), "Response don't have maxApiVersion");
+});
+client.global.set("version", response.body.minApiVersion);
+%}
+
+###
+GET /zx/login/v{{version}}/config HTTP/1.1
+Host: {{host}}
+
+> {%
+client.test("'supported' executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.contentType.mimeType === "application/json", "Content-type is not json")
+  client.assert(response.body.hasOwnProperty("zimbraDomainName"), "Response don't have zimbraDomainName");
+  client.assert(response.body.hasOwnProperty("zimbraPublicServiceHostname"), "Response don't have zimbraPublicServiceHostname");
+  client.assert(response.body.hasOwnProperty("zimbraPublicServicePort"), "Response don't have zimbraPublicServicePort");
+  client.assert(response.body.hasOwnProperty("zimbraPublicServiceProtocol"), "Response don't have zimbraPublicServiceProtocol");
+  client.assert(response.body.hasOwnProperty("loginPageSkinLogoUrl"), "Response don't have loginPageSkinLogoUrl");
+  client.assert(response.body.hasOwnProperty("publicUrl"), "Response don't have publicUrl");
+
+  // https://zextras.atlassian.net/wiki/spaces/COR/pages/826212445/Zextras+Login+Page
+
+  client.assert(response.body.hasOwnProperty("loginPageBackgroundImage"), "Response don't have loginPageBackgroundImage");
+  client.assert(response.body.hasOwnProperty("loginPageLogo"), "Response don't have loginPageLogo");
+  client.assert(response.body.hasOwnProperty("loginPageColorSet"), "Response don't have loginPageColorSet");
+
+  // some field are missing w.r.t. documentation
+});
+%}
+
+### TODO assets
