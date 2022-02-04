@@ -38,3 +38,28 @@ export function submitOtp(id, code, trustDevice) {
 		})
 	});
 }
+
+export function loginToZimbraAdmin(configuration, username, password) {
+	return fetch(`/zx/service/admin/soap/AuthRequest`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			Body: {
+				AuthRequest: {
+					_jsns: 'urn:zimbraAdmin',
+					csrfTokenSecured: '1',
+					persistAuthTokenCookie: '1',
+					account: {
+						by: 'name',
+						_content: username
+					},
+					password: {
+						_content: password
+					}
+				}
+			}
+		})
+	});
+}

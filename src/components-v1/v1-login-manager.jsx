@@ -13,7 +13,7 @@ import CredentialsForm from './credentials-form';
 import { postV1Login } from '../services/v1-service';
 import { saveCredentials } from '../utils';
 
-export default function V1LoginManager({ configuration, disableInputs }) {
+export default function V1LoginManager({ configuration, disableInputs, isDarkTheme }) {
 	const [t] = useTranslation();
 
 	const [loading, setLoading] = useState(false);
@@ -63,6 +63,7 @@ export default function V1LoginManager({ configuration, disableInputs }) {
 					authError={authError}
 					submitCredentials={submitCredentials}
 					loading={loading}
+					isDarkTheme={isDarkTheme}
 				/>
 			)}
 			{progress === 'waiting'

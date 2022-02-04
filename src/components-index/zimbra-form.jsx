@@ -36,7 +36,8 @@ const zimbraLogin = (username, password) => {
 	});
 };
 
-export function ZimbraForm({ destinationUrl }) {
+export function ZimbraForm({ destinationUrl, isDarkTheme }) {
+
 	const { t } = useTranslation();
 	const [authError, setAuthError] = useState();
 	const [loading, setLoading] = useState(false);
@@ -82,6 +83,7 @@ export function ZimbraForm({ destinationUrl }) {
 			authError={authError}
 			submitCredentials={submitCredentials}
 			loading={loading}
+			isDarkTheme={isDarkTheme}
 		/>
 	);
 }

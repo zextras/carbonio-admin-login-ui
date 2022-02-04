@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Container, Link, Padding, Row, Text, Tooltip, useScreenMode, useSetCustomTheme } from '@zextras/zapp-ui';
 import { forEach, set } from 'lodash';
@@ -18,9 +18,10 @@ import logoSafari from '../../assets/logo-safari.svg';
 import logoOpera from '../../assets/logo-opera.svg';
 import logoYandex from '../../assets/logo-yandex.svg';
 import logoUC from '../../assets/logo-ucbrowser.svg';
-import backgroundImage from '../../assets/carbonio_loginpage.jpg';
-import backgroundImageRetina from '../../assets/carbonio_loginpage-retina.jpg';
-import logoCarbonio from '../../assets/logo-carbonio.png';
+import backgroundImage from '../../assets/carbonio_light.jpg';
+import darkBackgroundImage from '../../assets/carbonio_loginpage.jpg';
+import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
+import logoCarbonio from '../../assets/carbonio-admin-panel.svg';
 import { getLoginConfig } from '../services/login-page-services';
 import FormSelector from './form-selector';
 import ServerNotResponding from '../components-index/server-not-responding';
@@ -42,7 +43,7 @@ const LoginContainer = styled(Container)`
 	padding: 0 100px;
 	background: url(${(props) => props.backgroundImage}) no-repeat 75% center/cover;
 	justify-content: center;
-	align-items: flex-start;
+	align-items: center;
 	${({ screenMode }) => screenMode === 'mobile' && css`
 		padding: 0 12px;
 		align-items: center;	
@@ -63,12 +64,12 @@ const FormContainer = styled.div`
 const FormWrapper = styled(Container)`
 	width: auto;
 	height: auto;
-	background-color: ${({ theme }) => theme.palette.gray6.regular};
+	background-color: ${({ theme, isDarkThmeEnabled }) => isDarkThmeEnabled ? 'rgba(65,65,65, .8)' : theme.palette.gray6.regular };
 	padding: 48px 48px 0;
 	width: 436px;
 	max-width: 100%;
 	min-height: 620px;
-	// height: 100vh;
+	opacity: ${({ isDarkThmeEnabled }) => isDarkThmeEnabled ? 'unset' : 0.8 };
 	overflow-y: auto;
 	${({ screenMode }) => screenMode === 'mobile' && css`
 		padding: 20px 20px 0;
@@ -93,6 +94,11 @@ const PhotoCredits = styled(Text)`
 	}
 `;
 
+const SupportedBrowserText = styled(Text)`
+	font-size: 16px;
+	color: ${({ isDarkThmeEnabled }) => isDarkThmeEnabled ? '#FFFFFF' : '#414141' };
+`;
+
 export default function PageLayout({ version, hasBackendApi }) {
 	const [t] = useTranslation();
 	const screenMode = useScreenMode();
@@ -106,10 +112,21 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [bg, setBg] = useState(backgroundImage);
 	const [isDefaultBg, setIsDefaultBg] = useState(true);
 	const [editedTheme, setEditedTheme] = useState({});
+	const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+	useEffect(() => {
+		if (isDarkTheme) {
+			setBg(darkBackgroundImage);
+			setIsDefaultBg(false);
+		}
+		else {
+			setBg(backgroundImage);
+			setIsDefaultBg(false);
+		}
+	} , [isDarkTheme]);
 
 	useLayoutEffect(() => {
 		let componentIsMounted = true;
-
 		if (hasBackendApi) {
 			getLoginConfig(version, domain, domain)
 				.then((res) => {
@@ -119,10 +136,10 @@ export default function PageLayout({ version, hasBackendApi }) {
 					const _logo = {};
 
 					if (componentIsMounted) {
-						if (res.loginPageBackgroundImage) {
-							setBg(res.loginPageBackgroundImage);
-							setIsDefaultBg(false);
-						}
+						// if (res.loginPageBackgroundImage) {
+						// 	setBg(res.loginPageBackgroundImage);
+						// 	setIsDefaultBg(false);
+						// }
 
 						if (res.loginPageLogo) {
 							_logo.image = res.loginPageLogo;
@@ -170,6 +187,9 @@ export default function PageLayout({ version, hasBackendApi }) {
 								}));
 							}
 						}
+						if (res.isDarkThemeEnable) {
+							setIsDarkTheme(true);
+						}
 						setLogo(_logo);
 					}
 				})
@@ -212,7 +232,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 			<LoginContainer screenMode={screenMode} isDefaultBg={isDefaultBg} backgroundImage={bg}>
 				<ModifiedTheme changes={editedTheme} />
 				<FormContainer>
-					<FormWrapper mainAlignment="space-between" screenMode={screenMode}>
+					<FormWrapper mainAlignment="space-between" screenMode={screenMode} isDarkThmeEnabled={isDarkTheme}>
 						<Container mainAlignment="flex-start" height="auto">
 							<Padding value="28px 0 28px" crossAlignment="center" width="100%">
 								<Container crossAlignment="center">
@@ -224,12 +244,12 @@ export default function PageLayout({ version, hasBackendApi }) {
 							</Padding>
 						</Container>
 						{hasBackendApi
-							? <FormSelector domain={domain} destinationUrl={destinationUrl}/>
-							: <ZimbraForm destinationUrl={destinationUrl}/>
+							? <FormSelector domain={domain} destinationUrl={destinationUrl} isDarkTheme={isDarkTheme} />
+							: <ZimbraForm destinationUrl={destinationUrl} isDarkTheme={isDarkTheme} />
 						}
 						<Container crossAlignment="flex-start" height="auto"
 							padding={{ bottom: 'extralarge', top: 'extralarge' }}>
-							<Text>{t('supported_browsers', 'Supported browsers')}</Text>
+							<SupportedBrowserText size="large" isDarkThmeEnabled={isDarkTheme}>{t('supported_browsers', 'Supported browsers')}</SupportedBrowserText>
 							<Row padding={{ top: 'medium', bottom: 'extralarge' }} wrap="nowrap">
 								<Padding all="extrasmall" right="small">
 									<Tooltip label="Chrome">
@@ -296,10 +316,11 @@ export default function PageLayout({ version, hasBackendApi }) {
 								</Padding>
 							</Row>
 							<Text
-								size="small"
+								size="large"
 								overflow="break-word"
+								color= {isDarkTheme ? 'gray6' : 'gray0'}
 							>
-								Copyright &copy;
+								{t('copy_right', 'Copyright')} &copy;
 								{` ${new Date().getFullYear()} Zextras, `}
 								{t('all_rights_reserved', 'All rights reserved')}
 							</Text>

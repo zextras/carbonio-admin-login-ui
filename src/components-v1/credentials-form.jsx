@@ -23,8 +23,10 @@ export default function CredentialsForm({
 	submitCredentials,
 	configuration,
 	disableInputs,
-	loading = false
+	loading = false,
+	isDarkTheme
 }) {
+
 	const [t] = useTranslation();
 
 	const [username, setUsername] = useState(urlParams.get('username') || '');
@@ -67,9 +69,14 @@ export default function CredentialsForm({
 				<Button
 					type="outlined"
 					label={t('login_saml', 'Login SAML')}
-					color="primary"
+					color='primary'
 					disabled={disableInputs}
 					onClick={samlButtonCbk}
+					height={36}
+					style={{
+						border: isDarkTheme ? '1px solid #FFFFFF' : '1px solid',
+						color: isDarkTheme ? '#FFFFFF' : '#2b73d2'
+					}}
 				/>
 			);
 		}
@@ -113,7 +120,7 @@ export default function CredentialsForm({
 					backgroundColor="gray5"
 				/>
 			</Row>
-			{hasClassicUi && (
+			{/* {hasClassicUi && (
 				<Row padding={{vertical: 'small'}}>
 					<Select
 						label={t('select_ui', 'Select UI')}
@@ -124,12 +131,12 @@ export default function CredentialsForm({
 						defaultSelection={defaultUi}
 					/>
 				</Row>
-			)}
+			)} */}
 			<Text color="error" size="medium" overflow="break-word">
 				{authError || <br />}
 			</Text>
 			<Row orientation="vertical" crossAlignment="flex-start" padding={{ bottom: 'large', top: 'small' }}>
-				<Button loading={loading} onClick={submitUserPassword} disabled={disableInputs} label={t('login', 'Login')} size="fill" />
+				<Button height={36} loading={loading} onClick={submitUserPassword} disabled={disableInputs} label={t('login', 'Login')} size="fill" />
 			</Row>
 			<Row mainAlignment="flex-end" padding={{ bottom: 'extralarge' }}>
 				{samlButton}
