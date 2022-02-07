@@ -5,7 +5,7 @@
 import { getDeviceModel, deviceId } from '../utils';
 
 export function postV2Login(authMethod, user, password, service) {
-	return fetch('/zx/auth/v2/login', {
+	return fetch('/service/auth/v2/login', {
 		method: 'POST',
 		headers: {
 			'X-Device-Model': getDeviceModel(),
@@ -22,7 +22,7 @@ export function postV2Login(authMethod, user, password, service) {
 }
 
 export function submitOtp(id, code, trustDevice) {
-	return fetch('/zx/auth/v2/otp/validate', {
+	return fetch('/service/auth/v2/otp/validate', {
 		method: 'POST',
 		headers: {
 			'X-Device-Model': getDeviceModel(),
@@ -40,7 +40,7 @@ export function submitOtp(id, code, trustDevice) {
 }
 
 export function loginToZimbraAdmin(configuration, username, password) {
-	return fetch(`/zx/service/admin/soap/AuthRequest`, {
+	return fetch(`/service/admin/soap/AuthRequest`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ export function loginToZimbraAdmin(configuration, username, password) {
 			Body: {
 				AuthRequest: {
 					_jsns: 'urn:zimbraAdmin',
-					csrfTokenSecured: '1',
+					csrfTokenSecured: '0',
 					persistAuthTokenCookie: '1',
 					account: {
 						by: 'name',
