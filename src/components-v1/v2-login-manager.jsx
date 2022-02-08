@@ -68,9 +68,20 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 		(username, password) => {
 			setLoadingCredentials(true);
 			return loginToZimbraAdmin(configuration, username, password)
-				.then((res) => {
-					console.log('[loginToZimbraAdmin][res]: ', res);
-				});
+				.then(async (res) => {
+					await res.json();
+					switch (res.status) {
+						case 200:
+							await saveCredentials(username, password);
+							window.location.assign('localhost:8080/carbonioAdmin');
+							break;
+						default:
+							setSnackbarNetworkError(true);
+			 				setLoadingCredentials(false);
+							break;
+					}	
+				})
+				.catch(() => setLoadingCredentials(false));
 			// return postV2Login('password', username, password)
 			// 	.then((res) => {
 			// 		switch (res.status) {

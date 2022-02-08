@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Container, Link, Padding, Row, Text, Tooltip, useScreenMode, useSetCustomTheme } from '@zextras/zapp-ui';
 import { forEach, set } from 'lodash';
@@ -115,15 +115,10 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
 
 	useEffect(() => {
-		if (isDarkTheme) {
-			setBg(darkBackgroundImage);
-			setIsDefaultBg(false);
-		}
-		else {
+		if (isDefaultBg) {
 			setBg(backgroundImage);
-			setIsDefaultBg(false);
 		}
-	} , [isDarkTheme]);
+	}, [isDefaultBg])
 
 	useLayoutEffect(() => {
 		let componentIsMounted = true;
@@ -136,10 +131,17 @@ export default function PageLayout({ version, hasBackendApi }) {
 					const _logo = {};
 
 					if (componentIsMounted) {
-						// if (res.loginPageBackgroundImage) {
-						// 	setBg(res.loginPageBackgroundImage);
-						// 	setIsDefaultBg(false);
-						// }
+						if (res.loginPageBackgroundImage) {
+							setBg(res.loginPageBackgroundImage);
+							setIsDefaultBg(false);
+						}
+						else {
+							setIsDefaultBg(true);
+						}
+						if (res.isDarkThemeEnable) {
+							setIsDarkTheme(true);
+							
+						}
 
 						if (res.loginPageLogo) {
 							_logo.image = res.loginPageLogo;
@@ -186,9 +188,6 @@ export default function PageLayout({ version, hasBackendApi }) {
 									'palette.secondary': generateColorSet({ regular: `#${colorSet.secondary}` })
 								}));
 							}
-						}
-						if (res.isDarkThemeEnable) {
-							setIsDarkTheme(true);
 						}
 						setLogo(_logo);
 					}
