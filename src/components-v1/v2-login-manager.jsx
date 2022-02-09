@@ -17,8 +17,7 @@ import { map } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-	loginToZimbraAdmin,
-	postV2Login,
+	loginToCarbonioAdmin,
 	submitOtp
 } from '../services/v2-service';
 import { saveCredentials } from '../utils';
@@ -67,13 +66,14 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 	const submitCredentials = useCallback(
 		(username, password) => {
 			setLoadingCredentials(true);
-			return loginToZimbraAdmin(configuration, username, password)
+			return loginToCarbonioAdmin(configuration, username, password)
 				.then(async (res) => {
 					await res.json();
 					switch (res.status) {
 						case 200:
 							await saveCredentials(username, password);
-							window.location.assign('localhost:8080/carbonioAdmin');
+							window.location.assign("http://localhost:8080/carbonioAdmin/");
+							setProgress(false);
 							break;
 						default:
 							setSnackbarNetworkError(true);

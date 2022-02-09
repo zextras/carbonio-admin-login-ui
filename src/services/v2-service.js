@@ -39,7 +39,7 @@ export function submitOtp(id, code, trustDevice) {
 	});
 }
 
-export function loginToZimbraAdmin(configuration, username, password) {
+export function loginToCarbonioAdmin(configuration, username, password) {
 	return fetch(`/service/admin/soap/AuthRequest`, {
 		method: 'POST',
 		headers: {

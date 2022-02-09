@@ -25,7 +25,7 @@ export default rest.get(
 				zimbraPublicServicePort: "443",
 				zimbraPublicServiceProtocol: "https",
 				zimbraDomainName: "6f4c8e62.testarea.zextras.com",
-				isDarkThemeEnable: true
+				isDarkThemeEnable: false
 			}),
 		);
 	}

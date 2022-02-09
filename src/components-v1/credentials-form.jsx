@@ -138,9 +138,9 @@ export default function CredentialsForm({
 			<Row orientation="vertical" crossAlignment="flex-start" padding={{ bottom: 'large', top: 'small' }}>
 				<Button height={36} loading={loading} onClick={submitUserPassword} disabled={disableInputs} label={t('login', 'Login')} size="fill" />
 			</Row>
-			<Row mainAlignment="flex-end" padding={{ bottom: 'extralarge' }}>
+			{/* <Row mainAlignment="flex-end" padding={{ bottom: 'extralarge' }}>
 				{samlButton}
-			</Row>
+			</Row> */}
 		</form>
 	);
 }

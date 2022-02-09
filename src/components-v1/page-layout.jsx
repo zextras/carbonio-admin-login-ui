@@ -260,19 +260,19 @@ export default function PageLayout({ version, hasBackendApi }) {
 									</Tooltip>
 								</Padding>
 								<Padding all="extrasmall" right="small">
-									<Tooltip label="Firefox">
+									<Tooltip label="Edge Chromium">
 										<img
-											alt="Logo Firefox"
-											src={logoFirefox}
+											alt="Logo Edge Chromium"
+											src={logoEdge}
 											width="18px"
 										/>
 									</Tooltip>
 								</Padding>
 								<Padding all="extrasmall" right="small">
-									<Tooltip label="Edge Chromium">
+									<Tooltip label="Firefox">
 										<img
-											alt="Logo Edge Chromium"
-											src={logoEdge}
+											alt="Logo Firefox"
+											src={logoFirefox}
 											width="18px"
 										/>
 									</Tooltip>
@@ -286,7 +286,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 										/>
 									</Tooltip>
 								</Padding>
-								<Padding all="extrasmall" right="small">
+								{/* <Padding all="extrasmall" right="small">
 									<Tooltip label="Opera">
 										<img
 											alt="Logo Opera"
@@ -312,7 +312,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 											width="18px"
 										/>
 									</Tooltip>
-								</Padding>
+								</Padding> */}
 							</Row>
 							<Text
 								size="large"
