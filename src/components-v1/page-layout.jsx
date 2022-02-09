@@ -115,10 +115,13 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
 
 	useEffect(() => {
-		if (isDefaultBg) {
+		if (isDarkTheme) {
+			setBg(darkBackgroundImage);
+		}
+		else {
 			setBg(backgroundImage);
 		}
-	}, [isDefaultBg])
+	}, [isDarkTheme])
 
 	useLayoutEffect(() => {
 		let componentIsMounted = true;
@@ -135,12 +138,9 @@ export default function PageLayout({ version, hasBackendApi }) {
 							setBg(res.loginPageBackgroundImage);
 							setIsDefaultBg(false);
 						}
-						else {
-							setIsDefaultBg(true);
-						}
 						if (res.isDarkThemeEnable) {
 							setIsDarkTheme(true);
-							
+							setIsDefaultBg(false);
 						}
 
 						if (res.loginPageLogo) {
