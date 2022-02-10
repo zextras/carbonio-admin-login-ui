@@ -115,13 +115,15 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
 
 	useEffect(() => {
-		if (isDarkTheme) {
-			setBg(darkBackgroundImage);
+		if (isDefaultBg) {
+			if (isDarkTheme) {
+				setBg(darkBackgroundImage);
+			}
+			else {
+				setBg(backgroundImage);
+			}
 		}
-		else {
-			setBg(backgroundImage);
-		}
-	}, [isDarkTheme])
+	}, [isDarkTheme, isDefaultBg])
 
 	useLayoutEffect(() => {
 		let componentIsMounted = true;

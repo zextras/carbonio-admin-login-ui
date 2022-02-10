@@ -72,7 +72,7 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 					switch (res.status) {
 						case 200:
 							await saveCredentials(username, password);
-							window.location.assign("http://localhost:8080/carbonioAdmin/");
+							window.location.assign(configuration.destinationUrl);
 							setProgress(false);
 							break;
 						default:
