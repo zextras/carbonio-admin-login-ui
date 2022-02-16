@@ -5,7 +5,7 @@
 import { rest } from 'msw';
 
 export default rest.post(
-	'/service/soap/AuthRequest',
+	'/service/admin/soap/AuthRequest',
 	(req, res, ctx) => {
 		return res(
 			ctx.status(200),
