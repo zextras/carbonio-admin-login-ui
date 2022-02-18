@@ -39,15 +39,14 @@ export function submitOtp(id, code, trustDevice) {
 	});
 }
 
-export function loginToCarbonioAdmin(configuration, username, password) {
+export function loginToCarbonioAdmin(username, password) {
 	return fetch(`/service/admin/soap/AuthRequest`, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/soap+xml'
+			'Content-Type': 'application/json'
 		},
 		referrerPolicy: 'same-origin',
-		body: `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Header><context xmlns="urn:zimbra"><userAgent xmlns="" name="CarbonioWebClient - FF97 (Linux)"/><session xmlns=""/><authTokenControl xmlns="" voidOnExpired="1"/><format xmlns="" type="js"/></context></soap:Header><soap:Body><AuthRequest xmlns="urn:zimbraAdmin"><name xmlns="">${ username }</name><password xmlns="">${password}</password><virtualHost xmlns="">nbm-s03.demo.zextras.io</virtualHost><csrfTokenSecured xmlns="">1</csrfTokenSecured></AuthRequest></soap:Body></soap:Envelope>`
-		/* JSON.stringify({
+		body: JSON.stringify({
 			Body: {
 				AuthRequest: {
 					_jsns: 'urn:zimbraAdmin',
@@ -62,6 +61,6 @@ export function loginToCarbonioAdmin(configuration, username, password) {
 					}
 				}
 			}
-		}) */
+		})
 	});
 }

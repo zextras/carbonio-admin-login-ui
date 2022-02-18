@@ -64,12 +64,11 @@ const FormContainer = styled.div`
 const FormWrapper = styled(Container)`
 	width: auto;
 	height: auto;
-	background-color: ${({ theme, isDarkThmeEnabled }) => isDarkThmeEnabled ? 'rgba(65,65,65, .8)' : theme.palette.gray6.regular };
+	background-color: ${({ theme, isDarkThmeEnabled }) => isDarkThmeEnabled ? 'rgba(65,65,65, .8)' : 'rgba(255,255,255, 0.8)' };
 	padding: 48px 48px 0;
 	width: 436px;
 	max-width: 100%;
 	min-height: 620px;
-	opacity: ${({ isDarkThmeEnabled }) => isDarkThmeEnabled ? 'unset' : 0.8 };
 	overflow-y: auto;
 	${({ screenMode }) => screenMode === 'mobile' && css`
 		padding: 20px 20px 0;

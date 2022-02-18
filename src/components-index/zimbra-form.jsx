@@ -8,35 +8,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useCallback, useState } from 'react';
 
 import CredentialsForm from '../components-v1/credentials-form';
-
-const zimbraLogin = (username, password) => {
-	return fetch('/service/admin/soap/AuthRequest', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/soap+xml'
-		},
-		referrerPolicy: 'same-origin',
-		body: `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Header><context xmlns="urn:zimbra"><userAgent xmlns="" name="CarbonioWebClient - FF97 (Linux)"/><session xmlns=""/><authTokenControl xmlns="" voidOnExpired="1"/><format xmlns="" type="js"/></context></soap:Header><soap:Body><AuthRequest xmlns="urn:zimbraAdmin"><name xmlns="">${ username }</name><password xmlns="">${password}</password><virtualHost xmlns="">nbm-s03.demo.zextras.io</virtualHost><csrfTokenSecured xmlns="">1</csrfTokenSecured></AuthRequest></soap:Body></soap:Envelope>`
-		/* JSON.stringify({
-			Body: {
-				AuthRequest: {
-					_jsns: 'urn:zimbraAccount',
-					csrfTokenSecured: '1',
-					persistAuthTokenCookie: '1',
-					generateDeviceId: '1',
-					account: {
-						by: 'name',
-						_content: username
-					},
-					password: {
-						_content: password
-					},
-					prefs: [{ pref: { name: 'zimbraPrefMailPollingInterval' } }]
-				}
-			}
-		}) */
-	});
-};
+import { loginToCarbonioAdmin } from '../services/v2-service';
 
 export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 
@@ -46,7 +18,7 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 
 	const submitCredentials = useCallback((username, password) => {
 		setLoading(true);
-		return zimbraLogin(username, password)
+		return loginToCarbonioAdmin(username, password)
 			.then(async (res) => {
 				const payload = await res.json();
 				if (payload.Body.Fault) {
