@@ -13,9 +13,11 @@ const zimbraLogin = (username, password) => {
 	return fetch('/service/admin/soap/AuthRequest', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/soap+xml'
 		},
-		body: JSON.stringify({
+		referrerPolicy: 'same-origin',
+		body: `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Header><context xmlns="urn:zimbra"><userAgent xmlns="" name="CarbonioWebClient - FF97 (Linux)"/><session xmlns=""/><authTokenControl xmlns="" voidOnExpired="1"/><format xmlns="" type="js"/></context></soap:Header><soap:Body><AuthRequest xmlns="urn:zimbraAdmin"><name xmlns="">${ username }</name><password xmlns="">${password}</password><virtualHost xmlns="">nbm-s03.demo.zextras.io</virtualHost><csrfTokenSecured xmlns="">1</csrfTokenSecured></AuthRequest></soap:Body></soap:Envelope>`
+		/* JSON.stringify({
 			Body: {
 				AuthRequest: {
 					_jsns: 'urn:zimbraAccount',
@@ -32,7 +34,7 @@ const zimbraLogin = (username, password) => {
 					prefs: [{ pref: { name: 'zimbraPrefMailPollingInterval' } }]
 				}
 			}
-		})
+		}) */
 	});
 };
 
@@ -52,7 +54,7 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 				}
 				switch (res.status) {
 					case 200:
-						window.location.assign(destinationUrl || window.location.origin);
+						window.location.assign('/carbonioAdmin');
 						break;
 					case 401:
 					case 500:
