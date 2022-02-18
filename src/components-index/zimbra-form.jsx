@@ -10,7 +10,7 @@ import React, { useCallback, useState } from 'react';
 import CredentialsForm from '../components-v1/credentials-form';
 
 const zimbraLogin = (username, password) => {
-	return fetch('/service/soap/AuthRequest', {
+	return fetch('/service/admin/soap/AuthRequest', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
