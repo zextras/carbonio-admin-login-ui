@@ -45,6 +45,7 @@ export function loginToCarbonioAdmin(configuration, username, password) {
 		headers: {
 			'Content-Type': 'application/json'
 		},
+		referrerPolicy: 'same-origin',
 		body: JSON.stringify({
 			Body: {
 				AuthRequest: {
