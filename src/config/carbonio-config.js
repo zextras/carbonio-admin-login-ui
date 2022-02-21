@@ -13,6 +13,6 @@ export function carbonioConfig() {
 		"zimbraPublicServicePort": "443",
 		"zimbraPublicServiceProtocol": "https",
 		"zimbraDomainName": "6f4c8e62.testarea.zextras.com",
-		"isDarkThemeEnable": false
+		"isDarkThemeEnable": true
 	}
 }
