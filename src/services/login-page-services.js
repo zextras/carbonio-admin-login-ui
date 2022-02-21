@@ -14,7 +14,7 @@ export function getLoginConfig(version, domain, host) {
 	const urlParams = new URLSearchParams();
 	if(domain) urlParams.append("domain", domain);
 	if(host) urlParams.append("host", host);
-	return fetch(`/zx/login/v${version}/config?${urlParams}`, {
+	return fetch(`src/config/config.json`, {
 		method: 'GET'
 	})
 		.then((res) => {
