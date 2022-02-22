@@ -129,6 +129,8 @@ export default function PageLayout({ version, hasBackendApi }) {
 		if (hasBackendApi) {
 			getLoginConfig(version, domain, domain)
 				.then((res) => {
+					alert('res =>>>');
+					alert(res);
 					if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.publicUrl));
 					if (!domain) setDomain(res.zimbraDomainName);
 
