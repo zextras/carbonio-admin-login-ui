@@ -125,6 +125,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 	}, [isDarkTheme, isDefaultBg])
 
 	useLayoutEffect(() => {
+		alert('$$$$$$$$$$');
 		let componentIsMounted = true;
 		if (hasBackendApi) {
 			getLoginConfig(version, domain, domain)
@@ -200,8 +201,6 @@ export default function PageLayout({ version, hasBackendApi }) {
 				});
 		}
 		else {
-			console.log('###########');
-			alert('44444444')
 			setLogo({ image: logoCarbonio, width: '221px' });
 			document.title = t('carbonio_authentication', 'Carbonio Authentication');
 		}
