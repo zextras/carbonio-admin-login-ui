@@ -125,8 +125,9 @@ export default function PageLayout({ version, hasBackendApi }) {
 	}, [isDarkTheme, isDefaultBg])
 
 	useLayoutEffect(() => {
-		alert('$$$$$$$$$$');
 		let componentIsMounted = true;
+		alert(`>>>>>>>${  hasBackendApi}`);
+		console.log('[Has BackendAPI]: ', hasBackendApi);
 		if (hasBackendApi) {
 			getLoginConfig(version, domain, domain)
 				.then((res) => {
