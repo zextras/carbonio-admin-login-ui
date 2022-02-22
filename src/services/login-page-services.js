@@ -12,14 +12,13 @@ export function getLoginSupported() {
 		});
 }
 
-export function getLoginConfig(version, domain, host) {
+export async function getLoginConfig(version, domain, host) {
 	const carbonioConfigData = carbonioConfig();
 	console.log('[carbonioConfigData]: ', carbonioConfigData);
-	console.warn('[carbonioConfigData] warn: ', carbonioConfigData);
-	console.error('[carbonioConfigData] error: ', carbonioConfigData);
-	return new Promise((resolve, reject) => {
-		resolve(carbonioConfigData);
-	});
+	// return await new Promise((resolve, reject) => {
+	// 	resolve(carbonioConfigData);
+	// });
+	return Promise.resolve(carbonioConfigData);
 }
 
 export function checkClassicUi() {
