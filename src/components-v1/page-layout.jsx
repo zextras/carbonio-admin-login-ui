@@ -126,85 +126,83 @@ export default function PageLayout({ version, hasBackendApi }) {
 
 	useLayoutEffect(() => {
 		let componentIsMounted = true;
-		alert(`>>>>>>>${  hasBackendApi}`);
-		console.log('[Has BackendAPI]: ', hasBackendApi);
-		if (hasBackendApi) {
-			getLoginConfig(version, domain, domain)
-				.then((res) => {
-					if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.publicUrl));
-					if (!domain) setDomain(res.zimbraDomainName);
+		// if (hasBackendApi) {
+		getLoginConfig(version, domain, domain)
+			.then((res) => {
+				if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.publicUrl));
+				if (!domain) setDomain(res.zimbraDomainName);
 
-					const _logo = {};
+				const _logo = {};
 
-					if (componentIsMounted) {
-						if (res.loginPageBackgroundImage) {
-							setBg(res.loginPageBackgroundImage);
-							setIsDefaultBg(false);
-						}
-						if (res.isDarkThemeEnable) {
-							setIsDarkTheme(true);
-							setIsDefaultBg(false);
-						}
-
-						if (res.loginPageLogo) {
-							_logo.image = res.loginPageLogo;
-							_logo.width = '100%';
-						}
-						else {
-							_logo.image = logoCarbonio;
-							_logo.width = '221px';
-						}
-
-						if (res.loginPageSkinLogoUrl) {
-							_logo.url = res.loginPageSkinLogoUrl;
-						}
-						else {
-							_logo.url = '';
-						}
-
-						if (res.loginPageTitle) {
-							document.title = res.loginPageTitle;
-						}
-						else {
-							document.title = t('carbonio_authentication', 'Carbonio Authentication');
-						}
-
-						if (res.loginPageFavicon) {
-							const link = document.querySelector('link[rel*=\'icon\']') || document.createElement('link');
-							link.type = 'image/x-icon';
-							link.rel = 'shortcut icon';
-							link.href = res.loginPageFavicon;
-							document.getElementsByTagName('head')[0].appendChild(link);
-						}
-
-						if (res.loginPageColorSet) {
-							const colorSet = res.loginPageColorSet;
-							if (colorSet.primary) {
-								setEditedTheme((et) => ({
-									...et,
-									'palette.primary': generateColorSet({ regular: `#${colorSet.primary}` })
-								}));
-							}
-							if (colorSet.secondary) {
-								setEditedTheme((et) => ({
-									...et,
-									'palette.secondary': generateColorSet({ regular: `#${colorSet.secondary}` })
-								}));
-							}
-						}
-						setLogo(_logo);
+				if (componentIsMounted) {
+					if (res.loginPageBackgroundImage) {
+						setBg(res.loginPageBackgroundImage);
+						setIsDefaultBg(false);
 					}
-				})
-				.catch(() => {
-					// It should never happen, If the server doesn't respond this page will not be loaded
-					if (componentIsMounted)
-						setServerError(true);
-				});
-		}
-		else {
-			setLogo({ image: logoCarbonio, width: '221px' });
-			document.title = t('carbonio_authentication', 'Carbonio Authentication');
-		}
+					if (res.isDarkThemeEnable) {
+						setIsDarkTheme(true);
+						setIsDefaultBg(false);
+					}
+
+					if (res.loginPageLogo) {
+						_logo.image = res.loginPageLogo;
+						_logo.width = '100%';
+					}
+					else {
+						_logo.image = logoCarbonio;
+						_logo.width = '221px';
+					}
+
+					if (res.loginPageSkinLogoUrl) {
+						_logo.url = res.loginPageSkinLogoUrl;
+					}
+					else {
+						_logo.url = '';
+					}
+
+					if (res.loginPageTitle) {
+						document.title = res.loginPageTitle;
+					}
+					else {
+						document.title = t('carbonio_authentication', 'Carbonio Authentication');
+					}
+
+					if (res.loginPageFavicon) {
+						const link = document.querySelector('link[rel*=\'icon\']') || document.createElement('link');
+						link.type = 'image/x-icon';
+						link.rel = 'shortcut icon';
+						link.href = res.loginPageFavicon;
+						document.getElementsByTagName('head')[0].appendChild(link);
+					}
+
+					if (res.loginPageColorSet) {
+						const colorSet = res.loginPageColorSet;
+						if (colorSet.primary) {
+							setEditedTheme((et) => ({
+								...et,
+								'palette.primary': generateColorSet({ regular: `#${colorSet.primary}` })
+							}));
+						}
+						if (colorSet.secondary) {
+							setEditedTheme((et) => ({
+								...et,
+								'palette.secondary': generateColorSet({ regular: `#${colorSet.secondary}` })
+							}));
+						}
+					}
+					setLogo(_logo);
+				}
+			})
+			.catch(() => {
+				// It should never happen, If the server doesn't respond this page will not be loaded
+				if (componentIsMounted)
+					setServerError(true);
+			});
+		// }
+		// else {
+		// 	setLogo({ image: logoCarbonio, width: '221px' });
+		// 	document.title = t('carbonio_authentication', 'Carbonio Authentication');
+		// }
 
 		return () => {
 			componentIsMounted = false;
@@ -245,10 +243,9 @@ export default function PageLayout({ version, hasBackendApi }) {
 								</Container>
 							</Padding>
 						</Container>
-						{hasBackendApi
-							? <FormSelector domain={domain} destinationUrl={destinationUrl} isDarkTheme={isDarkTheme} />
-							: <ZimbraForm destinationUrl={destinationUrl} isDarkTheme={isDarkTheme} />
-						}
+						
+						 <ZimbraForm destinationUrl={destinationUrl} isDarkTheme={isDarkTheme} />
+						
 						<Container crossAlignment="flex-start" height="auto"
 							padding={{ bottom: 'extralarge', top: 'extralarge' }}>
 							<SupportedBrowserText size="large" isDarkThmeEnabled={isDarkTheme}>{t('supported_browsers', 'Supported browsers')}</SupportedBrowserText>
