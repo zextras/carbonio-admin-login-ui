@@ -20,7 +20,7 @@ import {
 import { saveCredentials, setCookie } from '../utils';
 
 export const submitChangePassword = (username, oldPassword, newPassword) => {
-	return fetch('/service/soap/ChangePasswordRequest', {
+	return fetch('/service/admin/soap/ChangePasswordRequest', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

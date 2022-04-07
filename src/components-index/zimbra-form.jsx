@@ -8,42 +8,17 @@ import { useTranslation } from 'react-i18next';
 import React, { useCallback, useState } from 'react';
 
 import CredentialsForm from '../components-v1/credentials-form';
+import { loginToCarbonioAdmin } from '../services/v2-service';
 
-const zimbraLogin = (username, password) => {
-	return fetch('/service/soap/AuthRequest', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			Body: {
-				AuthRequest: {
-					_jsns: 'urn:zimbraAccount',
-					csrfTokenSecured: '1',
-					persistAuthTokenCookie: '1',
-					generateDeviceId: '1',
-					account: {
-						by: 'name',
-						_content: username
-					},
-					password: {
-						_content: password
-					},
-					prefs: [{ pref: { name: 'zimbraPrefMailPollingInterval' } }]
-				}
-			}
-		})
-	});
-};
+export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 
-export function ZimbraForm({ destinationUrl }) {
 	const { t } = useTranslation();
 	const [authError, setAuthError] = useState();
 	const [loading, setLoading] = useState(false);
 
 	const submitCredentials = useCallback((username, password) => {
 		setLoading(true);
-		return zimbraLogin(username, password)
+		return loginToCarbonioAdmin(username, password)
 			.then(async (res) => {
 				const payload = await res.json();
 				if (payload.Body.Fault) {
@@ -51,7 +26,7 @@ export function ZimbraForm({ destinationUrl }) {
 				}
 				switch (res.status) {
 					case 200:
-						window.location.assign(destinationUrl || window.location.origin);
+						window.location.assign('/carbonioAdmin');
 						break;
 					case 401:
 					case 500:
@@ -82,6 +57,7 @@ export function ZimbraForm({ destinationUrl }) {
 			authError={authError}
 			submitCredentials={submitCredentials}
 			loading={loading}
+			isDarkTheme={isDarkTheme}
 		/>
 	);
 }

@@ -17,7 +17,7 @@ import { map } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-	postV2Login,
+	loginToCarbonioAdmin,
 	submitOtp
 } from '../services/v2-service';
 import { saveCredentials } from '../utils';
@@ -34,9 +34,8 @@ const formState = {
 	changePassword: 'change-password',
 };
 
-export default function V2LoginManager({ configuration, disableInputs }) {
+export default function V2LoginManager({ configuration, disableInputs, isDarkTheme }) {
 	const [t] = useTranslation();
-
 	const [loadingCredentials, setLoadingCredentials] = useState(false);
 	const [loadingOtp, setLoadingOtp] = useState(false);
 	const [progress, setProgress] = useState(formState.credentials);
@@ -64,60 +63,24 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 
 	const [snackbarNetworkError, setSnackbarNetworkError] = useState(false);
 	const [detailNetworkModal, setDetailNetworkModal] = useState(false);
-
 	const submitCredentials = useCallback(
 		(username, password) => {
 			setLoadingCredentials(true);
-			return postV2Login('password', username, password)
-				.then((res) => {
+			return loginToCarbonioAdmin(username, password)
+				.then(async (res) => {
+					const responseData = await res.json();
+					console.log('[AuthResponse]: ', responseData);
 					switch (res.status) {
 						case 200:
-							setEmail(username);
-							if (res.redirected) {
-								setProgress(formState.changePassword);
-							}
-							else {
-								res.json().then(async (response) => {
-									await saveCredentials(username, password);
-									if (response?.['2FA'] === true) {
-										setOtpList(
-											map(response?.otp ?? [], (obj) => ({
-												label: obj.label,
-												value: obj.id,
-											}))
-										);
-										setOtpId(response?.otp?.[0].id);
-										setProgress(formState.twoFactor);
-										setLoadingCredentials(false);
-									}
- 									else {
-										window.location.assign(configuration.destinationUrl);
-									}
-								});
-							}
-							break;
-						case 401:
-							setAuthError(
-								t(
-									'credentials_not_valid',
-									'Credentials are not valid, please check data and try again'
-								)
-							);
-							setLoadingCredentials(false);
-							break;
-						case 403:
-							setAuthError(
-								t(
-									'auth_not_valid',
-									'The authentication policy needs more steps: please contact your administrator for more information'
-								)
-							);
-							setLoadingCredentials(false);
+							await saveCredentials(username, password);
+							window.location.assign('/carbonioAdmin');
+							setProgress(false);
 							break;
 						default:
 							setSnackbarNetworkError(true);
-							setLoadingCredentials(false);
-					}
+			 				setLoadingCredentials(false);
+							break;
+					}	
 				})
 				.catch(() => setLoadingCredentials(false));
 		},
@@ -170,6 +133,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 					authError={authError}
 					submitCredentials={submitCredentials}
 					loading={loadingCredentials}
+					isDarkTheme={isDarkTheme}
 				/>
 			)}
 			{progress === formState.waiting && (

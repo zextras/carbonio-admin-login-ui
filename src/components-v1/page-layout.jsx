@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Container, Link, Padding, Row, Text, Tooltip, useScreenMode, useSetCustomTheme } from '@zextras/zapp-ui';
 import { forEach, set } from 'lodash';
@@ -18,9 +18,10 @@ import logoSafari from '../../assets/logo-safari.svg';
 import logoOpera from '../../assets/logo-opera.svg';
 import logoYandex from '../../assets/logo-yandex.svg';
 import logoUC from '../../assets/logo-ucbrowser.svg';
-import backgroundImage from '../../assets/carbonio_loginpage.jpg';
-import backgroundImageRetina from '../../assets/carbonio_loginpage-retina.jpg';
-import logoCarbonio from '../../assets/logo-carbonio.png';
+import backgroundImage from '../../assets/carbonio_light.jpg';
+import darkBackgroundImage from '../../assets/carbonio_loginpage.jpg';
+import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
+import logoCarbonio from '../../assets/carbonio-admin-panel.svg';
 import { getLoginConfig } from '../services/login-page-services';
 import FormSelector from './form-selector';
 import ServerNotResponding from '../components-index/server-not-responding';
@@ -42,7 +43,7 @@ const LoginContainer = styled(Container)`
 	padding: 0 100px;
 	background: url(${(props) => props.backgroundImage}) no-repeat 75% center/cover;
 	justify-content: center;
-	align-items: flex-start;
+	align-items: center;
 	${({ screenMode }) => screenMode === 'mobile' && css`
 		padding: 0 12px;
 		align-items: center;	
@@ -63,12 +64,11 @@ const FormContainer = styled.div`
 const FormWrapper = styled(Container)`
 	width: auto;
 	height: auto;
-	background-color: ${({ theme }) => theme.palette.gray6.regular};
+	background-color: ${({ theme, isDarkThmeEnabled }) => isDarkThmeEnabled ? 'rgba(65,65,65, .8)' : 'rgba(255,255,255, 0.8)' };
 	padding: 48px 48px 0;
 	width: 436px;
 	max-width: 100%;
 	min-height: 620px;
-	// height: 100vh;
 	overflow-y: auto;
 	${({ screenMode }) => screenMode === 'mobile' && css`
 		padding: 20px 20px 0;
@@ -93,6 +93,11 @@ const PhotoCredits = styled(Text)`
 	}
 `;
 
+const SupportedBrowserText = styled(Text)`
+	font-size: 16px;
+	color: ${({ isDarkThmeEnabled }) => isDarkThmeEnabled ? '#FFFFFF' : '#414141' };
+`;
+
 export default function PageLayout({ version, hasBackendApi }) {
 	const [t] = useTranslation();
 	const screenMode = useScreenMode();
@@ -106,83 +111,98 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [bg, setBg] = useState(backgroundImage);
 	const [isDefaultBg, setIsDefaultBg] = useState(true);
 	const [editedTheme, setEditedTheme] = useState({});
+	const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+	useEffect(() => {
+		if (isDefaultBg) {
+			if (isDarkTheme) {
+				setBg(darkBackgroundImage);
+			}
+			else {
+				setBg(backgroundImage);
+			}
+		}
+	}, [isDarkTheme, isDefaultBg])
 
 	useLayoutEffect(() => {
 		let componentIsMounted = true;
+		// if (hasBackendApi) {
+		getLoginConfig(version, domain, domain)
+			.then((res) => {
+				if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.publicUrl));
+				if (!domain) setDomain(res.zimbraDomainName);
 
-		if (hasBackendApi) {
-			getLoginConfig(version, domain, domain)
-				.then((res) => {
-					if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.publicUrl));
-					if (!domain) setDomain(res.zimbraDomainName);
+				const _logo = {};
 
-					const _logo = {};
-
-					if (componentIsMounted) {
-						if (res.loginPageBackgroundImage) {
-							setBg(res.loginPageBackgroundImage);
-							setIsDefaultBg(false);
-						}
-
-						if (res.loginPageLogo) {
-							_logo.image = res.loginPageLogo;
-							_logo.width = '100%';
-						}
-						else {
-							_logo.image = logoCarbonio;
-							_logo.width = '221px';
-						}
-
-						if (res.loginPageSkinLogoUrl) {
-							_logo.url = res.loginPageSkinLogoUrl;
-						}
-						else {
-							_logo.url = '';
-						}
-
-						if (res.loginPageTitle) {
-							document.title = res.loginPageTitle;
-						}
-						else {
-							document.title = t('carbonio_authentication', 'Carbonio Authentication');
-						}
-
-						if (res.loginPageFavicon) {
-							const link = document.querySelector('link[rel*=\'icon\']') || document.createElement('link');
-							link.type = 'image/x-icon';
-							link.rel = 'shortcut icon';
-							link.href = res.loginPageFavicon;
-							document.getElementsByTagName('head')[0].appendChild(link);
-						}
-
-						if (res.loginPageColorSet) {
-							const colorSet = res.loginPageColorSet;
-							if (colorSet.primary) {
-								setEditedTheme((et) => ({
-									...et,
-									'palette.primary': generateColorSet({ regular: `#${colorSet.primary}` })
-								}));
-							}
-							if (colorSet.secondary) {
-								setEditedTheme((et) => ({
-									...et,
-									'palette.secondary': generateColorSet({ regular: `#${colorSet.secondary}` })
-								}));
-							}
-						}
-						setLogo(_logo);
+				if (componentIsMounted) {
+					if (res.loginPageBackgroundImage) {
+						setBg(res.loginPageBackgroundImage);
+						setIsDefaultBg(false);
 					}
-				})
-				.catch(() => {
-					// It should never happen, If the server doesn't respond this page will not be loaded
-					if (componentIsMounted)
-						setServerError(true);
-				});
-		}
-		else {
-			setLogo({ image: logoCarbonio, width: '221px' });
-			document.title = t('carbonio_authentication', 'Carbonio Authentication');
-		}
+					if (res.isDarkThemeEnable) {
+						setIsDarkTheme(true);
+						setIsDefaultBg(false);
+					}
+
+					if (res.loginPageLogo) {
+						_logo.image = res.loginPageLogo;
+						_logo.width = '100%';
+					}
+					else {
+						_logo.image = logoCarbonio;
+						_logo.width = '221px';
+					}
+
+					if (res.loginPageSkinLogoUrl) {
+						_logo.url = res.loginPageSkinLogoUrl;
+					}
+					else {
+						_logo.url = '';
+					}
+
+					if (res.loginPageTitle) {
+						document.title = res.loginPageTitle;
+					}
+					else {
+						document.title = t('carbonio_authentication', 'Carbonio Authentication');
+					}
+
+					if (res.loginPageFavicon) {
+						const link = document.querySelector('link[rel*=\'icon\']') || document.createElement('link');
+						link.type = 'image/x-icon';
+						link.rel = 'shortcut icon';
+						link.href = res.loginPageFavicon;
+						document.getElementsByTagName('head')[0].appendChild(link);
+					}
+
+					if (res.loginPageColorSet) {
+						const colorSet = res.loginPageColorSet;
+						if (colorSet.primary) {
+							setEditedTheme((et) => ({
+								...et,
+								'palette.primary': generateColorSet({ regular: `#${colorSet.primary}` })
+							}));
+						}
+						if (colorSet.secondary) {
+							setEditedTheme((et) => ({
+								...et,
+								'palette.secondary': generateColorSet({ regular: `#${colorSet.secondary}` })
+							}));
+						}
+					}
+					setLogo(_logo);
+				}
+			})
+			.catch(() => {
+				// It should never happen, If the server doesn't respond this page will not be loaded
+				if (componentIsMounted)
+					setServerError(true);
+			});
+		// }
+		// else {
+		// 	setLogo({ image: logoCarbonio, width: '221px' });
+		// 	document.title = t('carbonio_authentication', 'Carbonio Authentication');
+		// }
 
 		return () => {
 			componentIsMounted = false;
@@ -212,7 +232,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 			<LoginContainer screenMode={screenMode} isDefaultBg={isDefaultBg} backgroundImage={bg}>
 				<ModifiedTheme changes={editedTheme} />
 				<FormContainer>
-					<FormWrapper mainAlignment="space-between" screenMode={screenMode}>
+					<FormWrapper mainAlignment="space-between" screenMode={screenMode} isDarkThmeEnabled={isDarkTheme}>
 						<Container mainAlignment="flex-start" height="auto">
 							<Padding value="28px 0 28px" crossAlignment="center" width="100%">
 								<Container crossAlignment="center">
@@ -223,28 +243,18 @@ export default function PageLayout({ version, hasBackendApi }) {
 								</Container>
 							</Padding>
 						</Container>
-						{hasBackendApi
-							? <FormSelector domain={domain} destinationUrl={destinationUrl}/>
-							: <ZimbraForm destinationUrl={destinationUrl}/>
-						}
+						
+						 <ZimbraForm destinationUrl={destinationUrl} isDarkTheme={isDarkTheme} />
+						
 						<Container crossAlignment="flex-start" height="auto"
 							padding={{ bottom: 'extralarge', top: 'extralarge' }}>
-							<Text>{t('supported_browsers', 'Supported browsers')}</Text>
+							<SupportedBrowserText size="large" isDarkThmeEnabled={isDarkTheme}>{t('supported_browsers', 'Supported browsers')}</SupportedBrowserText>
 							<Row padding={{ top: 'medium', bottom: 'extralarge' }} wrap="nowrap">
 								<Padding all="extrasmall" right="small">
 									<Tooltip label="Chrome">
 										<img
 											alt="Logo Chrome"
 											src={logoChrome}
-											width="18px"
-										/>
-									</Tooltip>
-								</Padding>
-								<Padding all="extrasmall" right="small">
-									<Tooltip label="Firefox">
-										<img
-											alt="Logo Firefox"
-											src={logoFirefox}
 											width="18px"
 										/>
 									</Tooltip>
@@ -259,6 +269,15 @@ export default function PageLayout({ version, hasBackendApi }) {
 									</Tooltip>
 								</Padding>
 								<Padding all="extrasmall" right="small">
+									<Tooltip label="Firefox">
+										<img
+											alt="Logo Firefox"
+											src={logoFirefox}
+											width="18px"
+										/>
+									</Tooltip>
+								</Padding>
+								<Padding all="extrasmall" right="small">
 									<Tooltip label="Safari">
 										<img
 											alt="Logo Safari"
@@ -267,7 +286,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 										/>
 									</Tooltip>
 								</Padding>
-								<Padding all="extrasmall" right="small">
+								{/* <Padding all="extrasmall" right="small">
 									<Tooltip label="Opera">
 										<img
 											alt="Logo Opera"
@@ -293,13 +312,14 @@ export default function PageLayout({ version, hasBackendApi }) {
 											width="18px"
 										/>
 									</Tooltip>
-								</Padding>
+								</Padding> */}
 							</Row>
 							<Text
-								size="small"
+								size="large"
 								overflow="break-word"
+								color= {isDarkTheme ? 'gray6' : 'gray0'}
 							>
-								Copyright &copy;
+								{t('copy_right', 'Copyright')} &copy;
 								{` ${new Date().getFullYear()} Zextras, `}
 								{t('all_rights_reserved', 'All rights reserved')}
 							</Text>

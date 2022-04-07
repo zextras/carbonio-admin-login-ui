@@ -29,15 +29,16 @@ depends=(
 build() {
 }
 
-preinst() {
-}
 
 package() {
   cd "${srcdir}"
-  mkdir -p "${pkgdir}/opt/zextras/web/login/"
-  cp -a  ../build/* "${pkgdir}/opt/zextras/web/login"
-  chown root:root -R "${pkgdir}/opt/zextras/web/login"
-  chmod 755 -R "${pkgdir}/opt/zextras/web/login"
+  mkdir -p "${pkgdir}/opt/zextras/admin/login/"
+  cp -a  ../build/* "${pkgdir}/opt/zextras/admin/login"
+  chown root:root -R "${pkgdir}/opt/zextras/admin/login"
+  chmod 755 -R "${pkgdir}/opt/zextras/admin/login"
+}
+
+preinst() {
 }
 
 postinst() {

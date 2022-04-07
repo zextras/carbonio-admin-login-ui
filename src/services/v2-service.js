@@ -5,7 +5,7 @@
 import { getDeviceModel, deviceId } from '../utils';
 
 export function postV2Login(authMethod, user, password, service) {
-	return fetch('/zx/auth/v2/login', {
+	return fetch('/service/auth/v2/login', {
 		method: 'POST',
 		headers: {
 			'X-Device-Model': getDeviceModel(),
@@ -22,7 +22,7 @@ export function postV2Login(authMethod, user, password, service) {
 }
 
 export function submitOtp(id, code, trustDevice) {
-	return fetch('/zx/auth/v2/otp/validate', {
+	return fetch('/service/auth/v2/otp/validate', {
 		method: 'POST',
 		headers: {
 			'X-Device-Model': getDeviceModel(),
@@ -35,6 +35,32 @@ export function submitOtp(id, code, trustDevice) {
 			id,
 			code,
 			unsecure_device: !trustDevice
+		})
+	});
+}
+
+export function loginToCarbonioAdmin(username, password) {
+	return fetch(`/service/admin/soap/AuthRequest`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		referrerPolicy: 'same-origin',
+		body: JSON.stringify({
+			Body: {
+				AuthRequest: {
+					_jsns: 'urn:zimbraAdmin',
+					csrfTokenSecured: '1',
+					persistAuthTokenCookie: '1',
+					account: {
+						by: 'name',
+						_content: username
+					},
+					password: {
+						_content: password
+					}
+				}
+			}
 		})
 	});
 }

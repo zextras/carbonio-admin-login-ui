@@ -27,10 +27,21 @@ module.exports = (env) => {
 		target: 'web',
 		devServer: {
 			proxy: {
-				'/zx': {
-					target: 'https://infra-848931f5.testarea.zextras.com',
-					secure: false
+				'/carbonioAdmin': {
+					// target: 'https://infra-848931f5.testarea.zextras.com',
+					// target: 'https://localhost:7071/',
+					target: 'https://nbm-s03.demo.zextras.io:7071',
+					secure: true,
+					changeOrigin: true
+				},
+				'/service': {
+					// target: 'https://infra-848931f5.testarea.zextras.com',
+					// target: 'https://localhost:7071/',
+					target: 'https://nbm-s03.demo.zextras.io:7071',
+					secure: true,
+					changeOrigin: true
 				}
+
 			}
 		},
 		resolve: {
