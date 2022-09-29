@@ -1,15 +1,16 @@
-// SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-only
+/*
+ * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
-import { carbonioConfig } from "../config/carbonio-config";
+import { carbonioConfig } from '../config/carbonio-config';
 
 export function getLoginSupported() {
-	return fetch('/zx/login/supported')
-		.then((res) => {
-			if (res.status === 200) return res.json();
-			throw Error('Network Error');
-		});
+	return fetch('/zx/login/supported').then((res) => {
+		if (res.status === 200) return res.json();
+		throw Error('Network Error');
+	});
 }
 
 export async function getLoginConfig(version, domain, host) {
@@ -22,11 +23,10 @@ export async function getLoginConfig(version, domain, host) {
 }
 
 export function checkClassicUi() {
-	return fetch('/public/blank.html')
-		.then(res => {
-			if (res.status === 404) {
-				return { hasClassic: false }
-			}
-			return { hasClassic: true }
-		})
+	return fetch('/public/blank.html').then((res) => {
+		if (res.status === 404) {
+			return { hasClassic: false };
+		}
+		return { hasClassic: true };
+	});
 }

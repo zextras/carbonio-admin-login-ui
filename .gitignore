@@ -13,6 +13,5 @@
 /.npmrc
 
 LICENSES/*
-.reuse/*
 
 .DS_Store

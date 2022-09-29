@@ -11,15 +11,12 @@ import {
 	Row,
 	Select,
 	Snackbar,
-	Text,
-} from '@zextras/zapp-ui';
+	Text
+} from '@zextras/carbonio-design-system';
 import { map } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-	loginToCarbonioAdmin,
-	submitOtp
-} from '../services/v2-service';
+import { loginToCarbonioAdmin, submitOtp } from '../services/v2-service';
 import { saveCredentials } from '../utils';
 import ChangePasswordForm from './change-password-form';
 import CredentialsForm from './credentials-form';
@@ -31,7 +28,7 @@ const formState = {
 	credentials: 'credentials',
 	waiting: 'waiting',
 	twoFactor: 'two-factor',
-	changePassword: 'change-password',
+	changePassword: 'change-password'
 };
 
 export default function V2LoginManager({ configuration, disableInputs, isDarkTheme }) {
@@ -53,39 +50,33 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 		[setOtp]
 	);
 	const [trustDevice, setTrustDevice] = useState(false);
-	const toggleTrustDevice = useCallback(
-		() => setTrustDevice((v) => !v),
-		[setTrustDevice]
-	);
+	const toggleTrustDevice = useCallback(() => setTrustDevice((v) => !v), [setTrustDevice]);
 
 	const [email, setEmail] = useState('');
 	const [loadingChangePassword, setLoadingChangePassword] = useState(false);
 
 	const [snackbarNetworkError, setSnackbarNetworkError] = useState(false);
 	const [detailNetworkModal, setDetailNetworkModal] = useState(false);
-	const submitCredentials = useCallback(
-		(username, password) => {
-			setLoadingCredentials(true);
-			return loginToCarbonioAdmin(username, password)
-				.then(async (res) => {
-					const responseData = await res.json();
-					console.log('[AuthResponse]: ', responseData);
-					switch (res.status) {
-						case 200:
-							await saveCredentials(username, password);
-							window.location.assign('/carbonioAdmin');
-							setProgress(false);
-							break;
-						default:
-							setSnackbarNetworkError(true);
-			 				setLoadingCredentials(false);
-							break;
-					}	
-				})
-				.catch(() => setLoadingCredentials(false));
-		},
-		[configuration.destinationUrl]
-	);
+	const submitCredentials = useCallback((username, password) => {
+		setLoadingCredentials(true);
+		return loginToCarbonioAdmin(username, password)
+			.then(async (res) => {
+				const responseData = await res.json();
+				console.log('[AuthResponse]: ', responseData);
+				switch (res.status) {
+					case 200:
+						await saveCredentials(username, password);
+						window.location.assign('/carbonioAdmin');
+						setProgress(false);
+						break;
+					default:
+						setSnackbarNetworkError(true);
+						setLoadingCredentials(false);
+						break;
+				}
+			})
+			.catch(() => setLoadingCredentials(false));
+	}, []);
 
 	const submitOtpCb = useCallback(
 		(e) => {
@@ -96,12 +87,10 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 					if (res.status === 200) {
 						if (res.redirected) {
 							setProgress(formState.changePassword);
-						}
-						else {
+						} else {
 							window.location.assign(configuration.destinationUrl);
 						}
-					}
-					else {
+					} else {
 						setLoadingOtp(false);
 						setShowOtpError(true);
 					}
@@ -111,10 +100,7 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 		[otpId, otp, trustDevice, configuration.destinationUrl]
 	);
 
-	const onCloseCbk = useCallback(
-		() => setDetailNetworkModal(false),
-		[setDetailNetworkModal]
-	);
+	const onCloseCbk = useCallback(() => setDetailNetworkModal(false), [setDetailNetworkModal]);
 	const onSnackbarActionCbk = useCallback(
 		() => setDetailNetworkModal(true),
 		[setDetailNetworkModal]
@@ -137,11 +123,7 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 				/>
 			)}
 			{progress === formState.waiting && (
-				<Row
-					orientation="vertical"
-					crossAlignment="center"
-					padding={{ vertical: 'extralarge' }}
-				>
+				<Row orientation="vertical" crossAlignment="center" padding={{ vertical: 'extralarge' }}>
 					<Spinner />
 				</Row>
 			)}
@@ -175,18 +157,11 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 					<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
 						<Text color="error" size="medium" overflow="break-word">
 							{showOtpError &&
-								t(
-									'wrong_password',
-									'Wrong password, please check data and try again'
-								)}
+								t('wrong_password', 'Wrong password, please check data and try again')}
 							{!showOtpError && <br />}
 						</Text>
 					</Row>
-					<Row
-						orientation="vertical"
-						crossAlignment="flex-start"
-						padding={{ vertical: 'small' }}
-					>
+					<Row orientation="vertical" crossAlignment="flex-start" padding={{ vertical: 'small' }}>
 						<Button
 							onClick={submitOtpCb}
 							disabled={disableInputs}
@@ -198,10 +173,7 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 					<Row mainAlignment="flex-start">
 						<Checkbox
 							value={trustDevice}
-							label={t(
-								'trust_device_and_ip',
-								'Trust this device and IP address'
-							)}
+							label={t('trust_device_and_ip', 'Trust this device and IP address')}
 							onClick={toggleTrustDevice}
 						/>
 					</Row>

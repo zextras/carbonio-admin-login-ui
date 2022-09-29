@@ -1,6 +1,8 @@
-// SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-only
+/*
+ * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
 export const MAX_SUPPORTED_VERSION = 2; // to keep updated adding new versions
 export const IRIS_CHECK_URL = '/static/iris/components.json';
