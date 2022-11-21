@@ -13,9 +13,9 @@ export default rest.get(
 			ctx.status(200),
 			ctx.json({
 				publicUrl: 'https://infra-6f4c8e62.testarea.zextras.com',
-				loginPageBackgroundImage: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.freecreatives.com%2Fwp-content%2Fuploads%2F2016%2F02%2FAmazing-Road-Background-For-Free1.jpg',
+				loginPageBackgroundImage: '',
 				loginPageLogo: '',
-				loginPageSkinLogoUrl: 'https://banner2.cleanpng.com/20180513/fpq/kisspng-royalty-free-logo-dragon-5af7c7407136a9.1946411915261878404637.jpg',
+				loginPageSkinLogoUrl: '',
 				loginPageFavicon: '',
 				loginPageColorSet: {
 					primary: '2b73d2',
