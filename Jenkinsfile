@@ -331,7 +331,7 @@ pipeline {
 				}
 				stage('Stash') {
 					steps {
-						stash includes: "pacur.json,PKGBUILD,build/**", name: 'binaries'
+						stash includes: "pacur.json,PKGBUILD,dist/**", name: 'binaries'
 					}
 				}
 				stage('pacur') {

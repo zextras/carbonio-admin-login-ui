@@ -26,7 +26,7 @@ url="https://www.zextras.com/"
 package() {
   cd "${srcdir}"
   mkdir -p "${pkgdir}/opt/zextras/admin/login/"
-  cp -a  ../build/* "${pkgdir}/opt/zextras/admin/login"
+  cp -a  ../dist/* "${pkgdir}/opt/zextras/admin/login"
 }
 
 postinst() {
