@@ -12,10 +12,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const CopyPlugin = require('copy-webpack-plugin');
-const babelRCApp = require('./babel.config.js');
+const babelRCApp = require('./babel.config');
 const pkg = require('./package.json');
-
-var SRC_DIR = path.resolve(__dirname, "src");
 
 const pathsToCopy = [
 	{ from: 'translations', to: 'i18n' },
@@ -48,13 +46,12 @@ module.exports = (env) => {
 					secure: true,
 					changeOrigin: true
 				}
-
 			}
 		},
 		resolve: {
 			extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
 			alias: {
-				'assets': path.resolve(process.cwd(), 'assets')
+				assets: path.resolve(process.cwd(), 'assets')
 			}
 		},
 		module: {
@@ -75,9 +72,7 @@ module.exports = (env) => {
 				},
 				{
 					test: /\.(css)$/,
-					exclude: [
-						/node_modules\/tinymce/
-					],
+					exclude: [/node_modules\/tinymce/],
 					use: [
 						{
 							loader: 'style-loader'
@@ -114,7 +109,7 @@ module.exports = (env) => {
 		plugins: [
 			new CleanWebpackPlugin(),
 			new CopyPlugin({
-				patterns: pathsToCopy,
+				patterns: pathsToCopy
 			}),
 			new HtmlWebpackPlugin({
 				inject: true,
@@ -129,5 +124,5 @@ module.exports = (env) => {
 				ignoreStub: true
 			})
 		]
-	}
-}
+	};
+};

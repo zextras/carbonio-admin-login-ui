@@ -14,7 +14,7 @@ import {
 	Text,
 	Tooltip,
 	useScreenMode,
-	useSetCustomTheme
+	useTheme
 } from '@zextras/carbonio-design-system';
 import { forEach, set } from 'lodash';
 
@@ -42,7 +42,7 @@ function modifyTheme(draft, variant, changes) {
 
 function ModifiedTheme({ changes }) {
 	const proxyFn = useCallback((draft, variant) => modifyTheme(draft, variant, changes), [changes]);
-	useSetCustomTheme(proxyFn);
+	// useSetCustomTheme(proxyFn);
 
 	return null;
 }
