@@ -52,7 +52,6 @@ const LoginContainer = styled(Container)`
 	background: url(${(props) => props.backgroundImage}) no-repeat 75% center/cover;
 	justify-content: center;
 	align-items: center;
-	border: 5px solid red;
 	${({ screenMode }) =>
 		screenMode === 'mobile' &&
 		css`
