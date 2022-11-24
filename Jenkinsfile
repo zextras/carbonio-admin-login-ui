@@ -408,13 +408,8 @@ pipeline {
 							{
 								"pattern": "artifacts/carbonio-admin-login-ui*.deb",
 								"target": "ubuntu-playground/pool/",
-								"props": "deb.distribution=xenial;deb.distribution=bionic;deb.distribution=focal;deb.component=main;deb.architecture=amd64"
-							},
-							{
-								"pattern": "artifacts/(carbonio-admin-login-ui)-(*).rpm",
-								"target": "centos7-playground/zextras/{1}/{1}-{2}.rpm",
-								"props": "rpm.metadata.arch=x86_64;rpm.metadata.vendor=zextras"
-							},
+								"props": "deb.distribution=focal;deb.component=main;deb.architecture=amd64"
+							}
 							{
 								"pattern": "artifacts/(carbonio-admin-login-ui)-(*).rpm",
 								"target": "centos8-playground/zextras/{1}/{1}-{2}.rpm",
@@ -449,7 +444,7 @@ pipeline {
 								{
 									"pattern": "artifacts/carbonio-admin-login-ui*.deb",
 									"target": "ubuntu-rc/pool/",
-									"props": "deb.distribution=xenial;deb.distribution=bionic;deb.distribution=focal;deb.component=main;deb.architecture=amd64"
+									"props": "deb.distribution=focal;deb.component=main;deb.architecture=amd64"
 								}
 							]
 						}"""
@@ -475,7 +470,7 @@ pipeline {
 							"files": [
 								{
 									"pattern": "artifacts/(carbonio-admin-login-ui)-(*).rpm",
-									"target": "centos7-rc/zextras/{1}/{1}-{2}.rpm",
+									"target": "centos8-rc/zextras/{1}/{1}-{2}.rpm",
 									"props": "rpm.metadata.arch=x86_64;rpm.metadata.vendor=zextras"
 								}
 							]
