@@ -32,39 +32,40 @@ export default function FormSelector({ destinationUrl, domain, isDarkTheme }) {
 			})
 			.catch(() => {
 				// It should never happen, If the server doesn't respond this page will not be loaded
-				if(componentIsMounted) setError(true);
+				if (componentIsMounted) setError(true);
 			});
 		return () => {
 			componentIsMounted = false;
-		}
-	}, []);
+		};
+	}, [destinationUrl, domain]);
 
 	useEffect(() => {
 		const urlParams = new URLSearchParams(window.location.search);
 		if (configuration && urlParams.has('loginOp') && urlParams.get('loginOp') === 'logout') {
-			doAuthLogout(configuration)
-				.catch(() => console.log('Logout failed'));
+			doAuthLogout(configuration).catch(() => console.log('Logout failed'));
 		}
 	}, [configuration]);
 
-	if(error)
-		return <ServerNotResponding />
+	if (error) return <ServerNotResponding />;
 
-	if (configuration === null || !configuration.destinationUrl)
-		return <div></div>;
+	if (configuration === null || !configuration.destinationUrl) return <div></div>;
 
 	if (configuration.maxApiVersion >= 2 && configuration.minApiVersion <= 2)
-		return <V2LoginManager
-			configuration={configuration}
-			disableInputs={disableInputs}
-			isDarkTheme={isDarkTheme}
-		/>;
+		return (
+			<V2LoginManager
+				configuration={configuration}
+				disableInputs={disableInputs}
+				isDarkTheme={isDarkTheme}
+			/>
+		);
 	if (configuration.maxApiVersion >= 1 && configuration.minApiVersion <= 1)
-		return <V1LoginManager
-			configuration={configuration}
-			disableInputs={disableInputs}
-			isDarkTheme={isDarkTheme}
-		/>;
+		return (
+			<V1LoginManager
+				configuration={configuration}
+				disableInputs={disableInputs}
+				isDarkTheme={isDarkTheme}
+			/>
+		);
 
-	return <NotSupportedVersion />
+	return <NotSupportedVersion />;
 }

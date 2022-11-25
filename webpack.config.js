@@ -1,13 +1,18 @@
-// SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
-//
-// SPDX-License-Identifier: AGPL-3.0-only
+/*
+ * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-param-reassign */
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const CopyPlugin = require('copy-webpack-plugin');
-const babelRCApp = require('./babel.config.app.js');
+const babelRCApp = require('./babel.config');
 const pkg = require('./package.json');
 
 const pathsToCopy = [
@@ -30,7 +35,7 @@ module.exports = (env) => {
 				'/carbonioAdmin': {
 					// target: 'https://infra-848931f5.testarea.zextras.com',
 					// target: 'https://localhost:7071/',
-					target: 'https://nbm-s03.demo.zextras.io:7071',
+					target: 'https://nbm-s03.demo.zextras.io:6071',
 					secure: true,
 					changeOrigin: true
 				},
@@ -41,13 +46,12 @@ module.exports = (env) => {
 					secure: true,
 					changeOrigin: true
 				}
-
 			}
 		},
 		resolve: {
 			extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
 			alias: {
-				'assets': path.resolve(process.cwd(), 'assets')
+				assets: path.resolve(process.cwd(), 'assets')
 			}
 		},
 		module: {
@@ -68,9 +72,7 @@ module.exports = (env) => {
 				},
 				{
 					test: /\.(css)$/,
-					exclude: [
-						/node_modules\/tinymce/
-					],
+					exclude: [/node_modules\/tinymce/],
 					use: [
 						{
 							loader: 'style-loader'
@@ -107,7 +109,7 @@ module.exports = (env) => {
 		plugins: [
 			new CleanWebpackPlugin(),
 			new CopyPlugin({
-				patterns: pathsToCopy,
+				patterns: pathsToCopy
 			}),
 			new HtmlWebpackPlugin({
 				inject: true,
@@ -122,5 +124,5 @@ module.exports = (env) => {
 				ignoreStub: true
 			})
 		]
-	}
-}
+	};
+};

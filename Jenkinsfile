@@ -370,7 +370,7 @@ pipeline {
 							steps {
 								unstash 'binaries'
 								sh 'sudo cp -r * /tmp'
-								sh 'sudo pacur build centos'
+								sh 'sudo pacur build rocky'
 								dir("artifacts/") {
 									sh 'echo carbonio-admin-login-ui* | sed -E "s#(carbonio-admin-login-ui-[0-9.]*).*#\\0 \\1.x86_64.rpm#" | xargs sudo mv'
 								}
