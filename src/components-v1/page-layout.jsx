@@ -35,6 +35,7 @@ import FormSelector from './form-selector';
 import ServerNotResponding from '../components-index/server-not-responding';
 import { ZimbraForm } from '../components-index/zimbra-form';
 import { generateColorSet, prepareUrlForForward } from '../utils';
+import { useThemeStore } from '../store/theme/store';
 
 function modifyTheme(draft, variant, changes) {
 	forEach(changes, (v, k) => set(draft, k, v));
@@ -130,6 +131,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [isDefaultBg, setIsDefaultBg] = useState(true);
 	const [editedTheme, setEditedTheme] = useState({});
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
+	const setIsDarkMode = useThemeStore((state) => state.setIsDarkMode);
 
 	useEffect(() => {
 		if (isDefaultBg) {
@@ -209,6 +211,41 @@ export default function PageLayout({ version, hasBackendApi }) {
 							}));
 						}
 					}
+
+					// In case of v3 API response
+					if (res.carbonioAdminUiTitle) {
+						document.title = res.carbonioAdminUiTitle;
+					}
+					if (res.carbonioAdminUiFavicon) {
+						const link =
+							document.querySelector("link[rel*='icon']") || document.createElement('link');
+						link.type = 'image/x-icon';
+						link.rel = 'shortcut icon';
+						link.href = res.carbonioAdminUiFavicon;
+						document.getElementsByTagName('head')[0].appendChild(link);
+					}
+					if (res?.carbonioWebUiDarkMode) {
+						if (res?.carbonioAdminUiDarkBackground) {
+							setBg(res.carbonioAdminUiDarkBackground);
+							setIsDefaultBg(false);
+						}
+
+						if (res?.carbonioAdminUiDarkLoginLogo) {
+							_logo.image = res.carbonioAdminUiDarkLoginLogo;
+							_logo.width = '100%';
+						}
+					} else {
+						if (res?.carbonioAdminUiBackground) {
+							setBg(res.carbonioAdminUiBackground);
+							setIsDefaultBg(false);
+						}
+
+						if (res?.carbonioAdminUiLoginLogo) {
+							_logo.image = res.carbonioAdminUiLoginLogo;
+							_logo.width = '100%';
+						}
+					}
+					setIsDarkMode(!!res?.carbonioWebUiDarkMode);
 					setLogo(_logo);
 				}
 			})
@@ -216,8 +253,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 				// It should never happen, If the server doesn't respond this page will not be loaded
 				if (componentIsMounted) setServerError(true);
 			});
-		// }
-		// else {
+		// } else {
 		// 	setLogo({ image: logoCarbonio, width: '221px' });
 		// 	document.title = t('carbonio_authentication', 'Carbonio Authentication');
 		// }
@@ -225,7 +261,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 		return () => {
 			componentIsMounted = false;
 		};
-	}, [destinationUrl, t, domain, version]);
+	}, [destinationUrl, t, domain, version, hasBackendApi, setIsDarkMode]);
 
 	if (serverError) return <ServerNotResponding />;
 
