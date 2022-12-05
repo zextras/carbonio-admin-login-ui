@@ -132,6 +132,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [editedTheme, setEditedTheme] = useState({});
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
 	const setIsDarkMode = useThemeStore((state) => state.setIsDarkMode);
+	const [copyrightBanner, setCopyrightBanner] = useState('');
 
 	useEffect(() => {
 		if (isDefaultBg) {
@@ -245,6 +246,9 @@ export default function PageLayout({ version, hasBackendApi }) {
 							_logo.width = '100%';
 						}
 					}
+					if (res?.carbonioAdminUiDescription) {
+						setCopyrightBanner(res.carbonioAdminUiDescription);
+					}
 					setIsDarkMode(!!res?.carbonioWebUiDarkMode);
 					setLogo(_logo);
 				}
@@ -357,11 +361,17 @@ export default function PageLayout({ version, hasBackendApi }) {
 									</Tooltip>
 								</Padding> */}
 							</Row>
-							<Text size="large" overflow="break-word" color={isDarkTheme ? 'gray6' : 'gray0'}>
-								{t('copy_right', 'Copyright')} &copy;
-								{` ${new Date().getFullYear()} Zextras, `}
-								{t('all_rights_reserved', 'All rights reserved')}
-							</Text>
+							{copyrightBanner ? (
+								<Text size="large" overflow="break-word">
+									{copyrightBanner}
+								</Text>
+							) : (
+								<Text size="large" overflow="break-word" color={isDarkTheme ? 'gray6' : 'gray0'}>
+									{t('copy_right', 'Copyright')} &copy;
+									{` ${new Date().getFullYear()} Zextras, `}
+									{t('all_rights_reserved', 'All rights reserved')}
+								</Text>
+							)}
 						</Container>
 					</FormWrapper>
 				</FormContainer>
