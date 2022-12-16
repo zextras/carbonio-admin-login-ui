@@ -110,11 +110,6 @@ const PhotoCredits = styled(Text)`
 	}
 `;
 
-const SupportedBrowserText = styled(Text)`
-	font-size: 16px;
-	color: ${({ isDarkThmeEnabled }) => (isDarkThmeEnabled ? '#FFFFFF' : '#414141')};
-`;
-
 export default function PageLayout({ version, hasBackendApi }) {
 	const [t] = useTranslation();
 	const screenMode = useScreenMode();
@@ -309,9 +304,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 							height="auto"
 							padding={{ bottom: 'extralarge', top: 'extralarge' }}
 						>
-							<SupportedBrowserText size="large" isDarkThmeEnabled={isDarkTheme}>
-								{t('supported_browsers', 'Supported browsers')}
-							</SupportedBrowserText>
+							<Text>{t('supported_browsers', 'Supported browsers')}</Text>
 							<Row padding={{ top: 'medium', bottom: 'extralarge' }} wrap="nowrap">
 								<Padding all="extrasmall" right="small">
 									<Tooltip label="Chrome">
