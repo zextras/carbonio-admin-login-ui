@@ -362,11 +362,11 @@ export default function PageLayout({ version, hasBackendApi }) {
 								</Padding> */}
 							</Row>
 							{copyrightBanner ? (
-								<Text size="large" overflow="break-word">
+								<Text size="small" overflow="break-word">
 									{copyrightBanner}
 								</Text>
 							) : (
-								<Text size="large" overflow="break-word" color={isDarkTheme ? 'gray6' : 'gray0'}>
+								<Text size="small" overflow="break-word">
 									{t('copy_right', 'Copyright')} &copy;
 									{` ${new Date().getFullYear()} Zextras, `}
 									{t('all_rights_reserved', 'All rights reserved')}
