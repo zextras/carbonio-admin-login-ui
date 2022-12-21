@@ -18,3 +18,15 @@ export const ZIMBRA_PASSWORD_MIN_NUMERIC_CHARS_ATTR_NAME = 'zimbraPasswordMinNum
 export const ZIMBRA_PASSWORD_MIN_AGE_ATTR_NAME = 'zimbraPasswordMinAge';
 export const ZIMBRA_PASSWORD_MAX_AGE_ATTR_NAME = 'zimbraPasswordMaxAge';
 export const ZIMBRA_PASSWORD_ENFORCE_HISTORY_ATTR_NAME = 'zimbraPasswordEnforceHistory';
+export const darkReaderDynamicThemeFixes = {
+	ignoreImageAnalysis: ['.no-dr-invert *'],
+	invert: [],
+	css: `
+		.tox, .force-white-bg, .tox-swatches-menu, .tox .tox-edit-area__iframe {
+			background-color: #fff !important;
+			background: #fff !important;
+		}
+	`,
+	ignoreInlineStyle: ['.tox-menu *'],
+	disableStyleSheetsProxy: false
+};

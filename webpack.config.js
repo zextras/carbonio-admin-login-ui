@@ -35,16 +35,20 @@ module.exports = (env) => {
 				'/carbonioAdmin': {
 					// target: 'https://infra-848931f5.testarea.zextras.com',
 					// target: 'https://localhost:7071/',
-					target: 'https://nbm-s03.demo.zextras.io:6071',
+					target: 'https://np-s04.demo.zextras.io:6071/',
 					secure: true,
 					changeOrigin: true
 				},
 				'/service': {
 					// target: 'https://infra-848931f5.testarea.zextras.com',
 					// target: 'https://localhost:7071/',
-					target: 'https://nbm-s03.demo.zextras.io:7071',
+					target: 'https://np-s04.demo.zextras.io:7071/',
 					secure: true,
 					changeOrigin: true
+				},
+				'/zx': {
+					target: 'https://np-s04.demo.zextras.io:6071/',
+					secure: false
 				}
 			}
 		},

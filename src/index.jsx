@@ -7,8 +7,8 @@
 import React, { Suspense, useEffect, useState, useRef, useMemo } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { SnackbarManager, ThemeProvider } from '@zextras/carbonio-design-system';
-
+import { SnackbarManager } from '@zextras/carbonio-design-system';
+import { ThemeProvider } from './theme-provider/theme-provider';
 import './i18n/i18n.config';
 import './index.css';
 import { getLoginSupported } from './services/login-page-services';
@@ -39,10 +39,10 @@ function App() {
 			getLoginSupported(domain)
 				.then(({ minApiVersion, maxApiVersion }) => {
 					if (!canceled) {
-						let v = maxApiVersion;
-						if (v > MAX_SUPPORTED_VERSION) {
-							v = MAX_SUPPORTED_VERSION;
-						}
+						const v = maxApiVersion;
+						// if (v > MAX_SUPPORTED_VERSION) {
+						// 	v = MAX_SUPPORTED_VERSION;
+						// }
 						setVersions({
 							minApiVersion,
 							maxApiVersion,
