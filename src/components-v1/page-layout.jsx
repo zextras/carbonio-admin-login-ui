@@ -120,7 +120,9 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [destinationUrl, setDestinationUrl] = useState(
 		prepareUrlForForward(urlParams.get('destinationUrl'))
 	);
-	const [domain, setDomain] = useState(urlParams.get('domain') ?? destinationUrl);
+	const [domain, setDomain] = useState(
+		urlParams.get('domain') ?? destinationUrl ?? window?.location?.hostname
+	);
 
 	const [bg, setBg] = useState(backgroundImage);
 	const [isDefaultBg, setIsDefaultBg] = useState(true);
