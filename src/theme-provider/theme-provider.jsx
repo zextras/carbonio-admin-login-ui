@@ -5,11 +5,13 @@
  */
 
 import React, { createContext, FC, useCallback, useEffect, useState } from 'react';
-import { ThemeProvider as UIThemeProvider } from '@zextras/carbonio-design-system';
+import {
+	ThemeProvider as UIThemeProvider,
+	ThemeProviderProps
+} from '@zextras/carbonio-design-system';
 import { enable, disable, auto, setFetchMethod } from 'darkreader';
 import { reduce, set } from 'lodash';
 import { darkReaderDynamicThemeFixes } from '../constants';
-import { useThemeStore } from '../store/theme/store';
 
 setFetchMethod(window.fetch);
 
@@ -90,19 +92,16 @@ export function ThemeProvider({ children }) {
 		}
 	});
 
-	const [darkReaderState, setDarkReaderState] = useState('auto');
-	const isDarkMode = useThemeStore((state) => state.isDarkMode);
-
-	useEffect(() => {
-		setDarkReaderState(isDarkMode ? 'enabled' : 'disabled');
-	}, [isDarkMode]);
+	const [darkReaderState, setDarkReaderState] = useState('disabled');
 
 	useEffect(() => {
 		switch (darkReaderState) {
 			case 'disabled':
+				auto(false);
 				disable();
 				break;
 			case 'enabled':
+				auto(false);
 				enable(
 					{
 						sepia: -50
@@ -121,16 +120,32 @@ export function ThemeProvider({ children }) {
 				break;
 		}
 	}, [darkReaderState]);
-	const aggregatedExtensions = useCallback(
-		(theme) => reduce(extensions, (acc, val) => val(acc), theme),
-		[extensions]
-	);
-	const addExtension = useCallback(
-		(newExtension, id) => {
+
+	const aggregatedExtensions =
+		useCallback <
+		NonNullable <
+		ThemeProviderProps.extension >>
+			((theme) =>
+				reduce(
+					extensions,
+					(themeAccumulator, themeExtensionFn) => {
+						if (themeExtensionFn) {
+							return themeExtensionFn(themeAccumulator);
+						}
+						return themeAccumulator;
+					},
+					theme
+				),
+			[extensions]);
+
+	const addExtension =
+		useCallback <
+		ThemeCallbacksContext.addExtension >
+		((newExtension, id) => {
 			setExtensions((ext) => ({ ...ext, [id]: newExtension }));
 		},
-		[setExtensions]
-	);
+		[]);
+
 	return (
 		<UIThemeProvider extension={aggregatedExtensions}>
 			<ThemeCallbacksContext.Provider value={{ addExtension, setDarkReaderState }}>

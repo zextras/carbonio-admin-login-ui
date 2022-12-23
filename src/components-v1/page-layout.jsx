@@ -4,7 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useState,
+	useContext
+} from 'react';
 import styled, { css } from 'styled-components';
 import {
 	Container,
@@ -35,7 +42,7 @@ import FormSelector from './form-selector';
 import ServerNotResponding from '../components-index/server-not-responding';
 import { ZimbraForm } from '../components-index/zimbra-form';
 import { generateColorSet, prepareUrlForForward } from '../utils';
-import { useThemeStore } from '../store/theme/store';
+import { ThemeCallbacksContext } from '../theme-provider/theme-provider';
 
 function modifyTheme(draft, variant, changes) {
 	forEach(changes, (v, k) => set(draft, k, v));
@@ -128,8 +135,8 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [isDefaultBg, setIsDefaultBg] = useState(true);
 	const [editedTheme, setEditedTheme] = useState({});
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
-	const setIsDarkMode = useThemeStore((state) => state.setIsDarkMode);
 	const [copyrightBanner, setCopyrightBanner] = useState('');
+	const { setDarkReaderState } = useContext(ThemeCallbacksContext);
 
 	useEffect(() => {
 		if (isDefaultBg) {
@@ -246,7 +253,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 					if (res?.carbonioAdminUiDescription) {
 						setCopyrightBanner(res.carbonioAdminUiDescription);
 					}
-					setIsDarkMode(!!res?.carbonioWebUiDarkMode);
+					setDarkReaderState(res?.carbonioWebUiDarkMode ? 'enabled' : 'disabled');
 					setLogo(_logo);
 				}
 			})
@@ -262,7 +269,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 		return () => {
 			componentIsMounted = false;
 		};
-	}, [destinationUrl, t, domain, version, hasBackendApi, setIsDarkMode]);
+	}, [destinationUrl, t, domain, version, hasBackendApi, setDarkReaderState]);
 
 	if (serverError) return <ServerNotResponding />;
 
