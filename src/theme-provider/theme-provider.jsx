@@ -9,11 +9,10 @@ import { ThemeProvider as UIThemeProvider } from '@zextras/carbonio-design-syste
 import { enable, disable, auto, setFetchMethod } from 'darkreader';
 import { reduce, set } from 'lodash';
 import { darkReaderDynamicThemeFixes } from '../constants';
-import { useThemeStore } from '../store/theme/store';
 
 setFetchMethod(window.fetch);
 
-const ThemeCallbacksContext = createContext({
+export const ThemeCallbacksContext = createContext({
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	addExtension: (newExtension, id) => {},
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -90,19 +89,16 @@ export function ThemeProvider({ children }) {
 		}
 	});
 
-	const [darkReaderState, setDarkReaderState] = useState('auto');
-	const isDarkMode = useThemeStore((state) => state.isDarkMode);
-
-	useEffect(() => {
-		setDarkReaderState(isDarkMode ? 'enabled' : 'disabled');
-	}, [isDarkMode]);
+	const [darkReaderState, setDarkReaderState] = useState('disabled');
 
 	useEffect(() => {
 		switch (darkReaderState) {
 			case 'disabled':
+				auto(false);
 				disable();
 				break;
 			case 'enabled':
+				auto(false);
 				enable(
 					{
 						sepia: -50
