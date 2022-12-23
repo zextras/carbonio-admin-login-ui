@@ -5,17 +5,14 @@
  */
 
 import React, { createContext, FC, useCallback, useEffect, useState } from 'react';
-import {
-	ThemeProvider as UIThemeProvider,
-	ThemeProviderProps
-} from '@zextras/carbonio-design-system';
+import { ThemeProvider as UIThemeProvider } from '@zextras/carbonio-design-system';
 import { enable, disable, auto, setFetchMethod } from 'darkreader';
 import { reduce, set } from 'lodash';
 import { darkReaderDynamicThemeFixes } from '../constants';
 
 setFetchMethod(window.fetch);
 
-const ThemeCallbacksContext = createContext({
+export const ThemeCallbacksContext = createContext({
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	addExtension: (newExtension, id) => {},
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -120,31 +117,16 @@ export function ThemeProvider({ children }) {
 				break;
 		}
 	}, [darkReaderState]);
-
-	const aggregatedExtensions =
-		useCallback <
-		ThemeProviderProps.extension >
-		((theme) =>
-			reduce(
-				extensions,
-				(themeAccumulator, themeExtensionFn) => {
-					if (themeExtensionFn) {
-						return themeExtensionFn(themeAccumulator);
-					}
-					return themeAccumulator;
-				},
-				theme
-			),
-		[extensions]);
-
-	const addExtension =
-		useCallback <
-		ThemeCallbacksContext.addExtension >
-		((newExtension, id) => {
+	const aggregatedExtensions = useCallback(
+		(theme) => reduce(extensions, (acc, val) => val(acc), theme),
+		[extensions]
+	);
+	const addExtension = useCallback(
+		(newExtension, id) => {
 			setExtensions((ext) => ({ ...ext, [id]: newExtension }));
 		},
-		[]);
-
+		[setExtensions]
+	);
 	return (
 		<UIThemeProvider extension={aggregatedExtensions}>
 			<ThemeCallbacksContext.Provider value={{ addExtension, setDarkReaderState }}>
