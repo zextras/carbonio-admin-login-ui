@@ -123,20 +123,19 @@ export function ThemeProvider({ children }) {
 
 	const aggregatedExtensions =
 		useCallback <
-		NonNullable <
-		ThemeProviderProps.extension >>
-			((theme) =>
-				reduce(
-					extensions,
-					(themeAccumulator, themeExtensionFn) => {
-						if (themeExtensionFn) {
-							return themeExtensionFn(themeAccumulator);
-						}
-						return themeAccumulator;
-					},
-					theme
-				),
-			[extensions]);
+		ThemeProviderProps.extension >
+		((theme) =>
+			reduce(
+				extensions,
+				(themeAccumulator, themeExtensionFn) => {
+					if (themeExtensionFn) {
+						return themeExtensionFn(themeAccumulator);
+					}
+					return themeAccumulator;
+				},
+				theme
+			),
+		[extensions]);
 
 	const addExtension =
 		useCallback <
