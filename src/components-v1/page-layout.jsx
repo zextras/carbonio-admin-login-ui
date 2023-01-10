@@ -150,121 +150,121 @@ export default function PageLayout({ version, hasBackendApi }) {
 
 	useLayoutEffect(() => {
 		let componentIsMounted = true;
-		// if (hasBackendApi) {
-		getLoginConfig(version, domain, domain)
-			.then((res) => {
-				if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.publicUrl));
-				if (!domain) setDomain(res.zimbraDomainName);
+		if (hasBackendApi) {
+			getLoginConfig(version, domain, domain)
+				.then((res) => {
+					if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.publicUrl));
+					if (!domain) setDomain(res.zimbraDomainName);
 
-				const _logo = {};
+					const _logo = {};
 
-				if (componentIsMounted) {
-					if (res.loginPageBackgroundImage) {
-						setBg(res.loginPageBackgroundImage);
-						setIsDefaultBg(false);
-					}
-					if (res.isDarkThemeEnable) {
-						setIsDarkTheme(true);
-						setIsDefaultBg(false);
-					}
-
-					if (res.loginPageLogo) {
-						_logo.image = res.loginPageLogo;
-						_logo.width = '100%';
-					} else {
-						_logo.image = logoCarbonio;
-						_logo.width = '221px';
-					}
-
-					if (res.loginPageSkinLogoUrl) {
-						_logo.url = res.loginPageSkinLogoUrl;
-					} else {
-						_logo.url = '';
-					}
-
-					if (res.loginPageTitle) {
-						document.title = res.loginPageTitle;
-					} else {
-						document.title = t('carbonio_authentication', 'Carbonio Authentication');
-					}
-
-					if (res.loginPageFavicon) {
-						const link =
-							document.querySelector("link[rel*='icon']") || document.createElement('link');
-						link.type = 'image/x-icon';
-						link.rel = 'shortcut icon';
-						link.href = res.loginPageFavicon;
-						document.getElementsByTagName('head')[0].appendChild(link);
-					}
-
-					if (res.loginPageColorSet) {
-						const colorSet = res.loginPageColorSet;
-						if (colorSet.primary) {
-							setEditedTheme((et) => ({
-								...et,
-								'palette.primary': generateColorSet({
-									regular: `#${colorSet.primary}`
-								})
-							}));
+					if (componentIsMounted) {
+						if (res.loginPageBackgroundImage) {
+							setBg(res.loginPageBackgroundImage);
+							setIsDefaultBg(false);
 						}
-						if (colorSet.secondary) {
-							setEditedTheme((et) => ({
-								...et,
-								'palette.secondary': generateColorSet({
-									regular: `#${colorSet.secondary}`
-								})
-							}));
-						}
-					}
-
-					// In case of v3 API response
-					if (res.carbonioAdminUiTitle) {
-						document.title = res.carbonioAdminUiTitle;
-					}
-					if (res.carbonioAdminUiFavicon) {
-						const link =
-							document.querySelector("link[rel*='icon']") || document.createElement('link');
-						link.type = 'image/x-icon';
-						link.rel = 'shortcut icon';
-						link.href = res.carbonioAdminUiFavicon;
-						document.getElementsByTagName('head')[0].appendChild(link);
-					}
-					if (res?.carbonioWebUiDarkMode) {
-						if (res?.carbonioAdminUiDarkBackground) {
-							setBg(res.carbonioAdminUiDarkBackground);
+						if (res.isDarkThemeEnable) {
+							setIsDarkTheme(true);
 							setIsDefaultBg(false);
 						}
 
-						if (res?.carbonioAdminUiDarkLoginLogo) {
-							_logo.image = res.carbonioAdminUiDarkLoginLogo;
+						if (res.loginPageLogo) {
+							_logo.image = res.loginPageLogo;
 							_logo.width = '100%';
-						}
-					} else {
-						if (res?.carbonioAdminUiBackground) {
-							setBg(res.carbonioAdminUiBackground);
-							setIsDefaultBg(false);
+						} else {
+							_logo.image = logoCarbonio;
+							_logo.width = '221px';
 						}
 
-						if (res?.carbonioAdminUiLoginLogo) {
-							_logo.image = res.carbonioAdminUiLoginLogo;
-							_logo.width = '100%';
+						if (res.loginPageSkinLogoUrl) {
+							_logo.url = res.loginPageSkinLogoUrl;
+						} else {
+							_logo.url = '';
 						}
+
+						if (res.loginPageTitle) {
+							document.title = res.loginPageTitle;
+						} else {
+							document.title = t('carbonio_authentication', 'Carbonio Authentication');
+						}
+
+						if (res.loginPageFavicon) {
+							const link =
+								document.querySelector("link[rel*='icon']") || document.createElement('link');
+							link.type = 'image/x-icon';
+							link.rel = 'shortcut icon';
+							link.href = res.loginPageFavicon;
+							document.getElementsByTagName('head')[0].appendChild(link);
+						}
+
+						if (res.loginPageColorSet) {
+							const colorSet = res.loginPageColorSet;
+							if (colorSet.primary) {
+								setEditedTheme((et) => ({
+									...et,
+									'palette.primary': generateColorSet({
+										regular: `#${colorSet.primary}`
+									})
+								}));
+							}
+							if (colorSet.secondary) {
+								setEditedTheme((et) => ({
+									...et,
+									'palette.secondary': generateColorSet({
+										regular: `#${colorSet.secondary}`
+									})
+								}));
+							}
+						}
+
+						// In case of v3 API response
+						if (res.carbonioAdminUiTitle) {
+							document.title = res.carbonioAdminUiTitle;
+						}
+						if (res.carbonioAdminUiFavicon) {
+							const link =
+								document.querySelector("link[rel*='icon']") || document.createElement('link');
+							link.type = 'image/x-icon';
+							link.rel = 'shortcut icon';
+							link.href = res.carbonioAdminUiFavicon;
+							document.getElementsByTagName('head')[0].appendChild(link);
+						}
+						if (res?.carbonioWebUiDarkMode) {
+							if (res?.carbonioAdminUiDarkBackground) {
+								setBg(res.carbonioAdminUiDarkBackground);
+								setIsDefaultBg(false);
+							}
+
+							if (res?.carbonioAdminUiDarkLoginLogo) {
+								_logo.image = res.carbonioAdminUiDarkLoginLogo;
+								_logo.width = '100%';
+							}
+						} else {
+							if (res?.carbonioAdminUiBackground) {
+								setBg(res.carbonioAdminUiBackground);
+								setIsDefaultBg(false);
+							}
+
+							if (res?.carbonioAdminUiLoginLogo) {
+								_logo.image = res.carbonioAdminUiLoginLogo;
+								_logo.width = '100%';
+							}
+						}
+						if (res?.carbonioAdminUiDescription) {
+							setCopyrightBanner(res.carbonioAdminUiDescription);
+						}
+						setDarkReaderState(res?.carbonioWebUiDarkMode ? 'enabled' : 'disabled');
+						setLogo(_logo);
 					}
-					if (res?.carbonioAdminUiDescription) {
-						setCopyrightBanner(res.carbonioAdminUiDescription);
-					}
-					setDarkReaderState(res?.carbonioWebUiDarkMode ? 'enabled' : 'disabled');
-					setLogo(_logo);
-				}
-			})
-			.catch(() => {
-				// It should never happen, If the server doesn't respond this page will not be loaded
-				if (componentIsMounted) setServerError(true);
-			});
-		// } else {
-		// 	setLogo({ image: logoCarbonio, width: '221px' });
-		// 	document.title = t('carbonio_authentication', 'Carbonio Authentication');
-		// }
+				})
+				.catch(() => {
+					// It should never happen, If the server doesn't respond this page will not be loaded
+					if (componentIsMounted) setServerError(true);
+				});
+		} else {
+			setLogo({ image: logoCarbonio, width: '221px' });
+			document.title = t('carbonio_authentication', 'Carbonio Authentication');
+		}
 
 		return () => {
 			componentIsMounted = false;
