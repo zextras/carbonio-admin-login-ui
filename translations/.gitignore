@@ -1,7 +1,0 @@
-# Ignore everything...
-*
-
-# ...but not these files:
-!.gitignore
-!*.json
-!README.md
