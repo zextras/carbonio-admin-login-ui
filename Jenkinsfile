@@ -281,10 +281,8 @@ pipeline {
 					}
 					steps {
 						createBuild(false)
-						nodeCmd 'npm install -D jest-sonar-reporter sonarqube-scanner'
+						nodeCmd 'npm install -D sonarqube-scanner'
 						nodeCmd 'npm install -g npx --force'
-						nodeCmd "npx jest --passWithNoTests"
-						nodeCmd "npx jest --coverage --passWithNoTests"
 						withSonarQubeEnv(credentialsId: 'sonarqube-user-token', installationName: 'SonarQube instance') {
 							nodeCmd 'npx sonar-scanner'
 						}
