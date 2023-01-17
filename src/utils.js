@@ -78,7 +78,7 @@ export function prepareUrlForForward(oUrl) {
 		'soo',
 		'destinationUrl'
 	];
-	blackListedQueryStrings.map(
+	blackListedQueryStrings.forEach(
 		(queryString) => urlParams.has(queryString) && urlParams.delete(queryString)
 	);
 	urlParams.forEach((value, key) => {
