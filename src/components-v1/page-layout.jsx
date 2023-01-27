@@ -254,7 +254,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 						if (res?.carbonioAdminUiDescription) {
 							setCopyrightBanner(res.carbonioAdminUiDescription);
 						}
-						_logo.url = res?.carbonioLogoUrl ? res.carbonioLogoUrl : CARBONIO_LOGO_URL;
+						_logo.url = res?.carbonioLogoURL ? res.carbonioLogoURL : CARBONIO_LOGO_URL;
 						setDarkReaderState(res?.carbonioWebUiDarkMode ? 'enabled' : 'disabled');
 						setLogo(_logo);
 					}
