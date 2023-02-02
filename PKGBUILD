@@ -10,7 +10,7 @@ targets=(
   "ubuntu"
 )
 pkgname="carbonio-admin-login-ui"
-pkgver="0.9.3"
+pkgver="0.9.4"
 pkgrel="1"
 pkgdesc="Carbonio admin login page assets"
 pkgdesclong=(
