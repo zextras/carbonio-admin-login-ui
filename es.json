@@ -21,5 +21,15 @@
     "changePassword_oldPassword": "Contraseña antigua",
     "changePassword_error_minLength": "La longitud mínima es de {{num }} caracteres",
     "changePassword_error_maxLength": "La longitud máxima es de {{num}} caracteres",
-    "changePassword_confirmNewPassword": "Confirme la nueva contraseña"
+    "changePassword_confirmNewPassword": "Confirme la nueva contraseña",
+    "trust_device_and_ip": "Confiar en este dispositivo y dirección IP",
+    "changePassword_title": "Crear una nueva contraseña",
+    "changePassword_error_passwordRecentlyUsed": "Contraseña utilizada recientemente",
+    "changePassword_error_minUppercaseChars": "El número mínimo de caracteres en mayúscula es {{num}}",
+    "changePassword_error_minPunctuationChars": "El número mínimo de signos de puntuación es {{num}}",
+    "changePassword_error_minNumericChars": "El número mínimo de caracteres numéricos es {{num}}",
+    "changePassword_error_minLowerCaseChars": "El número mínimo de caracteres en minúscula es {{num}}",
+    "changePassword_error_confirmPassword": "Las contraseñas no coinciden",
+    "changePassword_confirm_label": "Cambiar la contraseña y luego iniciar sesión",
+    "carbonio_authentication": "Autenticación de Carbonio"
 }

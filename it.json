@@ -1,5 +1,4 @@
 {
-    "currently_offline_message": "Scollegato, per favore controlla la tua connessione",
     "server_not_responding": "Il server non risponde. Contatta l'amministratore del server",
     "unsupported_version": "Il server ha inviato una risposta non valida. Contatta l'amministratore del server",
     "type_otp": "Digita qui la One-Time-Password",
@@ -26,5 +25,11 @@
     "carbonio_authentication": "Autenticazione Carbonio",
     "copy_right": "Copyright",
     "changePassword_newPassword": "Nuova password",
-    "trust_device_and_ip": "Considera questo dispositivo e IP come affidabili"
+    "trust_device_and_ip": "Considera questo dispositivo e IP come affidabili",
+    "changePassword_error_minUppercaseChars": "Il numero minimo di caratteri maiuscoli è {{num}}",
+    "changePassword_error_minPunctuationChars": "Il numero minimo di caratteri di punteggiatura è {{num}}",
+    "changePassword_error_minNumericChars": "Il numero minimo di caratteri numerici è {{num}}",
+    "changePassword_error_minLowerCaseChars": "Il numero minimo di caratteri minuscoli è {{num}}",
+    "changePassword_error_confirmPassword": "Le password non sono uguali",
+    "changePassword_confirm_label": "Modifica la password e accedi"
 }

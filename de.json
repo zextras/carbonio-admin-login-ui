@@ -21,5 +21,6 @@
     "changePassword_oldPassword": "Altes Passwort",
     "changePassword_error_minLength": "Die Mindestlänge beträgt {{num}} Zeichen",
     "changePassword_error_maxLength": "Die maximale Länge ist {{num}} Zeichen",
-    "changePassword_confirmNewPassword": "Neues passwort bestätigen"
+    "changePassword_confirmNewPassword": "Neues passwort bestätigen",
+    "changePassword_error_confirmPassword": "Passwörter stimmen nicht überein"
 }
