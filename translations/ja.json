@@ -1,5 +1,4 @@
 {
-    "Help": "ヘルプ",
     "username": "ユーザー名",
     "password": "パスワード",
     "login": "ログイン",
@@ -18,5 +17,19 @@
     "all_rights_reserved": "無断転載を禁じます",
     "cant_login": "今はログインできません",
     "copy_right": "著作権",
-    "changePassword_newPassword": "新しいパスワード"
+    "changePassword_newPassword": "新しいパスワード",
+    "trust_device_and_ip": "このデバイスとIPアドレスを信頼する",
+    "changePassword_title": "新しいパスワードを作成する",
+    "changePassword_error_passwordRecentlyUsed": "最近使用したパスワード",
+    "changePassword_error_minPunctuationChars": "句読点は {{num}}文字以下でなければなりません",
+    "changePassword_error_minNumericChars": "数字は{{num}}文字以下でなければなりません",
+    "changePassword_error_minLowerCaseChars": "小文字は{{num}}文字以下でなければなりません",
+    "changePassword_confirm_label": "パスワードを変更してログインしてください",
+    "carbonio_authentication": "Carbonio認証",
+    "changePassword_oldPassword": "古いパスワード",
+    "changePassword_error_minUppercaseChars": "大文字は最低{{num}}文字なければなりません",
+    "changePassword_error_minLength": "最低{{num}}文字です",
+    "changePassword_error_maxLength": "最大{{num}}文字です",
+    "changePassword_error_confirmPassword": "パスワードが一致していません",
+    "changePassword_confirmNewPassword": "新しいパスワードを確認する"
 }
