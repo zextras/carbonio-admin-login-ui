@@ -1,5 +1,4 @@
 {
-    "Help": "हेल्प करें",
     "username": "यूज़रनेम",
     "password": "पासवर्ड",
     "login": "लॉगिन करें",
@@ -18,5 +17,19 @@
     "cant_login": "अभी लॉगिन नहीं कर सकते",
     "credentials_not_valid": "लॉगिन पासवर्ड मान्य नहीं है, जांच करें और दोबारा कोशिश करें",
     "copy_right": "कॉपीराइट",
-    "changePassword_newPassword": "नया पासवर्ड"
+    "changePassword_newPassword": "नया पासवर्ड",
+    "trust_device_and_ip": "इस डिवाइस और आईपी एड्रेस पर भरोसा करें",
+    "changePassword_title": "कोई नया पासवर्ड बनाएँ",
+    "changePassword_error_passwordRecentlyUsed": "हाल ही में इस्तेमाल किया गया पासवर्ड",
+    "changePassword_error_minUppercaseChars": "अपरकेस वर्णों की न्यूनतम संख्या {{num}} है",
+    "changePassword_error_minPunctuationChars": "विराम चिन्ह या पंक्चुएशन वर्णों की न्यूनतम संख्या {{num}} है",
+    "changePassword_error_minNumericChars": "संख्यात्मक वर्णों की न्यूनतम संख्या {{num}} है",
+    "changePassword_error_minLowerCaseChars": "लोवरकेस वर्णों की न्यूनतम संख्या {{num}} है",
+    "changePassword_confirm_label": "पासवर्ड बदलें और फिर लॉगिन करें",
+    "carbonio_authentication": "Carbonio ऑथेन्टिकेशन",
+    "changePassword_oldPassword": "पुराना पासवर्ड",
+    "changePassword_error_minLength": "अधिकतम लंबाई {{num}} कैरक्टर है",
+    "changePassword_error_maxLength": "अधिकतम लंबाई {{num}} कैरक्टर है",
+    "changePassword_error_confirmPassword": "पासवर्ड मेल नहीं खा रहे",
+    "changePassword_confirmNewPassword": "नए पासवर्ड को कन्फ़र्म करें"
 }

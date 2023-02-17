@@ -22,14 +22,14 @@
     "changePassword_oldPassword": "Старый пароль",
     "changePassword_newPassword": "Новый пароль",
     "changePassword_error_passwordRecentlyUsed": "Пароль недавно использовался",
-    "changePassword_error_minNumericChars": "Требуется как минимум {{num}} числовых символов",
-    "changePassword_error_minLowerCaseChars": "Требуется как минимум {{num}} символов нижнего регистра",
+    "changePassword_error_minNumericChars": "Минимальное количество цифр: {{num}}",
+    "changePassword_error_minLowerCaseChars": "Минимальное количество символов нижнего регистра: {{num}}.",
     "changePassword_error_minLength": "Минимальная длина: {{num}} символов",
     "changePassword_error_maxLength": "Максимальная длина: {{num}} символов",
     "changePassword_confirm_label": "Изменить пароль и логин",
     "changePassword_confirmNewPassword": "Подтвердить новый пароль",
     "carbonio_authentication": "Аутентификация Carbonio",
-    "changePassword_error_confirmPassword": "Подтверждение пароля не прошло",
-    "changePassword_error_minUppercaseChars": "Требуется как минимум {{num}} символов верхнего регистра",
-    "changePassword_error_minPunctuationChars": "Требуется как минимум {{num}} знаков пунктуации"
+    "changePassword_error_confirmPassword": "Пароли не совпадают",
+    "changePassword_error_minUppercaseChars": "Минимальное количество символов верхнего регистра: {{num}}",
+    "changePassword_error_minPunctuationChars": "Минимальное количество знаков пунктуации: {{num}}."
 }
