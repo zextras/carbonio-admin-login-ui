@@ -44,17 +44,8 @@ import { ZimbraForm } from '../components-index/zimbra-form';
 import { generateColorSet, prepareUrlForForward } from '../utils';
 import { ThemeCallbacksContext } from '../theme-provider/theme-provider';
 import { CARBONIO_LOGO_URL } from '../constants';
-
-function modifyTheme(draft, variant, changes) {
-	forEach(changes, (v, k) => set(draft, k, v));
-}
-
-function ModifiedTheme({ changes }) {
-	const proxyFn = useCallback((draft, variant) => modifyTheme(draft, variant, changes), [changes]);
-	// useSetCustomTheme(proxyFn);
-
-	return null;
-}
+import { useLoginConfigStore } from '../store/login/store';
+import { useDarkReaderResultValue } from '../dark-mode/use-dark-reader-result-value';
 
 const LoginContainer = styled(Container)`
 	padding: 0 100px;
@@ -117,6 +108,17 @@ const PhotoCredits = styled(Text)`
 		display: none;
 	}
 `;
+
+function DarkReaderListener() {
+	const { setDarkReaderState } = useContext(ThemeCallbacksContext);
+	const darkReaderResultValue = useDarkReaderResultValue();
+	useEffect(() => {
+		if (darkReaderResultValue) {
+			setDarkReaderState(darkReaderResultValue);
+		}
+	}, [darkReaderResultValue, setDarkReaderState]);
+	return null;
+}
 
 export default function PageLayout({ version, hasBackendApi }) {
 	const [t] = useTranslation();
@@ -218,45 +220,47 @@ export default function PageLayout({ version, hasBackendApi }) {
 							}
 						}
 
-						// In case of v3 API response
-						if (res.carbonioAdminUiTitle) {
-							document.title = res.carbonioAdminUiTitle;
-						}
-						if (res.carbonioAdminUiFavicon) {
-							const link =
-								document.querySelector("link[rel*='icon']") || document.createElement('link');
-							link.type = 'image/x-icon';
-							link.rel = 'shortcut icon';
-							link.href = res.carbonioAdminUiFavicon;
-							document.getElementsByTagName('head')[0].appendChild(link);
-						}
-						if (res?.carbonioWebUiDarkMode) {
-							if (res?.carbonioAdminUiDarkBackground) {
-								setBg(res.carbonioAdminUiDarkBackground);
-								setIsDefaultBg(false);
+						if (version === 3) {
+							useLoginConfigStore.setState(res);
+							// In case of v3 API response
+							if (res.carbonioAdminUiTitle) {
+								document.title = res.carbonioAdminUiTitle;
 							}
+							if (res.carbonioAdminUiFavicon) {
+								const link =
+									document.querySelector("link[rel*='icon']") || document.createElement('link');
+								link.type = 'image/x-icon';
+								link.rel = 'shortcut icon';
+								link.href = res.carbonioAdminUiFavicon;
+								document.getElementsByTagName('head')[0].appendChild(link);
+							}
+							if (res?.carbonioWebUiDarkMode) {
+								if (res?.carbonioAdminUiDarkBackground) {
+									setBg(res.carbonioAdminUiDarkBackground);
+									setIsDefaultBg(false);
+								}
 
-							if (res?.carbonioAdminUiDarkLoginLogo) {
-								_logo.image = res.carbonioAdminUiDarkLoginLogo;
-								_logo.width = '100%';
-							}
-						} else {
-							if (res?.carbonioAdminUiBackground) {
-								setBg(res.carbonioAdminUiBackground);
-								setIsDefaultBg(false);
-							}
+								if (res?.carbonioAdminUiDarkLoginLogo) {
+									_logo.image = res.carbonioAdminUiDarkLoginLogo;
+									_logo.width = '100%';
+								}
+							} else {
+								if (res?.carbonioAdminUiBackground) {
+									setBg(res.carbonioAdminUiBackground);
+									setIsDefaultBg(false);
+								}
 
-							if (res?.carbonioAdminUiLoginLogo) {
-								_logo.image = res.carbonioAdminUiLoginLogo;
-								_logo.width = '100%';
+								if (res?.carbonioAdminUiLoginLogo) {
+									_logo.image = res.carbonioAdminUiLoginLogo;
+									_logo.width = '100%';
+								}
 							}
+							if (res?.carbonioAdminUiDescription) {
+								setCopyrightBanner(res.carbonioAdminUiDescription);
+							}
+							_logo.url = res?.carbonioLogoURL ? res.carbonioLogoURL : CARBONIO_LOGO_URL;
+							setLogo(_logo);
 						}
-						if (res?.carbonioAdminUiDescription) {
-							setCopyrightBanner(res.carbonioAdminUiDescription);
-						}
-						_logo.url = res?.carbonioLogoURL ? res.carbonioLogoURL : CARBONIO_LOGO_URL;
-						setDarkReaderState(res?.carbonioWebUiDarkMode ? 'enabled' : 'disabled');
-						setLogo(_logo);
 					}
 				})
 				.catch(() => {
@@ -271,7 +275,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 		return () => {
 			componentIsMounted = false;
 		};
-	}, [destinationUrl, t, domain, version, hasBackendApi, setDarkReaderState]);
+	}, [destinationUrl, t, domain, version, hasBackendApi]);
 
 	if (serverError) return <ServerNotResponding />;
 
@@ -293,7 +297,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 
 		return (
 			<LoginContainer screenMode={screenMode} isDefaultBg={isDefaultBg} backgroundImage={bg}>
-				<ModifiedTheme changes={editedTheme} />
+				<DarkReaderListener />
 				<FormContainer>
 					<FormWrapper
 						mainAlignment="space-between"
