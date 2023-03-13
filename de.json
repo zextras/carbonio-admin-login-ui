@@ -22,5 +22,14 @@
     "changePassword_error_minLength": "Die Mindestlänge beträgt {{num}} Zeichen",
     "changePassword_error_maxLength": "Die maximale Länge ist {{num}} Zeichen",
     "changePassword_confirmNewPassword": "Neues passwort bestätigen",
-    "changePassword_error_confirmPassword": "Passwörter stimmen nicht überein"
+    "changePassword_error_confirmPassword": "Passwörter stimmen nicht überein",
+    "carbonio_authentication": "Carbonio Authentifizierung",
+    "changePassword_confirm_label": "Passwort ändern und dann anmelden",
+    "changePassword_error_minLowerCaseChars": "Die Mindestanzahl von Kleinbuchstaben ist {{num}}",
+    "changePassword_error_minPunctuationChars": "Die Mindestanzahl der Satzzeichen ist {{num}}",
+    "changePassword_error_minUppercaseChars": "Die Mindestanzahl von Großbuchstaben ist {{num}}",
+    "changePassword_error_passwordRecentlyUsed": "Kürzlich verwendetes Passwort",
+    "changePassword_title": "Neue Kennwort erstellen",
+    "trust_device_and_ip": "Diesem Gerät und dieser IP-Adresse vertrauen",
+    "changePassword_error_minNumericChars": "Die Mindestanzahl der Zahlenzeichen ist {{num}}"
 }
