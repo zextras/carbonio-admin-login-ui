@@ -11,7 +11,7 @@ targets=(
 )
 pkgname="carbonio-admin-login-ui"
 pkgver="0.9.5"
-pkgrel="1"
+pkgrel="2"
 pkgdesc="Carbonio admin login page assets"
 pkgdesclong=(
   "Carbonio admin login page assets"
