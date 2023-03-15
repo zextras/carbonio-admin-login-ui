@@ -13,7 +13,6 @@ import './i18n/i18n.config';
 import './index.css';
 import { getLoginSupported } from './services/login-page-services';
 import NotSupportedVersion from './components-index/not-supported-version';
-import { MAX_SUPPORTED_VERSION } from './constants';
 import { prepareUrlForForward } from './utils';
 
 const PageLayoutV1 = React.lazy(() => import('./components-v1/page-layout'));
@@ -28,12 +27,6 @@ function App() {
 	useEffect(() => {
 		let canceled = false;
 		const domain = urlParams.get('domain') ?? urlParams.get('destinationUrl');
-
-		fetch('/zx/auth/v2/myself').then((res) => {
-			if (res.ok && destinationUrl) {
-				window.location.assign(destinationUrl);
-			}
-		});
 
 		if (hasBackendApi) {
 			getLoginSupported(domain)
