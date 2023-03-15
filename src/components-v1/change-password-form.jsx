@@ -299,7 +299,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 				<Button
 					onClick={submitChangePasswordCb}
 					label={t('changePassword_confirm_label', 'Change password and login')}
-					size="fill"
+					width="fill"
 					loading={isLoading}
 					disabled={!newPassword || confirmNewPassword !== newPassword || errorLabelNewPassword}
 				/>

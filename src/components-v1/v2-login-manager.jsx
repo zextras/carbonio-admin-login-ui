@@ -166,7 +166,7 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 							onClick={submitOtpCb}
 							disabled={disableInputs}
 							label={t('login', 'Login')}
-							size="fill"
+							width="fill"
 							loading={loadingOtp}
 						/>
 					</Row>
