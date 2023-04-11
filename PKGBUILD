@@ -30,7 +30,7 @@ package() {
 }
 
 postinst() {
-  chown root:root -R "${pkgdir}/opt/zextras/admin/login"
-  chmod 755 -R "${pkgdir}/opt/zextras/admin/login"
-  chomd 644 "${pkgdir}/opt/zextras/admin/login/assets/*"
+  chown root:root -R /opt/zextras/admin/login
+  chmod 755 -R /opt/zextras/admin/login
+  chmod 644 /opt/zextras/admin/login/assets/*
 }
