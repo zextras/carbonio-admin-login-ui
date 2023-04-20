@@ -46,6 +46,6 @@ git subtree pull --squash --prefix translations/ git@bitbucket.org:zextras/com_z
 ```
 
 [1]: https://bitbucket.org/zextras/com_zextras_iris_login`
-[2]: https://translate.dev.zextras.com/projects/iris-mail/com_zextras_iris_login/
+[2]: https://translate.zextras.tools/projects/iris-mail/com_zextras_iris_login/
 [3]: https://www.i18next.com/translation-function/essentials#passing-a-default-value
 [4]: https://github.com/gilbsgilbs/babel-plugin-i18next-extract
