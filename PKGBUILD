@@ -32,4 +32,5 @@ package() {
 postinst() {
   chown root:root -R /opt/zextras/admin/login
   chmod 755 -R /opt/zextras/admin/login
+  chmod 644 /opt/zextras/admin/login/assets/*
 }
