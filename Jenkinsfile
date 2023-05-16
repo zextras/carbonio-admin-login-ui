@@ -156,11 +156,11 @@ def createBuild(sign) {
 	nodeCmd "npm install"
 	nodeCmd "NODE_ENV='production' npm run build:zimlet"
 	if (sign) {
-		dir("artifact-deployer") {
+		dir("jenkins-artifact-deployer") {
 			git(
 				branch: "master",
-				credentialsId: "tarsier_bot-ssh-key",
-				url: "git@bitbucket.org:zextras/artifact-deployer.git"
+				credentialsId: "jenkins-integration-with-github-account",
+				url: "git@github.com:zextras/jenkins-artifact-deployer.git"
 			)
 			sh(script: """#!/bin/bash
 				./sign-zextras-zip ../pkg/com_zextras_zapp_login.zip
