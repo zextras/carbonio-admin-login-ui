@@ -305,10 +305,15 @@ pipeline {
 			}
 			steps {
 				createBuild(false)
+				dependencyCheck additionalArguments: '''
+				-o "./"
+				-s "./"
+				-f "HTML"
+				--prettyPrint''', odcInstallation: 'dependency-check'
 				nodeCmd 'npm install -D sonarqube-scanner'
 				nodeCmd 'npm install -g npx --force'
 				withSonarQubeEnv(credentialsId: 'sonarqube-user-token', installationName: 'SonarQube instance') {
-					nodeCmd 'npx sonar-scanner'
+					nodeCmd 'npx sonar-scanner -Dsonar.dependencyCheck.htmlReportPath=dependency-check-report.html -Dsonar.dependencyCheck.jsonReportPath=dependency-check-report.json'
 				}
 			}
 		}
