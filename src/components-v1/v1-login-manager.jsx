@@ -7,7 +7,7 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Row, Snackbar } from '@zextras/carbonio-design-system';
-import { OfflineModal } from './modals';
+import OfflineModal from './modals';
 import Spinner from './spinner';
 import CredentialsForm from './credentials-form';
 import { postV1Login } from '../services/v1-service';
