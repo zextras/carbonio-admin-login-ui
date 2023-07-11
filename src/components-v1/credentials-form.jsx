@@ -101,7 +101,7 @@ export default function CredentialsForm({
 	}, []);
 
 	return (
-		<form onSubmit={submitUserPassword} style={{ width: '100%' }}>
+		<form onSubmit={submitUserPassword} style={{ width: '100%' }} data-testid="credentials-form">
 			<input type="submit" style={{ display: 'none' }} />
 			<Row padding={{ bottom: 'large' }}>
 				<Input

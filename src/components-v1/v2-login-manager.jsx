@@ -21,7 +21,7 @@ import { saveCredentials } from '../utils';
 import ChangePasswordForm from './change-password-form';
 import CredentialsForm from './credentials-form';
 
-import { OfflineModal } from './modals';
+import OfflineModal from './modals';
 import Spinner from './spinner';
 
 const formState = {
