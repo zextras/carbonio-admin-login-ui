@@ -23,6 +23,7 @@ export default function ServerNotResponding() {
 			onClose={onCloseCbk}
 			autoHideTimeout={10000}
 			type="error"
+			data-testid="server-not-responding"
 		/>
 	);
 }
