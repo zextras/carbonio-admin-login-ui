@@ -69,6 +69,7 @@ export default function CredentialsForm({
 			return (
 				<Button
 					type="outlined"
+					data-testid="loginSaml"
 					label={t('login_saml', 'Login SAML')}
 					color="primary"
 					disabled={disableInputs}
@@ -88,21 +89,25 @@ export default function CredentialsForm({
 	}, [configuration, disableInputs, samlButtonCbk, t, isDarkTheme]);
 
 	useEffect(() => {
-		checkClassicUi().then((res) => {
-			setHasClassicUi(res.hasClassic);
-			if (!res.hasClassic) {
-				setCookie('UI', 'iris');
-			}
-		});
+		checkClassicUi()
+			.then((res) => {
+				setHasClassicUi(res.hasClassic);
+				if (!res.hasClassic) {
+					setCookie('UI', 'iris');
+				}
+			})
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			.catch(() => {});
 	}, []);
 
 	return (
-		<form onSubmit={submitUserPassword} style={{ width: '100%' }}>
+		<form onSubmit={submitUserPassword} style={{ width: '100%' }} data-testid="credentials-form">
 			<input type="submit" style={{ display: 'none' }} />
 			<Row padding={{ bottom: 'large' }}>
 				<Input
 					defaultValue={username}
 					disabled={disableInputs}
+					data-testid="username"
 					onChange={(e) => setUsername(e.target.value)}
 					hasError={!!authError}
 					autocomplete="username"
@@ -114,6 +119,7 @@ export default function CredentialsForm({
 				<PasswordInput
 					defaultValue={password}
 					disabled={disableInputs}
+					data-testid="password"
 					onChange={(e) => setPassword(e.target.value)}
 					hasError={!!authError}
 					autocomplete="password"
@@ -144,15 +150,16 @@ export default function CredentialsForm({
 				<Button
 					height={36}
 					loading={loading}
+					data-testid="login"
 					onClick={submitUserPassword}
 					disabled={disableInputs}
 					label={t('login', 'Login')}
 					width="fill"
 				/>
 			</Row>
-			{/* <Row mainAlignment="flex-end" padding={{ bottom: 'extralarge' }}>
+			<Row mainAlignment="flex-end" padding={{ bottom: 'extralarge' }}>
 				{samlButton}
-			</Row> */}
+			</Row>
 		</form>
 	);
 }

@@ -23,6 +23,7 @@ export default function NotSupportedVersion() {
 			onClose={onCloseCbk}
 			autoHideTimeout={10000}
 			type="error"
+			data-testid="not-supported-version"
 		/>
 	);
 }
