@@ -259,8 +259,8 @@ export default function PageLayout({ version, hasBackendApi }) {
 								setCopyrightBanner(res.carbonioAdminUiDescription);
 							}
 							_logo.url = res?.carbonioLogoURL ? res.carbonioLogoURL : CARBONIO_LOGO_URL;
-							setLogo(_logo);
 						}
+						setLogo(_logo);
 					}
 				})
 				.catch(() => {
