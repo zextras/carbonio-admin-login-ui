@@ -16,7 +16,9 @@ import {
 	ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME,
 	ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
 	INVALID_PASSWORD_ERR_CODE,
-	PASSWORD_RECENTLY_USED_ERR_CODE
+	PASSWORD_RECENTLY_USED_ERR_CODE,
+	CONTENT_TYPE,
+	CONTENT_TYPE_JSON
 } from '../constants';
 import { saveCredentials, setCookie } from '../utils';
 
@@ -94,7 +96,9 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			if (newPassword && confirmNewPassword === newPassword && !errorLabelNewPassword) {
 				submitChangePassword(username, oldPassword, newPassword)
 					.then(async (res) => {
-						const payload = await res.json();
+						const payload = res?.headers.get(CONTENT_TYPE).indexOf(CONTENT_TYPE_JSON)
+							? await res.json()
+							: res;
 						if (res.status === 200) {
 							const authTokenArr = payload.Body.ChangePasswordResponse.authToken;
 							const authToken =
@@ -110,7 +114,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 								break;
 							case 401:
 							case 500:
-								if (payload.Body.Fault?.Detail?.Error?.Code === INVALID_PASSWORD_ERR_CODE) {
+								if (payload?.Body?.Fault?.Detail?.Error?.Code === INVALID_PASSWORD_ERR_CODE) {
 									setShowOldPasswordError(false);
 									const { a } = payload.Body.Fault.Detail.Error;
 									let currNum = a
@@ -187,7 +191,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 										);
 									}
 								} else if (
-									payload.Body.Fault?.Detail?.Error?.Code === PASSWORD_RECENTLY_USED_ERR_CODE
+									payload?.Body?.Fault?.Detail?.Error?.Code === PASSWORD_RECENTLY_USED_ERR_CODE
 								) {
 									setShowOldPasswordError(false);
 									setErrorLabelNewPassword(
