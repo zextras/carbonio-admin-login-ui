@@ -200,6 +200,13 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 									setErrorLabelNewPassword('');
 								}
 								break;
+							case 502:
+								setShowOldPasswordError(false);
+								setErrorLabelNewPassword(
+									t('server_unreachable', 'Error 502: Service Unreachable - Retry later.')
+								);
+								setIsLoading(false);
+								break;
 							default:
 								setShowOldPasswordError(false);
 								setErrorLabelNewPassword(

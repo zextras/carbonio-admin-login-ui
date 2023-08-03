@@ -47,6 +47,12 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 							);
 							setLoading(false);
 							break;
+						case 502:
+							setAuthError(
+								t('server_unreachable', 'Error 502: Service Unreachable - Retry later.')
+							);
+							setLoading(false);
+							break;
 						default:
 							setLoading(false);
 					}
