@@ -96,8 +96,8 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			if (newPassword && confirmNewPassword === newPassword && !errorLabelNewPassword) {
 				submitChangePassword(username, oldPassword, newPassword)
 					.then(async (res) => {
-						const payload = res?.headers.get(CONTENT_TYPE).indexOf(CONTENT_TYPE_JSON)
-							? await res.json()
+						const payload = (await res?.headers?.get(CONTENT_TYPE).indexOf(CONTENT_TYPE_JSON))
+							? res.json()
 							: res;
 						if (res.status === 200) {
 							const authTokenArr = payload.Body.ChangePasswordResponse.authToken;
