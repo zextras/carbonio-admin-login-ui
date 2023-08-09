@@ -25,6 +25,7 @@
     "offline": "You are currently offline, please check your internet connection",
     "password": "Password",
     "server_not_responding": "The server is not responding. Please contact your server administator",
+    "server_unreachable": "Error 502: Service Unreachable - Retry later.",
     "supported_browsers": "Supported browsers",
     "trust_device_and_ip": "Trust this device and IP address",
     "two_step_authentication": "Two-Step-Authentication",

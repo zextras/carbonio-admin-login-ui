@@ -6,7 +6,7 @@
 
 import { useTranslation } from 'react-i18next';
 import React, { useCallback, useState } from 'react';
-
+import { CONTENT_TYPE, CONTENT_TYPE_JSON } from '../constants';
 import CredentialsForm from '../components-v1/credentials-form';
 import { loginToCarbonioAdmin } from '../services/v2-service';
 
@@ -20,8 +20,10 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 			setLoading(true);
 			return loginToCarbonioAdmin(username, password)
 				.then(async (res) => {
-					const payload = await res.json();
-					if (payload.Body.Fault) {
+					const payload = (await res?.headers?.get(CONTENT_TYPE).indexOf(CONTENT_TYPE_JSON))
+						? res.json()
+						: res;
+					if (payload?.Body?.Fault) {
 						throw new Error(payload.Body.Fault.Reason.Text);
 					}
 					switch (res.status) {
@@ -44,6 +46,12 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 									'auth_not_valid',
 									'The authentication policy needs more steps: please contact your administrator for more information'
 								)
+							);
+							setLoading(false);
+							break;
+						case 502:
+							setAuthError(
+								t('server_unreachable', 'Error 502: Service Unreachable - Retry later.')
 							);
 							setLoading(false);
 							break;

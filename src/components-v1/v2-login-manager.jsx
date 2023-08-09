@@ -61,8 +61,6 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 		setLoadingCredentials(true);
 		return loginToCarbonioAdmin(username, password)
 			.then(async (res) => {
-				const responseData = await res.json();
-				console.log('[AuthResponse]: ', responseData);
 				switch (res.status) {
 					case 200:
 						await saveCredentials(username, password);
