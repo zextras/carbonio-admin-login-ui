@@ -21,8 +21,8 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 			return loginToCarbonioAdmin(username, password)
 				.then(async (res) => {
 					const payload = (await res?.headers?.get(CONTENT_TYPE).indexOf(CONTENT_TYPE_JSON))
-						? res.json()
-						: res;
+						? await res.json()
+						: await res;
 					if (payload?.Body?.Fault) {
 						throw new Error(payload.Body.Fault.Reason.Text);
 					}
