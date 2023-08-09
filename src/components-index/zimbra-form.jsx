@@ -6,7 +6,6 @@
 
 import { useTranslation } from 'react-i18next';
 import React, { useCallback, useState } from 'react';
-import { CONTENT_TYPE, CONTENT_TYPE_JSON } from '../constants';
 import CredentialsForm from '../components-v1/credentials-form';
 import { loginToCarbonioAdmin } from '../services/v2-service';
 
@@ -20,9 +19,12 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 			setLoading(true);
 			return loginToCarbonioAdmin(username, password)
 				.then(async (res) => {
-					const payload = (await res?.headers?.get(CONTENT_TYPE).indexOf(CONTENT_TYPE_JSON))
-						? res.json()
-						: res;
+					let payload;
+					try {
+						payload = await res.json();
+					} catch (err) {
+						payload = await res;
+					}
 					if (payload?.Body?.Fault) {
 						throw new Error(payload.Body.Fault.Reason.Text);
 					}

@@ -46,5 +46,3 @@ export const SCALING_LIMIT = {
 	DPR: 2 // device pixel ratio
 } as const;
 export const LOCAL_STORAGE_LAST_PRIMARY_KEY = 'config';
-export const CONTENT_TYPE = 'content-type';
-export const CONTENT_TYPE_JSON = 'application/json';

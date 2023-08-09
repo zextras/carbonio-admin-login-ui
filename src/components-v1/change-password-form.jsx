@@ -16,9 +16,7 @@ import {
 	ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME,
 	ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
 	INVALID_PASSWORD_ERR_CODE,
-	PASSWORD_RECENTLY_USED_ERR_CODE,
-	CONTENT_TYPE,
-	CONTENT_TYPE_JSON
+	PASSWORD_RECENTLY_USED_ERR_CODE
 } from '../constants';
 import { saveCredentials, setCookie } from '../utils';
 
@@ -96,9 +94,12 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			if (newPassword && confirmNewPassword === newPassword && !errorLabelNewPassword) {
 				submitChangePassword(username, oldPassword, newPassword)
 					.then(async (res) => {
-						const payload = (await res?.headers?.get(CONTENT_TYPE).indexOf(CONTENT_TYPE_JSON))
-							? res.json()
-							: res;
+						let payload;
+						try {
+							payload = await res.json();
+						} catch (err) {
+							payload = await res;
+						}
 						if (res.status === 200) {
 							const authTokenArr = payload.Body.ChangePasswordResponse.authToken;
 							const authToken =
