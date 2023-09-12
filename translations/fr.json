@@ -31,5 +31,6 @@
     "changePassword_oldPassword": "Ancien mot de passe",
     "changePassword_title": "Créer un nouveau mot de passe",
     "copy_right": "Copyright",
-    "trust_device_and_ip": "Appareils et adresses IP de confiance"
+    "trust_device_and_ip": "Appareils et adresses IP de confiance",
+    "server_unreachable": "Erreur 502 : Services inaccessible - Recommencez plus tard."
 }
