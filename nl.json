@@ -31,5 +31,6 @@
     "changePassword_error_minNumericChars": "Het minimumaantal numerieke tekens is {{num}}",
     "changePassword_error_minLowerCaseChars": "Het minimum aantal kleine letters is {{num}}",
     "changePassword_confirm_label": "Wachtwoord wijzigen en dan inloggen",
-    "carbonio_authentication": "Carbonio Authenticatie"
+    "carbonio_authentication": "Carbonio Authenticatie",
+    "server_unreachable": "Fout 502: Service onbereikbaar - Probeer het later opnieuw."
 }
