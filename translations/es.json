@@ -31,5 +31,6 @@
     "changePassword_error_minLowerCaseChars": "El número mínimo de caracteres en minúscula es {{num}}",
     "changePassword_error_confirmPassword": "Las contraseñas no coinciden",
     "changePassword_confirm_label": "Actualizar contraseña e ingresar",
-    "carbonio_authentication": "Autenticación de Carbonio"
+    "carbonio_authentication": "Autenticación de Carbonio",
+    "server_unreachable": "Error 502: Service Unreachable - Retry later."
 }

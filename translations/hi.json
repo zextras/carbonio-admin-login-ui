@@ -31,5 +31,6 @@
     "changePassword_error_minLength": "अधिकतम लंबाई {{num}} कैरक्टर है",
     "changePassword_error_maxLength": "अधिकतम लंबाई {{num}} कैरक्टर है",
     "changePassword_error_confirmPassword": "पासवर्ड मेल नहीं खा रहे",
-    "changePassword_confirmNewPassword": "नए पासवर्ड को कन्फ़र्म करें"
+    "changePassword_confirmNewPassword": "नए पासवर्ड को कन्फ़र्म करें",
+    "server_unreachable": "Error 502: सेवा पहुँच से बाहर है - बाद में दोबारा कोशिश करें।"
 }
