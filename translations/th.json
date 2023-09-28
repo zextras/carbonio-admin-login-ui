@@ -31,5 +31,6 @@
     "changePassword_error_minNumericChars": "จำนวนอักขระตัวเลขขั้นต่ำคือ {{num}}",
     "changePassword_error_minLowerCaseChars": "จำนวนอักขระตัวพิมพ์เล็กขั้นต่ำคือ {{num}}",
     "changePassword_confirm_label": "เปลี่ยนรหัสผ่านและเข้าสู่ระบบ",
-    "carbonio_authentication": "การตรวจสอบ Carbonio"
+    "carbonio_authentication": "การตรวจสอบ Carbonio",
+    "server_unreachable": "ข้อผิดพลาด 502: ไม่สามารถเข้าถึงบริการได้ - ลองอีกครั้งในภายหลัง"
 }

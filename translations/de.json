@@ -31,5 +31,6 @@
     "changePassword_error_passwordRecentlyUsed": "Kürzlich verwendetes Passwort",
     "changePassword_title": "Neue Kennwort erstellen",
     "trust_device_and_ip": "Diesem Gerät und dieser IP-Adresse vertrauen",
-    "changePassword_error_minNumericChars": "Die Mindestanzahl der Zahlenzeichen ist {{num}}"
+    "changePassword_error_minNumericChars": "Die Mindestanzahl der Zahlenzeichen ist {{num}}",
+    "server_unreachable": "Fehler 502: Der Dienst ist nicht erreichbar – Versuchen Sie es später noch einmal."
 }
