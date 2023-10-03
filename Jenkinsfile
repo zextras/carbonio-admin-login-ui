@@ -378,7 +378,7 @@ pipeline {
 				}
 				stage('pacur') {
 					parallel {
-						stage('Ubuntu 20.04') {
+						stage('Ubuntu') {
 							agent {
 								node {
 									label 'pacur-agent-ubuntu-20.04-v1'
@@ -400,7 +400,7 @@ pipeline {
 							}
 						}
 
-						stage('Rocky 8') {
+						stage('RHEL') {
 							agent {
 								node {
 									label 'pacur-agent-rocky-8-v1'
@@ -450,11 +450,16 @@ pipeline {
 							{
 								"pattern": "artifacts/carbonio-admin-login-ui*.deb",
 								"target": "ubuntu-playground/pool/",
-								"props": "deb.distribution=focal;deb.component=main;deb.architecture=amd64"
-							}
+								"props": "deb.distribution=focal;deb.distribution=jammy;deb.component=main;deb.architecture=amd64"
+							},
 							{
 								"pattern": "artifacts/(carbonio-admin-login-ui)-(*).rpm",
 								"target": "centos8-playground/zextras/{1}/{1}-{2}.rpm",
+								"props": "rpm.metadata.arch=x86_64;rpm.metadata.vendor=zextras"
+							},
+							{
+								"pattern": "artifacts/(carbonio-admin-login-ui)-(*).rpm",
+								"target": "rhel9-playground/zextras/{1}/{1}-{2}.rpm",
 								"props": "rpm.metadata.arch=x86_64;rpm.metadata.vendor=zextras"
 							}
 						]
@@ -486,7 +491,7 @@ pipeline {
 								{
 									"pattern": "artifacts/carbonio-admin-login-ui*.deb",
 									"target": "ubuntu-rc/pool/",
-									"props": "deb.distribution=focal;deb.component=main;deb.architecture=amd64"
+									"props": "deb.distribution=focal;deb.distribution=jammy;deb.component=main;deb.architecture=amd64"
 								}
 							]
 						}"""
@@ -530,6 +535,33 @@ pipeline {
 								'failFast'           : true
 						]
 						Artifactory.addInteractivePromotion server: server, promotionConfig: config, displayName: "Centos8 Promotion to Release"
+						server.publishBuildInfo buildInfo
+
+						//rocky9
+						buildInfo = Artifactory.newBuildInfo()
+						buildInfo.name += "-rhel9"
+						uploadSpec= """{
+							"files": [
+								{
+									"pattern": "artifacts/(carbonio-admin-login-ui)-(*).rpm",
+									"target": "rhel9-rc/zextras/{1}/{1}-{2}.rpm",
+									"props": "rpm.metadata.arch=x86_64;rpm.metadata.vendor=zextras"
+								}
+							]
+						}"""
+						server.upload spec: uploadSpec, buildInfo: buildInfo, failNoOp: false
+						config = [
+								'buildName'          : buildInfo.name,
+								'buildNumber'        : buildInfo.number,
+								'sourceRepo'         : 'rhel9-rc',
+								'targetRepo'         : 'rhel9-release',
+								'comment'            : 'Do not change anything! Just press the button',
+								'status'             : 'Released',
+								'includeDependencies': false,
+								'copy'               : true,
+								'failFast'           : true
+						]
+						Artifactory.addInteractivePromotion server: server, promotionConfig: config, displayName: "Rhel9 Promotion to Release"
 						server.publishBuildInfo buildInfo
 					}
 				}
