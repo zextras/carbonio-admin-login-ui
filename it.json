@@ -31,5 +31,6 @@
     "changePassword_error_minNumericChars": "Il numero minimo di caratteri numerici è {{num}}",
     "changePassword_error_minLowerCaseChars": "Il numero minimo di caratteri minuscoli è {{num}}",
     "changePassword_error_confirmPassword": "Le password non sono uguali",
-    "changePassword_confirm_label": "Modifica la password e accedi"
+    "changePassword_confirm_label": "Modifica la password e accedi",
+    "server_unreachable": "Errore 502: Impossibile raggiungere il server - Riprova più tardi."
 }
