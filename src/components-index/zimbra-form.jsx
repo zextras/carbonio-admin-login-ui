@@ -8,11 +8,23 @@ import { useTranslation } from 'react-i18next';
 import React, { useCallback, useState } from 'react';
 import CredentialsForm from '../components-v1/credentials-form';
 import { loginToCarbonioAdmin } from '../services/v2-service';
+import ChangePasswordForm from '../components-v1/change-password-form';
+
+const formState = {
+	credentials: 'credentials',
+	waiting: 'waiting',
+	twoFactor: 'two-factor',
+	changePassword: 'change-password'
+};
 
 export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 	const [t] = useTranslation();
 	const [authError, setAuthError] = useState();
 	const [loading, setLoading] = useState(false);
+	const [progress, setProgress] = useState(formState.credentials);
+	const [loadingChangePassword, setLoadingChangePassword] = useState(false);
+	const [loadingCredentials, setLoadingCredentials] = useState(false);
+	const [email, setEmail] = useState('');
 
 	const submitCredentials = useCallback(
 		(username, password) => {
@@ -25,8 +37,17 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 					} catch (err) {
 						payload = await res;
 					}
+					setLoadingCredentials(false);
+					setEmail(username);
 					if (payload?.Body?.Fault) {
-						throw new Error(payload.Body.Fault.Reason.Text);
+						if (
+							payload.Body.Fault?.Detail?.Error?.Code &&
+							payload.Body.Fault?.Detail?.Error?.Code === 'account.CHANGE_PASSWORD'
+						) {
+							setProgress(formState.changePassword);
+						} else {
+							throw new Error(payload.Body.Fault.Reason.Text);
+						}
 					}
 					switch (res.status) {
 						case 200:
@@ -63,6 +84,7 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 				})
 				.catch((err) => {
 					setLoading(false);
+					setLoadingCredentials(false);
 					if (err.message.startsWith('authentication failed'))
 						setAuthError(
 							t(
@@ -77,13 +99,28 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 	);
 
 	return (
-		<CredentialsForm
-			configuration={{ destinationUrl, authMethods: ['zimbra'] }}
-			disableInputs={false}
-			authError={authError}
-			submitCredentials={submitCredentials}
-			loading={loading}
-			isDarkTheme={isDarkTheme}
-		/>
+		<>
+			{progress === formState.credentials && (
+				<CredentialsForm
+					configuration={{ destinationUrl, authMethods: ['zimbra'] }}
+					disableInputs={false}
+					authError={authError}
+					submitCredentials={submitCredentials}
+					loading={loading}
+					isDarkTheme={isDarkTheme}
+				/>
+			)}
+			{progress === formState.changePassword && (
+				<ChangePasswordForm
+					isLoading={loadingChangePassword}
+					setIsLoading={setLoadingChangePassword}
+					configuration={{
+						destinationUrl: window.location.origin,
+						authMethods: ['zimbra']
+					}}
+					username={email}
+				/>
+			)}
+		</>
 	);
 }

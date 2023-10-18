@@ -16,7 +16,8 @@ import {
 	ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME,
 	ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
 	INVALID_PASSWORD_ERR_CODE,
-	PASSWORD_RECENTLY_USED_ERR_CODE
+	PASSWORD_RECENTLY_USED_ERR_CODE,
+	BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY
 } from '../constants';
 import { saveCredentials, setCookie } from '../utils';
 
@@ -26,6 +27,7 @@ export const submitChangePassword = (username, oldPassword, newPassword) => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
+		credentials: 'omit',
 		body: JSON.stringify({
 			Body: {
 				ChangePasswordRequest: {
@@ -101,7 +103,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 							payload = await res;
 						}
 						if (res.status === 200) {
-							const authTokenArr = payload.Body.ChangePasswordResponse.authToken;
+							const authTokenArr = payload?.Body?.ChangePasswordResponse?.authToken;
 							const authToken =
 								authTokenArr && authTokenArr.length > 0 ? authTokenArr[0]._content : undefined;
 							if (authToken) {
@@ -119,6 +121,19 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 									setShowOldPasswordError(false);
 									const { a } = payload.Body.Fault.Detail.Error;
 									let currNum = a
+										? a.find((rec) => rec.n === BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY)
+										: undefined;
+									if (currNum) {
+										setErrorLabelNewPassword(
+											t('changePassword_error_block_personal_data', {
+												defaultValue:
+													'Invalid password: password contains username or other personal data: {{str}}',
+												replace: { str: currNum._content }
+											})
+										);
+										break;
+									}
+									currNum = a
 										? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME)
 										: undefined;
 									if (currNum) {
@@ -234,14 +249,14 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			setIsLoading(false);
 		},
 		[
+			t,
 			setIsLoading,
 			newPassword,
 			confirmNewPassword,
 			errorLabelNewPassword,
 			username,
 			oldPassword,
-			configuration.destinationUrl,
-			t
+			configuration.destinationUrl
 		]
 	);
 
