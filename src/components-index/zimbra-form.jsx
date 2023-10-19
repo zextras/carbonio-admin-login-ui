@@ -107,7 +107,6 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 					authError={authError}
 					submitCredentials={submitCredentials}
 					loading={loading}
-					isDarkTheme={isDarkTheme}
 				/>
 			)}
 			{progress === formState.changePassword && (

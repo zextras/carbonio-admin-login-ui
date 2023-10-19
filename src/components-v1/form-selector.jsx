@@ -11,7 +11,7 @@ import { getAuthSupported, doAuthLogout } from '../services/auth-configuration-s
 import ServerNotResponding from '../components-index/server-not-responding';
 import NotSupportedVersion from '../components-index/not-supported-version';
 
-export default function FormSelector({ destinationUrl, domain, isDarkTheme }) {
+export default function FormSelector({ destinationUrl, domain }) {
 	const [configuration, setConfiguration] = useState(null);
 	const [error, setError] = useState(false);
 	const [disableInputs, setDisableInputs] = useState(true);
@@ -51,21 +51,9 @@ export default function FormSelector({ destinationUrl, domain, isDarkTheme }) {
 	if (configuration === null || !configuration.destinationUrl) return <div></div>;
 
 	if (configuration.maxApiVersion >= 2 && configuration.minApiVersion <= 2)
-		return (
-			<V2LoginManager
-				configuration={configuration}
-				disableInputs={disableInputs}
-				isDarkTheme={isDarkTheme}
-			/>
-		);
+		return <V2LoginManager configuration={configuration} disableInputs={disableInputs} />;
 	if (configuration.maxApiVersion >= 1 && configuration.minApiVersion <= 1)
-		return (
-			<V1LoginManager
-				configuration={configuration}
-				disableInputs={disableInputs}
-				isDarkTheme={isDarkTheme}
-			/>
-		);
+		return <V1LoginManager configuration={configuration} disableInputs={disableInputs} />;
 
 	return <NotSupportedVersion />;
 }

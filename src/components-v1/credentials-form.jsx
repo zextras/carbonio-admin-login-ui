@@ -23,8 +23,7 @@ export default function CredentialsForm({
 	submitCredentials,
 	configuration,
 	disableInputs,
-	loading = false,
-	isDarkTheme
+	loading = false
 }) {
 	const [t] = useTranslation();
 
@@ -75,10 +74,6 @@ export default function CredentialsForm({
 					disabled={disableInputs}
 					onClick={samlButtonCbk}
 					height={36}
-					style={{
-						border: isDarkTheme ? '1px solid #FFFFFF' : '1px solid',
-						color: isDarkTheme ? '#FFFFFF' : '#2b73d2'
-					}}
 				/>
 			);
 		}
@@ -86,7 +81,7 @@ export default function CredentialsForm({
 			// used to keep the correct space where or not SAML is shown
 			<div style={{ minHeight: '20px' }} />
 		);
-	}, [configuration, disableInputs, samlButtonCbk, t, isDarkTheme]);
+	}, [configuration, disableInputs, samlButtonCbk, t]);
 
 	useEffect(() => {
 		checkClassicUi()

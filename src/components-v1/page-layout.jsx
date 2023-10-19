@@ -319,7 +319,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 							</Padding>
 						</Container>
 
-						<ZimbraForm destinationUrl={destinationUrl} isDarkTheme={isDarkTheme} />
+						<ZimbraForm destinationUrl={destinationUrl} />
 
 						<Container
 							crossAlignment="flex-start"
