@@ -18,6 +18,7 @@ export const ZIMBRA_PASSWORD_MIN_NUMERIC_CHARS_ATTR_NAME = 'zimbraPasswordMinNum
 export const ZIMBRA_PASSWORD_MIN_AGE_ATTR_NAME = 'zimbraPasswordMinAge';
 export const ZIMBRA_PASSWORD_MAX_AGE_ATTR_NAME = 'zimbraPasswordMaxAge';
 export const ZIMBRA_PASSWORD_ENFORCE_HISTORY_ATTR_NAME = 'zimbraPasswordEnforceHistory';
+export const BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY = 'blockPersonalDataInPasswordPolicy';
 export const darkReaderDynamicThemeFixes = {
 	ignoreImageAnalysis: ['.no-dr-invert *'],
 	invert: [],

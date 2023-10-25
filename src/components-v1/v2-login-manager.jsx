@@ -31,7 +31,7 @@ const formState = {
 	changePassword: 'change-password'
 };
 
-export default function V2LoginManager({ configuration, disableInputs, isDarkTheme }) {
+export default function V2LoginManager({ configuration, disableInputs }) {
 	const [t] = useTranslation();
 	const [loadingCredentials, setLoadingCredentials] = useState(false);
 	const [loadingOtp, setLoadingOtp] = useState(false);
@@ -117,7 +117,6 @@ export default function V2LoginManager({ configuration, disableInputs, isDarkThe
 					authError={authError}
 					submitCredentials={submitCredentials}
 					loading={loadingCredentials}
-					isDarkTheme={isDarkTheme}
 				/>
 			)}
 			{progress === formState.waiting && (
