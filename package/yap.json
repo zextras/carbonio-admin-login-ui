@@ -1,11 +1,11 @@
 {
   "name": "carbonio-admin-login-ui",
   "description": "Zextras Carbonio Login Page",
-  "build_dir": "/tmp/",
+  "buildDir": "/tmp/",
   "output": "artifacts",
   "projects": [
     {
-      "name": "."
+      "name": "admin-login-ui"
     }
   ]
 }
