@@ -31,5 +31,6 @@
     "changePassword_error_minLength": "最低{{num}}文字です",
     "changePassword_error_maxLength": "最大{{num}}文字です",
     "changePassword_error_confirmPassword": "パスワードが一致していません",
-    "changePassword_confirmNewPassword": "新しいパスワードを確認する"
+    "changePassword_confirmNewPassword": "新しいパスワードを確認する",
+    "server_unreachable": "エラー 502: サービスにアクセスできません - 後程再度お試しください。"
 }
