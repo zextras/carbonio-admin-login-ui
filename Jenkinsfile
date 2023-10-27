@@ -373,15 +373,15 @@ pipeline {
 				}
 				stage('Stash') {
 					steps {
-						stash includes: "pacur.json,PKGBUILD,build/**", name: 'binaries'
+						stash includes: "package/**,build/**", name: 'binaries'
 					}
 				}
-				stage('pacur') {
+				stage('yap') {
 					parallel {
 						stage('Ubuntu') {
 							agent {
 								node {
-									label 'pacur-agent-ubuntu-20.04-v1'
+									label 'yap-agent-ubuntu-20.04-v2'
 								}
 							}
 							options {
@@ -389,8 +389,8 @@ pipeline {
 							}
 							steps {
 								unstash 'binaries'
-								sh 'sudo cp -r * /tmp'
-								sh 'sudo pacur build ubuntu'
+								sh 'sudo cp -r build /tmp'
+								sh 'sudo yap build ubuntu package'
 								stash includes: 'artifacts/', name: 'artifacts-deb'
 							}
 							post {
@@ -403,7 +403,7 @@ pipeline {
 						stage('RHEL') {
 							agent {
 								node {
-									label 'pacur-agent-rocky-8-v1'
+									label 'yap-agent-rocky-8-v2'
 								}
 							}
 							options {
@@ -411,16 +411,13 @@ pipeline {
 							}
 							steps {
 								unstash 'binaries'
-								sh 'sudo cp -r * /tmp'
-								sh 'sudo pacur build rocky'
-								dir("artifacts/") {
-									sh 'echo carbonio-admin-login-ui* | sed -E "s#(carbonio-admin-login-ui-[0-9.]*).*#\\0 \\1.x86_64.rpm#" | xargs sudo mv'
-								}
-								stash includes: 'artifacts/', name: 'artifacts-rpm'
+								sh 'sudo cp -r build /tmp'
+								sh 'sudo yap build rocky package'
+								stash includes: 'artifacts/x86_64/*.rpm', name: 'artifacts-rpm'
 							}
 							post {
 								always {
-									archiveArtifacts artifacts: "artifacts/*.rpm", fingerprint: true
+									archiveArtifacts artifacts: "artifacts/x86_64/*.rpm", fingerprint: true
 								}
 							}
 						}
@@ -453,12 +450,12 @@ pipeline {
 								"props": "deb.distribution=focal;deb.distribution=jammy;deb.component=main;deb.architecture=amd64"
 							},
 							{
-								"pattern": "artifacts/(carbonio-admin-login-ui)-(*).rpm",
+								"pattern": "artifacts/x86_64/(carbonio-admin-login-ui)-(*).rpm",
 								"target": "centos8-playground/zextras/{1}/{1}-{2}.rpm",
 								"props": "rpm.metadata.arch=x86_64;rpm.metadata.vendor=zextras"
 							},
 							{
-								"pattern": "artifacts/(carbonio-admin-login-ui)-(*).rpm",
+								"pattern": "artifacts/x86_64/(carbonio-admin-login-ui)-(*).rpm",
 								"target": "rhel9-playground/zextras/{1}/{1}-{2}.rpm",
 								"props": "rpm.metadata.arch=x86_64;rpm.metadata.vendor=zextras"
 							}
@@ -516,7 +513,7 @@ pipeline {
 						uploadSpec= """{
 							"files": [
 								{
-									"pattern": "artifacts/(carbonio-admin-login-ui)-(*).rpm",
+									"pattern": "artifacts/x86_64/(carbonio-admin-login-ui)-(*).rpm",
 									"target": "centos8-rc/zextras/{1}/{1}-{2}.rpm",
 									"props": "rpm.metadata.arch=x86_64;rpm.metadata.vendor=zextras"
 								}
@@ -543,7 +540,7 @@ pipeline {
 						uploadSpec= """{
 							"files": [
 								{
-									"pattern": "artifacts/(carbonio-admin-login-ui)-(*).rpm",
+									"pattern": "artifacts/x86_64/(carbonio-admin-login-ui)-(*).rpm",
 									"target": "rhel9-rc/zextras/{1}/{1}-{2}.rpm",
 									"props": "rpm.metadata.arch=x86_64;rpm.metadata.vendor=zextras"
 								}
