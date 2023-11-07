@@ -8,7 +8,7 @@
     "cant_login": "Nie da się obecnie zalogować",
     "carbonio_authentication": "Carbonio Uwierzytelnianie",
     "changePassword_confirmNewPassword": "Potwierdź nowe hasło",
-    "changePassword_confirm_label": "Zmień hasło a następnie się zaloguj",
+    "changePassword_confirm_label": "Zmień hasło i zaloguj się",
     "changePassword_error_confirmPassword": "Hasła nie są identyczne",
     "changePassword_error_maxLength": "Max. długość to {{num}} znaków",
     "server_not_responding": "Serwer nie odpowiada. Skontaktuj się z administratorem serwera",
@@ -32,5 +32,6 @@
     "login": "Zaloguj się",
     "login_saml": "Zaloguj się SAML",
     "password": "Hasło",
-    "server_unreachable": "Błąd 502: Usługa jest nieosiągalna - spróbuj ponownie później."
+    "server_unreachable": "Błąd 502: Usługa jest nieosiągalna - spróbuj ponownie później.",
+    "changePassword_error_block_personal_data": "Nieprawidłowe hasło: hasło zawiera nazwę użytkownika lub inne dane osobowe: {{str}}"
 }

@@ -32,5 +32,6 @@
     "changePassword_error_minLowerCaseChars": "Il numero minimo di caratteri minuscoli è {{num}}",
     "changePassword_error_confirmPassword": "Le password non sono uguali",
     "changePassword_confirm_label": "Modifica la password e accedi",
-    "server_unreachable": "Errore 502: Impossibile raggiungere il server - Riprova più tardi."
+    "server_unreachable": "Errore 502: Impossibile raggiungere il server - Riprova più tardi.",
+    "changePassword_error_block_personal_data": "Password non valida: la password contiene nome utente o altri dati personali: {{str}}"
 }

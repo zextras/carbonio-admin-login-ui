@@ -32,5 +32,6 @@
     "changePassword_title": "Créer un nouveau mot de passe",
     "copy_right": "Copyright",
     "trust_device_and_ip": "Appareils et adresses IP de confiance",
-    "server_unreachable": "Erreur 502 : Services inaccessible - Recommencez plus tard."
+    "server_unreachable": "Erreur 502 : Services inaccessible - Recommencez plus tard.",
+    "changePassword_error_block_personal_data": "Mot de passe non valide : le mot de passe contient un nom d'utilisateur ou d'autres données personnelles : {{str}}"
 }
