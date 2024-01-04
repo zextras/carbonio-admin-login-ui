@@ -29,8 +29,9 @@
     "changePassword_error_minLength": "En az {{num}} karakter kullanılabilir",
     "changePassword_error_maxLength": "En fazla {{num}} karakter kullanılabilir",
     "changePassword_error_confirmPassword": "Parolalar aynı değil",
-    "changePassword_confirm_label": "Parolayı değiştir ve sonra giriş yap",
+    "changePassword_confirm_label": "Parolayı değiştir ve giriş yap",
     "changePassword_confirmNewPassword": "Yeni parolayı onayla",
     "carbonio_authentication": "Carbonio Kimlik Doğrulama",
-    "server_unreachable": "Hata 502: Servise Erişilemiyor - Daha sonra tekrar deneyin."
+    "server_unreachable": "Hata 502: Servise Erişilemiyor - Daha sonra tekrar deneyin.",
+    "changePassword_error_block_personal_data": "Geçersiz parola: parola kullanıcı adı veya diğer kişisel verileri içeriyor: {{str}}"
 }
