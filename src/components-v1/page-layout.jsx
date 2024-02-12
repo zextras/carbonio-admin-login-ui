@@ -333,7 +333,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 										onMouseLeave={() => setOpen(false)}
 									>
 										<img alt="Logo Globe" src={logoGlobe} width="18px" />
-										<Text>*</Text>
+										<Text color="#a0a4a9">*</Text>
 									</Row>
 								</Padding>
 							</Row>
