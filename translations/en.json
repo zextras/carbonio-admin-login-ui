@@ -1,6 +1,8 @@
 {
     "all_rights_reserved": "All rights reserved",
     "auth_not_valid": "The authentication policy needs more steps: please contact your administrator for more information",
+    "browser_fully_supported": "Your browser is fully <a>supported</a>",
+    "browser_limited_supported": "Having troubles? try a fully <a>supported</a> browser",
     "cant_login": "Can not do the login now",
     "carbonio_authentication": "Carbonio Authentication",
     "changePassword_confirmNewPassword": "Confirm new password",
