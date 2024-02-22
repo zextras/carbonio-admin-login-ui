@@ -339,7 +339,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 							height="auto"
 							padding={{ bottom: 'extralarge', top: 'extralarge' }}
 						>
-							<Row padding={{ top: 'medium', bottom: 'extralarge' }} wrap="nowrap">
+							<Row padding={{ top: 'large', bottom: 'large' }} wrap="nowrap">
 								<Padding right="extrasmall">
 									<Icon
 										color="secondary"
