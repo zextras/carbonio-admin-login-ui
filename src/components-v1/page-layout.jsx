@@ -4,14 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-	useState,
-	useContext
-} from 'react';
+import React, { useEffect, useLayoutEffect, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import {
 	Container,
@@ -19,33 +12,31 @@ import {
 	Padding,
 	Row,
 	Text,
-	Tooltip,
-	useScreenMode,
-	useTheme
+	Icon,
+	useScreenMode
 } from '@zextras/carbonio-design-system';
-import { forEach, set } from 'lodash';
 
-import { useTranslation } from 'react-i18next';
-import logoChrome from '../../assets/logo-chrome.svg';
-import logoFirefox from '../../assets/logo-firefox.svg';
-import logoEdge from '../../assets/logo-edge.svg';
-import logoSafari from '../../assets/logo-safari.svg';
-import logoOpera from '../../assets/logo-opera.svg';
-import logoYandex from '../../assets/logo-yandex.svg';
-import logoUC from '../../assets/logo-ucbrowser.svg';
+import { useTranslation, Trans } from 'react-i18next';
+import { browserName } from 'react-device-detect';
 import backgroundImage from '../../assets/carbonio_light.jpg';
 import darkBackgroundImage from '../../assets/carbonio_loginpage.jpg';
 import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
 import logoCarbonio from '../../assets/carbonio-admin-panel.svg';
 import { getLoginConfig } from '../services/login-page-services';
-import FormSelector from './form-selector';
 import ServerNotResponding from '../components-index/server-not-responding';
 import { ZimbraForm } from '../components-index/zimbra-form';
 import { generateColorSet, prepareUrlForForward } from '../utils';
 import { ThemeCallbacksContext } from '../theme-provider/theme-provider';
-import { CARBONIO_LOGO_URL } from '../constants';
+import {
+	CARBONIO_CE_SUPPORTED_BROWSER_LINK,
+	CARBONIO_LOGO_URL,
+	CARBONIO_SUPPORTED_BROWSER_LINK,
+	CHROME,
+	FIREFOX
+} from '../constants';
 import { useLoginConfigStore } from '../store/login/store';
 import { useDarkReaderResultValue } from '../dark-mode/use-dark-reader-result-value';
+import { useGetPrimaryColor } from '../primary-color/use-get-primary-color';
 
 const LoginContainer = styled(Container)`
 	padding: 0 100px;
@@ -140,6 +131,9 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
 	const [copyrightBanner, setCopyrightBanner] = useState('');
 	const { setDarkReaderState } = useContext(ThemeCallbacksContext);
+	const primaryColor = useGetPrimaryColor();
+	const [isAdvanced, SetIsAdvanced] = useState(true);
+	const isSupportedBrowser = browserName === CHROME || browserName === FIREFOX;
 
 	useEffect(() => {
 		if (isDefaultBg) {
@@ -270,12 +264,31 @@ export default function PageLayout({ version, hasBackendApi }) {
 		} else {
 			setLogo({ image: logoCarbonio, width: '221px', url: CARBONIO_LOGO_URL });
 			document.title = t('carbonio_authentication', 'Carbonio Authentication');
+			SetIsAdvanced(false);
 		}
 
 		return () => {
 			componentIsMounted = false;
 		};
 	}, [destinationUrl, t, domain, version, hasBackendApi]);
+
+	const LinkText = (props) => {
+		const { to, children } = props || {};
+		return (
+			<a
+				href={to || '#'}
+				target="_blank"
+				rel="noreferrer"
+				style={{
+					textDecorationLine: 'underline',
+					cursor: 'pointer',
+					color: primaryColor || '#2b73d2'
+				}}
+			>
+				{children}
+			</a>
+		);
+	};
 
 	if (serverError) return <ServerNotResponding />;
 
@@ -326,55 +339,37 @@ export default function PageLayout({ version, hasBackendApi }) {
 							height="auto"
 							padding={{ bottom: 'extralarge', top: 'extralarge' }}
 						>
-							<Text>{t('supported_browsers', 'Supported browsers')}</Text>
-							<Row padding={{ top: 'medium', bottom: 'extralarge' }} wrap="nowrap">
-								<Padding all="extrasmall" right="small">
-									<Tooltip label="Chrome">
-										<img alt="Logo Chrome" src={logoChrome} width="18px" />
-									</Tooltip>
+							<Row padding={{ top: 'large', bottom: 'large' }} wrap="nowrap">
+								<Padding right="extrasmall">
+									<Icon
+										color="secondary"
+										icon={isSupportedBrowser ? 'CheckmarkOutline' : 'InfoOutline'}
+										size="medium"
+									/>
 								</Padding>
-								<Padding all="extrasmall" right="small">
-									<Tooltip label="Edge Chromium">
-										<img alt="Logo Edge Chromium" src={logoEdge} width="18px" />
-									</Tooltip>
-								</Padding>
-								<Padding all="extrasmall" right="small">
-									<Tooltip label="Firefox">
-										<img alt="Logo Firefox" src={logoFirefox} width="18px" />
-									</Tooltip>
-								</Padding>
-								<Padding all="extrasmall" right="small">
-									<Tooltip label="Safari">
-										<img alt="Logo Safari" src={logoSafari} width="18px" />
-									</Tooltip>
-								</Padding>
-								{/* <Padding all="extrasmall" right="small">
-									<Tooltip label="Opera">
-										<img
-											alt="Logo Opera"
-											src={logoOpera}
-											width="18px"
-										/>
-									</Tooltip>
-								</Padding>
-								<Padding all="extrasmall" right="small">
-									<Tooltip label="Yandex">
-										<img
-											alt="Logo Yandex"
-											src={logoYandex}
-											width="18px"
-										/>
-									</Tooltip>
-								</Padding>
-								<Padding all="extrasmall" right="small">
-									<Tooltip label="UC">
-										<img
-											alt="Logo UC"
-											src={logoUC}
-											width="18px"
-										/>
-									</Tooltip>
-								</Padding> */}
+								<Text size="small" color="secondary" weight="light">
+									<Trans
+										i18nKey={
+											isSupportedBrowser ? 'browser_fully_supported' : 'browser_limited_supported'
+										}
+										defaults={
+											isSupportedBrowser
+												? 'Your browser is fully <a>supported</a>'
+												: 'Having troubles? Try a fully <a>supported</a> browser'
+										}
+										components={{
+											a: (
+												<LinkText
+													to={
+														isAdvanced
+															? CARBONIO_SUPPORTED_BROWSER_LINK
+															: CARBONIO_CE_SUPPORTED_BROWSER_LINK
+													}
+												/>
+											)
+										}}
+									/>
+								</Text>
 							</Row>
 							{copyrightBanner ? (
 								<Text size="small" overflow="break-word">
