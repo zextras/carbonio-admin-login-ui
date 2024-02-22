@@ -47,3 +47,9 @@ export const SCALING_LIMIT = {
 	DPR: 2 // device pixel ratio
 } as const;
 export const LOCAL_STORAGE_LAST_PRIMARY_KEY = 'config';
+export const CHROME = 'Chrome';
+export const FIREFOX = 'Firefox';
+export const CARBONIO_CE_SUPPORTED_BROWSER_LINK =
+	'https://docs.zextras.com/carbonio-ce/html/basics/general.html#browser-compatibility';
+export const CARBONIO_SUPPORTED_BROWSER_LINK =
+	'https://docs.zextras.com/carbonio/html/basics/general.html#browser-compatibility';
