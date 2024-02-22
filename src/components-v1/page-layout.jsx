@@ -355,7 +355,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 										defaults={
 											isSupportedBrowser
 												? 'Your browser is fully <a>supported</a>'
-												: 'Having troubles? try a fully <a>supported</a> browser'
+												: 'Having troubles? Try a fully <a>supported</a> browser'
 										}
 										components={{
 											a: (
