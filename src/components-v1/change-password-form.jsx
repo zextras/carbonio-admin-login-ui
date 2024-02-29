@@ -17,7 +17,10 @@ import {
 	ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
 	INVALID_PASSWORD_ERR_CODE,
 	PASSWORD_RECENTLY_USED_ERR_CODE,
-	BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY
+	BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY,
+	BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY,
+	PASSWORD_LOCKED,
+	ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS
 } from '../constants';
 import { saveCredentials, setCookie } from '../utils';
 
@@ -121,6 +124,19 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 									setShowOldPasswordError(false);
 									const { a } = payload.Body.Fault.Detail.Error;
 									let currNum = a
+										? a.find((rec) => rec.n === BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY)
+										: undefined;
+									if (currNum) {
+										setErrorLabelNewPassword(
+											t('changePassword_error_block_common_words', {
+												defaultValue:
+													'Invalid password: password is known to be too common: {{str}}',
+												replace: { str: currNum._content }
+											})
+										);
+										break;
+									}
+									currNum = a
 										? a.find((rec) => rec.n === BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY)
 										: undefined;
 									if (currNum) {
@@ -206,6 +222,25 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 											})
 										);
 									}
+									currNum = a
+										? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS)
+										: undefined;
+									if (currNum) {
+										setErrorLabelNewPassword(
+											t('changePassword_error_minDigitsOrPuncs', {
+												defaultValue:
+													'Expecting at least {{num}} numeric or punctuation characters',
+												replace: { num: currNum._content }
+											})
+										);
+									}
+								} else if (payload?.Body?.Fault?.Detail?.Error?.Code === PASSWORD_LOCKED) {
+									setShowOldPasswordError(false);
+									setErrorLabelNewPassword(
+										t('changePassword_error_passwordLocked', {
+											defaultValue: "Password is locked and can't be changed"
+										})
+									);
 								} else if (
 									payload?.Body?.Fault?.Detail?.Error?.Code === PASSWORD_RECENTLY_USED_ERR_CODE
 								) {
