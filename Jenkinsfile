@@ -428,9 +428,8 @@ pipeline {
 
 		stage('Upload To Devel') {
 			when {
-				anyOf {
-					branch 'devel/*'
-					expression { params.DEVEL == true }
+				allOf {
+					expression { BRANCH_NAME ==~ /devel/ }
 				}
 			}
 			steps {
