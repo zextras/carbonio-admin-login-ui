@@ -2,7 +2,7 @@
     "username": "Nom d'utilisateur",
     "password": "Mot de passe",
     "login": "Connexion",
-    "details": "Details",
+    "details": "Détails",
     "auth_not_valid": "La politique d'authentification nécessite plus d'étapes : contactez, s'il vous plaît, votre administrateur pour plus d'information",
     "choose_otp": "Choisissez la méthode OTP",
     "wrong_password": "Mot de passe faux, veuillez vérifier la saisie et recommencer",
