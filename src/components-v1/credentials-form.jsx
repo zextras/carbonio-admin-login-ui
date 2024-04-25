@@ -134,7 +134,7 @@ export default function CredentialsForm({
 					/>
 				</Row>
 			)} */}
-			<Text color="error" size="medium" overflow="break-word">
+			<Text color="error" size="small" overflow="break-word">
 				{authError || <br />}
 			</Text>
 			<Row
