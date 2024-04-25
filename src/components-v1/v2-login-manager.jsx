@@ -152,7 +152,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 						/>
 					</Row>
 					<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-						<Text color="error" size="medium" overflow="break-word">
+						<Text color="error" size="small" overflow="break-word">
 							{showOtpError &&
 								t('wrong_password', 'Wrong password, please check data and try again')}
 							{!showOtpError && <br />}

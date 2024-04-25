@@ -321,7 +321,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			</Row>
 			{showOldPasswordError && (
 				<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-					<Text color="error" size="medium" overflow="break-word">
+					<Text color="error" size="small" overflow="break-word">
 						{t('wrong_password', 'Wrong password, please check data and try again')}
 					</Text>
 				</Row>
@@ -338,7 +338,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			</Row>
 			{errorLabelNewPassword && (
 				<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-					<Text color="error" size="medium" overflow="break-word">
+					<Text color="error" size="small" overflow="break-word">
 						{errorLabelNewPassword}
 					</Text>
 				</Row>
@@ -355,7 +355,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			</Row>
 			{errorLabelConfirmNewPassword && (
 				<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-					<Text color="error" size="medium" overflow="break-word">
+					<Text color="error" size="small" overflow="break-word">
 						{errorLabelConfirmNewPassword}
 					</Text>
 				</Row>
