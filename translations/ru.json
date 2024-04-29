@@ -33,5 +33,10 @@
     "changePassword_error_minUppercaseChars": "Минимальное количество символов верхнего регистра: {{num}}",
     "changePassword_error_minPunctuationChars": "Минимальное количество знаков пунктуации: {{num}}.",
     "server_unreachable": "Ошибка 502: Служба недоступна. Повторите попытку позже.",
-    "changePassword_error_block_personal_data": "Неверный пароль: пароль содержит имя пользователя или другие личные данные: {{str}}"
+    "changePassword_error_block_personal_data": "Неверный пароль: пароль содержит имя пользователя или другие личные данные: {{str}}",
+    "browser_fully_supported": "Ваш браузер полностью <a>поддерживается</a>",
+    "browser_limited_supported": "Возникли проблемы? Попробуйте полностью <a>поддерживаемый</a> браузер",
+    "changePassword_error_block_common_words": "Неверный пароль: известно, что пароль слишком распространен: {{str}}",
+    "changePassword_error_minDigitsOrPuncs": "Необходимо не менее {{num}} числовых символов или знаков препинания",
+    "changePassword_error_passwordLocked": "Пароль заблокирован и не может быть изменен"
 }
