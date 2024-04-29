@@ -33,5 +33,10 @@
     "changePassword_confirmNewPassword": "Yeni parolayı onayla",
     "carbonio_authentication": "Carbonio Kimlik Doğrulama",
     "server_unreachable": "Hata 502: Servise Erişilemiyor - Daha sonra tekrar deneyin.",
-    "changePassword_error_block_personal_data": "Geçersiz parola: parola kullanıcı adı veya diğer kişisel verileri içeriyor: {{str}}"
+    "changePassword_error_block_personal_data": "Geçersiz parola: parola kullanıcı adı veya diğer kişisel verileri içeriyor: {{str}}",
+    "browser_fully_supported": "Tarayıcınız tam olarak <a>destekleniyor</a>",
+    "browser_limited_supported": "Sorun mu yaşıyorsunuz? Tam olarak <a>desteklenen</a> bir tarayıcı deneyin",
+    "changePassword_error_block_common_words": "Geçersiz parola: parola çok genel kullanılıyor: {{str}}",
+    "changePassword_error_minDigitsOrPuncs": "En az {{num}} sayısal veya noktalama karakteri olmalı",
+    "changePassword_error_passwordLocked": "Parola kilitli ve değiştirilemez"
 }
