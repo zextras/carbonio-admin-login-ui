@@ -33,5 +33,10 @@
     "login_saml": "Zaloguj się SAML",
     "password": "Hasło",
     "server_unreachable": "Błąd 502: Usługa jest nieosiągalna - spróbuj ponownie później.",
-    "changePassword_error_block_personal_data": "Nieprawidłowe hasło: hasło zawiera nazwę użytkownika lub inne dane osobowe: {{str}}"
+    "changePassword_error_block_personal_data": "Nieprawidłowe hasło: hasło zawiera nazwę użytkownika lub inne dane osobowe: {{str}}",
+    "browser_fully_supported": "Twoja przeglądarka jest w pełni <a>wspierana</a>",
+    "browser_limited_supported": "Masz trudności? Spróbuj użyć w pełni <a>wspieranej</a> przeglądarki",
+    "changePassword_error_passwordLocked": "Hasło jest zablokowane i nie może zostać zmienione",
+    "changePassword_error_minDigitsOrPuncs": "Wymagane min. {{num}} znaków numerycznych lub interpunkcyjnych",
+    "changePassword_error_block_common_words": "Nieprawidłowe hasło: hasło jest zbyt pospolite: {{str}}"
 }
