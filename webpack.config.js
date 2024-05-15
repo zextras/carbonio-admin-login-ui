@@ -15,10 +15,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const babelRCApp = require('./babel.config');
 const pkg = require('./package.json');
 
-const pathsToCopy = [
-	{ from: 'translations', to: 'i18n' },
-	{ from: 'src/mockServiceWorker.js', to: 'mockServiceWorker.js' }
-];
+const pathsToCopy = [{ from: 'src/mockServiceWorker.js', to: 'mockServiceWorker.js' }];
 
 module.exports = (env) => {
 	return {
