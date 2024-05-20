@@ -25,26 +25,14 @@ def getRepositoryName() {
 		''', returnStdout: true).trim()
 }
 
+def getTimeStamp() {
+	return sh(script: '''
+		date +%s
+	''', returnStdout: true).trim()
+}
+
 def executeNpmLogin() {
 	withCredentials([usernamePassword(credentialsId: 'npm-zextras-bot-auth-token', usernameVariable: 'AUTH_USERNAME', passwordVariable: 'AUTH_PASSWORD')]) {
-//         NPM_AUTH_TOKEN = sh(
-//                 script: """
-//                                             curl -s \
-//                                                 -H "Accept: application/json" \
-//                                                 -H "Content-Type:application/json" \
-//                                                 -X PUT --data \'{"name": "${AUTH_USERNAME}", "password": "${AUTH_PASSWORD}"}\' \
-//                                                 https://registry.npmjs.com/-/user/org.couchdb.user:${AUTH_USERNAME} 2>&1 | grep -Po \
-//                                                 \'(?<="token":")[^"]*\';
-//                                             """,
-//                 returnStdout: true
-//         ).trim()
-//         sh(
-//                 script: """
-//                     touch .npmrc;
-//                     echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
-//                     """,
-//                 returnStdout: true
-//         ).trim()
 			sh(
 				script: """
 					touch .npmrc;
@@ -208,6 +196,7 @@ pipeline {
 		LOCAL_REGISTRY = "https://npm.zextras.com"
 		COMMIT_PARENTS_COUNT = getCommitParentsCount()
 		REPOSITORY_NAME = getRepositoryName()
+		TIMESTAMP = getTimeStamp()
 		TRANSLATIONS_REPOSITORY_NAME = "zextras/com_zextras_zapp_login"
 	}
 	stages {
@@ -369,6 +358,16 @@ pipeline {
 						executeNpmLogin()
 						nodeCmd "npm install"
 						nodeCmd "NODE_ENV=production npm run build"
+					}
+				}
+				stage('Generate Timestamped Version'){
+					when {
+						allOf {
+							expression { BRANCH_NAME ==~ /devel/ }
+						}
+					}
+					steps{
+						sh 'sed -i "s!pkgrel=.*!pkgrel=$TIMESTAMP!" package/login-ui/PKGBUILD'
 					}
 				}
 				stage('Stash') {
