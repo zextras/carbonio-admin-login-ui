@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.9.21 (2024-06-18)
+
+
+### Features
+
+* add brand new admin login ui ([1163b88](https://github.com/zextras/carbonio-admin-login-ui/commit/1163b8801e7ec59c110a71c2fa49ec22635bdaa8))
+* add ubuntu 22.04 (jammy jellyfish) support ([#48](https://github.com/zextras/carbonio-admin-login-ui/issues/48)) ([9fd8601](https://github.com/zextras/carbonio-admin-login-ui/commit/9fd8601b6a8b25abda9ef71f104620f355aabdf7))
+* first commit ([6d85537](https://github.com/zextras/carbonio-admin-login-ui/commit/6d85537d6c1560bf82ae009158116a6a57c78230))
+* IN-537: add Sonarqube ([#12](https://github.com/zextras/carbonio-admin-login-ui/issues/12)) ([cc6dba2](https://github.com/zextras/carbonio-admin-login-ui/commit/cc6dba2acd7e4a8a4bed3468cf10fafe424bd978))
+* move to yap agent and add rhel9 support ([#54](https://github.com/zextras/carbonio-admin-login-ui/issues/54)) ([d80ebbc](https://github.com/zextras/carbonio-admin-login-ui/commit/d80ebbca60b8c1938fed946a3f2635b5863944a7))
+
+
+### Bug Fixes
+
+* 2fa form button issue ([#24](https://github.com/zextras/carbonio-admin-login-ui/issues/24)) ([6777421](https://github.com/zextras/carbonio-admin-login-ui/commit/67774212b08ddeb2b682331573ca0d22c4995e59))
+* build license issue ([#57](https://github.com/zextras/carbonio-admin-login-ui/issues/57)) ([7d16874](https://github.com/zextras/carbonio-admin-login-ui/commit/7d1687401c79e102ddff905cb77fee6d367f5d36))
+* ci: generate pkgrel timestamps for packages ([#74](https://github.com/zextras/carbonio-admin-login-ui/issues/74)) ([3fc846e](https://github.com/zextras/carbonio-admin-login-ui/commit/3fc846ef89ca3cd333c6bfde0d2fa1f1d68a85bb))
+* common pwd rule for change password ([#63](https://github.com/zextras/carbonio-admin-login-ui/issues/63)) ([1ddc491](https://github.com/zextras/carbonio-admin-login-ui/commit/1ddc491b43862acb45dc18bfe0da4d3d8a78d36f))
+* error text size issue ([#69](https://github.com/zextras/carbonio-admin-login-ui/issues/69)) ([0b8cb8b](https://github.com/zextras/carbonio-admin-login-ui/commit/0b8cb8b1a972b845de04dda07cd7bf64ad9b3a19))
+* local code running issue ([99c5bdd](https://github.com/zextras/carbonio-admin-login-ui/commit/99c5bddddb09d176b238043cf2339e4eb0ca533e))
+* login issue for ce edition ([#10](https://github.com/zextras/carbonio-admin-login-ui/issues/10)) ([3cdf793](https://github.com/zextras/carbonio-admin-login-ui/commit/3cdf79315d2306162c878531d4001b9e2eccf407))
+* logo url open in new page ([6660c02](https://github.com/zextras/carbonio-admin-login-ui/commit/6660c0273ead5a435ebd782747036fb208ff441b))
+* remove fake url ([1ba4832](https://github.com/zextras/carbonio-admin-login-ui/commit/1ba4832cab112ce1b5447145ebbffbf23f10bede))
+* sonar analysis bugs ([#30](https://github.com/zextras/carbonio-admin-login-ui/issues/30)) ([c9a6872](https://github.com/zextras/carbonio-admin-login-ui/commit/c9a687299431f0545328d35d4cafc25e55eb5f9d))
+* supported browser info in login screen ([#64](https://github.com/zextras/carbonio-admin-login-ui/issues/64)) ([b40150d](https://github.com/zextras/carbonio-admin-login-ui/commit/b40150d03342ce8e22a8b294bdc6654f17e88f38))
+* theme and whitelabeling issue ([#9](https://github.com/zextras/carbonio-admin-login-ui/issues/9)) ([666a001](https://github.com/zextras/carbonio-admin-login-ui/commit/666a0011f3cafd7e4f8d1c811a77ea9554351556))
+* upload to devel repo ([#65](https://github.com/zextras/carbonio-admin-login-ui/issues/65)) ([4cae78a](https://github.com/zextras/carbonio-admin-login-ui/commit/4cae78affbaf0dcc9e3df657be7793e9a3c5f6c9))
+
 ### [0.1.1-rc.4](https://bitbucket.org/zextras/zapp-login/compare/v0.1.1-rc.3...v0.1.1-rc.4) (2022-01-10)
 
 
