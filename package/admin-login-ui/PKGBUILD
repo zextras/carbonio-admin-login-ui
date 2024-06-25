@@ -6,7 +6,7 @@
 # This package contains the assets for the browser login page
 
 pkgname="carbonio-admin-login-ui"
-pkgver="0.9.21"
+pkgver="0.9.22"
 pkgrel="1"
 pkgdesc="Carbonio admin login page assets"
 maintainer="Zextras <packages@zextras.com>"
@@ -24,6 +24,8 @@ package() {
   cd "${srcdir}"
   mkdir -p "${pkgdir}/opt/zextras/admin/login/"
   cp -a ../../build/* "${pkgdir}/opt/zextras/admin/login"
+  ln -s /opt/zextras/admin/login-i18n \
+    "${pkgdir}/opt/zextras/admin/login/i18n"
 }
 
 postinst() {
