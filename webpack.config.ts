@@ -100,7 +100,6 @@ const config = (
 			new CleanWebpackPlugin(),
 			new CopyPlugin({
 				patterns: [
-					{ from: 'src/mockServiceWorker.js', to: 'mockServiceWorker.js' },
 					{ from: './package/yap.json', to: '.' },
 					{
 						from: './package/PKGBUILD.template',
