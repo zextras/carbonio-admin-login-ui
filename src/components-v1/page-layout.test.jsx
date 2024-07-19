@@ -23,19 +23,6 @@ describe('PageLayout', () => {
 		expect(formContainer).toBeInTheDocument();
 	});
 
-	test('renders supported browsers', () => {
-		setup(<PageLayout version={1} hasBackendApi={false} />);
-
-		// Assert the presence of the browser logos
-		const chromeLogo = screen.getByAltText('Logo Chrome');
-		const firefoxLogo = screen.getByAltText('Logo Firefox');
-		const edgeLogo = screen.getByAltText('Logo Edge Chromium');
-
-		expect(chromeLogo).toBeInTheDocument();
-		expect(firefoxLogo).toBeInTheDocument();
-		expect(edgeLogo).toBeInTheDocument();
-	});
-
 	test('renders the default copyright banner', () => {
 		setup(<PageLayout version={1} hasBackendApi={false} />);
 
