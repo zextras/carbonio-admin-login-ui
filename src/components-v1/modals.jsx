@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 import { Modal, Paragraph } from '@zextras/carbonio-design-system';
+import { useTranslation } from 'react-i18next';
 
 export default function OfflineModal({ open, onClose }) {
 	const [t] = useTranslation();

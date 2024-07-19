@@ -5,8 +5,9 @@
  */
 
 import React, { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { Snackbar } from '@zextras/carbonio-design-system';
+import { useTranslation } from 'react-i18next';
 
 export default function ServerNotResponding() {
 	const [t] = useTranslation();

@@ -4,11 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useTranslation } from 'react-i18next';
 import React, { useCallback, useState } from 'react';
+
+import { useTranslation } from 'react-i18next';
+
+import ChangePasswordForm from '../components-v1/change-password-form';
 import CredentialsForm from '../components-v1/credentials-form';
 import { loginToCarbonioAdmin } from '../services/v2-service';
-import ChangePasswordForm from '../components-v1/change-password-form';
 
 const formState = {
 	credentials: 'credentials',

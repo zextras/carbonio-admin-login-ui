@@ -5,11 +5,12 @@
  */
 
 import React, { useEffect, useState } from 'react';
+
 import V1LoginManager from './v1-login-manager';
 import V2LoginManager from './v2-login-manager';
-import { getAuthSupported, doAuthLogout } from '../services/auth-configuration-service';
-import ServerNotResponding from '../components-index/server-not-responding';
 import NotSupportedVersion from '../components-index/not-supported-version';
+import ServerNotResponding from '../components-index/server-not-responding';
+import { getAuthSupported, doAuthLogout } from '../services/auth-configuration-service';
 
 export default function FormSelector({ destinationUrl, domain }) {
 	const [configuration, setConfiguration] = useState(null);

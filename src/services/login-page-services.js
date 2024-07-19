@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { carbonioConfig } from '../config/carbonio-config';
-
 export function getLoginSupported() {
 	return fetch('/zx/login/supported').then((res) => {
 		if (res.status === 200) return res.json();

@@ -4,9 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { Row, Text, Input, Button, PasswordInput } from '@zextras/carbonio-design-system';
 import React, { useState, useCallback, useEffect } from 'react';
+
+import { Row, Text, Input, Button, PasswordInput } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
+
 import {
 	ZM_AUTH_TOKEN,
 	ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME,

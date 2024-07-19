@@ -12,17 +12,19 @@ import React, {
 	useMemo,
 	useState
 } from 'react';
+
 import {
 	generateColorSet,
 	ThemeProvider as UIThemeProvider,
 	ThemeProviderProps as UIThemeProviderProps
 } from '@zextras/carbonio-design-system';
 import { auto, disable, enable, setFetchMethod } from 'darkreader';
-import { createGlobalStyle, DefaultTheme } from 'styled-components';
 import { reduce } from 'lodash';
+import { createGlobalStyle, DefaultTheme } from 'styled-components';
+
+import { getAutoScalingFontSize } from './utils';
 import { DarkReaderPropValues, ThemeExtension } from '../../types';
 import { darkReaderDynamicThemeFixes } from '../constants';
-import { getAutoScalingFontSize } from './utils';
 import { useGetPrimaryColor } from '../primary-color/use-get-primary-color';
 
 setFetchMethod(window.fetch);
