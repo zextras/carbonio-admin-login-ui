@@ -3,7 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-export default {
+import type { Config } from 'jest';
+
+const config: Config = {
 	// All imported modules in your tests should be mocked automatically
 	// automock: false,
 
@@ -152,10 +154,22 @@ export default {
 	// snapshotSerializers: [],
 
 	// The test environment that will be used for testing
-	testEnvironment: 'jsdom',
+	/*
+	 * @note Override test environment to set again Request, Response, TextEncoder and other
+	 * fields
+	 * @see https://mswjs.io/docs/migrations/1.x-to-2.x#requestresponsetextencoder-is-not-defined-jest
+	 * @see https://github.com/mswjs/msw/issues/1916#issuecomment-1919965699
+	 */
+	testEnvironment: '<rootDir>/src/tests/jsdom-extended.ts',
 
 	// Options that will be passed to the testEnvironment
-	// testEnvironmentOptions: {},
+	testEnvironmentOptions: {
+		/*
+		 * @see https://mswjs.io/docs/migrations/1.x-to-2.x#cannot-find-module-mswnode-jsdom
+		 * @see https://github.com/mswjs/msw/issues/1786#issuecomment-1782559851
+		 */
+		customExportConditions: ['']
+	},
 
 	// Adds a location field to test results
 	// testLocationInResults: false,
@@ -201,3 +215,5 @@ export default {
 	// Whether to use watchman for file crawling
 	// watchman: true,
 };
+
+export default config;

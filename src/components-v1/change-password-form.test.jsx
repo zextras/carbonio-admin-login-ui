@@ -129,6 +129,7 @@ describe('ChangePasswordForm', () => {
 
 		expect(window.fetch).toHaveBeenCalledWith('/service/admin/soap/ChangePasswordRequest', {
 			method: 'POST',
+			credentials: 'omit',
 			headers: {
 				'Content-Type': 'application/json'
 			},
