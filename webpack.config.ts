@@ -33,23 +33,7 @@ const config = (
 			webSocketServer: false,
 			proxy: [
 				{
-					path: '/carbonioAdmin',
-					// target: 'https://infra-848931f5.testarea.zextras.com',
-					// target: 'https://localhost:7071/',
-					target: 'https://np-s04.demo.zextras.io:6071/',
-					secure: true,
-					changeOrigin: true
-				},
-				{
-					path: '/service',
-					// target: 'https://infra-848931f5.testarea.zextras.com',
-					// target: 'https://localhost:7071/',
-					target: 'https://np-s04.demo.zextras.io:7071/',
-					secure: true,
-					changeOrigin: true
-				},
-				{
-					path: '/zx',
+					context: ['/zx', '/service'],
 					target: 'https://np-s04.demo.zextras.io:6071/',
 					secure: false
 				}
