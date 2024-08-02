@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useLayoutEffect, useState, useContext } from 'react';
-import styled, { css } from 'styled-components';
+
 import {
 	Container,
 	Link,
@@ -15,18 +15,16 @@ import {
 	Icon,
 	useScreenMode
 } from '@zextras/carbonio-design-system';
-
-import { useTranslation, Trans } from 'react-i18next';
 import { browserName } from 'react-device-detect';
+import { useTranslation, Trans } from 'react-i18next';
+import styled, { css } from 'styled-components';
+
+import logoCarbonio from '../../assets/carbonio-admin-panel.svg';
+import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
 import backgroundImage from '../../assets/carbonio_light.jpg';
 import darkBackgroundImage from '../../assets/carbonio_loginpage.jpg';
-import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
-import logoCarbonio from '../../assets/carbonio-admin-panel.svg';
-import { getLoginConfig } from '../services/login-page-services';
 import ServerNotResponding from '../components-index/server-not-responding';
 import { ZimbraForm } from '../components-index/zimbra-form';
-import { generateColorSet, prepareUrlForForward } from '../utils';
-import { ThemeCallbacksContext } from '../theme-provider/theme-provider';
 import {
 	CARBONIO_CE_SUPPORTED_BROWSER_LINK,
 	CARBONIO_LOGO_URL,
@@ -34,9 +32,12 @@ import {
 	CHROME,
 	FIREFOX
 } from '../constants';
-import { useLoginConfigStore } from '../store/login/store';
 import { useDarkReaderResultValue } from '../dark-mode/use-dark-reader-result-value';
 import { useGetPrimaryColor } from '../primary-color/use-get-primary-color';
+import { getLoginConfig } from '../services/login-page-services';
+import { useLoginConfigStore } from '../store/login/store';
+import { ThemeCallbacksContext } from '../theme-provider/theme-provider';
+import { generateColorSet, prepareUrlForForward } from '../utils';
 
 const LoginContainer = styled(Container)`
 	padding: 0 100px;

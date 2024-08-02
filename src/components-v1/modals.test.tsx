@@ -3,8 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { act, screen, within } from '@testing-library/react';
 import React from 'react';
+
+import { act, screen, within } from '@testing-library/react';
+
 import OfflineModal from './modals';
 import { setup } from '../tests/testUtils';
 

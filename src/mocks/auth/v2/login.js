@@ -4,13 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { rest } from 'msw';
+import { http, delay, HttpResponse } from 'msw';
 
-export default rest.post('/zx/auth/v2/login', (req, res, ctx) => {
-	return res(
-		ctx.delay(3000),
-		ctx.status(200),
-		ctx.json({
+export default http.post('/zx/auth/v2/login', async () => {
+	await delay(3000);
+	return HttpResponse.json(
+		{
 			otp: [
 				{
 					id: '9c3fcd35-848f-4a74-885a-f9618a55f9c2',
@@ -48,6 +47,7 @@ export default rest.post('/zx/auth/v2/login', (req, res, ctx) => {
 				primaryEmail: 'admin@99b88fa0.testarea.zextras.com'
 			},
 			'2FA': true
-		})
+		},
+		{ status: 200 }
 	);
 });

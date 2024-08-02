@@ -3,10 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { act, screen, within } from '@testing-library/react';
 import React from 'react';
-import { setup } from '../tests/testUtils';
+
+import { screen } from '@testing-library/react';
+
 import V1LoginManager from './v1-login-manager';
+import { setup } from '../tests/testUtils';
 
 describe('v1-login-manager', () => {
 	test('renders CredentialsForm component when progress is set to "credentials"', () => {

@@ -22,6 +22,16 @@ module.exports = {
 			{
 				templateFile: '.reuse/template.js'
 			}
-		]
-	}
+		],
+		'sonarjs/cognitive-complexity': 'warn',
+		'sonarjs/no-duplicate-string': 'warn'
+	},
+	overrides: [
+		{
+			files: ['webpack.config.ts'],
+			rules: {
+				'import/no-extraneous-dependencies': 'off'
+			}
+		}
+	]
 };

@@ -4,13 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+
+import { screen, waitFor } from '@testing-library/react';
+
 import FormSelector from './form-selector';
 import { getAuthSupported } from '../services/auth-configuration-service';
-import V2LoginManager from './v2-login-manager';
-import V1LoginManager from './v1-login-manager';
-import ServerNotResponding from '../components-index/server-not-responding';
-import NotSupportedVersion from '../components-index/not-supported-version';
 import { setup } from '../tests/testUtils';
 
 jest.mock('../services/auth-configuration-service');

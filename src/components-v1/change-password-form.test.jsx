@@ -3,8 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { screen, within, waitFor } from '@testing-library/react';
 import React from 'react';
+
+import { screen, within, waitFor } from '@testing-library/react';
+
 import ChangePasswordForm from './change-password-form';
 import { setup } from '../tests/testUtils';
 
@@ -127,6 +129,7 @@ describe('ChangePasswordForm', () => {
 
 		expect(window.fetch).toHaveBeenCalledWith('/service/admin/soap/ChangePasswordRequest', {
 			method: 'POST',
+			credentials: 'omit',
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -154,7 +157,7 @@ describe('ChangePasswordForm', () => {
 
 		await waitFor(() => {
 			expect(saveCredentialsMock).toHaveBeenCalledWith('testuser', 'newpassword');
-			expect(setCookieMock).toHaveBeenCalledWith('ZM_AUTH_TOKEN', mockAuthToken);
 		});
+		expect(setCookieMock).toHaveBeenCalledWith('ZM_AUTH_TOKEN', mockAuthToken);
 	});
 });

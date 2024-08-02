@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import React, { useCallback, useState } from 'react';
+
 import {
 	Button,
 	Checkbox,
@@ -13,16 +15,14 @@ import {
 	Snackbar,
 	Text
 } from '@zextras/carbonio-design-system';
-import { map } from 'lodash';
-import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { loginToCarbonioAdmin, submitOtp } from '../services/v2-service';
-import { saveCredentials } from '../utils';
+
 import ChangePasswordForm from './change-password-form';
 import CredentialsForm from './credentials-form';
-
 import OfflineModal from './modals';
 import Spinner from './spinner';
+import { loginToCarbonioAdmin, submitOtp } from '../services/v2-service';
+import { saveCredentials } from '../utils';
 
 const formState = {
 	credentials: 'credentials',
@@ -61,16 +61,13 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 		setLoadingCredentials(true);
 		return loginToCarbonioAdmin(username, password)
 			.then(async (res) => {
-				switch (res.status) {
-					case 200:
-						await saveCredentials(username, password);
-						window.location.assign('/carbonioAdmin');
-						setProgress(false);
-						break;
-					default:
-						setSnackbarNetworkError(true);
-						setLoadingCredentials(false);
-						break;
+				if (res.status === 200) {
+					await saveCredentials(username, password);
+					window.location.assign('/carbonioAdmin');
+					setProgress(false);
+				} else {
+					setSnackbarNetworkError(true);
+					setLoadingCredentials(false);
 				}
 			})
 			.catch(() => setLoadingCredentials(false));

@@ -5,7 +5,7 @@
   "output": "artifacts",
   "projects": [
     {
-      "name": "admin-login-ui"
+      "name": "package"
     }
   ]
 }

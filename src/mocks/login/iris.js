@@ -4,10 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { rest } from 'msw';
+import { http, delay, HttpResponse } from 'msw';
 
 import { IRIS_CHECK_URL } from '../../constants';
 
-export default rest.get(IRIS_CHECK_URL, (req, res, ctx) => {
-	return res(ctx.delay(1000), ctx.status(200));
+export default http.get(IRIS_CHECK_URL, async () => {
+	await delay(1000);
+	return HttpResponse.json(null, { status: 200 });
 });

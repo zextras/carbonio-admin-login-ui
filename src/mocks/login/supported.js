@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 
-export default rest.get('/zx/login/supported', (req, res, ctx) => {
-	return res(
-		ctx.status(200),
-		ctx.json({
+export default http.get('/zx/login/supported', () => {
+	return HttpResponse.json(
+		{
 			minApiVersion: 1,
 			maxApiVersion: 1
-		})
+		},
+		{ status: 200 }
 	);
 });

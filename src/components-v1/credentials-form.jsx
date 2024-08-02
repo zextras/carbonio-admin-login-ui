@@ -5,11 +5,12 @@
  */
 
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
-import { Button, Input, PasswordInput, Row, Select, Text } from '@zextras/carbonio-design-system';
+
+import { Button, Input, PasswordInput, Row, Text } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
 
-import { getCookieKeys, getCookie, setCookie } from '../utils';
 import { checkClassicUi } from '../services/login-page-services';
+import { getCookieKeys, getCookie, setCookie } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
 
