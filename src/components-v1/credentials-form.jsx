@@ -107,7 +107,7 @@ export default function CredentialsForm({
 					onChange={(e) => setUsername(e.target.value)}
 					hasError={!!authError}
 					autocomplete="username"
-					label={t('username', 'Username')}
+					label='Username.'
 					backgroundColor="gray5"
 				/>
 			</Row>
