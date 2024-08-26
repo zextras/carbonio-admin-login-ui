@@ -20,14 +20,15 @@ import {
 	within
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ModalManager, SnackbarManager } from '@zextras/carbonio-design-system';
 import i18next, { type i18n } from 'i18next';
 import { filter } from 'lodash';
 import { I18nextProvider } from 'react-i18next';
 import { MemoryRouter } from 'react-router-dom';
-import { ModalManager, SnackbarManager } from '@zextras/carbonio-design-system';
+
 import { ThemeProvider } from '../theme-provider/theme-provider';
 
-export type UserEvent = ReturnType<typeof userEvent['setup']> & {
+export type UserEvent = ReturnType<(typeof userEvent)['setup']> & {
 	readonly rightClick: (target: Element) => Promise<void>;
 };
 
@@ -41,6 +42,7 @@ const queryAllByTextWithMarkup: GetAllBy<[string | RegExp]> = (container, text) 
 				const regExp = RegExp(text);
 				return singleNode.textContent != null && regExp.test(singleNode.textContent);
 			};
+			// eslint-disable-next-line testing-library/no-node-access
 			const childrenDontHaveText = Array.from(element.children).every((child) => !hasText(child));
 			return hasText(element) && childrenDontHaveText;
 		}
@@ -185,7 +187,7 @@ function customRender(
 
 type SetupOptions = Pick<WrapperProps, 'initialRouterEntries'> & {
 	renderOptions?: Omit<RenderOptions, 'queries'>;
-	setupOptions?: Parameters<typeof userEvent['setup']>[0];
+	setupOptions?: Parameters<(typeof userEvent)['setup']>[0];
 };
 
 const setupUserEvent = (options: SetupOptions['setupOptions']): UserEvent => {

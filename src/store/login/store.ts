@@ -5,6 +5,7 @@
  */
 
 import create from 'zustand';
+
 import { LoginConfigStore } from '../../../types/loginConfig';
 
 export const useLoginConfigStore = create<LoginConfigStore>(() => ({}));

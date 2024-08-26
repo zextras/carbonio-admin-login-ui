@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { setupWorker } from 'msw';
+import { setupWorker } from 'msw/browser';
+
 import { handlers } from './handlers';
 
 // This configures a Service Worker with the given request handlers.

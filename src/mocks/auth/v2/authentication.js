@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { rest } from 'msw';
+import { http, delay, HttpResponse } from 'msw';
 
-export default rest.get('/zx/auth/v2/myself', (req, res, ctx) => {
-	return res(ctx.delay(1000), ctx.status(401));
+export default http.get('/zx/auth/v2/myself', async () => {
+	await delay(1000);
+	return HttpResponse.json(null, { status: 401 });
 });

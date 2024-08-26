@@ -1,5 +1,3 @@
-// Copyright (C) 2011-2020 Zextras
-/* eslint-disable import/no-extraneous-dependencies */
 /*
  * SPDX-FileCopyrightText: 2021 Zextras <https://www.zextras.com>
  *
@@ -19,5 +17,3 @@ window.matchMedia = function matchMedia(query: string): MediaQueryList {
 		dispatchEvent: (): boolean => true
 	};
 };
-
-window.fetch = require('node-fetch');

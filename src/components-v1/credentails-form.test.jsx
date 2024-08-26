@@ -3,8 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { screen, within } from '@testing-library/react';
 import React from 'react';
+
+import { screen, within } from '@testing-library/react';
+
 import CredentialsForm from './credentials-form';
 import { setup } from '../tests/testUtils';
 

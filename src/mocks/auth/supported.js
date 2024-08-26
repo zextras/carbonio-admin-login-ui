@@ -4,20 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 
-export default rest.get('/zx/auth/supported', (req, res, ctx) => {
-	const domain = req.url.searchParams.get('domain');
-
-	return res(
-		ctx.status(200),
-		ctx.json({
+export default http.get('/zx/auth/supported', () => {
+	return HttpResponse.json(
+		{
 			twoFactorsEnabled: false,
 			domain: '6f4c8e62.testarea.zextras.com',
 			minApiVersion: 1,
 			maxApiVersion: 2,
 			destinationUrl: '',
 			authMethods: ['password', 'saml']
-		})
+		},
+		{ status: 200 }
 	);
 });

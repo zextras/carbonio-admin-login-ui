@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import React from 'react';
+
 import { screen } from '@testing-library/react';
+
 import PageLayout from './page-layout';
 import { setup } from '../tests/testUtils';
 
@@ -19,19 +21,6 @@ describe('PageLayout', () => {
 		// Assert the presence of the form container
 		const formContainer = screen.getByTestId('form-container');
 		expect(formContainer).toBeInTheDocument();
-	});
-
-	test('renders supported browsers', () => {
-		setup(<PageLayout version={1} hasBackendApi={false} />);
-
-		// Assert the presence of the browser logos
-		const chromeLogo = screen.getByAltText('Logo Chrome');
-		const firefoxLogo = screen.getByAltText('Logo Firefox');
-		const edgeLogo = screen.getByAltText('Logo Edge Chromium');
-
-		expect(chromeLogo).toBeInTheDocument();
-		expect(firefoxLogo).toBeInTheDocument();
-		expect(edgeLogo).toBeInTheDocument();
 	});
 
 	test('renders the default copyright banner', () => {

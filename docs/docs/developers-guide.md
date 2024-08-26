@@ -21,7 +21,7 @@ npm install                                           # install dependencies fro
 ```
 
 In order to function this application does some HTTP requests to a Zextras server.  
-You can configure the URI of the server in `webpack.config.js` uncommenting lines:
+You can configure the URI of the server in `webpack.config.ts` uncommenting lines:
 ```js
     // devServer: {
 	// 	proxy: {

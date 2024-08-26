@@ -4,14 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 
-export default rest.get('/zx/login/v1/config', (req, res, ctx) => {
-	const domain = req.url.searchParams.get('domain');
-	const host = req.url.searchParams.get('host');
-	return res(
-		ctx.status(200),
-		ctx.json({
+export default http.get('/zx/login/v1/config', () => {
+	return HttpResponse.json(
+		{
 			publicUrl: 'https://infra-6f4c8e62.testarea.zextras.com',
 			loginPageBackgroundImage: '',
 			loginPageLogo: '',
@@ -26,6 +23,7 @@ export default rest.get('/zx/login/v1/config', (req, res, ctx) => {
 			zimbraPublicServiceProtocol: 'https',
 			zimbraDomainName: '6f4c8e62.testarea.zextras.com',
 			isDarkThemeEnable: false
-		})
+		},
+		{ status: 200 }
 	);
 });

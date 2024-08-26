@@ -90,10 +90,11 @@ export function prepareUrlForForward(oUrl) {
 export function generateColorSet({ regular, hover, active, disabled, focus }, dark = false) {
 	return {
 		regular,
-		hover: hover ?? dark ? lighten(0.1, regular) : darken(0.1, regular),
-		focus: focus ?? dark ? lighten(0.1, regular) : darken(0.1, regular),
-		active: active ?? dark ? lighten(0.15, regular) : darken(0.15, regular),
-		disabled: disabled ?? dark ? setLightness(0.8, regular) : desaturate(0.3, darken(0.3, regular))
+		hover: (hover ?? dark) ? lighten(0.1, regular) : darken(0.1, regular),
+		focus: (focus ?? dark) ? lighten(0.1, regular) : darken(0.1, regular),
+		active: (active ?? dark) ? lighten(0.15, regular) : darken(0.15, regular),
+		disabled:
+			(disabled ?? dark) ? setLightness(0.8, regular) : desaturate(0.3, darken(0.3, regular))
 	};
 }
 
