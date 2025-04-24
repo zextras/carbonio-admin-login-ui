@@ -52,7 +52,7 @@ export function loginToCarbonioAdmin(username, password) {
 			Body: {
 				AuthRequest: {
 					_jsns: 'urn:zimbraAdmin',
-					csrfTokenSecured: '1',
+					csrfTokenSecured: '0',
 					persistAuthTokenCookie: '1',
 					account: {
 						by: 'name',
