@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.25](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.9.24...v0.9.25) (2025-05-19)
+
+
+### Bug Fixes
+
+* [CO-2052] csrfTokenSecured 0 ([#81](https://github.com/zextras/carbonio-admin-login-ui/issues/81)) ([3feba10](https://github.com/zextras/carbonio-admin-login-ui/commit/3feba10c337272e7e333995f95bb0d6e2b413c33))
+
 ### 0.9.24 (2024-08-26)
 
 
