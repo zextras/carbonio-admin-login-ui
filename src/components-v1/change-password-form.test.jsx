@@ -137,7 +137,7 @@ describe('ChangePasswordForm', () => {
 				Body: {
 					ChangePasswordRequest: {
 						_jsns: 'urn:zimbraAccount',
-						csrfTokenSecured: '1',
+						csrfTokenSecured: '0',
 						persistAuthTokenCookie: '1',
 						account: {
 							by: 'name',
