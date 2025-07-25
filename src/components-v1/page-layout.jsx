@@ -15,6 +15,7 @@ import {
 	Icon,
 	useScreenMode
 } from '@zextras/carbonio-design-system';
+import PropTypes from 'prop-types';
 import { browserName } from 'react-device-detect';
 import { useTranslation, Trans } from 'react-i18next';
 import styled, { css } from 'styled-components';
@@ -38,7 +39,6 @@ import { getLoginConfig } from '../services/login-page-services';
 import { useLoginConfigStore } from '../store/login/store';
 import { ThemeCallbacksContext } from '../theme-provider/theme-provider';
 import { generateColorSet, prepareUrlForForward } from '../utils';
-import PropTypes from "prop-types";
 
 const LoginContainer = styled(Container)`
 	padding: 0 100px;
@@ -265,7 +265,7 @@ export default function PageLayout({ version, isAdvanced }) {
 		} else {
 			setLogo({ image: logoCarbonio, width: '221px', url: CARBONIO_LOGO_URL });
 			document.title = t('carbonio_authentication', 'Carbonio Authentication');
- 		}
+		}
 
 		return () => {
 			componentIsMounted = false;

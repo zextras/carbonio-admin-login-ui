@@ -7,6 +7,7 @@
 import React from 'react';
 
 import { render } from 'react-dom';
+
 import './i18n/i18n.config';
 import './index.css';
 import { App } from './app';
