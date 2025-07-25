@@ -33,8 +33,8 @@ const config = (
 			webSocketServer: false,
 			proxy: [
 				{
-					context: ['/zx', '/service'],
-					target: 'https://np-s04.demo.zextras.io:6071/',
+					context: ['/zx', '/service', '/advanced'],
+					target: 'https://kc-dev4-u22-ce.demo.zextras.io:6071/',
 					secure: false
 				}
 			]

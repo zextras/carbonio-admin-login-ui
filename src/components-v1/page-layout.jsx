@@ -38,6 +38,7 @@ import { getLoginConfig } from '../services/login-page-services';
 import { useLoginConfigStore } from '../store/login/store';
 import { ThemeCallbacksContext } from '../theme-provider/theme-provider';
 import { generateColorSet, prepareUrlForForward } from '../utils';
+import PropTypes from "prop-types";
 
 const LoginContainer = styled(Container)`
 	padding: 0 100px;
@@ -112,7 +113,7 @@ function DarkReaderListener() {
 	return null;
 }
 
-export default function PageLayout({ version, hasBackendApi }) {
+export default function PageLayout({ version, isAdvanced }) {
 	const [t] = useTranslation();
 	const screenMode = useScreenMode();
 	const [logo, setLogo] = useState(null);
@@ -133,7 +134,6 @@ export default function PageLayout({ version, hasBackendApi }) {
 	const [copyrightBanner, setCopyrightBanner] = useState('');
 	const { setDarkReaderState } = useContext(ThemeCallbacksContext);
 	const primaryColor = useGetPrimaryColor();
-	const [isAdvanced, SetIsAdvanced] = useState(true);
 	const isSupportedBrowser = browserName === CHROME || browserName === FIREFOX;
 
 	useEffect(() => {
@@ -148,7 +148,7 @@ export default function PageLayout({ version, hasBackendApi }) {
 
 	useLayoutEffect(() => {
 		let componentIsMounted = true;
-		if (hasBackendApi) {
+		if (isAdvanced) {
 			getLoginConfig(version, domain, domain)
 				.then((res) => {
 					if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.publicUrl));
@@ -265,13 +265,12 @@ export default function PageLayout({ version, hasBackendApi }) {
 		} else {
 			setLogo({ image: logoCarbonio, width: '221px', url: CARBONIO_LOGO_URL });
 			document.title = t('carbonio_authentication', 'Carbonio Authentication');
-			SetIsAdvanced(false);
-		}
+ 		}
 
 		return () => {
 			componentIsMounted = false;
 		};
-	}, [destinationUrl, t, domain, version, hasBackendApi]);
+	}, [destinationUrl, t, domain, version, isAdvanced]);
 
 	const LinkText = (props) => {
 		const { to, children } = props || {};
@@ -392,3 +391,8 @@ export default function PageLayout({ version, hasBackendApi }) {
 
 	return null;
 }
+
+PageLayout.propTypes = {
+	version: PropTypes.number,
+	isAdvanced: PropTypes.bool.isRequired
+};
