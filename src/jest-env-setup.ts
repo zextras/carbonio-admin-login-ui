@@ -53,3 +53,19 @@ export const createAPIInterceptor = (
 		getCalledTimes: () => calledTimes
 	};
 };
+
+const advancedSupportedURL = '/services/catalog/services';
+export const advancedSupportedApi = {
+	withError: (): APIInterceptor =>
+		createAPIInterceptor('get', advancedSupportedURL, HttpResponse.error),
+	withResponse: (response: () => HttpResponse): APIInterceptor =>
+		createAPIInterceptor('get', advancedSupportedURL, response),
+	supported: (): APIInterceptor =>
+		createAPIInterceptor('get', advancedSupportedURL, () =>
+			HttpResponse.json({ items: ['carbonio-advanced'] }, { status: 200 })
+		),
+	notSupported: (): APIInterceptor =>
+		createAPIInterceptor('get', advancedSupportedURL, () =>
+			HttpResponse.json({ items: ['carbonio-files'] }, { status: 200 })
+		)
+};

@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import { isArray } from 'lodash';
+
 type Error = {
 	errorMessage: string;
 };
@@ -18,19 +20,21 @@ function errorMessage(): Error {
 	return { errorMessage: 'Failed to check Advanced installation' };
 }
 
-export function getAdvancedSupported(): GetAdvancedSupportedResponse {
-	return fetch('/advanced/supported')
+export const getAdvancedSupported = (): GetAdvancedSupportedResponse =>
+	fetch('/services/catalog/services')
 		.then(async (res) => {
 			if (res.ok) {
 				const data = await res.json();
-				if (!('supported' in data)) {
-					return errorMessage();
+				if ('items' in data && isArray<string>(data.items)) {
+					const installedServices = data.items as Array<string>;
+					const isAdvanced =
+						installedServices.filter((service): boolean => service === 'carbonio-advanced').length >
+						0;
+					return { supported: isAdvanced };
 				}
-				return { supported: data.supported };
 			}
 			return errorMessage();
 		})
 		.catch(() => {
 			return { errorMessage: 'Failed to check Advanced installation' };
 		});
-}

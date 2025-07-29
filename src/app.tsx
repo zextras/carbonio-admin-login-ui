@@ -13,6 +13,7 @@ import { LoginAdvanced } from './loginAdvanced';
 import { LoginCE } from './loginCE';
 import { getAdvancedSupported } from './services/advanced-supported';
 import { ThemeProvider } from './theme-provider/theme-provider';
+import { ErrorPage } from './error-page';
 
 type Error = {
 	errorMessage: string;
@@ -55,7 +56,7 @@ export function App(): React.JSX.Element {
 				<Suspense fallback={<div></div>}>
 					<Router>
 						<Switch>
-							{errorResponse && <>Unable to determine product version</>}
+							{errorResponse && <ErrorPage />}
 							{isLoading && <>loading</>}
 							{supportedResponse && apiResponse.supported && <LoginAdvanced />}
 							{supportedResponse && !apiResponse.supported && <LoginCE />}

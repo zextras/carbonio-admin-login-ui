@@ -12,11 +12,7 @@ import { HttpResponse, JsonBodyType } from 'msw';
 import { setup } from './testUtils';
 import { App } from '../app';
 import { CARBONIO_CE_SUPPORTED_BROWSER_LINK, CARBONIO_SUPPORTED_BROWSER_LINK } from '../constants';
-import { APIInterceptor, createAPIInterceptor } from '../jest-env-setup';
-
-function mockAdvancedSupportedApi(response: () => HttpResponse): APIInterceptor {
-	return createAPIInterceptor('get', '/advanced/supported', response);
-}
+import { advancedSupportedApi, APIInterceptor, createAPIInterceptor } from '../jest-env-setup';
 
 function apiMinMaxVersions(version: number): APIInterceptor {
 	return createAPIInterceptor('get', '/zx/login/supported', () =>
@@ -41,25 +37,25 @@ function apiLoginConfigAPI(version: number, config: JsonBodyType): APIIntercepto
 
 describe('App', () => {
 	it('should display error if api returns error', async () => {
-		mockAdvancedSupportedApi(HttpResponse.error);
+		advancedSupportedApi.withError();
 
 		await act(async () => {
 			render(<App />);
 		});
 
-		await screen.findByText('Unable to determine product version');
+		await screen.findByText('We’re sorry, but there was an error trying to load this page.');
 	});
 
 	it('should display loading', async () => {
-		mockAdvancedSupportedApi(HttpResponse.error);
+		advancedSupportedApi.withError();
 
 		render(<App />);
 
 		await screen.findByText('loading');
 	});
 
-	it('should display Advanced Login if API ok and supported', async () => {
-		mockAdvancedSupportedApi(() => HttpResponse.json({ supported: true }, { status: 200 }));
+	it('should display Advanced Login if advanced supported', async () => {
+		advancedSupportedApi.supported();
 		const version = 2;
 		const apiInterceptor = apiMinMaxVersions(version);
 		const apiInterceptor1 = apiLoginConfigAPI(version, {
@@ -89,19 +85,21 @@ describe('App', () => {
 		expect(carbonioLink).toBeInTheDocument();
 	});
 
-	it('should display Advanced error Login if advanced supported but min-max version check API fails', async () => {
-		mockAdvancedSupportedApi(() => HttpResponse.json({ supported: true }, { status: 200 }));
+	it('should display Error if advanced supported but min-max version check API fails', async () => {
+		advancedSupportedApi.supported();
 		apiMinMaxFail();
 
 		await act(async () => {
 			setup(<App />);
 		});
 
-		expect(await screen.findByTestId('not-supported-version')).toBeInTheDocument();
+		expect(
+			await screen.findByText('We’re sorry, but there was an error trying to load this page.')
+		).toBeInTheDocument();
 	});
 
-	it('should display CE Login if API ok and supported false', async () => {
-		mockAdvancedSupportedApi(() => HttpResponse.json({ supported: false }, { status: 200 }));
+	it('should display CE Login if advanced not supported false', async () => {
+		advancedSupportedApi.notSupported();
 
 		await act(async () => {
 			setup(<App />);
