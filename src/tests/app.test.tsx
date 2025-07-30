@@ -40,7 +40,7 @@ describe('App', () => {
 		advancedSupportedApi.withError();
 
 		await act(async () => {
-			render(<App />);
+			setup(<App />);
 		});
 
 		await screen.findByText('We’re sorry, but there was an error trying to load this page.');

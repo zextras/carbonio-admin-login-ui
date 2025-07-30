@@ -5,9 +5,8 @@
  */
 import React, { useEffect, useState } from 'react';
 
-import NotSupportedVersion from './components-index/not-supported-version';
-import { getLoginSupported } from './services/login-page-services';
 import { ErrorPage } from './error-page';
+import { getLoginSupported } from './services/login-page-services';
 
 const PageLayoutV1 = React.lazy(() => import('./components-v1/page-layout'));
 
