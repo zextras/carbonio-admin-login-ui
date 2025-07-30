@@ -51,7 +51,7 @@ describe('App', () => {
 
 		render(<App />);
 
-		await screen.findByText('loading');
+		await screen.findByTestId('loading-view');
 	});
 
 	it('should display Advanced Login if advanced supported', async () => {

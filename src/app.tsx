@@ -14,6 +14,7 @@ import { LoginCE } from './loginCE';
 import { getAdvancedSupported } from './services/advanced-supported';
 import { ThemeProvider } from './theme-provider/theme-provider';
 import { ErrorPage } from './error-page';
+import { LoadingView } from './loading-view';
 
 type Error = {
 	errorMessage: string;
@@ -57,7 +58,7 @@ export function App(): React.JSX.Element {
 					<Router>
 						<Switch>
 							{errorResponse && <ErrorPage />}
-							{isLoading && <>loading</>}
+							{isLoading && <LoadingView />}
 							{supportedResponse && apiResponse.supported && <LoginAdvanced />}
 							{supportedResponse && !apiResponse.supported && <LoginCE />}
 						</Switch>
