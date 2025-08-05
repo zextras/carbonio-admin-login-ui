@@ -30,6 +30,11 @@
     "copy_right": "Copyright",
     "credentials_not_valid": "Credentials are not valid, please check data and try again",
     "details": "Details",
+    "error": {
+        "contact_support": "Contact support or try refreshing the page",
+        "loading_page": "We’re sorry, but there was an error trying to load this page.",
+        "something_went_wrong": "Something went wrong"
+    },
     "error_loading_page": "We’re sorry, but there was an error trying to load this page.",
     "login": "Login",
     "login_saml": "Login SAML",
