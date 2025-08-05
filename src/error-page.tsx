@@ -26,7 +26,7 @@ export const ErrorPage = (): React.JSX.Element => {
 					mainAlignment={'space-evenly'}
 				>
 					<Text style={{ fontSize: '64px' }} weight={'light'} color={'primary'}>
-						{t('something_went_wrong', 'Something went wrong')}
+						{t('error.something_went_wrong', 'Something went wrong')}
 					</Text>
 					<Text
 						overflow={'break-word'}
@@ -35,7 +35,7 @@ export const ErrorPage = (): React.JSX.Element => {
 						color={'secondary'}
 					>
 						{t(
-							'error_loading_page',
+							'error.loading_page',
 							'We’re sorry, but there was an error trying to load this page.'
 						)}
 					</Text>
@@ -44,7 +44,7 @@ export const ErrorPage = (): React.JSX.Element => {
 			<Container mainAlignment={'center'} height={'fit'}>
 				<Row gap={'16px'}>
 					<Text style={{ fontSize: '24px' }} weight={'light'} color={'secondary'}>
-						{t('contact_support_or_refresh', 'Contact support or try refreshing the page')}
+						{t('error.contact_support', 'Contact support or try refreshing the page')}
 					</Text>
 					<Button
 						iconPlacement={'left'}
