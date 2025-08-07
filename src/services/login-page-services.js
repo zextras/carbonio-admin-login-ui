@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export function getLoginSupported() {
-	return fetch('/zx/login/supported').then((res) => {
+export function getLoginSupported(signal) {
+	return fetch('/zx/login/supported', { signal }).then((res) => {
 		if (res.status === 200) return res.json();
 		throw Error('Network Error');
 	});

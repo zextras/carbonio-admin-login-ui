@@ -12,7 +12,7 @@ import { setup } from '../tests/testUtils';
 
 describe('PageLayout', () => {
 	test('renders the logo and form', () => {
-		setup(<PageLayout version={3} hasBackendApi={false} />);
+		setup(<PageLayout version={3} isAdvanced={false} />);
 
 		// Assert the presence of the logo image
 		const logoImage = screen.getByTestId('logo');
@@ -24,7 +24,7 @@ describe('PageLayout', () => {
 	});
 
 	test('renders the default copyright banner', () => {
-		setup(<PageLayout version={1} hasBackendApi={false} />);
+		setup(<PageLayout version={1} isAdvanced={false} />);
 
 		// Assert the presence of the default copyright banner
 		const defaultBanner = screen.getByTestId('default-banner');

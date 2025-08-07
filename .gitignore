@@ -12,6 +12,6 @@
 /junit.xml
 /.npmrc
 /dist
-LICENSES/*
+
 
 .DS_Store
