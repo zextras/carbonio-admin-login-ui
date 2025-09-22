@@ -19,11 +19,18 @@ depends=(
   "carbonio-nginx"
   "carbonio-webui-i18n"
 )
+source=(
+  "${pkgname}-dist.tar.gz"
+)
+sha256sums=(
+  'SKIP'
+)
 
 package() {
-  cd "${srcdir}"
-  mkdir -p "${pkgdir}/opt/zextras/admin/login/"
-  cp -a ../../dist/* "${pkgdir}/opt/zextras/admin/login"
+  install -dm755 \
+    "${pkgdir}/opt/zextras/admin/login/"
+  cp -a "${srcdir}/dist/"* \
+    "${pkgdir}/opt/zextras/admin/login"
   ln -s /opt/zextras/admin/login-i18n \
     "${pkgdir}/opt/zextras/admin/login/i18n"
 }
