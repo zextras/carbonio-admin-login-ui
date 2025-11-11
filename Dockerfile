@@ -1,10 +1,15 @@
-FROM alpine
+FROM --platform=$BUILDPLATFORM alpine:3.22.2 AS builder
 
-RUN apk add --no-cache jq
+ENV WEB_PATH="/opt/zextras/admin/login"
 
-COPY dist /tmp/build
+# Set up directories
+RUN mkdir -p "${WEB_PATH}"
 
-RUN ADMIN_PATH="/opt/zextras/admin/login" \
-&& mkdir -p "${ADMIN_PATH}" \
-&& cp -r /tmp/build/* "${ADMIN_PATH}" \
-&& rm -r /tmp/build
+# Copy application files
+COPY dist ${WEB_PATH}/
+
+# Final stage - built for all target platforms
+FROM alpine:3.22.2
+
+# Just copy the prepared files (no execution needed)
+COPY --from=builder /opt/zextras /opt/zextras
