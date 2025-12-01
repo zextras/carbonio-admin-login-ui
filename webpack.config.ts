@@ -34,7 +34,7 @@ const config = (
 			proxy: [
 				{
 					context: ['/zx', '/service', '/advanced'],
-					target: 'https://kc-dev4-u22-ce.demo.zextras.io:6071/',
+					target: 'https://dt1-single-srv1.demo.zextras.io:6071/',
 					secure: false
 				}
 			]

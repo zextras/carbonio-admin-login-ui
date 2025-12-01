@@ -104,7 +104,10 @@ export function ZimbraForm({ destinationUrl, isDarkTheme }) {
 		<>
 			{progress === formState.credentials && (
 				<CredentialsForm
-					configuration={{ destinationUrl, authMethods: ['zimbra'] }}
+					configuration={{
+						destinationUrl: 'https://dt1-single-srv1.demo.zextras.io:6071',
+						authMethods: ['password', 'recovery-token', 'anonymous', 'saml']
+					}}
 					disableInputs={false}
 					authError={authError}
 					submitCredentials={submitCredentials}
