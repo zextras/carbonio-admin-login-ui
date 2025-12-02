@@ -97,8 +97,11 @@ export default function CredentialsForm({
 	}, []);
 
 	return (
-		<form style={{ width: '100%' }} data-testid="credentials-form">
-			<input type="submit" style={{ display: 'none' }} />
+		<form
+			style={{ width: '100%' }}
+			data-testid="credentials-form"
+			onSubmit={(e) => e.preventDefault()}
+		>
 			<Row padding={{ bottom: 'large' }}>
 				<Input
 					defaultValue={username}
