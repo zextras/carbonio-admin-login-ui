@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import { browserName } from 'react-device-detect';
 import { useTranslation, Trans } from 'react-i18next';
 import styled, { css } from 'styled-components';
-
+import FormSelector from './form-selector';
 import logoCarbonio from '../../assets/carbonio-admin-panel.svg';
 import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
 import backgroundImage from '../../assets/carbonio_light.jpg';
@@ -120,12 +120,16 @@ export default function PageLayout({ version, isAdvanced }) {
 	const [serverError, setServerError] = useState(false);
 
 	const urlParams = new URLSearchParams(window.location.search);
+	console.log('PageLayout render::', 
+		{ version, isAdvanced, urlParams, 
+			search: window.location.search, 
+			destinationUrl: urlParams.get('destinationUrl'), 
+			domain: urlParams.get('domain') });
 	const [destinationUrl, setDestinationUrl] = useState(
 		prepareUrlForForward(urlParams.get('destinationUrl'))
 	);
 	const [domain, setDomain] = useState(
-		urlParams.get('domain') ?? destinationUrl ?? window?.location?.hostname
-	);
+		urlParams.get('domain') ?? destinationUrl);
 
 	const [bg, setBg] = useState(backgroundImage);
 	const [isDefaultBg, setIsDefaultBg] = useState(true);
@@ -135,7 +139,7 @@ export default function PageLayout({ version, isAdvanced }) {
 	const { setDarkReaderState } = useContext(ThemeCallbacksContext);
 	const primaryColor = useGetPrimaryColor();
 	const isSupportedBrowser = browserName === CHROME || browserName === FIREFOX;
-
+	console.log('PageLayout render::::', {destinationUrl}); 
 	useEffect(() => {
 		if (isDefaultBg) {
 			if (isDarkTheme) {
@@ -331,8 +335,11 @@ export default function PageLayout({ version, isAdvanced }) {
 								</Container>
 							</Padding>
 						</Container>
-
-						<ZimbraForm destinationUrl={destinationUrl} />
+						{isAdvanced ? (
+							<FormSelector domain={domain} destinationUrl={destinationUrl}/>
+						) : (
+							<ZimbraForm destinationUrl={destinationUrl} />
+						)}
 
 						<Container
 							crossAlignment="flex-start"

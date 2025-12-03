@@ -26,6 +26,7 @@ export default function CredentialsForm({
 	disableInputs,
 	loading = false
 }) {
+	console.log('CredentialsForm render::', { authError, configuration, disableInputs, loading });
 	const [t] = useTranslation();
 
 	const [username, setUsername] = useState(urlParams.get('username') || '');
@@ -97,8 +98,7 @@ export default function CredentialsForm({
 	}, []);
 
 	return (
-		<form onSubmit={submitUserPassword} style={{ width: '100%' }} data-testid="credentials-form">
-			<input type="submit" style={{ display: 'none' }} />
+		<form onSubmit={(e) => e.preventDefault()} style={{ width: '100%' }} data-testid="credentials-form">
 			<Row padding={{ bottom: 'large' }}>
 				<Input
 					defaultValue={username}
