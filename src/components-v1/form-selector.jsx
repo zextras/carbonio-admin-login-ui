@@ -13,7 +13,6 @@ import ServerNotResponding from '../components-index/server-not-responding';
 import { getAuthSupported, doAuthLogout } from '../services/auth-configuration-service';
 
 export default function FormSelector({ destinationUrl, domain }) {
-	console.log('==== FormSelector render:::', { destinationUrl, domain });
 	const [configuration, setConfiguration] = useState(null);
 	const [error, setError] = useState(false);
 	const [disableInputs, setDisableInputs] = useState(true);

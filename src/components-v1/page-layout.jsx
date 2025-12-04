@@ -120,11 +120,6 @@ export default function PageLayout({ version, isAdvanced }) {
 	const [serverError, setServerError] = useState(false);
 
 	const urlParams = new URLSearchParams(window.location.host);
-	console.log('PageLayout render::->', 
-		{ version, isAdvanced, urlParams, 
-			search: window.location.search, 
-			destinationUrl: urlParams.get('destinationUrl'), 
-			domain: urlParams.get('domain') });
 	const [destinationUrl, setDestinationUrl] = useState(
 		prepareUrlForForward(urlParams.get('destinationUrl')) ?? prepareUrlForForward(window.location.origin)
 	);
@@ -139,7 +134,6 @@ export default function PageLayout({ version, isAdvanced }) {
 	const { setDarkReaderState } = useContext(ThemeCallbacksContext);
 	const primaryColor = useGetPrimaryColor();
 	const isSupportedBrowser = browserName === CHROME || browserName === FIREFOX;
-	console.log('PageLayout render::::', {destinationUrl}); 
 	useEffect(() => {
 		if (isDefaultBg) {
 			if (isDarkTheme) {

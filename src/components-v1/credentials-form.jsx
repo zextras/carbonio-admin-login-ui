@@ -26,9 +26,7 @@ export default function CredentialsForm({
 	disableInputs,
 	loading = false
 }) {
-	console.log('CredentialsForm render::', { authError, configuration, disableInputs, loading });
 	const [t] = useTranslation();
-
 	const [username, setUsername] = useState(urlParams.get('username') || '');
 	const [password, setPassword] = useState('');
 	const [hasClassicUi, setHasClassicUi] = useState(false);
