@@ -120,16 +120,16 @@ export default function PageLayout({ version, isAdvanced }) {
 	const [serverError, setServerError] = useState(false);
 
 	const urlParams = new URLSearchParams(window.location.host);
-	console.log('PageLayout render::', 
+	console.log('PageLayout render::->', 
 		{ version, isAdvanced, urlParams, 
 			search: window.location.search, 
 			destinationUrl: urlParams.get('destinationUrl'), 
 			domain: urlParams.get('domain') });
 	const [destinationUrl, setDestinationUrl] = useState(
-		prepareUrlForForward(urlParams.get('destinationUrl'))
+		prepareUrlForForward(urlParams.get('destinationUrl')) ?? prepareUrlForForward(window.location.origin)
 	);
 	const [domain, setDomain] = useState(
-		urlParams.get('domain') ?? destinationUrl);
+		urlParams.get('domain'));
 
 	const [bg, setBg] = useState(backgroundImage);
 	const [isDefaultBg, setIsDefaultBg] = useState(true);
