@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import { browserName } from 'react-device-detect';
 import { useTranslation, Trans } from 'react-i18next';
 import styled, { css } from 'styled-components';
+
 import FormSelector from './form-selector';
 import logoCarbonio from '../../assets/carbonio-admin-panel.svg';
 import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
@@ -119,12 +120,12 @@ export default function PageLayout({ version, isAdvanced }) {
 	const [logo, setLogo] = useState(null);
 	const [serverError, setServerError] = useState(false);
 
-	const urlParams = new URLSearchParams(window.location.host);
+	const urlParams = new URLSearchParams(window.location.search);
 	const [destinationUrl, setDestinationUrl] = useState(
-		prepareUrlForForward(urlParams.get('destinationUrl')) ?? prepareUrlForForward(window.location.origin)
+		prepareUrlForForward(urlParams.get('destinationUrl')) ??
+			prepareUrlForForward(window.location.origin)
 	);
-	const [domain, setDomain] = useState(
-		urlParams.get('domain'));
+	const [domain, setDomain] = useState(urlParams.get('domain'));
 
 	const [bg, setBg] = useState(backgroundImage);
 	const [isDefaultBg, setIsDefaultBg] = useState(true);
@@ -330,7 +331,7 @@ export default function PageLayout({ version, isAdvanced }) {
 							</Padding>
 						</Container>
 						{isAdvanced ? (
-							<FormSelector domain={domain} destinationUrl={destinationUrl}/>
+							<FormSelector domain={domain} destinationUrl={destinationUrl} />
 						) : (
 							<ZimbraForm destinationUrl={destinationUrl} />
 						)}
