@@ -245,6 +245,11 @@ function CopyrightBanner({ copyrightBanner, t }) {
 	);
 }
 
+CopyrightBanner.propTypes = {
+	copyrightBanner: PropTypes.string,
+	t: PropTypes.func.isRequired
+};
+
 function LinkText({ to, children, primaryColor }) {
 	return (
 		<a
@@ -261,6 +266,12 @@ function LinkText({ to, children, primaryColor }) {
 		</a>
 	);
 }
+
+LinkText.propTypes = {
+	to: PropTypes.string,
+	children: PropTypes.node,
+	primaryColor: PropTypes.string
+};
 
 export default function PageLayout({ version, isAdvanced }) {
 	const [t] = useTranslation();
