@@ -220,6 +220,42 @@ function applyV3Customization(res, logo, setBg, setIsDefaultBg, setCopyrightBann
 	return updatedLogo;
 }
 
+function processLoginConfig(
+	res,
+	version,
+	destinationUrl,
+	domain,
+	setDestinationUrl,
+	setDomain,
+	setBg,
+	setIsDefaultBg,
+	setIsDarkTheme,
+	setEditedTheme,
+	setCopyrightBanner,
+	setLogo,
+	t
+) {
+	configureBasicSettings(res, setBg, setIsDefaultBg, setIsDarkTheme);
+	const _logo = createLogoObject(res);
+	setDocumentTitle(res, t);
+
+	if (res.loginPageFavicon) {
+		setFavicon(res.loginPageFavicon);
+	}
+
+	if (res.loginPageColorSet) {
+		applyColorSet(res.loginPageColorSet, setEditedTheme);
+	}
+
+	if (version === 3) {
+		useLoginConfigStore.setState(res);
+		const v3Logo = applyV3Customization(res, _logo, setBg, setIsDefaultBg, setCopyrightBanner);
+		setLogo(v3Logo);
+	} else {
+		setLogo(_logo);
+	}
+}
+
 export default function PageLayout({ version, isAdvanced }) {
 	const [t] = useTranslation();
 	const screenMode = useScreenMode();
@@ -260,36 +296,24 @@ export default function PageLayout({ version, isAdvanced }) {
 					if (!domain) setDomain(res.zimbraDomainName);
 
 					if (componentIsMounted) {
-						configureBasicSettings(res, setBg, setIsDefaultBg, setIsDarkTheme);
-						const _logo = createLogoObject(res);
-						setDocumentTitle(res, t);
-
-						if (res.loginPageFavicon) {
-							setFavicon(res.loginPageFavicon);
-						}
-
-						if (res.loginPageColorSet) {
-							applyColorSet(res.loginPageColorSet, setEditedTheme);
-						}
-
-						if (version === 3) {
-							useLoginConfigStore.setState(res);
-							// In case of v3 API response
-							const v3Logo = applyV3Customization(
-								res,
-								_logo,
-								setBg,
-								setIsDefaultBg,
-								setCopyrightBanner
-							);
-							setLogo(v3Logo);
-						} else {
-							setLogo(_logo);
-						}
+						processLoginConfig(
+							res,
+							version,
+							destinationUrl,
+							domain,
+							setDestinationUrl,
+							setDomain,
+							setBg,
+							setIsDefaultBg,
+							setIsDarkTheme,
+							setEditedTheme,
+							setCopyrightBanner,
+							setLogo,
+							t
+						);
 					}
 				})
 				.catch(() => {
-					// It should never happen, If the server doesn't respond this page will not be loaded
 					if (componentIsMounted) setServerError(true);
 				});
 		} else {
