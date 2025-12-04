@@ -119,7 +119,7 @@ export default function PageLayout({ version, isAdvanced }) {
 	const [logo, setLogo] = useState(null);
 	const [serverError, setServerError] = useState(false);
 
-	const urlParams = new URLSearchParams(window.location.search);
+	const urlParams = new URLSearchParams(window.location.host);
 	console.log('PageLayout render::', 
 		{ version, isAdvanced, urlParams, 
 			search: window.location.search, 
