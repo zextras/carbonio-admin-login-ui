@@ -39,7 +39,7 @@ import { useGetPrimaryColor } from '../primary-color/use-get-primary-color';
 import { getLoginConfig } from '../services/login-page-services';
 import { useLoginConfigStore } from '../store/login/store';
 import { ThemeCallbacksContext } from '../theme-provider/theme-provider';
-import { generateColorSet, prepareUrlForForward } from '../utils';
+import { prepareUrlForForward } from '../utils';
 
 const LoginContainer = styled(Container)`
 	padding: 0 100px;
@@ -159,25 +159,6 @@ function setFavicon(faviconUrl) {
 	document.getElementsByTagName('head')[0].appendChild(link);
 }
 
-function applyColorSet(colorSet, setEditedTheme) {
-	if (colorSet.primary) {
-		setEditedTheme((et) => ({
-			...et,
-			'palette.primary': generateColorSet({
-				regular: `#${colorSet.primary}`
-			})
-		}));
-	}
-	if (colorSet.secondary) {
-		setEditedTheme((et) => ({
-			...et,
-			'palette.secondary': generateColorSet({
-				regular: `#${colorSet.secondary}`
-			})
-		}));
-	}
-}
-
 function applyV3Customization(res, logo, setBg, setIsDefaultBg, setCopyrightBanner) {
 	if (res.carbonioAdminUiTitle) {
 		document.title = res.carbonioAdminUiTitle;
@@ -220,31 +201,22 @@ function applyV3Customization(res, logo, setBg, setIsDefaultBg, setCopyrightBann
 	return updatedLogo;
 }
 
-function processLoginConfig(
+function processLoginConfig({
 	res,
 	version,
-	destinationUrl,
-	domain,
-	setDestinationUrl,
-	setDomain,
 	setBg,
 	setIsDefaultBg,
 	setIsDarkTheme,
-	setEditedTheme,
 	setCopyrightBanner,
 	setLogo,
 	t
-) {
+}) {
 	configureBasicSettings(res, setBg, setIsDefaultBg, setIsDarkTheme);
 	const _logo = createLogoObject(res);
 	setDocumentTitle(res, t);
 
 	if (res.loginPageFavicon) {
 		setFavicon(res.loginPageFavicon);
-	}
-
-	if (res.loginPageColorSet) {
-		applyColorSet(res.loginPageColorSet, setEditedTheme);
 	}
 
 	if (version === 3) {
@@ -254,6 +226,40 @@ function processLoginConfig(
 	} else {
 		setLogo(_logo);
 	}
+}
+
+function CopyrightBanner({ copyrightBanner, t }) {
+	if (copyrightBanner) {
+		return (
+			<Text size="small" overflow="break-word">
+				{copyrightBanner}
+			</Text>
+		);
+	}
+	return (
+		<Text size="small" overflow="break-word" data-testid="default-banner">
+			{t('copy_right', 'Copyright')} &copy;
+			{` ${new Date().getFullYear()} Zextras, `}
+			{t('all_rights_reserved', 'All rights reserved')}
+		</Text>
+	);
+}
+
+function LinkText({ to, children, primaryColor }) {
+	return (
+		<a
+			href={to || '#'}
+			target="_blank"
+			rel="noreferrer"
+			style={{
+				textDecorationLine: 'underline',
+				cursor: 'pointer',
+				color: primaryColor || '#2b73d2'
+			}}
+		>
+			{children}
+		</a>
+	);
 }
 
 export default function PageLayout({ version, isAdvanced }) {
@@ -271,20 +277,14 @@ export default function PageLayout({ version, isAdvanced }) {
 
 	const [bg, setBg] = useState(backgroundImage);
 	const [isDefaultBg, setIsDefaultBg] = useState(true);
-	const [editedTheme, setEditedTheme] = useState({});
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
 	const [copyrightBanner, setCopyrightBanner] = useState('');
-	const { setDarkReaderState } = useContext(ThemeCallbacksContext);
 	const primaryColor = useGetPrimaryColor();
 	const isSupportedBrowser = browserName === CHROME || browserName === FIREFOX;
+
 	useEffect(() => {
-		if (isDefaultBg) {
-			if (isDarkTheme) {
-				setBg(darkBackgroundImage);
-			} else {
-				setBg(backgroundImage);
-			}
-		}
+		if (!isDefaultBg) return;
+		setBg(isDarkTheme ? darkBackgroundImage : backgroundImage);
 	}, [isDarkTheme, isDefaultBg]);
 
 	useLayoutEffect(() => {
@@ -296,21 +296,16 @@ export default function PageLayout({ version, isAdvanced }) {
 					if (!domain) setDomain(res.zimbraDomainName);
 
 					if (componentIsMounted) {
-						processLoginConfig(
+						processLoginConfig({
 							res,
 							version,
-							destinationUrl,
-							domain,
-							setDestinationUrl,
-							setDomain,
 							setBg,
 							setIsDefaultBg,
 							setIsDarkTheme,
-							setEditedTheme,
 							setCopyrightBanner,
 							setLogo,
 							t
-						);
+						});
 					}
 				})
 				.catch(() => {
@@ -326,45 +321,27 @@ export default function PageLayout({ version, isAdvanced }) {
 		};
 	}, [destinationUrl, t, domain, version, isAdvanced]);
 
-	const LinkText = (props) => {
-		const { to, children } = props || {};
-		return (
-			<a
-				href={to || '#'}
-				target="_blank"
-				rel="noreferrer"
-				style={{
-					textDecorationLine: 'underline',
-					cursor: 'pointer',
-					color: primaryColor || '#2b73d2'
-				}}
-			>
-				{children}
-			</a>
-		);
-	};
-
 	if (serverError) return <ServerNotResponding />;
+	if (!logo) return null;
 
-	if (logo) {
-		const logoHtml = (
-			<img
-				alt="Logo"
-				src={logo.image}
-				width={logo.width}
-				style={{
-					maxWidth: '100%',
-					maxHeight: '150px',
-					display: 'block',
-					marginLeft: 'auto',
-					marginRight: 'auto'
-				}}
-				data-testid="logo"
-			/>
-		);
+	const logoHtml = (
+		<img
+			alt="Logo"
+			src={logo.image}
+			width={logo.width}
+			style={{
+				maxWidth: '100%',
+				maxHeight: '150px',
+				display: 'block',
+				marginLeft: 'auto',
+				marginRight: 'auto'
+			}}
+			data-testid="logo"
+		/>
+	);
 
-		return (
-			<LoginContainer screenMode={screenMode} isDefaultBg={isDefaultBg} backgroundImage={bg}>
+	return (
+		<LoginContainer screenMode={screenMode} isDefaultBg={isDefaultBg} backgroundImage={bg}>
 				<DarkReaderListener />
 				<FormContainer data-testid="form-container">
 					<FormWrapper
@@ -417,6 +394,7 @@ export default function PageLayout({ version, isAdvanced }) {
 										components={{
 											a: (
 												<LinkText
+													primaryColor={primaryColor}
 													to={
 														isAdvanced
 															? CARBONIO_SUPPORTED_BROWSER_LINK
@@ -428,25 +406,12 @@ export default function PageLayout({ version, isAdvanced }) {
 									/>
 								</Text>
 							</Row>
-							{copyrightBanner ? (
-								<Text size="small" overflow="break-word">
-									{copyrightBanner}
-								</Text>
-							) : (
-								<Text size="small" overflow="break-word" data-testid="default-banner">
-									{t('copy_right', 'Copyright')} &copy;
-									{` ${new Date().getFullYear()} Zextras, `}
-									{t('all_rights_reserved', 'All rights reserved')}
-								</Text>
-							)}
+							<CopyrightBanner copyrightBanner={copyrightBanner} t={t} />
 						</Container>
 					</FormWrapper>
 				</FormContainer>
 			</LoginContainer>
 		);
-	}
-
-	return null;
 }
 
 PageLayout.propTypes = {
