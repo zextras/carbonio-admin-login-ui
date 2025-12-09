@@ -30,4 +30,21 @@ describe('PageLayout', () => {
 		const defaultBanner = screen.getByTestId('default-banner');
 		expect(defaultBanner).toBeInTheDocument();
 	});
+
+	test('renders custom logo when loginPageLogo and loginPageSkinLogoUrl are provided in config', async () => {
+		setup(<PageLayout version={1} isAdvanced={true} />);
+
+		// Wait for the component to load the config and render
+		const logoImage = await screen.findByTestId('logo', {}, { timeout: 5000 });
+		expect(logoImage).toBeInTheDocument();
+		
+		// Verify custom logo is rendered with 100% width
+		expect(logoImage).toHaveAttribute('src', 'https://example.com/test-logo.png');
+		expect(logoImage).toHaveAttribute('width', '100%');
+
+		// Verify logo link is rendered with custom URL
+		const logoLink = await screen.findByTestId('logo-link');
+		expect(logoLink).toBeInTheDocument();
+		expect(logoLink).toHaveAttribute('href', 'https://example.com/test-url');
+	}, 10000);
 });

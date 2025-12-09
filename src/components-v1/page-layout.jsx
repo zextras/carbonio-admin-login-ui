@@ -364,7 +364,7 @@ export default function PageLayout({ version, isAdvanced }) {
 							<Padding value="28px 0 28px" crossAlignment="center" width="100%">
 								<Container crossAlignment="center">
 									{logo.url ? (
-										<a target="_blank" href={logo.url} rel="noreferrer">
+										<a target="_blank" href={logo.url} rel="noreferrer" data-testid="logo-link">
 											{logoHtml}
 										</a>
 									) : (
