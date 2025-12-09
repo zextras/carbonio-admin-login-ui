@@ -353,76 +353,76 @@ export default function PageLayout({ version, isAdvanced }) {
 
 	return (
 		<LoginContainer screenMode={screenMode} isDefaultBg={isDefaultBg} backgroundImage={bg}>
-				<DarkReaderListener />
-				<FormContainer data-testid="form-container">
-					<FormWrapper
-						mainAlignment="space-between"
-						screenMode={screenMode}
-						isDarkThmeEnabled={isDarkTheme}
-					>
-						<Container mainAlignment="flex-start" height="auto">
-							<Padding value="28px 0 28px" crossAlignment="center" width="100%">
-								<Container crossAlignment="center">
-									{logo.url ? (
-										<a target="_blank" href={logo.url} rel="noreferrer" data-testid="logo-link">
-											{logoHtml}
-										</a>
-									) : (
-										logoHtml
-									)}
-								</Container>
-							</Padding>
-						</Container>
-						{isAdvanced ? (
-							<FormSelector domain={domain} destinationUrl={destinationUrl} />
-						) : (
-							<ZimbraForm destinationUrl={destinationUrl} />
-						)}
+			<DarkReaderListener />
+			<FormContainer data-testid="form-container">
+				<FormWrapper
+					mainAlignment="space-between"
+					screenMode={screenMode}
+					isDarkThmeEnabled={isDarkTheme}
+				>
+					<Container mainAlignment="flex-start" height="auto">
+						<Padding value="28px 0 28px" crossAlignment="center" width="100%">
+							<Container crossAlignment="center">
+								{logo.url ? (
+									<a target="_blank" href={logo.url} rel="noreferrer" data-testid="logo-link">
+										{logoHtml}
+									</a>
+								) : (
+									logoHtml
+								)}
+							</Container>
+						</Padding>
+					</Container>
+					{isAdvanced ? (
+						<FormSelector domain={domain} destinationUrl={destinationUrl} />
+					) : (
+						<ZimbraForm destinationUrl={destinationUrl} />
+					)}
 
-						<Container
-							crossAlignment="flex-start"
-							height="auto"
-							padding={{ bottom: 'extralarge', top: 'extralarge' }}
-						>
-							<Row padding={{ top: 'large', bottom: 'large' }} wrap="nowrap">
-								<Padding right="extrasmall">
-									<Icon
-										color="secondary"
-										icon={isSupportedBrowser ? 'CheckmarkOutline' : 'InfoOutline'}
-										size="medium"
-									/>
-								</Padding>
-								<Text size="small" color="secondary" weight="light">
-									<Trans
-										i18nKey={
-											isSupportedBrowser ? 'browser_fully_supported' : 'browser_limited_supported'
-										}
-										defaults={
-											isSupportedBrowser
-												? 'Your browser is fully <a>supported</a>'
-												: 'Having troubles? Try a fully <a>supported</a> browser'
-										}
-										components={{
-											a: (
-												<LinkText
-													primaryColor={primaryColor}
-													to={
-														isAdvanced
-															? CARBONIO_SUPPORTED_BROWSER_LINK
-															: CARBONIO_CE_SUPPORTED_BROWSER_LINK
-													}
-												/>
-											)
-										}}
-									/>
-								</Text>
-							</Row>
-							<CopyrightBanner copyrightBanner={copyrightBanner} t={t} />
-						</Container>
-					</FormWrapper>
-				</FormContainer>
-			</LoginContainer>
-		);
+					<Container
+						crossAlignment="flex-start"
+						height="auto"
+						padding={{ bottom: 'extralarge', top: 'extralarge' }}
+					>
+						<Row padding={{ top: 'large', bottom: 'large' }} wrap="nowrap">
+							<Padding right="extrasmall">
+								<Icon
+									color="secondary"
+									icon={isSupportedBrowser ? 'CheckmarkOutline' : 'InfoOutline'}
+									size="medium"
+								/>
+							</Padding>
+							<Text size="small" color="secondary" weight="light">
+								<Trans
+									i18nKey={
+										isSupportedBrowser ? 'browser_fully_supported' : 'browser_limited_supported'
+									}
+									defaults={
+										isSupportedBrowser
+											? 'Your browser is fully <a>supported</a>'
+											: 'Having troubles? Try a fully <a>supported</a> browser'
+									}
+									components={{
+										a: (
+											<LinkText
+												primaryColor={primaryColor}
+												to={
+													isAdvanced
+														? CARBONIO_SUPPORTED_BROWSER_LINK
+														: CARBONIO_CE_SUPPORTED_BROWSER_LINK
+												}
+											/>
+										)
+									}}
+								/>
+							</Text>
+						</Row>
+						<CopyrightBanner copyrightBanner={copyrightBanner} t={t} />
+					</Container>
+				</FormWrapper>
+			</FormContainer>
+		</LoginContainer>
+	);
 }
 
 PageLayout.propTypes = {
