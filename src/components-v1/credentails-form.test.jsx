@@ -50,7 +50,7 @@ describe('CredentialsForm', () => {
 	});
 
 	test('displays SAML login button when SAML auth method is available', () => {
-		const { user } = setup(
+		setup(
 			<CredentialsForm
 				authError=""
 				submitCredentials={jest.fn()}
@@ -65,7 +65,7 @@ describe('CredentialsForm', () => {
 	});
 
 	test('does not display SAML login button when SAML auth method is not available', () => {
-		const { user } = setup(
+		setup(
 			<CredentialsForm
 				authError=""
 				submitCredentials={jest.fn()}
@@ -77,5 +77,31 @@ describe('CredentialsForm', () => {
 
 		const samlButton = screen.queryByLabelText('Login SAML');
 		expect(samlButton).not.toBeInTheDocument();
+	});
+
+	test('prevents default form submission', async () => {
+		const submitCredentialsMock = jest.fn();
+		const configuration = {
+			authMethods: ['password'],
+			destinationUrl: ''
+		};
+
+		setup(
+			<CredentialsForm
+				authError=""
+				submitCredentials={submitCredentialsMock}
+				configuration={configuration}
+				disableInputs={false}
+				loading={false}
+			/>
+		);
+
+		const form = screen.getByTestId('credentials-form');
+		const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+		const preventDefaultSpy = jest.spyOn(submitEvent, 'preventDefault');
+
+		form.dispatchEvent(submitEvent);
+
+		expect(preventDefaultSpy).toHaveBeenCalled();
 	});
 });
