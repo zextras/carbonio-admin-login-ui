@@ -18,6 +18,7 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, Dispatch<S
 	}, [initialValue, key]);
 
 	const [storedValue, setStoredValue] = useState<T>(readValue());
+	
 	const setValue = (value: T | ((val: T) => T)): void => {
 		try {
 			const valueToStore = value instanceof Function ? value(storedValue) : value;
@@ -26,10 +27,6 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, Dispatch<S
 				const prevValueJSON = JSON.stringify(prevState);
 				if (prevValueJSON !== valueToStoreJSON) {
 					localStorage.setItem(key, valueToStoreJSON);
-					// Defer the storage event dispatch to avoid render-phase updates
-					queueMicrotask(() => {
-						window.dispatchEvent(new Event('storage'));
-					});
 					return valueToStore;
 				}
 				return prevState;
@@ -49,7 +46,7 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, Dispatch<S
 		return () => {
 			window.removeEventListener('storage', updateValue);
 		};
-	}, [readValue, updateValue]);
+	}, [updateValue]);
 
 	return [storedValue, setValue];
 }
