@@ -294,8 +294,9 @@ export default function PageLayout({ version, isAdvanced }) {
 	const isSupportedBrowser = browserName === CHROME || browserName === FIREFOX;
 
 	useEffect(() => {
-		if (!isDefaultBg) return;
-		setBg(isDarkTheme ? darkBackgroundImage : backgroundImage);
+		if (isDefaultBg) {
+			setBg(isDarkTheme ? darkBackgroundImage : backgroundImage);
+		}
 	}, [isDarkTheme, isDefaultBg]);
 
 	useLayoutEffect(() => {
