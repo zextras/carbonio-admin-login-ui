@@ -128,4 +128,35 @@ describe('PageLayout', () => {
 			expect(formContainer).toBeInTheDocument();
 		});
 	});
+
+	test('should set favicon when loginPageFavicon is provided', async () => {
+		const mockFaviconUrl = 'https://example.com/favicon.ico';
+		const mockResponse = {
+			loginPageFavicon: mockFaviconUrl,
+			publicUrl: MOCK_PUBLIC_URL,
+			zimbraDomainName: MOCK_DOMAIN_NAME
+		};
+
+		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
+
+		setup(<PageLayout version={TEST_VERSION} isAdvanced />);
+
+		await waitFor(() => {
+			const formContainer = screen.getByTestId('form-container');
+			expect(formContainer).toBeInTheDocument();
+		});
+
+		// Check if favicon link was added to the document head
+		await waitFor(() => {
+			// eslint-disable-next-line testing-library/no-node-access
+			const faviconLink = document.querySelector("link[rel*='icon']");
+			expect(faviconLink).toBeTruthy();
+		});
+
+		// eslint-disable-next-line testing-library/no-node-access
+		const faviconLink = document.querySelector("link[rel*='icon']");
+		expect(faviconLink.href).toBe(mockFaviconUrl);
+		expect(faviconLink.type).toBe('image/x-icon');
+		expect(faviconLink.rel).toBe('shortcut icon');
+	});
 });
