@@ -5,7 +5,6 @@
  */
 
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
-import { flushSync } from 'react-dom';
 
 export function useLocalStorage<T>(key: string, initialValue: T): [T, Dispatch<SetStateAction<T>>] {
 	const readValue = useCallback<() => T>(() => {
@@ -24,17 +23,14 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, Dispatch<S
 		try {
 			const valueToStore = value instanceof Function ? value(storedValue) : value;
 			const valueToStoreJSON = JSON.stringify(valueToStore);
-			flushSync(() => {
-				setStoredValue((prevState) => {
-					const prevValueJSON = JSON.stringify(prevState);
-					if (prevValueJSON !== valueToStoreJSON) {
-						localStorage.setItem(key, valueToStoreJSON);
-						// Dispatch synchronously after state is flushed
-						window.dispatchEvent(new Event('storage'));
-						return valueToStore;
-					}
-					return prevState;
-				});
+			setStoredValue((prevState) => {
+				const prevValueJSON = JSON.stringify(prevState);
+				if (prevValueJSON !== valueToStoreJSON) {
+					localStorage.setItem(key, valueToStoreJSON);
+					window.dispatchEvent(new Event('storage'));
+					return valueToStore;
+				}
+				return prevState;
 			});
 		} catch (error) {
 			console.error(error);

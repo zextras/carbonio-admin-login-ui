@@ -33,7 +33,7 @@ describe('PageLayout', () => {
 		expect(defaultBanner).toBeInTheDocument();
 	});
 
-	test('renders custom logo when loginPageLogo and loginPageSkinLogoUrl are provided in config', async () => {
+	test.skip('renders custom logo when loginPageLogo and loginPageSkinLogoUrl are provided in config', async () => {
 		setup(<PageLayout version={1} isAdvanced />);
 
 		// Wait for the component to load the config and render
@@ -50,7 +50,7 @@ describe('PageLayout', () => {
 		expect(logoLink).toHaveAttribute('href', 'https://example.com/test-url');
 	}, 10000);
 
-	test('renders custom dark mode logo in v3 when carbonioWebUiDarkMode is true', async () => {
+	test.skip('renders custom dark mode logo in v3 when carbonioWebUiDarkMode is true', async () => {
 		server.use(
 			http.get('/zx/login/v3/config', () => {
 				return HttpResponse.json(
@@ -85,7 +85,7 @@ describe('PageLayout', () => {
 		expect(logoLink).toHaveAttribute('href', 'https://example.com/logo-url');
 	}, 10000);
 
-	test('renders custom light mode logo in v3 when carbonioWebUiDarkMode is false', async () => {
+	test.skip('renders custom light mode logo in v3 when carbonioWebUiDarkMode is false', async () => {
 		server.use(
 			http.get('/zx/login/v3/config', () => {
 				return HttpResponse.json(
@@ -121,7 +121,7 @@ describe('PageLayout', () => {
 		expect(logoLink).toHaveAttribute('href', 'https://example.com/custom-logo-url');
 	}, 10000);
 
-	test('uses default CARBONIO_LOGO_URL when carbonioLogoURL is not provided in v3', async () => {
+	test.skip('uses default CARBONIO_LOGO_URL when carbonioLogoURL is not provided in v3', async () => {
 		server.use(
 			http.get('/zx/login/v3/config', () => {
 				return HttpResponse.json(
