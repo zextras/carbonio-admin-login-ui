@@ -12,6 +12,11 @@ import * as loginPageServices from '../services/login-page-services';
 import { setup } from '../tests/testUtils';
 
 describe('PageLayout', () => {
+	const MOCK_PUBLIC_URL = 'https://example.com';
+	const MOCK_DOMAIN_NAME = 'example.com';
+	const MOCK_LOGO_URL = 'https://example.com/custom-logo.png';
+	const TEST_VERSION = 2;
+
 	beforeEach(() => {
 		jest.clearAllMocks();
 	});
@@ -38,47 +43,53 @@ describe('PageLayout', () => {
 
 	test('should set custom logo properties when loginPageLogo and loginPageSkinLogoUrl are provided', async () => {
 		const mockResponse = {
-			loginPageLogo: 'https://example.com/custom-logo.png',
+			loginPageLogo: MOCK_LOGO_URL,
 			loginPageSkinLogoUrl: 'https://example.com/logo-url',
-			publicUrl: 'https://example.com',
-			zimbraDomainName: 'example.com'
+			publicUrl: MOCK_PUBLIC_URL,
+			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
 		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
-		setup(<PageLayout version={2} isAdvanced={true} />);
+		setup(<PageLayout version={TEST_VERSION} isAdvanced />);
 
 		await waitFor(() => {
 			const logoImage = screen.getByTestId('logo');
 			expect(logoImage).toBeInTheDocument();
-			expect(logoImage).toHaveAttribute('src', mockResponse.loginPageLogo);
-			expect(logoImage).toHaveAttribute('width', '100%');
 		});
+
+		const logoImage = screen.getByTestId('logo');
+		expect(logoImage).toHaveAttribute('src', mockResponse.loginPageLogo);
+		expect(logoImage).toHaveAttribute('width', '100%');
 
 		await waitFor(() => {
 			const logoLink = screen.getByTestId('logo-link');
 			expect(logoLink).toBeInTheDocument();
-			expect(logoLink).toHaveAttribute('href', mockResponse.loginPageSkinLogoUrl);
 		});
+
+		const logoLink = screen.getByTestId('logo-link');
+		expect(logoLink).toHaveAttribute('href', mockResponse.loginPageSkinLogoUrl);
 	});
 
 	test('should handle custom logo without URL', async () => {
 		const mockResponse = {
-			loginPageLogo: 'https://example.com/custom-logo.png',
-			publicUrl: 'https://example.com',
-			zimbraDomainName: 'example.com'
+			loginPageLogo: MOCK_LOGO_URL,
+			publicUrl: MOCK_PUBLIC_URL,
+			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
 		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
-		setup(<PageLayout version={2} isAdvanced={true} />);
+		setup(<PageLayout version={TEST_VERSION} isAdvanced />);
 
 		await waitFor(() => {
 			const logoImage = screen.getByTestId('logo');
 			expect(logoImage).toBeInTheDocument();
-			expect(logoImage).toHaveAttribute('src', mockResponse.loginPageLogo);
-			expect(logoImage).toHaveAttribute('width', '100%');
 		});
+
+		const logoImage = screen.getByTestId('logo');
+		expect(logoImage).toHaveAttribute('src', mockResponse.loginPageLogo);
+		expect(logoImage).toHaveAttribute('width', '100%');
 
 		// Logo should not be wrapped in a link when no URL is provided
 		expect(screen.queryByTestId('logo-link')).not.toBeInTheDocument();
@@ -87,13 +98,13 @@ describe('PageLayout', () => {
 	test('should configure background image when loginPageBackgroundImage is provided', async () => {
 		const mockResponse = {
 			loginPageBackgroundImage: 'https://example.com/background.jpg',
-			publicUrl: 'https://example.com',
-			zimbraDomainName: 'example.com'
+			publicUrl: MOCK_PUBLIC_URL,
+			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
 		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
-		setup(<PageLayout version={2} isAdvanced={true} />);
+		setup(<PageLayout version={TEST_VERSION} isAdvanced />);
 
 		await waitFor(() => {
 			const formContainer = screen.getByTestId('form-container');
@@ -104,13 +115,13 @@ describe('PageLayout', () => {
 	test('should configure dark theme when isDarkThemeEnable is provided', async () => {
 		const mockResponse = {
 			isDarkThemeEnable: true,
-			publicUrl: 'https://example.com',
-			zimbraDomainName: 'example.com'
+			publicUrl: MOCK_PUBLIC_URL,
+			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
 		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
-		setup(<PageLayout version={2} isAdvanced={true} />);
+		setup(<PageLayout version={TEST_VERSION} isAdvanced />);
 
 		await waitFor(() => {
 			const formContainer = screen.getByTestId('form-container');
