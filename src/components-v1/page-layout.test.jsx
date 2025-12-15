@@ -159,4 +159,49 @@ describe('PageLayout', () => {
 		expect(faviconLink.type).toBe('image/x-icon');
 		expect(faviconLink.rel).toBe('shortcut icon');
 	});
+
+	test('should set V3 custom login logo when carbonioAdminUiLoginLogo is provided', async () => {
+		const mockLogoUrl = 'https://example.com/v3-logo.png';
+		const mockResponse = {
+			carbonioAdminUiLoginLogo: mockLogoUrl,
+			publicUrl: MOCK_PUBLIC_URL,
+			zimbraDomainName: MOCK_DOMAIN_NAME
+		};
+
+		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
+
+		setup(<PageLayout version={3} isAdvanced />);
+
+		await waitFor(() => {
+			const logoImage = screen.getByTestId('logo');
+			expect(logoImage).toBeInTheDocument();
+		});
+
+		const logoImage = screen.getByTestId('logo');
+		expect(logoImage).toHaveAttribute('src', mockLogoUrl);
+		expect(logoImage).toHaveAttribute('width', '100%');
+	});
+
+	test('should set V3 custom dark login logo when carbonioWebUiDarkMode and carbonioAdminUiDarkLoginLogo are provided', async () => {
+		const mockDarkLogoUrl = 'https://example.com/v3-dark-logo.png';
+		const mockResponse = {
+			carbonioWebUiDarkMode: true,
+			carbonioAdminUiDarkLoginLogo: mockDarkLogoUrl,
+			publicUrl: MOCK_PUBLIC_URL,
+			zimbraDomainName: MOCK_DOMAIN_NAME
+		};
+
+		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
+
+		setup(<PageLayout version={3} isAdvanced />);
+
+		await waitFor(() => {
+			const logoImage = screen.getByTestId('logo');
+			expect(logoImage).toBeInTheDocument();
+		});
+
+		const logoImage = screen.getByTestId('logo');
+		expect(logoImage).toHaveAttribute('src', mockDarkLogoUrl);
+		expect(logoImage).toHaveAttribute('width', '100%');
+	});
 });
