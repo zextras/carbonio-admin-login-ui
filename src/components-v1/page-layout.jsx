@@ -281,8 +281,7 @@ export default function PageLayout({ version, isAdvanced }) {
 
 	const urlParams = new URLSearchParams(window.location.search);
 	const [destinationUrl, setDestinationUrl] = useState(
-		prepareUrlForForward(urlParams.get('destinationUrl')) ??
-			prepareUrlForForward(window.location.origin)
+		prepareUrlForForward(urlParams.get('destinationUrl'))
 	);
 	const [domain, setDomain] = useState(urlParams.get('domain'));
 
@@ -304,7 +303,7 @@ export default function PageLayout({ version, isAdvanced }) {
 		if (isAdvanced) {
 			getLoginConfig(version, domain, domain)
 				.then((res) => {
-					if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.publicUrl));
+					if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.adminConsolePublicUrl));
 					if (!domain) setDomain(res.zimbraDomainName);
 
 					if (componentIsMounted) {
