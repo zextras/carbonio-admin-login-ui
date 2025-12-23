@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 import { ErrorPage } from './error-page';
 import { getLoginSupported } from './services/login-page-services';
@@ -40,11 +40,11 @@ export function LoginAdvanced(): React.JSX.Element {
 	const notSupported = hasError || (versions && versions.version < versions.minApiVersion);
 
 	return (
-		<>
+		<Suspense fallback={<div></div>}>
 			{versions && versions.version >= versions.minApiVersion && (
 				<PageLayoutV1 version={versions?.version} isAdvanced />
 			)}
 			{notSupported && <ErrorPage />}
-		</>
+		</Suspense>
 	);
 }

@@ -27,7 +27,6 @@ export default function CredentialsForm({
 	loading = false
 }) {
 	const [t] = useTranslation();
-
 	const [username, setUsername] = useState(urlParams.get('username') || '');
 	const [password, setPassword] = useState('');
 	const [hasClassicUi, setHasClassicUi] = useState(false);
@@ -97,8 +96,11 @@ export default function CredentialsForm({
 	}, []);
 
 	return (
-		<form onSubmit={submitUserPassword} style={{ width: '100%' }} data-testid="credentials-form">
-			<input type="submit" style={{ display: 'none' }} />
+		<form
+			onSubmit={(e) => e.preventDefault()}
+			style={{ width: '100%' }}
+			data-testid="credentials-form"
+		>
 			<Row padding={{ bottom: 'large' }}>
 				<Input
 					defaultValue={username}
