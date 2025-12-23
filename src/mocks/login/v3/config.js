@@ -6,7 +6,7 @@
 
 import { http, HttpResponse } from 'msw';
 
-export default http.get('/zx/login/v1/config', ({ request }) => {
+export default http.get('/zx/login/v3/config', ({ request }) => {
 	// Extract query parameters if needed
 	const url = new URL(request.url);
 	const domain = url.searchParams.get('domain');
@@ -16,9 +16,10 @@ export default http.get('/zx/login/v1/config', ({ request }) => {
 		{
 			publicUrl: 'https://infra-6f4c8e62.testarea.zextras.com',
 			loginPageBackgroundImage: '',
-			loginPageLogo: 'https://example.com/test-logo.png',
-			loginPageSkinLogoUrl: 'https://example.com/test-url',
+			loginPageLogo: '',
+			loginPageSkinLogoUrl: '',
 			loginPageFavicon: '',
+			loginPageTitle: '',
 			loginPageColorSet: {
 				primary: '2b73d2',
 				secondary: '666666'
@@ -27,7 +28,16 @@ export default http.get('/zx/login/v1/config', ({ request }) => {
 			zimbraPublicServicePort: '443',
 			zimbraPublicServiceProtocol: 'https',
 			zimbraDomainName: domain || '6f4c8e62.testarea.zextras.com',
-			isDarkThemeEnable: false
+			isDarkThemeEnable: false,
+			carbonioAdminUiTitle: '',
+			carbonioAdminUiFavicon: '',
+			carbonioWebUiDarkMode: false,
+			carbonioAdminUiBackground: '',
+			carbonioAdminUiLoginLogo: '',
+			carbonioAdminUiDarkBackground: '',
+			carbonioAdminUiDarkLoginLogo: '',
+			carbonioAdminUiDescription: '',
+			carbonioLogoURL: ''
 		},
 		{ status: 200 }
 	);
