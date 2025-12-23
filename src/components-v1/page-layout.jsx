@@ -303,7 +303,8 @@ export default function PageLayout({ version, isAdvanced }) {
 		if (isAdvanced) {
 			getLoginConfig(version, domain, domain)
 				.then((res) => {
-					if (!destinationUrl) setDestinationUrl(prepareUrlForForward(res.adminConsolePublicUrl));
+					if (!destinationUrl)
+						setDestinationUrl(prepareUrlForForward(res.adminConsolePublicUrl ?? res.publicUrl));
 					if (!domain) setDomain(res.zimbraDomainName);
 
 					if (componentIsMounted) {
