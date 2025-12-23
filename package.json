@@ -41,7 +41,7 @@
 		"@types/react": "^17.0.53",
 		"@types/react-dom": "17.0.11",
 		"@types/react-router-dom": "^5.3.3",
-		"@types/styled-components": "^5.1.26",
+		"@types/styled-components": "^5.1.36",
 		"@types/webpack": "^5.28.5",
 		"@types/webpack-dev-server": "^4.7.2",
 		"@types/webpack-env": "^1.18.5",
