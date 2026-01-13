@@ -195,13 +195,10 @@ const config: Config = {
 		'\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
 			'<rootDir>/src/mocks/fileTransformer.js',
 		'\\.(css|less)$': '<rootDir>/__mocks__/styleMock.js'
-	}
+	},
 
 	// An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-	// transformIgnorePatterns: [
-	//   "/node_modules/",
-	//   "\\.pnp\\.[^\\/]+$"
-	// ],
+	transformIgnorePatterns: ['/node_modules/(?!(until-async)/)']
 
 	// An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
 	// unmockedModulePathPatterns: undefined,

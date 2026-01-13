@@ -43,7 +43,6 @@ export const createAPIInterceptor = (
 	method: 'get' | 'post',
 	url: string,
 	response: () => HttpResponse<DefaultBodyType>
-
 ): APIInterceptor => {
 	let calledTimes = 0;
 	const requests: Array<StrictRequest<DefaultBodyType>> = [];
