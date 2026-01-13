@@ -301,7 +301,7 @@ export default function PageLayout({ version, isAdvanced }) {
 	useLayoutEffect(() => {
 		let componentIsMounted = true;
 		if (isAdvanced) {
-			getLoginConfig(version, domain, domain)
+			getLoginConfig(version, domain, window.location.hostname)
 				.then((res) => {
 					if (!destinationUrl)
 						setDestinationUrl(prepareUrlForForward(res.adminConsolePublicUrl ?? res.publicUrl));
