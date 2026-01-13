@@ -42,7 +42,8 @@ export type APIInterceptor = {
 export const createAPIInterceptor = (
 	method: 'get' | 'post',
 	url: string,
-	response: () => HttpResponse
+	response: () => HttpResponse<DefaultBodyType>
+
 ): APIInterceptor => {
 	let calledTimes = 0;
 	const requests: Array<StrictRequest<DefaultBodyType>> = [];
@@ -65,7 +66,7 @@ const advancedSupportedURL = '/services/catalog/services';
 export const advancedSupportedApi = {
 	withError: (): APIInterceptor =>
 		createAPIInterceptor('get', advancedSupportedURL, HttpResponse.error),
-	withResponse: (response: () => HttpResponse): APIInterceptor =>
+	withResponse: (response: () => HttpResponse<DefaultBodyType>): APIInterceptor =>
 		createAPIInterceptor('get', advancedSupportedURL, response),
 	supported: (): APIInterceptor =>
 		createAPIInterceptor('get', advancedSupportedURL, () =>
