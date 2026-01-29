@@ -17,6 +17,9 @@ YAP_IMAGE_PREFIX ?= docker.io/m0rf30/yap
 YAP_VERSION ?= 1.47
 CONTAINER_RUNTIME ?= $(shell command -v docker >/dev/null 2>&1 && echo docker || echo podman)
 
+# Project name
+PKGNAME ?= carbonio-admin-login-ui
+
 # Build directories
 OUTPUT_DIR ?= artifacts
 
@@ -54,7 +57,7 @@ build-js:
 	npm run build
 	@echo "Preparing package sources..."
 	cp dist/package/PKGBUILD package/PKGBUILD
-	tar -czf package/carbonio-admin-login-ui-dist.tar.gz dist
+	tar -czf package/$(PKGNAME)-dist.tar.gz dist
 
 ## build-package: Build distribution packages for the specified TARGET
 build-package:
