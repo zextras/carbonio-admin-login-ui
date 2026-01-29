@@ -2,6 +2,11 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 
+*.deb
+*.rpm
+*.tar.gz
+package/PKGBUILD
+package/src/
 /.idea/
 /.idea/sonarlint/
 /node_modules/
