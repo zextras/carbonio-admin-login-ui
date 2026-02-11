@@ -21,7 +21,7 @@ import ChangePasswordForm from './change-password-form';
 import CredentialsForm from './credentials-form';
 import OfflineModal from './modals';
 import Spinner from './spinner';
-import { loginToCarbonioAdmin, submitOtp } from '../services/v2-service';
+import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
 import { saveCredentials } from '../utils';
 
 const formState = {
@@ -59,7 +59,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 	const [detailNetworkModal, setDetailNetworkModal] = useState(false);
 	const submitCredentials = useCallback((username, password) => {
 		setLoadingCredentials(true);
-		return loginToCarbonioAdmin(username, password)
+		return loginToCarbonioAdvancedAdmin(username, password)
 			.then(async (res) => {
 				if (res.status === 200) {
 					await saveCredentials(username, password);
