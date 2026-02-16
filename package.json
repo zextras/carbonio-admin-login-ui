@@ -48,7 +48,7 @@
 		"@typescript-eslint/eslint-plugin": "4.7.0",
 		"@typescript-eslint/parser": "4.7.0",
 		"eslint-plugin-jest-dom": "^4.0.3",
-		"eslint-plugin-testing-library": "^5.10.1",
+		"eslint-plugin-testing-library": "^5.11.1",
 		"@zextras/carbonio-ui-configs": "^1.0.4",
 		"autoprefixer": "10.4.24",
 		"babel-jest": "^29.7.0",
