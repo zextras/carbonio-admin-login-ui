@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 Zextras <https://www.zextras.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 FROM --platform=$BUILDPLATFORM alpine:3.22.2 AS builder
 
 ENV WEB_PATH="/opt/zextras/admin/login"

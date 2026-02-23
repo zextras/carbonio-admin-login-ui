@@ -13,12 +13,14 @@ import v2OTPValidate from './auth/v2/otp_validate';
 import irisStatus from './login/iris';
 import loginSupported from './login/supported';
 import v1config from './login/v1/config';
+import v3config from './login/v3/config';
 import zimbraLogin from './login/zimbra';
 
 export const handlers = [
 	loginSupported,
 	authSupported,
 	v1config,
+	v3config,
 	v1login,
 	v2login,
 	v1logout,

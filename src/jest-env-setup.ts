@@ -1,5 +1,5 @@
 // Copyright (C) 2011-2020 Zextras
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-extraneous-dependencies, max-classes-per-file */
 /*
  * SPDX-FileCopyrightText: 2021 Zextras <https://www.zextras.com>
  *
@@ -11,6 +11,13 @@ import { DefaultBodyType, http, HttpResponse, StrictRequest } from 'msw';
 import { SetupServer } from 'msw/lib/node';
 
 import server from './mocks/server';
+
+// Mock SVG elements for darkreader compatibility with jsdom
+/* eslint-disable @typescript-eslint/no-explicit-any */
+global.SVGStyleElement = class SVGStyleElement {} as any;
+global.SVGTextElement = class SVGTextElement {} as any;
+global.SVGElement = class SVGElement extends HTMLElement {} as any;
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 beforeEach(() => {
 	// Do not useFakeTimers with `whatwg-fetch` if using mocked server
@@ -35,7 +42,7 @@ export type APIInterceptor = {
 export const createAPIInterceptor = (
 	method: 'get' | 'post',
 	url: string,
-	response: () => HttpResponse
+	response: () => HttpResponse<DefaultBodyType>
 ): APIInterceptor => {
 	let calledTimes = 0;
 	const requests: Array<StrictRequest<DefaultBodyType>> = [];
@@ -58,7 +65,7 @@ const advancedSupportedURL = '/services/catalog/services';
 export const advancedSupportedApi = {
 	withError: (): APIInterceptor =>
 		createAPIInterceptor('get', advancedSupportedURL, HttpResponse.error),
-	withResponse: (response: () => HttpResponse): APIInterceptor =>
+	withResponse: (response: () => HttpResponse<DefaultBodyType>): APIInterceptor =>
 		createAPIInterceptor('get', advancedSupportedURL, response),
 	supported: (): APIInterceptor =>
 		createAPIInterceptor('get', advancedSupportedURL, () =>
