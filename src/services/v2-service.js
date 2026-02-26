@@ -29,7 +29,7 @@ export function submitOtp(id, code, trustDevice) {
 		headers: {
 			'X-Device-Model': getDeviceModel(),
 			'X-Device-Id': deviceId(),
-			'X-Service': 'WebUI',
+			'X-Service': 'WebAdminUI',
 			'Content-Type': 'application/json',
 			version: '2'
 		},
