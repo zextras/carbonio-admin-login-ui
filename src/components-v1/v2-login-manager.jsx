@@ -15,6 +15,7 @@ import {
 	Snackbar,
 	Text
 } from '@zextras/carbonio-design-system';
+import { map } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import ChangePasswordForm from './change-password-form';
@@ -23,7 +24,6 @@ import OfflineModal from './modals';
 import Spinner from './spinner';
 import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
 import { saveCredentials } from '../utils';
-import { map } from 'lodash';
 
 const formState = {
 	credentials: 'credentials',
