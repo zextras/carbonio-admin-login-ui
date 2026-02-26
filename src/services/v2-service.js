@@ -24,7 +24,7 @@ export function postV2Login(authMethod, user, password, service) {
 }
 
 export function submitOtp(id, code, trustDevice) {
-	return fetch('/service/auth/v2/admin/otp/validate', {
+	return fetch('/zx/auth/v2/admin/otp/validate', {
 		method: 'POST',
 		headers: {
 			'X-Device-Model': getDeviceModel(),
