@@ -6,23 +6,6 @@
 
 import { getDeviceModel, deviceId } from '../utils';
 
-export function postV2Login(authMethod, user, password, service) {
-	return fetch('/service/auth/v2/login', {
-		method: 'POST',
-		headers: {
-			'X-Device-Model': getDeviceModel(),
-			'X-Device-Id': deviceId(),
-			'X-Service': 'WebUI',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			auth_method: authMethod,
-			user,
-			password
-		})
-	});
-}
-
 export function submitOtp(id, code, trustDevice) {
 	return fetch('/service/auth/v2/admin/otp/validate', {
 		method: 'POST',
@@ -45,7 +28,11 @@ export function loginToCarbonioAdvancedAdmin(user, password) {
 	return fetch(`/zx/auth/v2/admin/login`, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'X-Device-Model': getDeviceModel(),
+			'X-Device-Id': deviceId(),
+			'X-Service': 'WebAdminUI',
+			'Content-Type': 'application/json',
+			version: '2'
 		},
 		referrerPolicy: 'same-origin',
 		body: JSON.stringify({
