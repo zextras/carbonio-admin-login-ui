@@ -16,19 +16,14 @@ describe('loginToCarbonioAdvancedAdmin', () => {
 		const interceptor = createAPIInterceptor('post', LOGIN_URL, () =>
 			HttpResponse.json({ user: {} }, { status: 200 })
 		);
-
 		await loginToCarbonioAdvancedAdmin('admin@test.com', 'secret');
-
 		expect(interceptor.getCalledTimes()).toBe(1);
 	});
-
 	it('should send user and password in the request body with auth_method password', async () => {
 		const interceptor = createAPIInterceptor('post', LOGIN_URL, () =>
 			HttpResponse.json({}, { status: 200 })
 		);
-
 		await loginToCarbonioAdvancedAdmin('admin@test.com', 'secret');
-
 		const request = interceptor.getLastRequest();
 		const body = await request.json();
 		expect(body).toEqual({
@@ -42,9 +37,7 @@ describe('loginToCarbonioAdvancedAdmin', () => {
 		const interceptor = createAPIInterceptor('post', LOGIN_URL, () =>
 			HttpResponse.json({}, { status: 200 })
 		);
-
 		await loginToCarbonioAdvancedAdmin('admin@test.com', 'secret');
-
 		const request = interceptor.getLastRequest();
 		expect(request.headers.get('Content-Type')).toBe('application/json');
 		expect(request.headers.get('version')).toBe('2');
@@ -52,18 +45,13 @@ describe('loginToCarbonioAdvancedAdmin', () => {
 		expect(request.headers.get('X-Device-Model')).toBeDefined();
 		expect(request.headers.get('X-Device-Id')).toBeDefined();
 	});
-
 	it('should return the fetch response', async () => {
 		const responseBody = {
 			'2FA': true,
 			otp: [{ id: 'otp-id', label: 'OTP-label' }]
 		};
-		createAPIInterceptor('post', LOGIN_URL, () =>
-			HttpResponse.json(responseBody, { status: 200 })
-		);
-
+		createAPIInterceptor('post', LOGIN_URL, () => HttpResponse.json(responseBody, { status: 200 }));
 		const response = await loginToCarbonioAdvancedAdmin('admin@test.com', 'secret');
-
 		expect(response.ok).toBe(true);
 		expect(response.status).toBe(200);
 		const json = await response.json();
@@ -74,20 +62,15 @@ describe('loginToCarbonioAdvancedAdmin', () => {
 		createAPIInterceptor('post', LOGIN_URL, () =>
 			HttpResponse.json({ message: 'Unauthorized' }, { status: 401 })
 		);
-
 		const response = await loginToCarbonioAdvancedAdmin('admin@test.com', 'wrong');
-
 		expect(response.ok).toBe(false);
 		expect(response.status).toBe(401);
 	});
-
 	it('should handle different user and password values', async () => {
 		const interceptor = createAPIInterceptor('post', LOGIN_URL, () =>
 			HttpResponse.json({}, { status: 200 })
 		);
-
 		await loginToCarbonioAdvancedAdmin('other@domain.org', 'p@$$w0rd!');
-
 		const request = interceptor.getLastRequest();
 		const body = await request.json();
 		expect(body).toEqual({
