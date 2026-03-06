@@ -16,6 +16,7 @@ import {
 	Text
 } from '@zextras/carbonio-design-system';
 import { map } from 'lodash';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import ChangePasswordForm from './change-password-form';
@@ -31,6 +32,12 @@ const formState = {
 	twoFactor: 'two-factor',
 	changePassword: 'change-password'
 };
+
+const mapOtpItems = (otpArray) =>
+	map(otpArray ?? [], (obj) => ({
+		label: obj.label,
+		value: obj.id
+	}));
 
 export default function V2LoginManager({ configuration, disableInputs }) {
 	const [t] = useTranslation();
@@ -72,12 +79,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 								res.json().then(async (response) => {
 									await saveCredentials(username, password);
 									if (response?.['2FA'] === true) {
-										setOtpList(
-											map(response?.otp ?? [], (obj) => ({
-												label: obj.label,
-												value: obj.id
-											}))
-										);
+										setOtpList(mapOtpItems(response?.otp));
 										setOtpId(response?.otp?.[0].id);
 										setProgress(formState.twoFactor);
 										setLoadingCredentials(false);
@@ -242,3 +244,10 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 		</>
 	);
 }
+
+V2LoginManager.propTypes = {
+	configuration: PropTypes.shape({
+		destinationUrl: PropTypes.string.isRequired
+	}).isRequired,
+	disableInputs: PropTypes.bool
+};
