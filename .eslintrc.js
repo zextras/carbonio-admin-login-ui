@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 module.exports = {
+	env: { es2020: true },
 	extends: ['./node_modules/@zextras/carbonio-ui-configs/rules/eslint.js'],
 	settings: {
 		'import/resolver': {
