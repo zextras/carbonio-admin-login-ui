@@ -84,7 +84,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 										setProgress(formState.twoFactor);
 										setLoadingCredentials(false);
 									} else {
-										window.location.assign(configuration.destinationUrl);
+										globalThis.location.assign(configuration.destinationUrl);
 									}
 								});
 							}
@@ -133,7 +133,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 						if (res.redirected) {
 							setProgress(formState.changePassword);
 						} else {
-							window.location.assign(configuration.destinationUrl);
+							globalThis.location.assign(configuration.destinationUrl);
 						}
 					} else {
 						setLoadingOtp(false);
