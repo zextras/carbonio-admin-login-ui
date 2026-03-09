@@ -1,12 +1,32 @@
 {
-	"extends": "@zextras/carbonio-ui-configs/rules/typescript.json",
+	"extends": "@tsconfig/vite-react",
 	"compilerOptions": {
-		"skipLibCheck": true,
-		"jsx": "react",
-		"allowJs": true,
+		"composite": true,
+		"allowImportingTsExtensions": false,
+		"verbatimModuleSyntax": false,
+		"erasableSyntaxOnly": false,
+		"noUnusedParameters": false,
+		"noEmit": false,
+		"declaration": true,
+		"declarationMap": true,
 		"checkJs": false,
-		"resolveJsonModule": true
-	},
-	"include": ["types/**/*.d.ts", "src/**/*.ts", "src/**/*.tsx", "src/**/*.jsx", "./global.d.ts"],
-	"exclude": ["./node_modules/*"]
+		"esModuleInterop": true,
+		"allowJs": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noImplicitOverride": true,
+		"allowSyntheticDefaultImports": true,
+		"preserveConstEnums": true,
+		"noUncheckedIndexedAccess": false,
+		"types": ["@vitest/browser/matchers", "vitest/globals"],
+		"useDefineForClassFields": false,
+		"plugins": [
+			{
+				"name": "typescript-plugin-css-modules",
+				"options": {
+					"classnameTransform": "camelCaseOnly"
+				}
+			}
+		]
+	}
 }
