@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { getDeviceModel, deviceId } from '../utils';
+import { deviceId, getDeviceModel } from '../utils';
 
-export function postV1Login(authMethod, user, password, service) {
+export function postV1Login(authMethod: string, user: string, password: string) {
 	return fetch('/zx/auth/v1/login', {
 		method: 'POST',
 		headers: {
