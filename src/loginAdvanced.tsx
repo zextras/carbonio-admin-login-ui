@@ -3,19 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { PageLayout } from './components-v1/page-layout';
 import { ErrorPage } from './error-page';
 import { getLoginSupported } from './services/login-page-services';
-
-const PageLayoutV1 = React.lazy(() => import('./components-v1/page-layout'));
 
 type Versions = {
 	minApiVersion: number;
 	maxApiVersion: number;
 	version: number;
 };
-export function LoginAdvanced(): React.JSX.Element {
+
+export function LoginAdvanced() {
 	const [versions, setVersions] = useState<Versions>();
 	const [hasError, setHasError] = useState(false);
 
@@ -40,11 +40,11 @@ export function LoginAdvanced(): React.JSX.Element {
 	const notSupported = hasError || (versions && versions.version < versions.minApiVersion);
 
 	return (
-		<Suspense fallback={<div></div>}>
+		<>
 			{versions && versions.version >= versions.minApiVersion && (
-				<PageLayoutV1 version={versions?.version} isAdvanced />
+				<PageLayout version={versions?.version} isAdvanced />
 			)}
 			{notSupported && <ErrorPage />}
-		</Suspense>
+		</>
 	);
 }
