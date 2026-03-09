@@ -5,16 +5,14 @@
  */
 
 import { useCallback, useState } from 'react';
-
-import { Button, Checkbox, Input, Row, Select, Snackbar, Text } from '../ui-components/src';
 import { useTranslation } from 'react-i18next';
 
-import ChangePasswordForm from './change-password-form';
-import { Configuration, CredentialsForm } from './credentials-form';
-import OfflineModal from './modals';
-import Spinner from './spinner';
 import { loginToCarbonioAdmin, submitOtp } from '../services/v2-service';
+import { Button, Checkbox, Input, Row, Select, Snackbar, Text } from '../ui-components/src';
 import { saveCredentials } from '../utils';
+import ChangePasswordForm from './change-password-form';
+import { type Configuration, CredentialsForm } from './credentials-form';
+import OfflineModal from './modals';
 
 const formState = {
 	credentials: 'credentials',
@@ -110,7 +108,7 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManager)
 			)}
 			{progress === formState.waiting && (
 				<Row orientation="vertical" crossAlignment="center" padding={{ vertical: 'extralarge' }}>
-					<Spinner />
+					<spinner-wc></spinner-wc>
 				</Row>
 			)}
 			{progress === formState.twoFactor && (
