@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
-import { Row, Text, Input, Button, PasswordInput } from '@zextras/carbonio-design-system';
+import { Row, Text, Input, Button, PasswordInput } from '../ui-components/src';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -26,7 +26,11 @@ import {
 } from '../constants';
 import { saveCredentials, setCookie } from '../utils';
 
-export const submitChangePassword = (username, oldPassword, newPassword) => {
+export const submitChangePassword = (
+	username: string,
+	oldPassword: string,
+	newPassword: string
+) => {
 	return fetch('/service/admin/soap/ChangePasswordRequest', {
 		method: 'POST',
 		headers: {
@@ -56,14 +60,14 @@ export const submitChangePassword = (username, oldPassword, newPassword) => {
 	});
 };
 
-const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }) => {
+const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }: any) => {
 	const [t] = useTranslation();
 
 	const [oldPassword, setOldPassword] = useState('');
 	const [newPassword, setNewPassword] = useState('');
 	const [confirmNewPassword, setConfirmNewPassword] = useState('');
 	const [showOldPasswordError, setShowOldPasswordError] = useState(false);
-	const [errorLabelNewPassword, setErrorLabelNewPassword] = useState(false);
+	const [errorLabelNewPassword, setErrorLabelNewPassword] = useState<string | false>(false);
 	const [errorLabelConfirmNewPassword, setErrorLabelConfirmNewPassword] = useState('');
 
 	const onChangeOldPassword = useCallback(
@@ -105,7 +109,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 						try {
 							payload = await res.json();
 						} catch (err) {
-							payload = await res;
+							payload = res;
 						}
 						if (res.status === 200) {
 							const authTokenArr = payload?.Body?.ChangePasswordResponse?.authToken;
@@ -126,7 +130,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 									setShowOldPasswordError(false);
 									const { a } = payload.Body.Fault.Detail.Error;
 									let currNum = a
-										? a.find((rec) => rec.n === BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY)
+										? a.find((rec: any) => rec.n === BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY)
 										: undefined;
 									if (currNum) {
 										setErrorLabelNewPassword(
@@ -139,7 +143,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 										break;
 									}
 									currNum = a
-										? a.find((rec) => rec.n === BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY)
+										? a.find((rec: any) => rec.n === BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY)
 										: undefined;
 									if (currNum) {
 										setErrorLabelNewPassword(
@@ -152,7 +156,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 										break;
 									}
 									currNum = a
-										? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME)
+										? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME)
 										: undefined;
 									if (currNum) {
 										setErrorLabelNewPassword(
@@ -165,7 +169,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 									}
 
 									currNum = a
-										? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_LENGTH_ATTR_NAME)
+										? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_LENGTH_ATTR_NAME)
 										: undefined;
 									if (currNum) {
 										setErrorLabelNewPassword(
@@ -178,7 +182,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 									}
 
 									currNum = a
-										? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_LOWERCASE_CHARS_ATTR_NAME)
+										? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_LOWERCASE_CHARS_ATTR_NAME)
 										: undefined;
 									if (currNum) {
 										setErrorLabelNewPassword(
@@ -190,7 +194,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 										break;
 									}
 									currNum = a
-										? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_NUMERIC_CHARS_ATTR_NAME)
+										? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_NUMERIC_CHARS_ATTR_NAME)
 										: undefined;
 									if (currNum) {
 										setErrorLabelNewPassword(
@@ -202,7 +206,9 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 										break;
 									}
 									currNum = a
-										? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME)
+										? a.find(
+												(rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME
+											)
 										: undefined;
 									if (currNum) {
 										setErrorLabelNewPassword(
@@ -214,7 +220,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 										break;
 									}
 									currNum = a
-										? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME)
+										? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME)
 										: undefined;
 									if (currNum) {
 										setErrorLabelNewPassword(
@@ -225,7 +231,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 										);
 									}
 									currNum = a
-										? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS)
+										? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS)
 										: undefined;
 									if (currNum) {
 										setErrorLabelNewPassword(
@@ -331,7 +337,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			<Row padding={{ top: 'large' }}>
 				<PasswordInput
 					defaultValue={newPassword}
-					hasError={errorLabelNewPassword}
+					hasError={!!errorLabelNewPassword}
 					onChange={onChangeNewPassword}
 					label={t('changePassword_newPassword', 'New password')}
 					backgroundColor="gray5"
@@ -348,7 +354,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			<Row padding={{ top: 'large' }}>
 				<PasswordInput
 					defaultValue={confirmNewPassword}
-					hasError={errorLabelConfirmNewPassword}
+					hasError={!!errorLabelConfirmNewPassword}
 					onChange={onChangeConfirmNewPassword}
 					label={t('changePassword_confirmNewPassword', 'Confirm new password')}
 					backgroundColor="gray5"
@@ -368,7 +374,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 					label={t('changePassword_confirm_label', 'Change password and login')}
 					width="fill"
 					loading={isLoading}
-					disabled={!newPassword || confirmNewPassword !== newPassword || errorLabelNewPassword}
+					disabled={!newPassword || confirmNewPassword !== newPassword || !!errorLabelNewPassword}
 					data-testid="submitChangePasswordBtn"
 				/>
 			</Row>

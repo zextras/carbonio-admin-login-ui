@@ -1,32 +1,15 @@
 {
 	"extends": "@tsconfig/vite-react",
 	"compilerOptions": {
-		"composite": true,
-		"allowImportingTsExtensions": false,
-		"verbatimModuleSyntax": false,
-		"erasableSyntaxOnly": false,
-		"noUnusedParameters": false,
-		"noEmit": false,
-		"declaration": true,
-		"declarationMap": true,
-		"checkJs": false,
-		"esModuleInterop": true,
-		"allowJs": true,
+		"noEmit": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noImplicitOverride": true,
 		"allowSyntheticDefaultImports": true,
-		"preserveConstEnums": true,
-		"noUncheckedIndexedAccess": false,
-		"types": ["@vitest/browser/matchers", "vitest/globals"],
-		"useDefineForClassFields": false,
-		"plugins": [
-			{
-				"name": "typescript-plugin-css-modules",
-				"options": {
-					"classnameTransform": "camelCaseOnly"
-				}
-			}
-		]
+		"esModuleInterop": true,
+		"useDefineForClassFields": true,
+		"noUnusedParameters": true,
+		"noUncheckedIndexedAccess": true,
+		"types": ["vitest/globals"]
 	}
 }
