@@ -4,41 +4,41 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 
-import { Button, Input, PasswordInput, Row, Text } from '@zextras/carbonio-design-system';
+import { Button, Input, PasswordInput, Row, Text } from '../ui-components/src';
 import { useTranslation } from 'react-i18next';
 
 import { checkClassicUi } from '../services/login-page-services';
-import { getCookieKeys, getCookie, setCookie } from '../utils';
+import { setCookie } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
 
-const uiList = [
-	{ label: 'Classic', value: 'classic' },
-	{ label: 'Iris', value: 'iris' }
-];
+export type Configuration = {
+	minApiVersion: number;
+	maxApiVersion: number;
+	destinationUrl: string;
+	authMethods?: Array<string>;
+} | null;
 
-export default function CredentialsForm({
+type CredentialsFormProps = {
+	authError: boolean;
+	submitCredentials: (username: string, password: string) => void;
+	configuration: Configuration;
+	disableInputs: boolean;
+	loading?: boolean;
+};
+
+export const CredentialsForm = ({
 	authError,
 	submitCredentials,
 	configuration,
 	disableInputs,
 	loading = false
-}) {
+}: CredentialsFormProps) => {
 	const [t] = useTranslation();
 	const [username, setUsername] = useState(urlParams.get('username') || '');
 	const [password, setPassword] = useState('');
-	const [hasClassicUi, setHasClassicUi] = useState(false);
-
-	const defaultUi = useMemo(() => {
-		const cookieKeys = getCookieKeys();
-		if (cookieKeys.includes('UI')) {
-			return getCookie('UI') === 'iris' ? uiList[1] : uiList[0];
-		}
-		setCookie('UI', 'iris');
-		return uiList[1];
-	}, []);
 
 	const submitUserPassword = useCallback(
 		(e) => {
@@ -60,11 +60,11 @@ export default function CredentialsForm({
 
 	const samlButtonCbk = useCallback(() => {
 		window.location.assign(
-			`/zx/auth/startSamlWorkflow?redirectUrl=${configuration.destinationUrl}`
+			`/zx/auth/startSamlWorkflow?redirectUrl=${configuration?.destinationUrl ?? ''}`
 		);
 	}, [configuration]);
 	const samlButton = useMemo(() => {
-		if (configuration.authMethods.includes('saml')) {
+		if (configuration?.authMethods?.includes('saml')) {
 			return (
 				<Button
 					type="outlined"
@@ -73,7 +73,7 @@ export default function CredentialsForm({
 					color="primary"
 					disabled={disableInputs}
 					onClick={samlButtonCbk}
-					height={36}
+					style={{ height: '36px' }}
 				/>
 			);
 		}
@@ -86,12 +86,10 @@ export default function CredentialsForm({
 	useEffect(() => {
 		checkClassicUi()
 			.then((res) => {
-				setHasClassicUi(res.hasClassic);
 				if (!res.hasClassic) {
 					setCookie('UI', 'iris');
 				}
 			})
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
 			.catch(() => {});
 	}, []);
 
@@ -105,10 +103,9 @@ export default function CredentialsForm({
 				<Input
 					defaultValue={username}
 					disabled={disableInputs}
-					data-testid="username"
-					onChange={(e) => setUsername(e.target.value)}
 					hasError={!!authError}
-					autocomplete="username"
+					data-testid="username"
+					onChange={(e: any) => setUsername(e.target.value)}
 					label={t('username', 'Username')}
 					backgroundColor="gray5"
 				/>
@@ -118,35 +115,23 @@ export default function CredentialsForm({
 					defaultValue={password}
 					disabled={disableInputs}
 					data-testid="password"
-					onChange={(e) => setPassword(e.target.value)}
 					hasError={!!authError}
-					autocomplete="password"
+					onChange={(e: any) => setPassword(e.target.value)}
 					label={t('password', 'Password')}
 					backgroundColor="gray5"
 				/>
 			</Row>
-			{/* {hasClassicUi && (
-				<Row padding={{vertical: 'small'}}>
-					<Select
-						label={t('select_ui', 'Select UI')}
-						items={uiList}
-						onChange={(newUI) => {
-							setCookie('UI', newUI === 'iris' ? 'iris' : 'legacy-zcs')
-						}}
-						defaultSelection={defaultUi}
-					/>
-				</Row>
-			)} */}
 			<Text color="error" size="small" overflow="break-word">
 				{authError || <br />}
 			</Text>
+
 			<Row
 				orientation="vertical"
 				crossAlignment="flex-start"
 				padding={{ bottom: 'large', top: 'small' }}
 			>
 				<Button
-					height={36}
+					style={{ height: '36px' }}
 					loading={loading}
 					data-testid="login"
 					onClick={submitUserPassword}
@@ -160,4 +145,4 @@ export default function CredentialsForm({
 			</Row>
 		</form>
 	);
-}
+};

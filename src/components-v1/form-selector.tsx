@@ -4,16 +4,23 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import V1LoginManager from './v1-login-manager';
+import { V1LoginManager } from './v1-login-manager';
 import V2LoginManager from './v2-login-manager';
 import NotSupportedVersion from '../components-index/not-supported-version';
 import ServerNotResponding from '../components-index/server-not-responding';
 import { getAuthSupported, doAuthLogout } from '../services/auth-configuration-service';
+import { Configuration } from './credentials-form';
 
-export default function FormSelector({ destinationUrl, domain }) {
-	const [configuration, setConfiguration] = useState(null);
+export default function FormSelector({
+	destinationUrl,
+	domain
+}: {
+	destinationUrl: string;
+	domain: string | null;
+}) {
+	const [configuration, setConfiguration] = useState<Configuration>(null);
 	const [error, setError] = useState(false);
 	const [disableInputs, setDisableInputs] = useState(true);
 
@@ -24,7 +31,7 @@ export default function FormSelector({ destinationUrl, domain }) {
 			.then((res) => {
 				if (componentIsMounted) {
 					setConfiguration((conf) => ({
-						...conf,
+						...(conf ?? {}),
 						...res,
 						destinationUrl
 					}));

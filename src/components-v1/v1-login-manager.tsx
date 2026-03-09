@@ -9,12 +9,14 @@ import { Snackbar } from '../ui-components/src';
 
 import { useTranslation } from 'react-i18next';
 
-import CredentialsForm from './credentials-form';
+import { Configuration, CredentialsForm } from './credentials-form';
 import OfflineModal from './modals';
 import { postV1Login } from '../services/v1-service';
 import { saveCredentials } from '../utils';
 
-export default function V1LoginManager({ configuration, disableInputs }: any) {
+type V1LoginManagerProps = { configuration: Configuration; disableInputs: boolean };
+
+export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerProps) => {
 	const [t] = useTranslation();
 
 	const [loading, setLoading] = useState(false);
@@ -32,7 +34,7 @@ export default function V1LoginManager({ configuration, disableInputs }: any) {
 				switch (res.status) {
 					case 200:
 						await saveCredentials(username, password);
-						window.location.assign(configuration.destinationUrl);
+						window.location.assign(configuration?.destinationUrl ?? '');
 						break;
 					case 401:
 						setAuthError(
@@ -64,7 +66,7 @@ export default function V1LoginManager({ configuration, disableInputs }: any) {
 				return setLoading(false);
 			}
 		},
-		[configuration.destinationUrl, t]
+		[configuration?.destinationUrl, t]
 	);
 
 	const onCloseCbk = useCallback(() => setDetailNetworkModal(false), [setDetailNetworkModal]);
@@ -98,4 +100,4 @@ export default function V1LoginManager({ configuration, disableInputs }: any) {
 			<OfflineModal open={detailNetworkModal} onClose={onCloseCbk} />
 		</>
 	);
-}
+};
