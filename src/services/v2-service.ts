@@ -4,26 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { getDeviceModel, deviceId } from '../utils';
+import { deviceId, getDeviceModel } from '../utils';
 
-export function postV2Login(authMethod, user, password, service) {
-	return fetch('/service/auth/v2/login', {
-		method: 'POST',
-		headers: {
-			'X-Device-Model': getDeviceModel(),
-			'X-Device-Id': deviceId(),
-			'X-Service': 'WebUI',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			auth_method: authMethod,
-			user,
-			password
-		})
-	});
-}
-
-export function submitOtp(id, code, trustDevice) {
+export function submitOtp(id: string, code: string, trustDevice: boolean) {
 	return fetch('/service/auth/v2/otp/validate', {
 		method: 'POST',
 		headers: {
@@ -41,7 +24,7 @@ export function submitOtp(id, code, trustDevice) {
 	});
 }
 
-export function loginToCarbonioAdmin(username, password) {
+export function loginToCarbonioAdmin(username: string, password: string) {
 	return fetch(`/service/admin/soap/AuthRequest`, {
 		method: 'POST',
 		headers: {
