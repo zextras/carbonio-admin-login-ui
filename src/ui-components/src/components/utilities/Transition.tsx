@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { CSSProperties, useEffect, useMemo } from 'react';
+import React, { type CSSProperties, useEffect, useMemo } from 'react';
 
 import { useCombinedRefs } from '../../hooks/useCombinedRefs';
 
@@ -155,11 +155,11 @@ const TransitionOn = ({
   const childRef = useCombinedRefs<HTMLElement>(ref);
 
   const duration = useMemo(
-    () => transitionDuration || STYLES[type].transitionDuration || DEFAULT_TRANSITION_DURATION,
+    () => transitionDuration || STYLES[type]?.transitionDuration || DEFAULT_TRANSITION_DURATION,
     [type, transitionDuration],
   );
   const timing = useMemo(
-    () => transitionTiming || STYLES[type].transitionTimingFunction || DEFAULT_TRANSITION_TIMING,
+    () => transitionTiming || STYLES[type]?.transitionTimingFunction || DEFAULT_TRANSITION_TIMING,
     [type, transitionTiming],
   );
 
@@ -167,7 +167,7 @@ const TransitionOn = ({
     const childElement = childRef.current;
 
     if (apply && childElement) {
-      const toStyles = to || STYLES[type].to;
+      const toStyles = to || STYLES[type]?.to;
       applyStyle(toStyles, childElement);
       childElement.style.transition = `${transitionTarget} ${duration}ms ${timing} ${transitionDelay}ms`;
 

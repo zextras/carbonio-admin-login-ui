@@ -4,14 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {
-  type CloseSnackbarFn,
-  type CreateSnackbarFn,
-  type CreateSnackbarFnArgs,
-  SnackbarManagerContext,
-} from '@zextras/ui-shared';
-import { type JSX, type PropsWithChildren, useCallback, useReducer } from 'react';
+import { type JSX, type PropsWithChildren, useCallback, useContext, useReducer } from 'react';
 
+import { type CreateSnackbarFn,SnackbarManagerContext } from '../../use-snackbar/use-snackbar';
 import { Snackbar } from '../feedback/snackbar/Snackbar';
 
 const SNACKBAR_ACTION = {
@@ -50,18 +45,26 @@ function snackbarsReducer(state: Array<JSX.Element>, action: SnackbarAction): Ar
   }
 }
 
+export function useSnackbar(): CreateSnackbarFn {
+	const createSnackbar = useContext(SnackbarManagerContext);
+	const fallback = useCallback<CreateSnackbarFn>(() => {
+		console.error('snackbar manager context not initialized');
+		return (): void => undefined;
+	}, []);
+	return createSnackbar ?? fallback;
+}
 type SnackbarManagerProps = PropsWithChildren<{
   autoHideDefaultTimeout?: number;
 }>;
 
-function SnackbarManager({ children, autoHideDefaultTimeout }: SnackbarManagerProps): JSX.Element {
+export function SnackbarManager({ children, autoHideDefaultTimeout }: SnackbarManagerProps): JSX.Element {
   const [snackbars, dispatchSnackbar] = useReducer(snackbarsReducer, []);
 
   const createSnackbar = useCallback<CreateSnackbarFn>(
     ({
       label,
       key,
-      severity = 'info',
+      severity = 'info' as const,
       onActionClick,
       onClose,
       autoHideTimeout,
@@ -108,11 +111,4 @@ function SnackbarManager({ children, autoHideDefaultTimeout }: SnackbarManagerPr
     </>
   );
 }
-export {
-  type CloseSnackbarFn,
-  type CreateSnackbarFn,
-  type CreateSnackbarFnArgs,
-  SnackbarManager,
-  SnackbarManagerContext,
-  type SnackbarManagerProps,
-};
+

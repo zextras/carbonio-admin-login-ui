@@ -81,6 +81,7 @@
 		"jest-fail-on-console": "^3.0.2",
 		"jest-junit": "^15.0.0",
 		"jest-styled-components": "^7.1.1",
+		"knip": "^5.86.0",
 		"lit": "^3.3.2",
 		"msw": "^2.3.2",
 		"postcss": "^8.4.39",
