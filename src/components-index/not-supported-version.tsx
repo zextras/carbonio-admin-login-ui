@@ -4,12 +4,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import { Snackbar } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
+import { Snackbar } from '../ui-components/src';
 
-export default function NotSupportedVersion() {
+export const NotSupportedVersion = () => {
 	const [t] = useTranslation();
 	const [isOpen, setOpen] = useState(true);
 	const onCloseCbk = useCallback(() => setOpen(false), []);
@@ -23,8 +23,8 @@ export default function NotSupportedVersion() {
 			)}
 			onClose={onCloseCbk}
 			autoHideTimeout={10000}
-			type="error"
+			severity="error"
 			data-testid="not-supported-version"
 		/>
 	);
-}
+};
