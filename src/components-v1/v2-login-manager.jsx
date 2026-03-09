@@ -15,13 +15,15 @@ import {
 	Snackbar,
 	Text
 } from '@zextras/carbonio-design-system';
+import { map } from 'lodash';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import ChangePasswordForm from './change-password-form';
 import CredentialsForm from './credentials-form';
 import OfflineModal from './modals';
 import Spinner from './spinner';
-import { loginToCarbonioAdmin, submitOtp } from '../services/v2-service';
+import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
 import { saveCredentials } from '../utils';
 
 const formState = {
@@ -30,6 +32,12 @@ const formState = {
 	twoFactor: 'two-factor',
 	changePassword: 'change-password'
 };
+
+const mapOtpItems = (otpArray) =>
+	map(otpArray ?? [], (obj) => ({
+		label: obj.label,
+		value: obj.id
+	}));
 
 export default function V2LoginManager({ configuration, disableInputs }) {
 	const [t] = useTranslation();
@@ -57,21 +65,63 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 
 	const [snackbarNetworkError, setSnackbarNetworkError] = useState(false);
 	const [detailNetworkModal, setDetailNetworkModal] = useState(false);
-	const submitCredentials = useCallback((username, password) => {
-		setLoadingCredentials(true);
-		return loginToCarbonioAdmin(username, password)
-			.then(async (res) => {
-				if (res.status === 200) {
-					await saveCredentials(username, password);
-					window.location.assign('/carbonioAdmin');
-					setProgress(false);
-				} else {
-					setSnackbarNetworkError(true);
-					setLoadingCredentials(false);
-				}
-			})
-			.catch(() => setLoadingCredentials(false));
-	}, []);
+	const submitCredentials = useCallback(
+		(username, password) => {
+			setLoadingCredentials(true);
+			return loginToCarbonioAdvancedAdmin(username, password)
+				.then((res) => {
+					switch (res.status) {
+						case 200:
+							setEmail(username);
+							if (res.redirected) {
+								setProgress(formState.changePassword);
+							} else {
+								res.json().then(async (response) => {
+									await saveCredentials(username, password);
+									if (response?.['2FA'] === true) {
+										setOtpList(mapOtpItems(response?.otp));
+										setOtpId(response?.otp?.[0].id);
+										setProgress(formState.twoFactor);
+										setLoadingCredentials(false);
+									} else {
+										globalThis.location.assign(configuration.destinationUrl);
+									}
+								});
+							}
+							break;
+						case 401:
+							setAuthError(
+								t(
+									'credentials_not_valid',
+									'Credentials are not valid, please check data and try again'
+								)
+							);
+							setLoadingCredentials(false);
+							break;
+						case 403:
+							setAuthError(
+								t(
+									'auth_not_valid',
+									'The authentication policy needs more steps: please contact your administrator for more information'
+								)
+							);
+							setLoadingCredentials(false);
+							break;
+						case 502:
+							setAuthError(
+								t('server_unreachable', 'Error 502: Service Unreachable - Retry later.')
+							);
+							setLoadingCredentials(false);
+							break;
+						default:
+							setSnackbarNetworkError(true);
+							setLoadingCredentials(false);
+					}
+				})
+				.catch(() => setLoadingCredentials(false));
+		},
+		[configuration.destinationUrl, t]
+	);
 
 	const submitOtpCb = useCallback(
 		(e) => {
@@ -83,7 +133,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 						if (res.redirected) {
 							setProgress(formState.changePassword);
 						} else {
-							window.location.assign(configuration.destinationUrl);
+							globalThis.location.assign(configuration.destinationUrl);
 						}
 					} else {
 						setLoadingOtp(false);
@@ -194,3 +244,10 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 		</>
 	);
 }
+
+V2LoginManager.propTypes = {
+	configuration: PropTypes.shape({
+		destinationUrl: PropTypes.string.isRequired
+	}).isRequired,
+	disableInputs: PropTypes.bool
+};
