@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*
  * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
  *
@@ -6,12 +7,12 @@
 
 import { useEffect, useState } from 'react';
 
+import { NotSupportedVersion } from '../components-index/not-supported-version';
+import { ServerNotResponding } from '../components-index/server-not-responding';
+import { doAuthLogout, getAuthSupported } from '../services/auth-configuration-service';
+import { type Configuration } from './credentials-form';
 import { V1LoginManager } from './v1-login-manager';
-import V2LoginManager from './v2-login-manager';
-import NotSupportedVersion from '../components-index/not-supported-version';
-import ServerNotResponding from '../components-index/server-not-responding';
-import { getAuthSupported, doAuthLogout } from '../services/auth-configuration-service';
-import { Configuration } from './credentials-form';
+import { V2LoginManager } from './v2-login-manager';
 
 export default function FormSelector({
 	destinationUrl,
@@ -58,9 +59,19 @@ export default function FormSelector({
 
 	if (configuration === null || !configuration.destinationUrl) return <div></div>;
 
-	if (configuration.maxApiVersion >= 2 && configuration.minApiVersion <= 2)
+	if (
+		configuration?.maxApiVersion &&
+		configuration.maxApiVersion >= 2 &&
+		configuration?.minApiVersion &&
+		configuration?.minApiVersion <= 2
+	)
 		return <V2LoginManager configuration={configuration} disableInputs={disableInputs} />;
-	if (configuration.maxApiVersion >= 1 && configuration.minApiVersion <= 1)
+	if (
+		configuration.maxApiVersion &&
+		configuration.maxApiVersion >= 1 &&
+		configuration.minApiVersion &&
+		configuration.minApiVersion <= 1
+	)
 		return <V1LoginManager configuration={configuration} disableInputs={disableInputs} />;
 
 	return <NotSupportedVersion />;
