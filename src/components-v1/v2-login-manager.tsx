@@ -4,21 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import {
-	Button,
-	Checkbox,
-	Input,
-	Row,
-	Select,
-	Snackbar,
-	Text
-} from '@zextras/carbonio-design-system';
+import { Button, Checkbox, Input, Row, Select, Snackbar, Text } from '../ui-components/src';
 import { useTranslation } from 'react-i18next';
 
 import ChangePasswordForm from './change-password-form';
-import CredentialsForm from './credentials-form';
+import { Configuration, CredentialsForm } from './credentials-form';
 import OfflineModal from './modals';
 import Spinner from './spinner';
 import { loginToCarbonioAdmin, submitOtp } from '../services/v2-service';
@@ -31,17 +23,17 @@ const formState = {
 	changePassword: 'change-password'
 };
 
-export default function V2LoginManager({ configuration, disableInputs }) {
+type V2LoginManager = { configuration: Configuration; disableInputs: boolean };
+
+export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManager) => {
 	const [t] = useTranslation();
 	const [loadingCredentials, setLoadingCredentials] = useState(false);
 	const [loadingOtp, setLoadingOtp] = useState(false);
 	const [progress, setProgress] = useState(formState.credentials);
 
-	const [authError, setAuthError] = useState(false);
 	const [showOtpError, setShowOtpError] = useState(false);
 
-	const [otpList, setOtpList] = useState([]);
-	const [otpId, setOtpId] = useState('');
+	const [otpId, setOtpId] = useState<any>('');
 	const [otp, setOtp] = useState('');
 	const onChangeOtp = useCallback(
 		(ev) => {
@@ -52,25 +44,25 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 	const [trustDevice, setTrustDevice] = useState(false);
 	const toggleTrustDevice = useCallback(() => setTrustDevice((v) => !v), [setTrustDevice]);
 
-	const [email, setEmail] = useState('');
 	const [loadingChangePassword, setLoadingChangePassword] = useState(false);
 
 	const [snackbarNetworkError, setSnackbarNetworkError] = useState(false);
 	const [detailNetworkModal, setDetailNetworkModal] = useState(false);
-	const submitCredentials = useCallback((username, password) => {
+	const submitCredentials = useCallback(async (username, password) => {
 		setLoadingCredentials(true);
-		return loginToCarbonioAdmin(username, password)
-			.then(async (res) => {
-				if (res.status === 200) {
-					await saveCredentials(username, password);
-					window.location.assign('/carbonioAdmin');
-					setProgress(false);
-				} else {
-					setSnackbarNetworkError(true);
-					setLoadingCredentials(false);
-				}
-			})
-			.catch(() => setLoadingCredentials(false));
+		try {
+			const res = await loginToCarbonioAdmin(username, password);
+			if (res.status === 200) {
+				await saveCredentials(username, password);
+				window.location.assign('/carbonioAdmin');
+				setProgress('false');
+			} else {
+				setSnackbarNetworkError(true);
+				setLoadingCredentials(false);
+			}
+		} catch {
+			return setLoadingCredentials(false);
+		}
 	}, []);
 
 	const submitOtpCb = useCallback(
@@ -83,7 +75,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 						if (res.redirected) {
 							setProgress(formState.changePassword);
 						} else {
-							window.location.assign(configuration.destinationUrl);
+							window.location.assign(configuration?.destinationUrl ?? '');
 						}
 					} else {
 						setLoadingOtp(false);
@@ -92,7 +84,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 				})
 				.catch(() => setLoadingOtp(false));
 		},
-		[otpId, otp, trustDevice, configuration.destinationUrl]
+		[otpId, otp, trustDevice, configuration?.destinationUrl]
 	);
 
 	const onCloseCbk = useCallback(() => setDetailNetworkModal(false), [setDetailNetworkModal]);
@@ -111,7 +103,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 				<CredentialsForm
 					configuration={configuration}
 					disableInputs={disableInputs}
-					authError={authError}
+					authError={false}
 					submitCredentials={submitCredentials}
 					loading={loadingCredentials}
 				/>
@@ -131,11 +123,10 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 					</Row>
 					<Row padding={{ top: 'large' }}>
 						<Select
-							items={otpList}
+							items={[]}
 							background="gray5"
 							label={t('choose_otp', 'Choose the OTP Method')}
 							onChange={setOtpId}
-							defaultSelection={otpList[0]}
 						/>
 					</Row>
 					<Row padding={{ top: 'large' }}>
@@ -178,7 +169,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 					isLoading={loadingChangePassword}
 					setIsLoading={setLoadingChangePassword}
 					configuration={configuration}
-					username={email}
+					username={''}
 				/>
 			)}
 			<Snackbar
@@ -188,9 +179,9 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 				onActionClick={onSnackbarActionCbk}
 				onClose={onCloseSnackbarCbk}
 				autoHideTimeout={10000}
-				type="error"
+				severity="error"
 			/>
 			<OfflineModal open={detailNetworkModal} onClose={onCloseCbk} />
 		</>
 	);
-}
+};
