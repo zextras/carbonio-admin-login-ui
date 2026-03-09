@@ -22,18 +22,18 @@ export * from './components/layout/Container';
 export * from './components/layout/Padding';
 export * from './components/layout/Row';
 export {
-  Section,
-  type SectionProps,
-  WizardInSection,
-  type WizardInSectionProps,
+	Section,
+	type SectionProps,
+	WizardInSection,
+	type WizardInSectionProps
 } from './components/layout/Section';
 
 /** Inputs components */
 export * from './components/inputs/Checkbox';
 export {
-  ChipInput,
-  type ChipInputProps,
-  type ChipItem,
+	ChipInput,
+	type ChipInputProps,
+	type ChipItem
 } from './components/inputs/chipInput/ChipInput';
 export * from './components/inputs/DateTimePicker';
 export * from './components/inputs/IconCheckbox';
@@ -42,11 +42,11 @@ export * from './components/inputs/PasswordInput';
 export { Radio, type RadioProps } from './components/inputs/Radio';
 export { RadioGroup, type RadioGroupProps } from './components/inputs/RadioGroup';
 export {
-  type MultipleSelectionOnChange,
-  Select,
-  type SelectItem,
-  type SelectProps,
-  type SingleSelectionOnChange,
+	type MultipleSelectionOnChange,
+	Select,
+	type SelectItem,
+	type SelectProps,
+	type SingleSelectionOnChange
 } from './components/inputs/Select';
 export * from './components/inputs/Switch';
 export * from './components/inputs/TextArea';
@@ -62,9 +62,9 @@ export * from './components/custom/displayer';
 export * from './components/custom/dropdown-input';
 export * from './components/custom/horizontal-wizard-layout';
 export {
-  type TRow as HoverableRow,
-  default as HoverableRowFactory,
-  type HoverableRowProps,
+	type TRow as HoverableRow,
+	default as HoverableRowFactory,
+	type HoverableRowProps
 } from './components/custom/hoverable-row-factory';
 export * from './components/custom/inherited-input';
 export * from './components/custom/inherited-select';
@@ -86,11 +86,11 @@ export * from './components/display/List/List';
 export * from './components/display/ListItem';
 export * from './components/display/Popper';
 export {
-  Table,
-  type TableProps,
-  type THeader,
-  type THeaderProps,
-  type TRow,
+	Table,
+	type TableProps,
+	type THeader,
+	type THeaderProps,
+	type TRow
 } from './components/display/Table';
 export * from './components/display/Tooltip';
 
@@ -101,6 +101,7 @@ export * from './components/feedback/quota/Quota';
 export * from './components/feedback/snackbar/Snackbar';
 
 /** Utilities components */
+export * from './components/basic/paragraph';
 export * from './components/custom/hwizard';
 export * from './components/utilities/Catcher';
 export * from './components/utilities/Collapse';
@@ -110,8 +111,8 @@ export * from './hooks/usewizard';
 export * from './theme/theme-utils';
 export type { AnyColor } from './types/utils';
 export {
-  type CloseSnackbarFn,
-  type CreateSnackbarFn,
-  type CreateSnackbarFnArgs,
-  useSnackbar,
-} from '@zextras/ui-shared';
+	type CloseSnackbarFn,
+	type CreateSnackbarFn,
+	type CreateSnackbarFnArgs,
+	useSnackbar
+} from './use-snackbar/use-snackbar';
