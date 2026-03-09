@@ -3,14 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React from 'react';
 
-import { Button, Container, Row, Text } from '@zextras/carbonio-design-system';
 import { useTranslation } from 'react-i18next';
 
 import errorSVG from '../assets/carbonio-load-app-error.svg';
+import { Button, Container, Row, Text } from './ui-components/src';
 
-export const ErrorPage = (): React.JSX.Element => {
+export const ErrorPage = () => {
 	const [t] = useTranslation();
 	return (
 		<Container gap={'10px'} orientation={'vertical'} mainAlignment={'center'} background={'gray5'}>
