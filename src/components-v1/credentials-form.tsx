@@ -4,20 +4,19 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useCallback, useEffect, useState, useMemo } from 'react';
-
-import { Button, Input, PasswordInput, Row, Text } from '../ui-components/src';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { checkClassicUi } from '../services/login-page-services';
+import { Button, Input, PasswordInput, Row, Text } from '../ui-components/src';
 import { setCookie } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
 
 export type Configuration = {
-	minApiVersion: number;
-	maxApiVersion: number;
 	destinationUrl: string;
+	minApiVersion?: number;
+	maxApiVersion?: number;
 	authMethods?: Array<string>;
 } | null;
 
