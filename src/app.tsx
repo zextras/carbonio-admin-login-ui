@@ -5,8 +5,6 @@
  */
 
 import React, { Suspense, useEffect, useState } from 'react';
-
-import { SnackbarManager } from '@zextras/carbonio-design-system';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import { ErrorPage } from './error-page';
@@ -14,7 +12,7 @@ import { LoadingView } from './loading-view';
 import { LoginAdvanced } from './loginAdvanced';
 import { LoginCE } from './loginCE';
 import { getAdvancedSupported } from './services/advanced-supported';
-import { ThemeProvider } from './theme-provider/theme-provider';
+import { SnackbarManager } from './ui-components/src';
 
 type Error = {
 	errorMessage: string;
@@ -52,19 +50,17 @@ export function App(): React.JSX.Element {
 	const supportedResponse = apiResponse && 'supported' in apiResponse;
 
 	return (
-		<ThemeProvider>
-			<SnackbarManager>
-				<Suspense fallback={<div></div>}>
-					<Router>
-						<Switch>
-							{errorResponse && <ErrorPage />}
-							{isLoading && <LoadingView />}
-							{supportedResponse && apiResponse.supported && <LoginAdvanced />}
-							{supportedResponse && !apiResponse.supported && <LoginCE />}
-						</Switch>
-					</Router>
-				</Suspense>
-			</SnackbarManager>
-		</ThemeProvider>
+		<SnackbarManager>
+			<Suspense fallback={<div></div>}>
+				<Router>
+					<Switch>
+						{errorResponse && <ErrorPage />}
+						{isLoading && <LoadingView />}
+						{supportedResponse && apiResponse.supported && <LoginAdvanced />}
+						{supportedResponse && !apiResponse.supported && <LoginCE />}
+					</Switch>
+				</Router>
+			</Suspense>
+		</SnackbarManager>
 	);
 }
