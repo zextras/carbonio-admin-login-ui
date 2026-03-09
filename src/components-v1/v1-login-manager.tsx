@@ -5,7 +5,7 @@
  */
 
 import { useCallback, useState } from 'react';
-import { Row, Snackbar } from '../ui-components/src';
+import { Snackbar } from '../ui-components/src';
 
 import { useTranslation } from 'react-i18next';
 
@@ -19,7 +19,7 @@ export default function V1LoginManager({ configuration, disableInputs }: any) {
 
 	const [loading, setLoading] = useState(false);
 
-	const [authError, setAuthError] = useState();
+	const [authError, setAuthError] = useState(false);
 
 	const [snackbarNetworkError, setSnackbarNetworkError] = useState(false);
 	const [detailNetworkModal, setDetailNetworkModal] = useState(false);
