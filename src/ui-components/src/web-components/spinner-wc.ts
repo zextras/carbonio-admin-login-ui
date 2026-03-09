@@ -4,36 +4,43 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../theme/theme.css';
-
 import { css, html, LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
 
 export class SpinnerWC extends LitElement {
   static override styles = css`
     :host {
       display: inline-block;
     }
-    .spinner {
-      width: 0.75rem;
-      height: 0.75rem;
-      border: 0.125rem solid;
-      border-right-color: transparent;
-      border-radius: 50%;
-      animation: spinner-rotate 0.75s linear infinite;
+    svg {
+      animation: rotate 2s linear infinite;
+      margin: -25px 0 0 -25px;
+      width: 50px;
+      height: 50px;
     }
-    @keyframes spinner-rotate {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
+    .path {
+      stroke: #0000ff;
+      animation: dash 1.5s ease-in-out infinite;
+    }
+    @keyframes rotate {
+      100% {
         transform: rotate(360deg);
       }
     }
+    @keyframes dash {
+      0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+      }
+      50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+      }
+      100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+      }
+    }
   `;
-
-  @property({ type: String, reflect: true })
-  accessor color = 'primary';
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -42,13 +49,9 @@ export class SpinnerWC extends LitElement {
 
   override render() {
     return html`
-      <div
-        class="spinner"
-        style="border-color: var(--color-${this.color}-regular); border-right-color: transparent;"
-        role="status"
-        aria-busy="true"
-        aria-label="Loading"
-      ></div>
+      <svg viewBox="0 0 50 50">
+        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4" />
+      </svg>
     `;
   }
 }
