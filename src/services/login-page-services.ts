@@ -10,7 +10,41 @@ export async function getLoginSupported(signal: AbortSignal) {
 	throw Error('Network Error');
 }
 
-export async function getLoginConfig(version: number, domain: string | null, host: string) {
+type GetLoginConfigResponseBase = {
+	carbonioWebUiDescription: string;
+	carbonioAdminUiTitle: string;
+	carbonioWebUiDarkMode: boolean;
+	zimbraDomainName: string;
+	carbonioFeatureResetPasswordEnabled: boolean;
+	loginPageSkinLogoURL: string;
+	loginPageLogo: string;
+	carbonioPrefWebUiDarkMode: boolean;
+	carbonioAdminUiDescription: string;
+	loginPageFavicon: string;
+	adminConsolePublicUrl: string;
+	zimbraPublicServiceHostname: string;
+	loginPageBackgroundImage: string;
+	carbonioWebUiTitle: string;
+	zimbraPublicServicePort: string;
+	zimbraPublicServiceProtocol: string;
+	loginPageTitle: string;
+	publicUrl: string;
+	loginPageColorSet: unknown;
+	loginPageSkinLogoAppBanner: string;
+	carbonioLogoURL: string;
+	loginPageSkinLogoUrl: string;
+	carbonioAdminUiFavicon: string;
+	carbonioAdminUiBackground: string;
+	carbonioAdminUiLoginLogo: string;
+};
+
+export type GetLoginConfigResponse = Partial<GetLoginConfigResponseBase>;
+
+export async function getLoginConfig(
+	version: number,
+	domain: string | null,
+	host: string
+): Promise<GetLoginConfigResponse> {
 	const urlParams = new URLSearchParams();
 	if (domain) urlParams.append('domain', domain);
 	if (host) urlParams.append('host', host);

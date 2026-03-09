@@ -51,7 +51,7 @@ export async function saveCredentials(id: string, password: string): Promise<voi
 	return Promise.resolve();
 }
 
-export function prepareUrlForForward(oUrl: string) {
+export function prepareUrlForForward(oUrl: string | undefined) {
 	if (typeof oUrl !== 'string') return oUrl;
 	let url;
 	try {

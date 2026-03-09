@@ -14,13 +14,13 @@ import { type Configuration } from './credentials-form';
 import { V1LoginManager } from './v1-login-manager';
 import { V2LoginManager } from './v2-login-manager';
 
-export default function FormSelector({
+export const FormSelector = ({
 	destinationUrl,
 	domain
 }: {
 	destinationUrl: string;
 	domain: string | null;
-}) {
+}) => {
 	const [configuration, setConfiguration] = useState<Configuration>(null);
 	const [error, setError] = useState(false);
 	const [disableInputs, setDisableInputs] = useState(true);
@@ -75,4 +75,4 @@ export default function FormSelector({
 		return <V1LoginManager configuration={configuration} disableInputs={disableInputs} />;
 
 	return <NotSupportedVersion />;
-}
+};
