@@ -47,6 +47,7 @@
 		"@types/webpack-env": "^1.18.8",
 		"@typescript-eslint/eslint-plugin": "4.7.0",
 		"@typescript-eslint/parser": "4.7.0",
+		"@tsconfig/vite-react": "^7.0.2",
 		"eslint-plugin-jest-dom": "^4.0.3",
 		"eslint-plugin-testing-library": "^5.11.1",
 		"@zextras/carbonio-ui-configs": "^1.0.4",
@@ -87,10 +88,11 @@
 		"webpack": "^5.93.0",
 		"webpack-cli": "^5.1.4",
 		"webpack-dev-server": "^5.0.4",
+		"clsx": "^2.1.1",
+		"lit": "^3.3.2",
 		"webpack-merge": "^6.0.1"
 	},
 	"dependencies": {
-		"@zextras/carbonio-design-system": "^7.1.0",
 		"core-js": "^3.37.1",
 		"darkreader": "^4.9.87",
 		"i18next": "^22.5.1",
