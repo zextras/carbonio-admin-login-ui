@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import clsx from 'clsx';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { browserName } from 'react-device-detect';
 import { type TFunction, Trans, useTranslation } from 'react-i18next';
-import styled, { css } from 'styled-components';
 
 import backgroundImage from '../../assets/carbonio_light.jpg';
 import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
@@ -28,37 +28,7 @@ import { prepareUrlForForward } from '../utils';
 import { CopyrightBanner } from './copyright-banner';
 import { FormSelector } from './form-selector';
 import { LinkText } from './link-text';
-
-const LoginContainer = styled(Container)`
-	padding: 0 100px;
-	background: url(${(props) => props.backgroundImage}) no-repeat 75% center/cover;
-	justify-content: center;
-	align-items: center;
-	${({ isDefaultBg }) =>
-		isDefaultBg &&
-		css`
-			@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-				background: url(${backgroundImageRetina}) no-repeat 75% center/cover;
-			}
-		`}
-`;
-
-const FormContainer = styled.div`
-	max-width: 100%;
-	max-height: 100vh;
-	box-shadow: 0px 0px 20px -7px rgba(0, 0, 0, 0.3);
-`;
-
-const FormWrapper = styled(Container)`
-	width: auto;
-	height: auto;
-	background-color: rgba(255, 255, 255, 0.8);
-	padding: 48px 48px 0;
-	width: 436px;
-	max-width: 100%;
-	min-height: 620px;
-	overflow-y: auto;
-`;
+import styles from './page-layout.module.css';
 
 type ConfigBasicSettingsProps = {
 	res: { loginPageBackgroundImage?: string };
@@ -259,9 +229,16 @@ export default function PageLayout({ version, isAdvanced }: PageLayoutProps) {
 	);
 
 	return (
-		<LoginContainer isDefaultBg={isDefaultBg} backgroundImage={bg}>
-			<FormContainer data-testid="form-container">
-				<FormWrapper mainAlignment="space-between">
+		<Container
+			className={clsx(styles.loginContainer, isDefaultBg && styles.loginContainerRetina)}
+			style={{
+				// @ts-expect-error CSS custom property
+				'--background-image': `url(${bg})`,
+				'--background-image-retina': `url(${backgroundImageRetina})`
+			}}
+		>
+			<div className={styles.formContainer} data-testid="form-container">
+				<Container className={styles.formWrapper} mainAlignment="space-between">
 					<Container mainAlignment="flex-start" height="auto">
 						<Padding value="28px 0 28px" width="100%">
 							<Container crossAlignment="center">
@@ -320,8 +297,8 @@ export default function PageLayout({ version, isAdvanced }: PageLayoutProps) {
 						</Row>
 						<CopyrightBanner copyrightBanner={copyrightBanner} t={t} />
 					</Container>
-				</FormWrapper>
-			</FormContainer>
-		</LoginContainer>
+				</Container>
+			</div>
+		</Container>
 	);
 }
