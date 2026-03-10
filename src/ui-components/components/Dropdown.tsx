@@ -19,9 +19,9 @@ import React, {
   useState,
 } from 'react';
 
+import { setupFloating } from '../floating-ui';
 import { resolveThemeColor } from '../theme/theme-utils';
 import { type AnyColor } from '../types/utils';
-import { setupFloating } from '../utils/floating-ui';
 import { type IconName } from '../web-components/icon-registry';
 import { FOCUSABLE_SELECTOR, TIMERS } from './constants';
 import { Container } from './Container';
@@ -200,7 +200,7 @@ function NestListItem({
     }
   }, [onClose]);
 
-    const closeOnMouseLeave = useCallback(
+  const closeOnMouseLeave = useCallback(
     (event: Event) => {
       if (event.target instanceof Node) {
         const eventIsOnTrigger = itemRef.current?.contains(event.target);
@@ -304,7 +304,10 @@ type DropdownProps = Omit<HTMLAttributes<HTMLDivElement>, 'contextMenu'> & {
   preventDefault?: boolean;
   itemTextSize?: TextSize;
   /** @internal */
-  _dropdownListRef?: React.RefCallback<HTMLDivElement> | React.RefObject<HTMLDivElement | null> | null;
+  _dropdownListRef?:
+    | React.RefCallback<HTMLDivElement>
+    | React.RefObject<HTMLDivElement | null>
+    | null;
 };
 
 const Dropdown = ({
@@ -333,8 +336,7 @@ const Dropdown = ({
   const endSentinelRef = useRef<HTMLDivElement | null>(null);
   const nestedDropdownsRef = useRef<Array<React.RefObject<HTMLDivElement | null>>>([]);
 
-
-    const openPopper = useCallback(() => {
+  const openPopper = useCallback(() => {
     setOpen(true);
     openRef.current = true;
     onOpen?.();
@@ -357,7 +359,7 @@ const Dropdown = ({
       }
       onClose?.();
     },
-    [disableRestoreFocus,  innerTriggerRef, onClose],
+    [disableRestoreFocus, innerTriggerRef, onClose],
   );
 
   const toggleOpen = useCallback<(e: React.SyntheticEvent | KeyboardEvent) => void>(
@@ -418,7 +420,7 @@ const Dropdown = ({
     lastChild?.focus();
   }, []);
 
-   useLayoutEffect(() => {
+  useLayoutEffect(() => {
     let cleanup: ReturnType<typeof setupFloating>;
     if (open) {
       const popperReference = innerTriggerRef.current;
@@ -576,7 +578,7 @@ const Dropdown = ({
       '--popper-max-height': maxHeight,
     } as CSSProperties;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ maxWidth, maxHeight, open, innerTriggerRef]);
+  }, [maxWidth, maxHeight, open, innerTriggerRef]);
 
   return (
     <div className={styles.popperDropdownWrapper} data-display={display} {...rest}>
