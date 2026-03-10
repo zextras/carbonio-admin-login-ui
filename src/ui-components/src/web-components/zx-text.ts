@@ -11,9 +11,9 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 import { resolveThemeColor } from '../theme/theme-utils';
 
-type TextSize = 'extrasmall'| 'small'| 'medium'| 'large'| 'extralarge';
-type TextWeight= 'light'| 'regular'| 'medium'| 'bold';
-type TextOverflow = 'ellipsis' | 'break-word';
+export type TextSize = 'extrasmall'| 'small'| 'medium'| 'large'| 'extralarge';
+export type TextWeight= 'light'| 'regular'| 'medium'| 'bold';
+export type TextOverflow = 'ellipsis' | 'break-word';
 
 export class ZxText extends LitElement {
   static override styles = css`

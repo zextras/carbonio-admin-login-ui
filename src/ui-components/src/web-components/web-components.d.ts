@@ -8,6 +8,7 @@
 import React from 'react';
 
 import { type IconName, type IconSize } from './icon-registry';
+import { type TextOverflow,type TextSize, type TextWeight } from './zx-text';
 
 declare global {
   namespace React {
@@ -28,9 +29,9 @@ declare global {
         'zx-text': React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             color?: string;
-            size?: 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
-            weight?: 'light' | 'regular' | 'medium' | 'bold';
-            overflow?: 'ellipsis' | 'break-word';
+            size?: TextSize;
+            weight?: TextWeight;
+            overflow?: TextOverflow;
             disabled?: boolean;
             lineHeight?: number;
           },
