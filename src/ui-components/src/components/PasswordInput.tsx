@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../../web-components/icon-wc';
+import '../web-components/icon-wc';
 
 import React, { useCallback, useRef, useState } from 'react';
 
-import { Container } from '../layout/Container';
+import { Container } from './Container';
 import { Input, InputProps } from './Input';
 
 const PasswordInput = (props: InputProps) => {

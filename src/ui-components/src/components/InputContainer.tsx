@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { CSSProperties, FC, HTMLAttributes, useMemo } from 'react';
 
 import { resolveThemeColor } from '../theme/theme-utils';
-import { Container, ContainerProps } from './layout/Container';
+import { Container, ContainerProps } from './Container';
 import styles from './InputContainer.module.css';
 
 type InputContainerOwnProps = {

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../../web-components/divider-wc';
+import '../web-components/divider-wc';
 
 import { noop } from 'lodash-es';
 import React, { HTMLAttributes, useCallback, useRef } from 'react';

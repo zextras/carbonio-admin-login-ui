@@ -7,8 +7,8 @@
 import { omit } from 'lodash-es';
 import React, { HTMLAttributes } from 'react';
 
-import { PaddingVarObj } from '../../theme/theme-utils';
-import { AllKeys } from '../../types/utils';
+import { PaddingVarObj } from '../theme/theme-utils';
+import { AllKeys } from '../types/utils';
 import styles from './Padding.module.css';
 
 type PaddingComponentProps = {

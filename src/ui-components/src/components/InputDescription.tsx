@@ -6,7 +6,7 @@
 
 import React from 'react';
 
-import { Text, TextProps } from '../../basic/text/Text';
+import { Text, TextProps } from './Text';
 import styles from './InputDescription.module.css';
 
 type InputDescriptionProps = Omit<TextProps, 'overflow' | 'size'>;

@@ -6,7 +6,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import { Container } from '../../layout/Container';
+import { Container } from '../Container';
 import styles from './ModalComponents.module.css';
 
 const modalMinWidth = {

@@ -6,10 +6,10 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import { Button } from '../../Button';
-import { Text } from '../../basic/text/Text';
-import { Tooltip } from '../../display/Tooltip';
-import { Row } from '../../layout/Row';
+import { Button } from '../Button';
+import { Text } from '../Text';
+import { Tooltip } from '../Tooltip';
+import { Row } from '../Row';
 import styles from './ModalHeader.module.css';
 
 type ModalHeaderProps = {

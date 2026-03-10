@@ -8,14 +8,14 @@ import '../web-components/divider-wc';
 
 import { useCallback, useMemo, useState } from 'react';
 
-import { KeyboardPresetObj, useKeyboard } from '../../hooks/useKeyboard';
-import { resolveThemeColor } from '../../theme/theme-utils';
-import { AnyColor } from '../../types/utils';
-import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from '../constants';
+import { KeyboardPresetObj, useKeyboard } from '../hooks/useKeyboard';
+import { resolveThemeColor } from '../theme/theme-utils';
+import { AnyColor } from '../types/utils';
+import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from './constants';
 import { useCombinedRefs } from '../hooks/useCombinedRefs';
-import { InputContainer } from '../InputContainer';
-import { InputDescription } from '../InputDescription';
-import { Container, ContainerProps } from '../layout/Container';
+import { InputContainer } from './InputContainer';
+import { InputDescription } from './InputDescription';
+import { Container, ContainerProps } from './Container';
 import styles from './Input.module.css';
 
 type InputProps = ContainerProps & {

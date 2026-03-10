@@ -6,8 +6,8 @@
 
 import React, { createContext, useCallback, useMemo, useReducer } from 'react';
 
-import { CustomModal, CustomModalProps } from '../feedback/CustomModal';
-import { Modal, ModalProps } from '../feedback/Modal';
+import { CustomModal, CustomModalProps } from '../CustomModal';
+import { Modal, ModalProps } from '../Modal';
 
 type CreateModalArgs =
   | [modalProps: ModalProps & { id: string }, customModal?: false]
