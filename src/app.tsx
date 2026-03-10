@@ -5,7 +5,6 @@
  */
 
 import React, { Suspense, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import { ErrorPage } from './error-page';
 import { LoadingView } from './loading-view';
@@ -52,14 +51,10 @@ export function App(): React.JSX.Element {
 	return (
 		<SnackbarManager>
 			<Suspense fallback={<div></div>}>
-				<Router>
-					<Switch>
 						{errorResponse && <ErrorPage />}
 						{isLoading && <LoadingView />}
 						{supportedResponse && apiResponse.supported && <LoginAdvanced />}
 						{supportedResponse && !apiResponse.supported && <LoginCE />}
-					</Switch>
-				</Router>
 			</Suspense>
 		</SnackbarManager>
 	);
