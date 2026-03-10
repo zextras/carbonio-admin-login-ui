@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import errorSVG from '../assets/carbonio-load-app-error.svg';
 import styles from './error-page.module.css';
 import { Button } from './ui-components/';
+import { zxTextVars } from './ui-components/web-components/zx-text';
 
 export const ErrorPage = () => {
   const [t] = useTranslation();
@@ -21,7 +22,11 @@ export const ErrorPage = () => {
         <div className={styles.contentWrapper}>
           <div className={styles.textGroup}>
             <zx-text
-              style={{ '--text-font-size': '64px' } as React.CSSProperties}
+              style={
+                {
+                  [zxTextVars.fontSize]: '64px',
+                } as React.CSSProperties
+              }
               weight="medium"
               color="primary"
             >
@@ -29,19 +34,19 @@ export const ErrorPage = () => {
             </zx-text>
             <zx-text
               overflow="break-word"
-              style={{ '--text-font-size': '40px' } as React.CSSProperties}
+              style={{ [zxTextVars.fontSize]: '40px' } as React.CSSProperties}
               weight="light"
               color="secondary"
             >
               {t(
                 'error.loading_page',
-                "We're sorry, but there was an error trying to load this page.",
+                'We’re sorry, but there was an error trying to load this page.',
               )}
             </zx-text>
           </div>
           <div className={styles.rowWrapper}>
             <zx-text
-              style={{ '--text-font-size': '24px' } as React.CSSProperties}
+              style={{ [zxTextVars.fontSize]: '24px' } as React.CSSProperties}
               weight="regular"
               color="secondary"
             >
