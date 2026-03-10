@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { checkClassicUi } from '../services/login-page-services';
-import { Button, Input, PasswordInput, Row, Text } from '../ui-components/src';
+import { Button, Input, PasswordInput, Row } from '../ui-components/src';
 import { setCookie } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -120,9 +120,9 @@ export const CredentialsForm = ({
 					backgroundColor="gray5"
 				/>
 			</Row>
-			<Text color="error" size="small" overflow="break-word">
+			<zx-text color="error" size="small" overflow="break-word">
 				{authError || <br />}
-			</Text>
+			</zx-text>
 
 			<Row
 				orientation="vertical"

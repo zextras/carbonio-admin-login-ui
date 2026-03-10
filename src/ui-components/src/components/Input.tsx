@@ -15,7 +15,6 @@ import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from './constants';
 import { Container, type ContainerProps } from './Container';
 import styles from './Input.module.css';
 import { InputContainer } from './InputContainer';
-import { Text } from './Text';
 
 type InputProps = ContainerProps & {
   backgroundColor?: AnyColor;
@@ -168,9 +167,9 @@ const Input = ({
       </InputContainer>
       <divider-wc color={dividerColor}></divider-wc>
       {description !== undefined && (
-      <Text overflow="break-word" size="extrasmall" className={styles.inputDescription} color={descriptionTextColor} disabled={disabled} >
+      <zx-text overflow="break-word" size="extrasmall" class={styles.inputDescription} color={descriptionTextColor} disabled={disabled} >
           {description}
-          </Text>
+          </zx-text>
       )}
     </Container>
   );

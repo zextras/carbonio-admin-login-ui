@@ -15,7 +15,6 @@ import { TIMERS } from './constants';
 import { Container } from './Container';
 import { Row } from './Row';
 import styles from './Snackbar.module.css';
-import { Text } from './Text';
 import { Portal } from './utilities/Portal';
 import { Transition } from './utilities/Transition';
 
@@ -139,9 +138,9 @@ const Snackbar = ({
                 flexGrow={1}
                 width={'auto'}
               >
-                <Text color="gray6" overflow={'break-word'}>
+                <zx-text color="gray6" overflow="break-word">
                   {label}
-                </Text>
+                </zx-text>
               </Row>
               {!hideButton && (
                 <Row

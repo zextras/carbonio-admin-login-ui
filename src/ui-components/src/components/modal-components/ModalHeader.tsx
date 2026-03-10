@@ -8,7 +8,6 @@ import React from 'react';
 
 import { Button } from '../Button';
 import { Row } from '../Row';
-import { Text } from '../Text';
 import { Tooltip } from '../Tooltip';
 import styles from './ModalHeader.module.css';
 
@@ -31,13 +30,13 @@ function ModalHeader({
 }: ModalHeaderProps): React.JSX.Element {
 	return (
 		<Row width="100%" padding={{ bottom: 'small' }}>
-			<Text
-				className={clsx(styles.modalTitle, centered && styles.centered)}
+			<zx-text
+				class={clsx(styles.modalTitle, centered && styles.centered)}
 				color={type === 'error' ? 'error' : undefined}
 				weight="bold"
 			>
 				{title}
-			</Text>
+			</zx-text>
 			{showCloseIcon && onClose && (
 				<Tooltip label={closeIconTooltip} disabled={!closeIconTooltip}>
 					<Button icon="Close" size="large" onClick={onClose} type="ghost" color="text" />

@@ -25,6 +25,17 @@ declare global {
           },
           HTMLElement
         >;
+        'zx-text': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            color?: string;
+            size?: 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
+            weight?: 'light' | 'regular' | 'medium' | 'bold';
+            overflow?: 'ellipsis' | 'break-word';
+            disabled?: boolean;
+            lineHeight?: number;
+          },
+          HTMLElement
+        >;
       }
     }
   }

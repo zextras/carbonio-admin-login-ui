@@ -4,26 +4,24 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useState, useCallback, useEffect } from 'react';
-
-import { Row, Text, Input, Button, PasswordInput } from '../ui-components/src';
+import { useCallback, useEffect,useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
-	ZM_AUTH_TOKEN,
+	BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY,
+	BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY,
+	INVALID_PASSWORD_ERR_CODE,
+	PASSWORD_LOCKED,
+	PASSWORD_RECENTLY_USED_ERR_CODE,
 	ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME,
+	ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS,
 	ZIMBRA_PASSWORD_MIN_LENGTH_ATTR_NAME,
 	ZIMBRA_PASSWORD_MIN_LOWERCASE_CHARS_ATTR_NAME,
 	ZIMBRA_PASSWORD_MIN_NUMERIC_CHARS_ATTR_NAME,
 	ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME,
 	ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
-	INVALID_PASSWORD_ERR_CODE,
-	PASSWORD_RECENTLY_USED_ERR_CODE,
-	BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY,
-	BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY,
-	PASSWORD_LOCKED,
-	ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS
-} from '../constants';
+	ZM_AUTH_TOKEN} from '../constants';
+import { Button, Input, PasswordInput,Row } from '../ui-components/src';
 import { saveCredentials, setCookie } from '../utils';
 
 export const submitChangePassword = (
@@ -108,7 +106,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 						let payload;
 						try {
 							payload = await res.json();
-						} catch (err) {
+						} catch {
 							payload = res;
 						}
 						if (res.status === 200) {
@@ -310,9 +308,9 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 		>
 			<input type="submit" style={{ display: 'none' }} />
 			<Row padding={{ bottom: 'large' }}>
-				<Text size="large" color="text" weight="bold">
+				<zx-text size="large" color="text" weight="bold">
 					{t('changePassword_title', 'Create a new password')}
-				</Text>
+				</zx-text>
 			</Row>
 			<Row padding={{ top: 'large' }}>
 				<Input defaultValue={username} disabled label="Email" data-testid="email" />
@@ -329,9 +327,9 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			</Row>
 			{showOldPasswordError && (
 				<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-					<Text color="error" size="small" overflow="break-word">
+					<zx-text color="error" size="small" overflow="break-word">
 						{t('wrong_password', 'Wrong password, please check data and try again')}
-					</Text>
+					</zx-text>
 				</Row>
 			)}
 			<Row padding={{ top: 'large' }}>
@@ -346,9 +344,9 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			</Row>
 			{errorLabelNewPassword && (
 				<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-					<Text color="error" size="small" overflow="break-word">
+					<zx-text color="error" size="small" overflow="break-word">
 						{errorLabelNewPassword}
-					</Text>
+					</zx-text>
 				</Row>
 			)}
 			<Row padding={{ top: 'large' }}>
@@ -363,9 +361,9 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			</Row>
 			{errorLabelConfirmNewPassword && (
 				<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-					<Text color="error" size="small" overflow="break-word">
+					<zx-text color="error" size="small" overflow="break-word">
 						{errorLabelConfirmNewPassword}
-					</Text>
+					</zx-text>
 				</Row>
 			)}
 			<Row orientation="vertical" crossAlignment="flex-start" padding={{ vertical: 'medium' }}>

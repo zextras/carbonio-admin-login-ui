@@ -23,7 +23,7 @@ import {
 } from '../constants';
 import { getLoginConfig, type GetLoginConfigResponse } from '../services/login-page-services';
 import { useLoginConfigStore } from '../store/login/store';
-import { Container, Padding, Row, Text } from '../ui-components/src/';
+import { Container, Padding, Row } from '../ui-components/src/';
 import { prepareUrlForForward } from '../utils';
 import { CopyrightBanner } from './copyright-banner';
 import { FormSelector } from './form-selector';
@@ -271,7 +271,7 @@ export  const PageLayout=({ version, isAdvanced }: PageLayoutProps)=> {
 									size="medium"
 								/>
 							</Padding>
-							<Text size="small" color="secondary" weight="light">
+							<zx-text size="small" color="secondary" weight="light">
 								<Trans
 									i18nKey={
 										isSupportedBrowser ? 'browser_fully_supported' : 'browser_limited_supported'
@@ -293,7 +293,7 @@ export  const PageLayout=({ version, isAdvanced }: PageLayoutProps)=> {
 										)
 									}}
 								/>
-							</Text>
+							</zx-text>
 						</Row>
 						<CopyrightBanner copyrightBanner={copyrightBanner} t={t} />
 					</Container>

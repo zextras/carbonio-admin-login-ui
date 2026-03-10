@@ -6,8 +6,6 @@
 
 import type { TFunction } from 'react-i18next';
 
-import { Text } from '../ui-components/src';
-
 type CopyrightBannerProps = {
 	copyrightBanner?: string;
 	t: TFunction;
@@ -15,16 +13,16 @@ type CopyrightBannerProps = {
 export const CopyrightBanner = ({ copyrightBanner, t }: CopyrightBannerProps) => {
 	if (copyrightBanner) {
 		return (
-			<Text size="small" overflow="break-word">
+			<zx-text size="small" overflow="break-word">
 				{copyrightBanner}
-			</Text>
+			</zx-text>
 		);
 	}
 	return (
-		<Text size="small" overflow="break-word" data-testid="default-banner">
+		<zx-text size="small" overflow="break-word" data-testid="default-banner">
 			{t('copy_right', 'Copyright')} &copy;
 			{` ${new Date().getFullYear()} Zextras, `}
 			{t('all_rights_reserved', 'All rights reserved')}
-		</Text>
+		</zx-text>
 	);
 };

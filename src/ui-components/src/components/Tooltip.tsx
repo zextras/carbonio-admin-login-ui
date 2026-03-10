@@ -17,14 +17,22 @@ import {
 
 import { useCombinedRefs } from '../hooks/useCombinedRefs';
 import { setupFloating } from '../utils/floating-ui';
-import { Text, type TextProps } from './Text';
 import styles from './Tooltip.module.css';
 import { Portal } from './utilities/Portal';
 
-type TooltipWrapperProps = TextProps & {
+type TextSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
+type TextOverflow = 'ellipsis' | 'break-word';
+
+type TooltipWrapperProps = {
+	size?: TextSize;
+	overflow?: TextOverflow;
+	className?: string;
+	style?: React.CSSProperties;
+	children?: React.ReactNode;
 	open: boolean;
 	maxWidth: string;
-};
+	ref?: React.Ref<HTMLDivElement>;
+} & React.HTMLAttributes<HTMLElement>;
 
 const TooltipWrapper = ({
 	open,
@@ -44,20 +52,20 @@ const TooltipWrapper = ({
 	};
 
 	return (
-		<Text
+		<zx-text
 			size={size}
 			overflow={overflow}
-			data-testid={'tooltip'}
-			className={className}
+			data-testid="tooltip"
+			class={className}
 			style={tooltipStyle}
 			{...rest}
 		>
 			{children}
-		</Text>
+		</zx-text>
 	);
 };
 
-type TooltipProps = TextProps & {
+type TooltipProps = {
 	/** Tooltip text */
 	label: string | React.ReactNode | undefined;
 	/** Tooltip placement */

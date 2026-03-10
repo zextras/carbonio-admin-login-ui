@@ -11,7 +11,6 @@ import { resolveThemeColor } from '../theme/theme-utils';
 import styles from './Checkbox.module.css';
 import { Container, type ContainerProps } from './Container';
 import { Padding } from './Padding';
-import { Text } from './Text';
 
 
 export type CheckboxProps = Omit<ContainerProps, 'onChange' | 'onClick'> & {
@@ -66,14 +65,14 @@ export const Checkbox = ({
       </div>
       {label && (
         <Padding left="small">
-          <Text
-            className={styles.customText}
+          <zx-text
+            class={styles.customText}
             weight="regular"
             overflow="break-word"
             color="gray0"
           >
             {label}
-          </Text>
+          </zx-text>
         </Padding>
       )}
     </Container>

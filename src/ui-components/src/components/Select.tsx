@@ -15,7 +15,6 @@ import { Dropdown, type DropdownItem, type DropdownProps } from './Dropdown';
 import { Padding } from './Padding';
 import { Row } from './Row';
 import styles from './Select.module.css';
-import { Text } from './Text';
 
 type SelectItem<T = string> = {
   label: string;
@@ -142,17 +141,17 @@ const DefaultLabelFactory = <T,>({
       >
         <Row takeAvailableSpace mainAlignment="unset">
           <Padding top="medium" width="100%">
-            <Text
+            <zx-text
               color={disabled ? 'secondary' : 'text'}
               className={styles.customText}
             >
               {selectedLabels}
-            </Text>
+            </zx-text>
           </Padding>
           <div className={styles.label} style={labelStyle}>
-            <Text size={hasSelection ? 'small' : 'medium'} color={labelColor}>
+            <zx-text size={hasSelection ? 'small' : 'medium'} color={labelColor}>
               {label}
-            </Text>
+            </zx-text>
           </div>
         </Row>
         <div className={styles.iconWrapper}>

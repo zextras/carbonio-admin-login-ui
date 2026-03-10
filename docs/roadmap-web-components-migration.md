@@ -169,7 +169,7 @@ src/
 │   └── events.ts               # Custom events
 ├── web-components/
 │   ├── primitives/
-│   │   ├── text-wc.ts
+│   │   ├── zx-text.ts
 │   │   ├── padding-wc.ts
 │   │   ├── container-wc.ts
 │   │   └── row-wc.ts

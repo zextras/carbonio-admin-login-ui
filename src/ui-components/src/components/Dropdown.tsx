@@ -27,16 +27,17 @@ import { FOCUSABLE_SELECTOR, TIMERS } from './constants';
 import { Container } from './Container';
 import styles from './Dropdown.module.css';
 import { Padding } from './Padding';
-import { Text } from './Text';
 import { Tooltip } from './Tooltip';
 import { Portal } from './utilities/Portal';
+
+type TextSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 
 type ListItemContentProps = {
   icon?: IconName;
   label: string;
   selected?: boolean;
   disabled?: boolean;
-  itemTextSize: React.ComponentProps<typeof Text>['size'];
+  itemTextSize: TextSize;
   tooltipLabel?: string;
 };
 
@@ -61,14 +62,14 @@ function ListItemContent({
             ></icon-wc>
           </Padding>
         )}
-        <Text
+        <zx-text
           size={itemTextSize}
           weight={selected ? 'bold' : 'regular'}
           color={disabled ? 'secondary.regular' : 'text'}
           disabled={disabled}
         >
           {label}
-        </Text>
+        </zx-text>
       </Container>
     </Tooltip>
   );
@@ -301,7 +302,7 @@ type DropdownProps = Omit<HTMLAttributes<HTMLDivElement>, 'contextMenu'> & {
   placement?: Placement;
   disablePortal?: boolean;
   preventDefault?: boolean;
-  itemTextSize?: React.ComponentPropsWithRef<typeof Text>['size'];
+  itemTextSize?: TextSize;
   /** @internal */
   _dropdownListRef?: React.RefCallback<HTMLDivElement> | React.RefObject<HTMLDivElement | null> | null;
 };

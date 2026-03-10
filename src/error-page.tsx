@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import errorSVG from '../assets/carbonio-load-app-error.svg';
 import styles from './error-page.module.css';
-import { Button, Text } from './ui-components/src';
+import { Button } from './ui-components/src';
 
 export const ErrorPage = () => {
 	const [t] = useTranslation();
@@ -20,30 +20,38 @@ export const ErrorPage = () => {
 				</div>
 				<div className={styles.contentWrapper}>
 					<div className={styles.textGroup}>
-						<Text style={{ fontSize: '64px' }} weight={'medium'} color={'primary'}>
+						<zx-text
+							style={{ '--text-font-size': '64px' } as React.CSSProperties}
+							weight="medium"
+							color="primary"
+						>
 							{t('error.something_went_wrong', 'Something went wrong')}
-						</Text>
-						<Text
-							overflow={'break-word'}
-							style={{ fontSize: '40px' }}
-							weight={'light'}
-							color={'secondary'}
+						</zx-text>
+						<zx-text
+							overflow="break-word"
+							style={{ '--text-font-size': '40px' } as React.CSSProperties}
+							weight="light"
+							color="secondary"
 						>
 							{t(
 								'error.loading_page',
-								'We’re sorry, but there was an error trying to load this page.'
+								"We're sorry, but there was an error trying to load this page."
 							)}
-						</Text>
+						</zx-text>
 					</div>
 					<div className={styles.rowWrapper}>
-						<Text style={{ fontSize: '24px' }} weight={'regular'} color={'secondary'}>
+						<zx-text
+							style={{ '--text-font-size': '24px' } as React.CSSProperties}
+							weight="regular"
+							color="secondary"
+						>
 							{t('error.contact_support', 'Contact support or try refreshing the page')}
-						</Text>
+						</zx-text>
 						<Button
-							iconPlacement={'left'}
+							iconPlacement="left"
 							icon="Refresh"
 							label={t('button.refresh_page', 'REFRESH')}
-							type={'outlined'}
+							type="outlined"
 							onClick={(): void => window.location.reload()}
 							color="primary"
 						/>

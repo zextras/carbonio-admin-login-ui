@@ -15,8 +15,7 @@ import {
 	Input,
 	Row,
 	Select,
-	Snackbar,
-	Text
+	Snackbar
 } from '../ui-components/src';
 import { saveCredentials } from '../utils';
 import ChangePasswordForm from './change-password-form';
@@ -178,9 +177,9 @@ export const V2LoginManager=({ configuration, disableInputs }:V2LoginManagerProp
 				<form onSubmit={submitOtpCb} style={{ width: '100%' }}>
 					<input type="submit" style={{ display: 'none' }} />
 					<Row padding={{ bottom: 'large' }}>
-						<Text size="large" color="text" weight="bold">
+						<zx-text size="large" color="text" weight="bold">
 							{t('two_step_authentication', 'Two-Step-Authentication')}
-						</Text>
+						</zx-text>
 					</Row>
 					<Row padding={{ top: 'large' }}>
 						<Select
@@ -202,11 +201,11 @@ export const V2LoginManager=({ configuration, disableInputs }:V2LoginManagerProp
 						/>
 					</Row>
 					<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-						<Text color="error" size="small" overflow="break-word">
+						<zx-text color="error" size="small" overflow="break-word">
 							{showOtpError &&
 								t('wrong_password', 'Wrong password, please check data and try again')}
 							{!showOtpError && <br />}
-						</Text>
+						</zx-text>
 					</Row>
 					<Row orientation="vertical" crossAlignment="flex-start" padding={{ vertical: 'small' }}>
 						<Button

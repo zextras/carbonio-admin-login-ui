@@ -6,16 +6,16 @@
 
 import { useTranslation } from 'react-i18next';
 
-import { Modal, Text} from '../ui-components/src/';
+import { Modal } from '../ui-components/src/';
 import styles from './modals.module.css';
 
 export default function OfflineModal({ open, onClose }: any) {
 	const [t] = useTranslation();
 	return (
 		<Modal title="Offline" open={open} onClose={onClose}>
-		<Text overflow={'break-word'} lineHeight={1.4} className={styles.paragraph} data-testid="offlineMsg">
+		<zx-text overflow="break-word" line-height={1.4} class={styles.paragraph} data-testid="offlineMsg">
 				{t('offline', 'You are currently offline, please check your internet connection')}
-        </Text>
+    </zx-text>
 		</Modal>
 	);
 }
