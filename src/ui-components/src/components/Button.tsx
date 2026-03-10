@@ -199,7 +199,6 @@ const Button = ({
 	loading = false,
 	secondaryAction,
 	width = 'fit',
-	minWidth,
 	ref,
 	...rest
 }: ButtonProps) => {
@@ -249,7 +248,6 @@ const Button = ({
 
 	const gridStyle: React.CSSProperties = {
 		'--btn-width': gridWidth,
-		'--btn-min-width': minWidth ?? '0',
 		'--secondary-margin': padding
 	} as React.CSSProperties;
 

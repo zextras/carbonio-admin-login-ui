@@ -15,7 +15,6 @@
   gap: var(--btn-gap);
   width: var(--btn-width);
   max-width: 100%;
-  min-width: 0;
   border: none;
   border-radius: 0.25rem;
   color: var(--btn-color);
@@ -108,7 +107,7 @@
 .grid {
   width: var(--btn-width);
   max-width: 100%;
-  min-width: var(--btn-min-width, 0);
+  min-width: 0;
   display: grid;
   place-items: center;
   align-content: center;
