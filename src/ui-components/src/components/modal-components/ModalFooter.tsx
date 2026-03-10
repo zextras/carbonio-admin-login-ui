@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import React, { useMemo } from 'react';
 
 import { AnyColor } from '../../../types/utils';
-import { Button } from '../../basic/button/Button';
+import { Button } from '../../Button';
 import { Tooltip } from '../../display/Tooltip';
 import { Container } from '../../layout/Container';
 import { Padding } from '../../layout/Padding';

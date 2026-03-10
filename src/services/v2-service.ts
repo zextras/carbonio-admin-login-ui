@@ -24,6 +24,25 @@ export function submitOtp(id: string, code: string, trustDevice: boolean) {
 	});
 }
 
+export function loginToCarbonioAdvancedAdmin(user:string, password:string) {
+	return fetch(`/zx/auth/v2/admin/login`, {
+		method: 'POST',
+		headers: {
+			'X-Device-Model': getDeviceModel(),
+			'X-Device-Id': deviceId(),
+			'X-Service': 'WebAdminUI',
+			'Content-Type': 'application/json',
+			version: '2'
+		},
+		referrerPolicy: 'same-origin',
+		body: JSON.stringify({
+			auth_method: 'password',
+			user,
+			password
+		})
+	});
+}
+
 export function loginToCarbonioAdmin(username: string, password: string) {
 	return fetch(`/service/admin/soap/AuthRequest`, {
 		method: 'POST',

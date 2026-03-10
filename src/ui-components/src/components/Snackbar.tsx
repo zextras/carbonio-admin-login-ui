@@ -4,20 +4,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../../../web-components/icon-wc';
+import '../web-components/icon-wc';
 
 import React, { useCallback, useEffect } from 'react';
 
-import { resolveThemeColor } from '../../../theme/theme-utils';
-import { type IconName } from '../../../web-components/icon-registry';
-import { Button } from '../../basic/button/Button';
-import { Text } from '../../basic/text/Text';
-import { TIMERS } from '../../constants';
-import { Container } from '../../layout/Container';
-import { Row } from '../../layout/Row';
-import { Portal } from '../../utilities/Portal';
-import { Transition } from '../../utilities/Transition';
+import { resolveThemeColor } from '../theme/theme-utils';
+import { type IconName } from '../web-components/icon-registry';
+import { Button } from './Button';
+import { TIMERS } from './constants';
+import { Container } from './Container';
+import { Row } from './Row';
 import styles from './Snackbar.module.css';
+import { Text } from './Text';
+import { Portal } from './utilities/Portal';
+import { Transition } from './utilities/Transition';
 
 const icons: Record<'success' | 'info' | 'warning' | 'error', IconName> = {
   success: 'CheckmarkOutline',

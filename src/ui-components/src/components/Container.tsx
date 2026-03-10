@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import clsx from 'clsx';
-import React, { CSSProperties, HTMLAttributes, useMemo } from 'react';
+import React, { type CSSProperties, type HTMLAttributes, useMemo } from 'react';
 
-import { getPaddingVar, PaddingVarObj, resolveThemeColor } from '../../theme/theme-utils';
-import { AnyColor, LiteralUnion } from '../../types/utils';
+import { getPaddingVar, type PaddingVarObj, resolveThemeColor } from '../theme/theme-utils';
+import { type AnyColor, type LiteralUnion } from '../types/utils';
 import styles from './Container.module.css';
 
 type Dimension = LiteralUnion<'fit' | 'fill', string> | number;

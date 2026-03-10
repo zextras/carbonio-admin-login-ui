@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { flip, limitShift, offset, Placement, shift } from '@floating-ui/dom';
+import { flip, limitShift, offset, type Placement, shift } from '@floating-ui/dom';
 import {
 	cloneElement,
 	createRef,
@@ -15,11 +15,11 @@ import {
 	useState
 } from 'react';
 
-import { useCombinedRefs } from '../../hooks/useCombinedRefs';
-import { setupFloating } from '../../utils/floating-ui';
-import { Text, TextProps } from '../basic/text/Text';
-import { Portal } from '../utilities/Portal';
+import { useCombinedRefs } from '../hooks/useCombinedRefs';
+import { setupFloating } from '../utils/floating-ui';
+import { Text, type TextProps } from './Text';
 import styles from './Tooltip.module.css';
+import { Portal } from './utilities/Portal';
 
 type TooltipWrapperProps = TextProps & {
 	open: boolean;

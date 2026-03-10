@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../../web-components/divider-wc';
+import '../web-components/divider-wc';
 
-import { flip, limitShift, Placement, shift } from '@floating-ui/dom';
+import { flip, limitShift, type Placement, shift } from '@floating-ui/dom';
 import clsx from 'clsx';
 import React, {
-  CSSProperties,
-  HTMLAttributes,
+  type CSSProperties,
+  type HTMLAttributes,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -19,28 +19,17 @@ import React, {
   useState,
 } from 'react';
 
-import { useCombinedRefs } from '../../hooks/useCombinedRefs';
-import {
-  clickNodeWithFocus,
-  focusOnFirstNode,
-  focusOnLastNode,
-  focusOnNextNode,
-  focusOnPreviousNode,
-  getKeyboardPreset,
-  KeyboardPresetObj,
-  useKeyboard,
-} from '../../hooks/useKeyboard';
-import { resolveThemeColor } from '../../theme/theme-utils';
-import { AnyColor } from '../../types/utils';
-import { setupFloating } from '../../utils/floating-ui';
-import { IconName } from '../../web-components/icon-registry';
-import { Text } from '../basic/text/Text';
-import { FOCUSABLE_SELECTOR, TIMERS } from '../constants';
-import { Container } from '../layout/Container';
-import { Padding } from '../layout/Padding';
-import { Portal } from '../utilities/Portal';
+import { resolveThemeColor } from '../theme/theme-utils';
+import { type AnyColor } from '../types/utils';
+import { setupFloating } from '../utils/floating-ui';
+import { type IconName } from '../web-components/icon-registry';
+import { FOCUSABLE_SELECTOR, TIMERS } from './constants';
+import { Container } from './Container';
 import styles from './Dropdown.module.css';
+import { Padding } from './Padding';
+import { Text } from './Text';
 import { Tooltip } from './Tooltip';
+import { Portal } from './utilities/Portal';
 
 type ListItemContentProps = {
   icon?: IconName;
@@ -210,39 +199,7 @@ function NestListItem({
     }
   }, [onClose]);
 
-  const itemKeyEvents = useMemo(
-    (): KeyboardPresetObj[] => [
-      {
-        type: 'keydown',
-        callback: openNestedDropdown,
-        keys: [{ key: 'ArrowRight', ctrlKey: false }],
-      },
-    ],
-    [openNestedDropdown],
-  );
-
-  useKeyboard(itemRef, itemKeyEvents);
-
-  const dropdownKeyEvents = useMemo(
-    (): KeyboardPresetObj[] => [
-      {
-        type: 'keydown',
-        callback: (event): void => {
-          closeNestedDropdown();
-          event.stopPropagation();
-        },
-        keys: [
-          { key: 'Escape', ctrlKey: false },
-          { key: 'ArrowLeft', ctrlKey: false },
-        ],
-      },
-    ],
-    [closeNestedDropdown],
-  );
-
-  useKeyboard(itemRef, dropdownKeyEvents, open);
-
-  const closeOnMouseLeave = useCallback(
+    const closeOnMouseLeave = useCallback(
     (event: Event) => {
       if (event.target instanceof Node) {
         const eventIsOnTrigger = itemRef.current?.contains(event.target);
@@ -288,10 +245,9 @@ function NestListItem({
       <Dropdown
         display="block"
         items={items}
-        forceOpen={open}
         placement="right-start"
         itemTextSize={itemTextSize}
-        dropdownListRef={setDropdownListRef}
+        _dropdownListRef={setDropdownListRef}
         disablePortal
       >
         <Container
@@ -334,62 +290,50 @@ type DropdownProps = Omit<HTMLAttributes<HTMLDivElement>, 'contextMenu'> & {
   disabled?: boolean;
   items: Array<DropdownItem>;
   display?: 'block' | 'inline-block';
-  width?: string;
   maxWidth?: string;
   maxHeight?: string;
-  handleTriggerEvents?: boolean;
   disableRestoreFocus?: boolean;
   disableAutoFocus?: boolean;
   multiple?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
   children: React.ReactElement;
-  triggerRef?: React.Ref<HTMLElement> | null;
   placement?: Placement;
   disablePortal?: boolean;
-  forceOpen?: boolean;
   preventDefault?: boolean;
   itemTextSize?: React.ComponentPropsWithRef<typeof Text>['size'];
-  dropdownListRef?: React.ForwardedRef<HTMLDivElement> | null;
+  /** @internal */
+  _dropdownListRef?: React.RefCallback<HTMLDivElement> | React.RefObject<HTMLDivElement | null> | null;
 };
 
 const Dropdown = ({
-  forceOpen = false,
   disabled = false,
   items,
   placement = 'bottom-start' as const,
   display = 'inline-block',
-  width = 'auto',
   maxWidth = '18.75rem',
   maxHeight = '50vh',
-  handleTriggerEvents = false,
   disableRestoreFocus = false,
   disableAutoFocus = false,
   multiple = false,
   onOpen,
   onClose,
   children,
-  triggerRef = null,
   disablePortal = false,
   itemTextSize = 'medium',
-  dropdownListRef = null,
   ...rest
 }: DropdownProps) => {
-  const [open, setOpen] = useState<boolean>(forceOpen);
+  const [open, setOpen] = useState<boolean>(false);
   const openRef = useRef<boolean>(open);
-  const dropdownRef = useCombinedRefs<HTMLDivElement>(dropdownListRef);
-  const innerTriggerRef = useCombinedRefs(triggerRef);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const innerTriggerRef = useRef<HTMLDivElement | null>(null);
   const popperItemsRef = useRef<HTMLDivElement | null>(null);
   const startSentinelRef = useRef<HTMLDivElement | null>(null);
   const endSentinelRef = useRef<HTMLDivElement | null>(null);
   const nestedDropdownsRef = useRef<Array<React.RefObject<HTMLDivElement | null>>>([]);
 
-  useEffect(() => {
-    setOpen(forceOpen);
-    openRef.current = forceOpen;
-  }, [forceOpen]);
 
-  const openPopper = useCallback(() => {
+    const openPopper = useCallback(() => {
     setOpen(true);
     openRef.current = true;
     onOpen?.();
@@ -398,8 +342,8 @@ const Dropdown = ({
   const closePopper = useCallback(
     (e?: React.SyntheticEvent | KeyboardEvent) => {
       e?.preventDefault();
-      setOpen(forceOpen);
-      openRef.current = forceOpen;
+      setOpen(false);
+      openRef.current = false;
       if (!disableRestoreFocus) {
         const triggerElement = innerTriggerRef.current;
         if (triggerElement) {
@@ -412,7 +356,7 @@ const Dropdown = ({
       }
       onClose?.();
     },
-    [disableRestoreFocus, forceOpen, innerTriggerRef, onClose],
+    [disableRestoreFocus,  innerTriggerRef, onClose],
   );
 
   const toggleOpen = useCallback<(e: React.SyntheticEvent | KeyboardEvent) => void>(
@@ -473,94 +417,7 @@ const Dropdown = ({
     lastChild?.focus();
   }, []);
 
-  const triggerEvents = useMemo(
-    () => (handleTriggerEvents ? getKeyboardPreset('button', toggleOpen) : []),
-    [toggleOpen, handleTriggerEvents],
-  );
-  useKeyboard(innerTriggerRef, triggerEvents);
-
-  const listEvents = useMemo<KeyboardPresetObj[]>(
-    () => [
-      {
-        type: 'keydown',
-        callback: (event): void => {
-          if (event.defaultPrevented) {
-            return;
-          }
-          focusOnPreviousNode(popperItemsRef);
-          event.preventDefault();
-        },
-        keys: [{ key: 'ArrowUp', ctrlKey: false }],
-        haveToPreventDefault: false,
-      },
-      {
-        type: 'keydown',
-        callback: (event): void => {
-          if (event.defaultPrevented) {
-            return;
-          }
-          focusOnNextNode(popperItemsRef);
-          event.preventDefault();
-        },
-        keys: [{ key: 'ArrowDown', ctrlKey: false }],
-        haveToPreventDefault: false,
-      },
-      {
-        type: 'keydown',
-        callback: (event): void => {
-          if (event.defaultPrevented) {
-            return;
-          }
-          focusOnFirstNode(popperItemsRef);
-          event.preventDefault();
-        },
-        keys: [{ key: 'ArrowUp', ctrlKey: true }],
-        haveToPreventDefault: false,
-      },
-      {
-        type: 'keydown',
-        callback: (event): void => {
-          if (event.defaultPrevented) {
-            return;
-          }
-          focusOnLastNode(popperItemsRef);
-          event.preventDefault();
-        },
-        keys: [{ key: 'ArrowDown', ctrlKey: true }],
-        haveToPreventDefault: false,
-      },
-      {
-        type: 'keydown',
-        callback: (event): void => {
-          if (event.defaultPrevented) {
-            return;
-          }
-          clickNodeWithFocus(popperItemsRef);
-          event.preventDefault();
-        },
-        keys: [{ key: 'Enter', ctrlKey: false }],
-        haveToPreventDefault: false,
-      },
-    ],
-    [popperItemsRef],
-  );
-
-  useKeyboard(popperItemsRef, listEvents, open);
-
-  const escapeEvent = useMemo<KeyboardPresetObj[]>(
-    () => [
-      {
-        type: 'keydown',
-        callback: closePopper,
-        keys: [{ key: 'Escape', ctrlKey: false }],
-      },
-    ],
-    [closePopper],
-  );
-
-  useKeyboard(dropdownRef, escapeEvent, open);
-
-  useLayoutEffect(() => {
+   useLayoutEffect(() => {
     let cleanup: ReturnType<typeof setupFloating>;
     if (open) {
       const popperReference = innerTriggerRef.current;
@@ -713,12 +570,12 @@ const Dropdown = ({
     const triggerWidth = innerTriggerRef.current?.clientWidth;
 
     return {
-      width: width === '100%' && triggerWidth ? `${triggerWidth}px` : width,
-      maxWidth: width === '100%' ? '100%' : maxWidth,
+      width: `${triggerWidth}px`,
+      maxWidth: '100%',
       '--popper-max-height': maxHeight,
     } as CSSProperties;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, maxWidth, maxHeight, open, innerTriggerRef]);
+  }, [ maxWidth, maxHeight, open, innerTriggerRef]);
 
   return (
     <div className={styles.popperDropdownWrapper} data-display={display} {...rest}>

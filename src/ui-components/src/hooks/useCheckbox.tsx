@@ -6,7 +6,6 @@
 
 import React, { useCallback,useEffect, useMemo, useState } from 'react';
 
-import { getKeyboardPreset, useKeyboard } from './useKeyboard';
 
 type UseCheckboxArgs = {
 	ref: React.RefObject<HTMLElement | null>;
@@ -42,9 +41,6 @@ function useCheckbox({
 		},
 		[disabled, uncontrolledMode, onClick]
 	);
-
-	const keyEvents = useMemo(() => getKeyboardPreset('button', handleClick), [handleClick]);
-	useKeyboard(ref, keyEvents);
 
 	useEffect(() => {
 		value !== undefined && setChecked(value);

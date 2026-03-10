@@ -4,22 +4,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { flip, limitShift, offset, Placement, shift } from '@floating-ui/dom';
+import { flip, limitShift, offset, type Placement, shift } from '@floating-ui/dom';
 import clsx from 'clsx';
 import React, {
-  HTMLAttributes,
+  type HTMLAttributes,
   useCallback,
   useEffect,
   useLayoutEffect,
-  useMemo,
   useRef,
 } from 'react';
 
-import { useCombinedRefs } from '../../hooks/useCombinedRefs';
-import { KeyboardPresetObj, useKeyboard } from '../../hooks/useKeyboard';
-import { setupFloating } from '../../utils/floating-ui';
-import { Portal } from '../utilities/Portal';
+import { useCombinedRefs } from '../hooks/useCombinedRefs';
+import { setupFloating } from '../utils/floating-ui';
 import styles from './Popper.module.css';
+import { Portal } from './utilities/Portal';
 
 type PopperProps = HTMLAttributes<HTMLDivElement> & {
   /** Whether the popper is open or not */
@@ -58,9 +56,7 @@ const Popper = ({
     [onClose, popperRef],
   );
 
-  const keyboardClosePopper = useCallback(() => {
-    onClose?.();
-  }, [onClose]);
+  
 
   const onStartSentinelFocus = useCallback(() => {
     const nodeList =
@@ -77,16 +73,7 @@ const Popper = ({
     node?.focus();
   }, []);
 
-  const escapeEvent = useMemo<KeyboardPresetObj[]>(
-    () => [
-      { type: 'keydown', callback: keyboardClosePopper, keys: [{ key: 'Escape', ctrlKey: false }] },
-    ],
-    [keyboardClosePopper],
-  );
-
-  useKeyboard(popperRef, escapeEvent);
-
-  useLayoutEffect(() => {
+    useLayoutEffect(() => {
     let cleanup: ReturnType<typeof setupFloating>;
     if (open) {
       const anchorElement = anchorEl.current;
@@ -137,6 +124,8 @@ const Popper = ({
   }, [open, startSentinelRef, endSentinelRef, onStartSentinelFocus, onEndSentinelFocus]);
 
   const popperContainerClassName = clsx(styles.popperContainer, open && styles.open);
+
+
 
   return (
     <Portal show={open} disablePortal={false}>

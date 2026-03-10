@@ -6,7 +6,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import { Button } from '../../basic/button/Button';
+import { Button } from '../../Button';
 import { Text } from '../../basic/text/Text';
 import { Tooltip } from '../../display/Tooltip';
 import { Row } from '../../layout/Row';

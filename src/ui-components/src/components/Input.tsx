@@ -4,18 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../../web-components/divider-wc';
+import '../web-components/divider-wc';
 
 import { useCallback, useMemo, useState } from 'react';
 
-import { useCombinedRefs } from '../../hooks/useCombinedRefs';
 import { KeyboardPresetObj, useKeyboard } from '../../hooks/useKeyboard';
 import { resolveThemeColor } from '../../theme/theme-utils';
 import { AnyColor } from '../../types/utils';
 import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from '../constants';
+import { useCombinedRefs } from '../hooks/useCombinedRefs';
+import { InputContainer } from '../InputContainer';
+import { InputDescription } from '../InputDescription';
 import { Container, ContainerProps } from '../layout/Container';
-import { InputContainer } from './commons/InputContainer';
-import { InputDescription } from './commons/InputDescription';
 import styles from './Input.module.css';
 
 type InputProps = ContainerProps & {

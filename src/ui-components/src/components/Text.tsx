@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { HTMLAttributes } from 'react';
+import { type HTMLAttributes } from 'react';
 
-import { resolveThemeColor } from '../../../theme/theme-utils';
-import { AnyColor } from '../../../types/utils';
+import { resolveThemeColor } from '../theme/theme-utils';
+import { type AnyColor } from '../types/utils';
 import styles from './Text.module.css';
 
 type TextOverflow = 'ellipsis' | 'break-word';

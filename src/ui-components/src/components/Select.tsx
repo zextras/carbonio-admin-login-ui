@@ -4,18 +4,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../../web-components/icon-wc';
+import '../web-components/icon-wc';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { resolveThemeColor } from '../../theme/theme-utils';
-import { Text } from '../basic/text/Text';
-import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from '../constants';
-import { Dropdown, DropdownItem, DropdownProps } from '../display/Dropdown';
-import { Container } from '../layout/Container';
-import { Padding } from '../layout/Padding';
-import { Row } from '../layout/Row';
+import { resolveThemeColor } from '../theme/theme-utils';
+import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from './constants';
+import { Container } from './Container';
+import { Dropdown, type DropdownItem, type DropdownProps } from './Dropdown';
+import { Padding } from './Padding';
+import { Row } from './Row';
 import styles from './Select.module.css';
+import { Text } from './Text';
 
 type SelectItem<T = string> = {
   label: string;
@@ -175,7 +175,6 @@ const SelectComponent = function SelectFn<T = string>({
   multiple = false,
   i18nAllLabel = 'All',
   display = 'block',
-  dropdownWidth = '100%',
   dropdownMaxWidth,
   dropdownMaxHeight,
   LabelFactory = DefaultLabelFactory,
@@ -220,7 +219,7 @@ const SelectComponent = function SelectFn<T = string>({
     (item: SelectItem<T>, isSelected: boolean) => (): void => {
       if (multiple) {
         updateMultipleSelection(item, isSelected);
-      } else if (selected.length === 0 || item.value !== selected[0].value) {
+      } else if (selected.length === 0 || item.value !== selected?.[0]?.value) {
         updateSingleSelection(item);
       }
     },
@@ -297,11 +296,9 @@ const SelectComponent = function SelectFn<T = string>({
   return (
     <Dropdown
       display={display}
-      width={dropdownWidth}
       maxWidth={dropdownMaxWidth}
       maxHeight={dropdownMaxHeight}
       items={multiple ? multipleMappedItems : mappedItems}
-      handleTriggerEvents
       multiple={multiple}
       disabled={disabled}
       onOpen={onOpen}

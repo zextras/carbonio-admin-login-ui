@@ -7,7 +7,7 @@
 import { type JSX, type PropsWithChildren, useCallback, useContext, useReducer } from 'react';
 
 import { type CreateSnackbarFn,SnackbarManagerContext } from '../../use-snackbar/use-snackbar';
-import { Snackbar } from '../feedback/snackbar/Snackbar';
+import { Snackbar } from '../Snackbar';
 
 const SNACKBAR_ACTION = {
   PUSH: 'push',

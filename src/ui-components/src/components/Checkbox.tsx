@@ -7,14 +7,14 @@
 import clsx from 'clsx';
 import React, { useMemo, useRef } from 'react';
 
-import { useCheckbox } from '../../hooks/useCheckbox';
-import { useCombinedRefs } from '../../hooks/useCombinedRefs';
-import { resolveThemeColor } from '../../theme/theme-utils';
-import { AnyColor } from '../../types/utils';
-import { Text } from '../basic/text/Text';
-import { Container, ContainerProps } from '../layout/Container';
-import { Padding } from '../layout/Padding';
+import { useCheckbox } from '../hooks/useCheckbox';
+import { useCombinedRefs } from '../hooks/useCombinedRefs';
+import { resolveThemeColor } from '../theme/theme-utils';
+import { type AnyColor } from '../types/utils';
 import styles from './Checkbox.module.css';
+import { Container, type ContainerProps } from './Container';
+import { Padding } from './Padding';
+import { Text } from './Text';
 
 type CheckboxSize = 'medium' | 'small';
 

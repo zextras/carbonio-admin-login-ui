@@ -7,10 +7,10 @@
 import clsx from 'clsx';
 import React, { type ButtonHTMLAttributes, useCallback, useMemo } from 'react';
 
-import type { AnyColor, With$Prefix, Without$Prefix } from '../../../types/utils';
-import { type IconName } from '../../../web-components/icon-registry';
-import { Text } from '../text/Text';
+import type { AnyColor, With$Prefix, Without$Prefix } from '../types/utils';
+import { type IconName } from '../web-components/icon-registry';
 import styles from './Button.module.css';
+import { Text } from './Text';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';

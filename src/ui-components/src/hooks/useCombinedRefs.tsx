@@ -6,8 +6,8 @@
 
 import React, { useEffect, useRef } from 'react';
 
-function useCombinedRefs<T>(...refs: Array<React.Ref<T> | undefined>): React.RefObject<T | null> {
-	const targetRef = useRef<T>(null);
+function useCombinedRefs<T>(...refs: Array<React.Ref<T> | React.RefObject<T | null> | undefined>): React.RefObject<T | null> {
+	const targetRef = useRef<T | null>(null);
 	useEffect(() => {
 		refs.forEach((ref) => {
 			if (!ref) return;
@@ -15,10 +15,10 @@ function useCombinedRefs<T>(...refs: Array<React.Ref<T> | undefined>): React.Ref
 			if (typeof ref === 'function') {
 				ref(targetRef.current);
 			} else {
-				ref.current = targetRef.current;
+				(ref as React.MutableRefObject<T | null>).current = targetRef.current;
 			}
 		});
-	}, [refs]);
+	});
 	return targetRef;
 }
 

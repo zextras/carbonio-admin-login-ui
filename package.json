@@ -103,6 +103,7 @@
 		"webpack-merge": "^6.0.1"
 	},
 	"dependencies": {
+		"@floating-ui/dom": "^1.7.6",
 		"core-js": "^3.37.1",
 		"darkreader": "^4.9.87",
 		"i18next": "^22.5.1",

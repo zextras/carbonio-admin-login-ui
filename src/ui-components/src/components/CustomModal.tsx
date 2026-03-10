@@ -4,14 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { HTMLAttributes, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { type HTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
 
-import { useCombinedRefs } from '../../hooks/useCombinedRefs';
-import { KeyboardPresetObj, useKeyboard } from '../../hooks/useKeyboard';
-import { AnyColor } from '../../types/utils';
-import { TIMERS } from '../constants';
-import { Portal } from '../utilities/Portal';
-import { Transition } from '../utilities/Transition';
+import { useCombinedRefs } from '../hooks/useCombinedRefs';
+import { type AnyColor } from '../types/utils';
+import { TIMERS } from './constants';
 import {
   getScrollbarSize,
   isBodyOverflowing,
@@ -19,6 +16,8 @@ import {
   ModalContent,
   ModalWrapper,
 } from './modal-components/ModalComponents';
+import { Portal } from './utilities/Portal';
+import { Transition } from './utilities/Transition';
 
 type BareModalProps = {
   /** Modal background */
@@ -84,7 +83,7 @@ const CustomModal = ({
   const onStartSentinelFocus = useCallback(() => {
     if (modalContentRef.current) {
       const nodeList = modalContentRef.current.querySelectorAll<HTMLElement>('[tabindex]');
-      nodeList[nodeList.length - 1].focus();
+      nodeList[nodeList.length - 1]?.focus();
     }
   }, []);
 
@@ -95,17 +94,7 @@ const CustomModal = ({
     }
   }, []);
 
-  const escapeEvent = useMemo<KeyboardPresetObj[]>(
-    () =>
-      (onClose && [
-        { type: 'keydown', callback: onClose, keys: [{ key: 'Escape', ctrlKey: false }] },
-      ]) ||
-      [],
-    [onClose],
-  );
-  useKeyboard(modalRef, escapeEvent);
-
-  useEffect(() => {
+    useEffect(() => {
     if (open) {
       const defaultOverflowY = window.document.body.style.overflowY;
       const defaultPaddingRight = window.document.body.style.paddingRight;
