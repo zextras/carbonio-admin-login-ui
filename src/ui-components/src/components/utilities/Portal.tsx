@@ -30,4 +30,3 @@ const Portal = ({ children, container, show = false, disablePortal = false }: Po
 };
 
 export { Portal };
-export type { PortalProps };

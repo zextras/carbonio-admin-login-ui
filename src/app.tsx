@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 import { ErrorPage } from './error-page';
+import { LoadingView } from './loading-view';
 import { getAdvancedSupported } from './services/advanced-supported';
 
 type Error = {
@@ -45,12 +46,12 @@ export function App(): React.JSX.Element {
 	const supportedResponse = apiResponse && 'supported' in apiResponse;
 
 	return (
-    <>
+      <Suspense fallback={<LoadingView />}>
       <ErrorPage />
 			{/*    {errorResponse && <ErrorPage />} */}
 			{/* {isLoading && <LoadingView />} */}
 			{/* {supportedResponse && apiResponse.supported && <LoginAdvanced />} */}
 			{/* {supportedResponse && !apiResponse.supported && <LoginCE />} */}
-    </>
+      </Suspense>
 	);
 }

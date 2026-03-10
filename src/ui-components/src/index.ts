@@ -23,7 +23,6 @@ export {
 	type SingleSelectionOnChange
 } from './components/Select';
 export * from './components/Snackbar';
-export * from './components/utilities/SnackbarManager';
 export * from './global';
 export * from './theme/theme-utils';
 export type { AnyColor } from './types/utils';

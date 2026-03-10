@@ -7,8 +7,24 @@
 import './i18n/i18n.config';
 import './index.css';
 
-import { render } from 'react-dom';
+import { StrictMode, Suspense } from 'react';
+import ReactDOM from 'react-dom/client';
 
 import { App } from './app';
+import { LoadingView } from './loading-view';
 
-render(<App />, document.getElementById('app'));
+function getAppRoot(): HTMLElement {
+  const root = document.getElementById('app');
+  if (!root) {
+    throw new Error('Root element #app not found');
+  }
+  return root;
+}
+
+ReactDOM.createRoot(getAppRoot()).render(
+  <StrictMode>
+    <Suspense fallback={<LoadingView />}>
+      <App />
+    </Suspense>
+  </StrictMode>,
+);

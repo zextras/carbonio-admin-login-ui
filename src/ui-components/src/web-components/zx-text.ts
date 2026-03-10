@@ -7,12 +7,11 @@ import '../theme/theme.css';
 
 import { css, html, LitElement, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
-import { styleMap } from 'lit/directives/style-map.js';
 
 import { resolveThemeColor } from '../theme/theme-utils';
 
-export type TextSize = 'extrasmall'| 'small'| 'medium'| 'large'| 'extralarge';
-export type TextWeight= 'light'| 'regular'| 'medium'| 'bold';
+export type TextSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
+export type TextWeight = 'light' | 'regular' | 'medium' | 'bold';
 export type TextOverflow = 'ellipsis' | 'break-word';
 
 export class ZxText extends LitElement {
@@ -23,9 +22,6 @@ export class ZxText extends LitElement {
       max-width: 100%;
       color: var(--text-color);
       font-family: var(--text-font-family, var(--font-family));
-      font-size: var(--text-font-size);
-      font-weight: var(--text-font-weight);
-      line-height: var(--text-line-height);
     }
 
     :host([overflow='ellipsis']) {
@@ -59,14 +55,21 @@ export class ZxText extends LitElement {
   accessor lineHeight: number | undefined;
 
   override render(): TemplateResult {
-    const styles = styleMap({
-      '--text-color': resolveThemeColor(this.color, this.disabled ? 'disabled' : 'regular'),
-      '--text-font-size': `var(--font-size-${this.size})`,
-      '--text-font-weight': `var(--font-weight-${this.weight})`,
-      '--text-line-height': this.lineHeight,
-    });
+    this.style.setProperty(
+      '--text-color',
+      resolveThemeColor(this.color, this.disabled ? 'disabled' : 'regular'),
+    );
 
-    return html`<slot style=${styles}></slot>`;
+    if (!this.style.getPropertyValue('font-size')) {
+      this.style.setProperty('font-size', `var(--text-font-size, var(--font-size-${this.size}))`);
+    }
+
+    this.style.setProperty('font-weight', `var(--font-weight-${this.weight})`);
+    if (this.lineHeight !== undefined) {
+      this.style.setProperty('line-height', String(this.lineHeight));
+    }
+
+    return html`<slot></slot>`;
   }
 }
 

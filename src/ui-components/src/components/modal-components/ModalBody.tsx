@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import clsx from 'clsx';
-import React, { HTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from 'react';
 
 import styles from './ModalBody.module.css';
 
