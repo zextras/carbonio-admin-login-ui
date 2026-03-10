@@ -8,7 +8,7 @@
 import React from 'react';
 
 import { type IconName, type IconSize } from './icon-registry';
-import { type TextOverflow,type TextSize, type TextWeight } from './zx-text';
+import { type TextOverflow, type TextSize, type TextWeight } from './zx-text';
 
 declare global {
   namespace React {

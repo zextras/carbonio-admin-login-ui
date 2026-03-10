@@ -5,14 +5,22 @@
  */
 import '../theme/theme.css';
 
-import { css, html, LitElement, type TemplateResult } from 'lit';
+import { css, html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 
+import { type Theme, theme } from '../theme/theme';
 import { resolveThemeColor } from '../theme/theme-utils';
 
-export type TextSize = theme;
-export type TextWeight = 'light' | 'regular' | 'medium' | 'bold';
+export type TextSize = keyof Theme['font']['size'];
+export type TextWeight = keyof Theme['font']['weight'];
 export type TextOverflow = 'ellipsis' | 'break-word';
+
+export const zxTextVars = {
+  fontSize: '--zx-text-font-size',
+  color: '--zx-text-color',
+  weight: '--zx-text-font-weight',
+  lineHeight: '--zx-text-line-height',
+} as const;
 
 export class ZxText extends LitElement {
   static override styles = css`
@@ -20,7 +28,9 @@ export class ZxText extends LitElement {
       display: block;
       margin: 0;
       max-width: 100%;
-      color: var(--text-color);
+      color: var(${unsafeCSS(zxTextVars.color)}, ${unsafeCSS(theme.color.text.regular)});
+      font-size: var(${unsafeCSS(zxTextVars.fontSize)}, ${unsafeCSS(theme.font.size.medium)});
+      font-weight: var(${unsafeCSS(zxTextVars.weight)}, ${unsafeCSS(theme.font.weight.regular)});
       font-family: var(--text-font-family, var(--font-family));
     }
 
@@ -56,15 +66,18 @@ export class ZxText extends LitElement {
 
   override render(): TemplateResult {
     this.style.setProperty(
-      '--text-color',
+      zxTextVars.color,
       resolveThemeColor(this.color, this.disabled ? 'disabled' : 'regular'),
     );
 
-    if (!this.style.getPropertyValue('font-size')) {
-      this.style.setProperty('font-size', `var(--text-font-size, var(--font-size-${this.size}))`);
+    if (!this.style.getPropertyValue(zxTextVars.fontSize)) {
+      this.style.setProperty(zxTextVars.fontSize, theme.font.size[this.size]);
     }
 
-    this.style.setProperty('font-weight', `var(--font-weight-${this.weight})`);
+    if (!this.style.getPropertyValue(zxTextVars.weight)) {
+      this.style.setProperty(zxTextVars.weight, String(theme.font.weight[this.weight]));
+    }
+
     if (this.lineHeight !== undefined) {
       this.style.setProperty('line-height', String(this.lineHeight));
     }
