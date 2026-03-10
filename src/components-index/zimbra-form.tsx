@@ -5,7 +5,6 @@
  */
 
 import { useCallback, useState } from 'react';
-
 import { useTranslation } from 'react-i18next';
 
 import ChangePasswordForm from '../components-v1/change-password-form';
@@ -35,7 +34,7 @@ export const ZimbraForm = ({ destinationUrl }: { destinationUrl: string }) => {
 				let payload;
 				try {
 					payload = await res.json();
-				} catch (err) {
+				} catch  {
 					payload = res;
 				}
 				setEmail(username);

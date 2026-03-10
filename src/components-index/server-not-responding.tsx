@@ -5,8 +5,8 @@
  */
 
 import { useCallback, useState } from 'react';
-
 import { useTranslation } from 'react-i18next';
+
 import { Snackbar } from '../ui-components/src';
 
 export const ServerNotResponding = () => {
