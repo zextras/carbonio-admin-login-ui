@@ -9,8 +9,8 @@
    License: none (public domain)
 */
 
-@import './ui-components/src/theme/theme.css';
-@source './ui-components/src';
+@import './ui-components/theme/theme.css';
+@source './ui-components';
 @source '.';
 
 html, body {

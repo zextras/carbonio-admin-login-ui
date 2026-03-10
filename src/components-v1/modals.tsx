@@ -6,7 +6,7 @@
 
 import { useTranslation } from 'react-i18next';
 
-import { Modal } from '../ui-components/src/';
+import { Modal } from '../ui-components/';
 import styles from './modals.module.css';
 
 export default function OfflineModal({ open, onClose }: any) {

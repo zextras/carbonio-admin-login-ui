@@ -21,7 +21,7 @@ import {
 	ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME,
 	ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
 	ZM_AUTH_TOKEN} from '../constants';
-import { Button, Input, PasswordInput,Row } from '../ui-components/src';
+import { Button, Input, PasswordInput,Row } from '../ui-components';
 import { saveCredentials, setCookie } from '../utils';
 
 export const submitChangePassword = (

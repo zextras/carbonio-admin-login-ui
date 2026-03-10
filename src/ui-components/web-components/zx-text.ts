@@ -10,7 +10,7 @@ import { property } from 'lit/decorators.js';
 
 import { resolveThemeColor } from '../theme/theme-utils';
 
-export type TextSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
+export type TextSize = theme;
 export type TextWeight = 'light' | 'regular' | 'medium' | 'bold';
 export type TextOverflow = 'ellipsis' | 'break-word';
 

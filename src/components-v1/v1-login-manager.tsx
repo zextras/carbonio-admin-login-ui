@@ -8,7 +8,7 @@ import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { postV1Login } from '../services/v1-service';
-import { Snackbar } from '../ui-components/src';
+import { Snackbar } from '../ui-components';
 import { saveCredentials } from '../utils';
 import { type Configuration, CredentialsForm } from './credentials-form';
 import OfflineModal from './modals';

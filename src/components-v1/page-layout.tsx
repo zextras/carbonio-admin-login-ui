@@ -23,7 +23,7 @@ import {
 } from '../constants';
 import { getLoginConfig, type GetLoginConfigResponse } from '../services/login-page-services';
 import { useLoginConfigStore } from '../store/login/store';
-import { Container, Padding, Row } from '../ui-components/src/';
+import { Container, Padding, Row } from '../ui-components/';
 import { prepareUrlForForward } from '../utils';
 import { CopyrightBanner } from './copyright-banner';
 import { FormSelector } from './form-selector';

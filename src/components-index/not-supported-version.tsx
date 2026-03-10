@@ -7,7 +7,7 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Snackbar } from '../ui-components/src';
+import { Snackbar } from '../ui-components';
 
 export const NotSupportedVersion = () => {
 	const [t] = useTranslation();

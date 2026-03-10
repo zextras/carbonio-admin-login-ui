@@ -16,7 +16,7 @@ import {
 	Row,
 	Select,
 	Snackbar
-} from '../ui-components/src';
+} from '../ui-components';
 import { saveCredentials } from '../utils';
 import ChangePasswordForm from './change-password-form';
 import {type Configuration,CredentialsForm} from './credentials-form';

@@ -16,16 +16,16 @@ export * from './components/Padding';
 export * from './components/PasswordInput';
 export * from './components/Row';
 export {
-	type MultipleSelectionOnChange,
-	Select,
-	type SelectItem,
-	type SelectProps,
-	type SingleSelectionOnChange
+  type MultipleSelectionOnChange,
+  Select,
+  type SelectItem,
+  type SelectProps,
+  type SingleSelectionOnChange,
 } from './components/Select';
 export * from './components/Snackbar';
 export * from './global';
+export * from './theme/theme';
 export * from './theme/theme-utils';
 export type { AnyColor } from './types/utils';
 export * from './web-components';
 export { type IconName } from './web-components/icon-registry';
-

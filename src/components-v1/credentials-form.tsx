@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { checkClassicUi } from '../services/login-page-services';
-import { Button, Input, PasswordInput, Row } from '../ui-components/src';
+import { Button, Input, PasswordInput, Row } from '../ui-components';
 import { setCookie } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
