@@ -2,8 +2,10 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-only
 
-module.exports = {
+import autoprefixer from 'autoprefixer';
+
+export default {
     plugins: [
-    	require('autoprefixer')
+    	autoprefixer
     ]
 };
