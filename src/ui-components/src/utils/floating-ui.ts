@@ -6,8 +6,8 @@
 import {
 	autoUpdate,
 	computePosition,
-	ComputePositionConfig,
-	ReferenceElement
+	type ComputePositionConfig,
+	type ReferenceElement
 } from '@floating-ui/dom';
 
 export function setupFloating(

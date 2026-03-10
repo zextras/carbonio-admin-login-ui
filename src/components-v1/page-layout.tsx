@@ -153,7 +153,7 @@ function processLoginConfig({
 type PageLayoutProps = { version: number; isAdvanced: boolean };
 type Logo = { image: string; width: string; url?: string };
 
-export default function PageLayout({ version, isAdvanced }: PageLayoutProps) {
+export  const PageLayout=({ version, isAdvanced }: PageLayoutProps)=> {
 	const [t] = useTranslation();
 	const [logo, setLogo] = useState<Logo | null>(null);
 	const [serverError, setServerError] = useState(false);

@@ -5,14 +5,13 @@
  */
 
 import { useCallback, useState } from 'react';
-import { Snackbar } from '../ui-components/src';
-
 import { useTranslation } from 'react-i18next';
 
-import { Configuration, CredentialsForm } from './credentials-form';
-import OfflineModal from './modals';
 import { postV1Login } from '../services/v1-service';
+import { Snackbar } from '../ui-components/src';
 import { saveCredentials } from '../utils';
+import { type Configuration, CredentialsForm } from './credentials-form';
+import OfflineModal from './modals';
 
 type V1LoginManagerProps = { configuration: Configuration; disableInputs: boolean };
 

@@ -3,19 +3,19 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React from 'react';
 
 import { screen, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
 
-import FormSelector from './form-selector';
 import { getAuthSupported } from '../services/auth-configuration-service';
 import { setup } from '../tests/testUtils';
+import FormSelector from './form-selector';
 
-jest.mock('../services/auth-configuration-service');
+vi.mock('../services/auth-configuration-service');
 
 describe('FormSelector', () => {
 	afterEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	test('should render ServerNotResponding component on error', async () => {

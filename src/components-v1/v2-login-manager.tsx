@@ -41,7 +41,7 @@ const mapOtpItems = (otpArray:Array<OtpItemProp>):Array<OtpItem> =>
 
 type V2LoginManagerProps = {configuration: Configuration; disableInputs?: boolean};
 
-export default function V2LoginManager({ configuration, disableInputs }:V2LoginManagerProps) {
+export const V2LoginManager=({ configuration, disableInputs }:V2LoginManagerProps)=> {
 	const [t] = useTranslation();
 	const [loadingCredentials, setLoadingCredentials] = useState(false);
 	const [loadingOtp, setLoadingOtp] = useState(false);

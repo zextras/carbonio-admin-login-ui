@@ -7,9 +7,9 @@ import clsx from 'clsx';
 import React from 'react';
 
 import { Button } from '../Button';
+import { Row } from '../Row';
 import { Text } from '../Text';
 import { Tooltip } from '../Tooltip';
-import { Row } from '../Row';
 import styles from './ModalHeader.module.css';
 
 type ModalHeaderProps = {
@@ -34,7 +34,6 @@ function ModalHeader({
 			<Text
 				className={clsx(styles.modalTitle, centered && styles.centered)}
 				color={type === 'error' ? 'error' : undefined}
-				size="medium"
 				weight="bold"
 			>
 				{title}

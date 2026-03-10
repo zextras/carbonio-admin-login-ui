@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import clsx from 'clsx';
-import { CSSProperties, FC, HTMLAttributes, useMemo } from 'react';
+import { type CSSProperties, type FC, type HTMLAttributes, useMemo } from 'react';
 
 import { resolveThemeColor } from '../theme/theme-utils';
-import { Container, ContainerProps } from './Container';
+import { Container, type ContainerProps } from './Container';
 import styles from './InputContainer.module.css';
 
 type InputContainerOwnProps = {

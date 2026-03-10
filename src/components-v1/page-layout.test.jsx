@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React from 'react';
 
 import { screen, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
 
-import PageLayout from './page-layout';
 import * as loginPageServices from '../services/login-page-services';
 import { setup } from '../tests/testUtils';
+import PageLayout from './page-layout';
 
 describe('PageLayout', () => {
 	const MOCK_PUBLIC_URL = 'https://example.com';
@@ -18,7 +18,7 @@ describe('PageLayout', () => {
 	const TEST_VERSION = 2;
 
 	beforeEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	test('renders the logo and form', () => {
@@ -49,7 +49,7 @@ describe('PageLayout', () => {
 			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
-		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
+		vi.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
 		setup(<PageLayout version={TEST_VERSION} isAdvanced />);
 
@@ -78,7 +78,7 @@ describe('PageLayout', () => {
 			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
-		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
+		vi.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
 		setup(<PageLayout version={TEST_VERSION} isAdvanced />);
 
@@ -102,7 +102,7 @@ describe('PageLayout', () => {
 			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
-		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
+		vi.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
 		setup(<PageLayout version={TEST_VERSION} isAdvanced />);
 
@@ -119,7 +119,7 @@ describe('PageLayout', () => {
 			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
-		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
+		vi.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
 		setup(<PageLayout version={TEST_VERSION} isAdvanced />);
 
@@ -137,7 +137,7 @@ describe('PageLayout', () => {
 			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
-		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
+		vi.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
 		setup(<PageLayout version={TEST_VERSION} isAdvanced />);
 
@@ -168,7 +168,7 @@ describe('PageLayout', () => {
 			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
-		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
+		vi.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
 		setup(<PageLayout version={3} isAdvanced />);
 
@@ -191,7 +191,7 @@ describe('PageLayout', () => {
 			zimbraDomainName: MOCK_DOMAIN_NAME
 		};
 
-		jest.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
+		vi.spyOn(loginPageServices, 'getLoginConfig').mockResolvedValue(mockResponse);
 
 		setup(<PageLayout version={3} isAdvanced />);
 

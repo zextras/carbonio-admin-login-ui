@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { omit } from 'lodash-es';
-import React, { HTMLAttributes } from 'react';
+import { omit } from 'lodash';
+import React, { type HTMLAttributes } from 'react';
 
-import { PaddingVarObj } from '../theme/theme-utils';
-import { AllKeys } from '../types/utils';
+import { type  PaddingVarObj } from '../theme/theme-utils';
+import { type AllKeys } from '../types/utils';
 import styles from './Padding.module.css';
 
 type PaddingComponentProps = {

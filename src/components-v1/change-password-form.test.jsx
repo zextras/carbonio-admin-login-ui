@@ -3,16 +3,16 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React from 'react';
 
-import { screen, within, waitFor } from '@testing-library/react';
+import { screen, waitFor,within } from '@testing-library/react';
+import { describe,expect,test,vi } from 'vitest';
 
-import ChangePasswordForm from './change-password-form';
 import { setup } from '../tests/testUtils';
+import ChangePasswordForm from './change-password-form';
 
-jest.mock('../utils', () => ({
-	saveCredentials: jest.fn(),
-	setCookie: jest.fn()
+vi.mock('../utils', () => ({
+	saveCredentials: vi.fn(),
+	setCookie: vi.fn()
 }));
 
 describe('ChangePasswordForm', () => {
@@ -20,7 +20,7 @@ describe('ChangePasswordForm', () => {
 		setup(
 			<ChangePasswordForm
 				isLoading={false}
-				setIsLoading={jest.fn()}
+				setIsLoading={vi.fn()}
 				username="testuser"
 				configuration={{ destinationUrl: '/home' }}
 			/>
@@ -37,7 +37,7 @@ describe('ChangePasswordForm', () => {
 		const { user } = setup(
 			<ChangePasswordForm
 				isLoading={false}
-				setIsLoading={jest.fn()}
+				setIsLoading={vi.fn()}
 				username="testuser"
 				configuration={{ destinationUrl: '/home' }}
 			/>
@@ -66,7 +66,7 @@ describe('ChangePasswordForm', () => {
 		const { user } = setup(
 			<ChangePasswordForm
 				isLoading={false}
-				setIsLoading={jest.fn()}
+				setIsLoading={vi.fn()}
 				username="testuser"
 				configuration={{ destinationUrl: '/home' }}
 			/>
@@ -90,19 +90,19 @@ describe('ChangePasswordForm', () => {
 		const mockAuthToken = 'mockAuthToken';
 		const mockResponse = {
 			status: 200,
-			json: jest.fn().mockResolvedValue({
+			json: vi.fn().mockResolvedValue({
 				Body: { ChangePasswordResponse: { authToken: [{ _content: mockAuthToken }] } }
 			})
 		};
-		jest.spyOn(window, 'fetch').mockResolvedValue(mockResponse);
+		vi.spyOn(window, 'fetch').mockResolvedValue(mockResponse);
 
-		const saveCredentialsMock = jest.requireMock('../utils').saveCredentials;
-		const setCookieMock = jest.requireMock('../utils').setCookie;
+		const saveCredentialsMock = vi.importMock('../utils').saveCredentials;
+		const setCookieMock = vi.importMock('../utils').setCookie;
 
 		const { user } = setup(
 			<ChangePasswordForm
 				isLoading={false}
-				setIsLoading={jest.fn()}
+				setIsLoading={vi.fn()}
 				username="testuser"
 				configuration={{ destinationUrl: '' }}
 			/>

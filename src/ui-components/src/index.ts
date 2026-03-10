@@ -24,7 +24,6 @@ export {
 } from './components/Select';
 export * from './components/Snackbar';
 export * from './components/Text';
-export * from './components/utilities/ModalManager';
 export * from './components/utilities/SnackbarManager';
 export * from './global';
 export * from './theme/theme-utils';

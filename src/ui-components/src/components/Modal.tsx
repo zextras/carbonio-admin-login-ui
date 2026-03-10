@@ -6,12 +6,12 @@
 
 import '../web-components/divider-wc';
 
-import { noop } from 'lodash-es';
-import React, { HTMLAttributes, useCallback, useRef } from 'react';
+import { noop } from 'lodash';
+import React, { type HTMLAttributes, useCallback, useRef } from 'react';
 
-import { CustomModal, CustomModalProps } from './CustomModal';
+import { CustomModal, type CustomModalProps } from './CustomModal';
 import { ModalBody } from './modal-components/ModalBody';
-import { ModalFooter, ModalFooterProps } from './modal-components/ModalFooter';
+import { ModalFooter, type ModalFooterProps } from './modal-components/ModalFooter';
 import { ModalHeader } from './modal-components/ModalHeader';
 
 function copyToClipboard(node: HTMLDivElement | null, window: Window): void {

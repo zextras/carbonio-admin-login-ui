@@ -7,7 +7,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports
 import React from 'react';
 
-import { IconName, IconSize } from './icon-registry';
+import { type IconName, type IconSize } from './icon-registry';
 
 declare global {
   namespace React {

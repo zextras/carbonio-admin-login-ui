@@ -1,6 +1,7 @@
 {
 	"extends": "@tsconfig/vite-react",
 	"compilerOptions": {
+    "jsx": "react",
 		"noEmit": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,

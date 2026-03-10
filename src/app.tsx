@@ -4,14 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ErrorPage } from './error-page';
-import { LoadingView } from './loading-view';
-import { LoginAdvanced } from './loginAdvanced';
-import { LoginCE } from './loginCE';
 import { getAdvancedSupported } from './services/advanced-supported';
-import { SnackbarManager } from './ui-components/src';
 
 type Error = {
 	errorMessage: string;
@@ -49,13 +45,12 @@ export function App(): React.JSX.Element {
 	const supportedResponse = apiResponse && 'supported' in apiResponse;
 
 	return (
-		<SnackbarManager>
-			<Suspense fallback={<div></div>}>
-						{errorResponse && <ErrorPage />}
-						{isLoading && <LoadingView />}
-						{supportedResponse && apiResponse.supported && <LoginAdvanced />}
-						{supportedResponse && !apiResponse.supported && <LoginCE />}
-			</Suspense>
-		</SnackbarManager>
+    <>
+      <ErrorPage />
+			{/*    {errorResponse && <ErrorPage />} */}
+			{/* {isLoading && <LoadingView />} */}
+			{/* {supportedResponse && apiResponse.supported && <LoginAdvanced />} */}
+			{/* {supportedResponse && !apiResponse.supported && <LoginCE />} */}
+    </>
 	);
 }

@@ -62,3 +62,9 @@
 	transform: translateY(0);
 	font-size: var(--font-size-extrasmall);
 }
+
+.inputDescription {
+	line-height: 1.5;
+	padding-top: 0.25rem;
+	min-height: calc(var(--font-size-extrasmall) * 1.5);
+}

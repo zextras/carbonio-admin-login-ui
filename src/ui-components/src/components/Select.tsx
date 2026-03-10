@@ -143,7 +143,6 @@ const DefaultLabelFactory = <T,>({
         <Row takeAvailableSpace mainAlignment="unset">
           <Padding top="medium" width="100%">
             <Text
-              size="medium"
               color={disabled ? 'secondary' : 'text'}
               className={styles.customText}
             >

@@ -9,7 +9,7 @@ import '../web-components/icon-wc';
 import React, { useCallback, useRef, useState } from 'react';
 
 import { Container } from './Container';
-import { Input, InputProps } from './Input';
+import { Input, type InputProps } from './Input';
 
 const PasswordInput = (props: InputProps) => {
   const [show, setShow] = useState(false);

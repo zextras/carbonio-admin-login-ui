@@ -10,47 +10,35 @@ import React, { useCallback,useEffect, useMemo, useState } from 'react';
 type UseCheckboxArgs = {
 	ref: React.RefObject<HTMLElement | null>;
 	value?: boolean;
-	defaultChecked?: boolean;
-	disabled?: boolean;
 	onClick?: (event: Event) => void;
-	onChange?: (newValue: boolean) => void;
 };
 
 function useCheckbox({
 	ref,
 	value,
-	defaultChecked,
-	disabled,
 	onClick,
-	onChange
 }: UseCheckboxArgs): boolean {
-	const [checked, setChecked] = useState<boolean>(value || defaultChecked || false);
+	const [checked, setChecked] = useState<boolean>(value || false);
 
 	const uncontrolledMode = useMemo(() => value === undefined, [value]);
 
 	const handleClick = useCallback(
 		(ev: Event) => {
-			if (!disabled) {
 				if (uncontrolledMode) {
 					setChecked((check) => !check);
 				}
 				if (onClick) {
 					onClick(ev);
 				}
-			}
 		},
-		[disabled, uncontrolledMode, onClick]
+		[ uncontrolledMode, onClick]
 	);
 
 	useEffect(() => {
 		value !== undefined && setChecked(value);
 	}, [value]);
 
-	useEffect(() => {
-		onChange && onChange(checked);
-	}, [onChange, checked]);
-
-	useEffect(() => {
+		useEffect(() => {
 		const refSave = ref.current;
 		refSave && refSave.addEventListener('click', handleClick);
 		return () => {

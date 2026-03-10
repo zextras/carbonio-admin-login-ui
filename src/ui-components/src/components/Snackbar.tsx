@@ -139,7 +139,7 @@ const Snackbar = ({
                 flexGrow={1}
                 width={'auto'}
               >
-                <Text color="gray6" size="medium" overflow={'break-word'}>
+                <Text color="gray6" overflow={'break-word'}>
                   {label}
                 </Text>
               </Row>

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import clsx from 'clsx';
 import { type HTMLAttributes } from 'react';
 
 import { resolveThemeColor } from '../theme/theme-utils';
@@ -18,8 +19,6 @@ type TextProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   weight?: 'light' | 'regular' | 'medium' | 'bold';
   overflow?: TextOverflow;
   disabled?: boolean;
-  italic?: boolean;
-  textAlign?: React.CSSProperties['textAlign'];
   lineHeight?: number;
   ref?: React.Ref<HTMLDivElement>;
 };
@@ -31,8 +30,6 @@ const Text = ({
   weight = 'regular',
   overflow = 'ellipsis',
   disabled = false,
-  italic = false,
-  textAlign,
   lineHeight,
   className,
   style,
@@ -46,8 +43,6 @@ const Text = ({
     '--text-font-family': 'var(--font-family)',
     '--text-font-size': `var(--font-size-${size})`,
     '--text-font-weight': `var(--font-weight-${weight})`,
-    '--text-font-style': italic ? 'italic' : undefined,
-    '--text-align': textAlign,
     '--text-line-height': lineHeight,
     ...style,
   } as React.CSSProperties;
@@ -55,7 +50,7 @@ const Text = ({
   return (
     <div
       ref={ref}
-      className={`${styles.text} ${styles[overflowClass]}${className ? ` ${className}` : ''}`}
+      className={clsx(styles.text, styles[overflowClass], className)}
       style={textStyle}
       {...rest}
     >

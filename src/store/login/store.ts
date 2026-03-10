@@ -6,6 +6,6 @@
 
 import create from 'zustand';
 
-import { LoginConfigStore } from '../../../types/loginConfig';
+import type { LoginConfigStore } from '../../../types';
 
 export const useLoginConfigStore = create<LoginConfigStore>(() => ({}));

@@ -5,6 +5,8 @@
  */
 import React from 'react';
 
+import { vi } from 'vitest';
+
 import { screen, within } from '@testing-library/react';
 
 import CredentialsForm from './credentials-form';
@@ -12,7 +14,7 @@ import { setup } from '../tests/testUtils';
 
 describe('CredentialsForm', () => {
 	test('submits user credentials on form submit', async () => {
-		const submitCredentialsMock = jest.fn();
+		const submitCredentialsMock = vi.fn();
 		const configuration = {
 			twoFactorsEnabled: false,
 			domain: 'demo.zextras.io',
@@ -53,7 +55,7 @@ describe('CredentialsForm', () => {
 		setup(
 			<CredentialsForm
 				authError=""
-				submitCredentials={jest.fn()}
+				submitCredentials={vi.fn()}
 				configuration={{ authMethods: ['saml'], destinationUrl: 'https://example.com' }}
 				disableInputs={false}
 				loading={false}
@@ -68,7 +70,7 @@ describe('CredentialsForm', () => {
 		setup(
 			<CredentialsForm
 				authError=""
-				submitCredentials={jest.fn()}
+				submitCredentials={vi.fn()}
 				configuration={{ authMethods: [], destinationUrl: 'https://example.com' }}
 				disableInputs={false}
 				loading={false}
@@ -80,7 +82,7 @@ describe('CredentialsForm', () => {
 	});
 
 	test('prevents default form submission', async () => {
-		const submitCredentialsMock = jest.fn();
+		const submitCredentialsMock = vi.fn();
 		const configuration = {
 			authMethods: ['password'],
 			destinationUrl: ''
@@ -98,7 +100,7 @@ describe('CredentialsForm', () => {
 
 		const form = screen.getByTestId('credentials-form');
 		const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-		const preventDefaultSpy = jest.spyOn(submitEvent, 'preventDefault');
+		const preventDefaultSpy = vi.spyOn(submitEvent, 'preventDefault');
 
 		form.dispatchEvent(submitEvent);
 

@@ -6,11 +6,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom/vitest';
+import { vi } from 'vitest';
 import { DefaultBodyType, http, HttpResponse, StrictRequest } from 'msw';
-import { SetupServer } from 'msw/lib/node';
+import type { SetupServer } from 'msw/lib/node';
 
 import server from './mocks/server';
+
+import './jest-polyfills';
 
 // Mock SVG elements for darkreader compatibility with jsdom
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -20,16 +23,14 @@ global.SVGElement = class SVGElement extends HTMLElement {} as any;
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 beforeEach(() => {
-	// Do not useFakeTimers with `whatwg-fetch` if using mocked server
-	// https://github.com/mswjs/msw/issues/448
-	jest.useFakeTimers();
+	vi.useFakeTimers();
 });
 beforeAll(() => server.listen());
 afterAll(() => server.close());
 afterEach(() => {
 	server.resetHandlers();
-	jest.runOnlyPendingTimers();
-	jest.useRealTimers();
+	vi.runOnlyPendingTimers();
+	vi.useRealTimers();
 });
 
 export const getSetupServer = (): SetupServer => server;

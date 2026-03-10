@@ -6,11 +6,11 @@
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
 
-import { AnyColor } from '../../types/utils';
+import { type AnyColor } from '../../types/utils';
 import { Button } from '../Button';
-import { Tooltip } from '../Tooltip';
 import { Container } from '../Container';
 import { Padding } from '../Padding';
+import { Tooltip } from '../Tooltip';
 import styles from './ModalFooter.module.css';
 
 type ModalFooterProps = {

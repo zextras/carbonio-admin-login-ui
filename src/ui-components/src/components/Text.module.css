@@ -11,8 +11,6 @@
   font-family: var(--text-font-family);
   font-size: var(--text-font-size);
   font-weight: var(--text-font-weight);
-  font-style: var(--text-font-style);
-  text-align: var(--text-align);
   line-height: var(--text-line-height);
 }
 

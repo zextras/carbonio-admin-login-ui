@@ -8,15 +8,14 @@ import '../web-components/divider-wc';
 
 import { useCallback, useMemo, useState } from 'react';
 
-import { KeyboardPresetObj, useKeyboard } from '../hooks/useKeyboard';
-import { resolveThemeColor } from '../theme/theme-utils';
-import { AnyColor } from '../types/utils';
-import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from './constants';
 import { useCombinedRefs } from '../hooks/useCombinedRefs';
-import { InputContainer } from './InputContainer';
-import { InputDescription } from './InputDescription';
-import { Container, ContainerProps } from './Container';
+import { resolveThemeColor } from '../theme/theme-utils';
+import { type AnyColor } from '../types/utils';
+import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from './constants';
+import { Container, type ContainerProps } from './Container';
 import styles from './Input.module.css';
+import { InputContainer } from './InputContainer';
+import { Text } from './Text';
 
 type InputProps = ContainerProps & {
   backgroundColor?: AnyColor;
@@ -61,7 +60,6 @@ const Input = ({
   inputName,
   type = 'text',
   hideBorder = false,
-  onEnter,
   description,
   ref,
   ...rest
@@ -86,21 +84,6 @@ const Input = ({
   const onInputBlur = useCallback(() => {
     setHasFocus(false);
   }, []);
-
-  const keyboardEvents = useMemo<KeyboardPresetObj[]>(() => {
-    const events: KeyboardPresetObj[] = [];
-    if (onEnter) {
-      events.push({
-        type: 'keyup',
-        callback: onEnter,
-        keys: [{ key: 'Enter', ctrlKey: false }],
-        haveToPreventDefault: true,
-      });
-    }
-    return events;
-  }, [onEnter]);
-
-  useKeyboard(innerRef, keyboardEvents);
 
   const dividerColor = useMemo<AnyColor>(
     () =>
@@ -127,6 +110,8 @@ const Input = ({
       } as React.CSSProperties),
     [textColor, labelColor],
   );
+
+  const descriptionTextColor = useMemo(() => (hasError && 'error') || (hasFocus && 'primary') || 'secondary',[hasError, hasFocus])
 
   return (
     <Container height="fit" width="fill" crossAlignment="flex-start">
@@ -183,12 +168,9 @@ const Input = ({
       </InputContainer>
       <divider-wc color={dividerColor}></divider-wc>
       {description !== undefined && (
-        <InputDescription
-          color={(hasError && 'error') || (hasFocus && 'primary') || 'secondary'}
-          disabled={disabled}
-        >
+      <Text overflow="break-word" size="extrasmall" className={styles.inputDescription} color={descriptionTextColor} disabled={disabled} >
           {description}
-        </InputDescription>
+          </Text>
       )}
     </Container>
   );

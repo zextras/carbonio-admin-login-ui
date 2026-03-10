@@ -9,6 +9,10 @@
    License: none (public domain)
 */
 
+@import './ui-components/src/theme/theme.css';
+@source './ui-components/src';
+@source '.';
+
 html, body {
 	height: 100%;
 }
