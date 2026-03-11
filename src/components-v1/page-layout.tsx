@@ -4,21 +4,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import './browser-support-message';
+
 import clsx from 'clsx';
 import type { TFunction } from 'i18next';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { browserName } from 'react-device-detect';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import backgroundImage from '../../assets/carbonio_light.jpg';
 import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
 import logoCarbonio from '../../assets/carbonio-admin-panel.svg';
 import { ServerNotResponding } from '../components-index/server-not-responding';
-import { ZimbraForm } from '../components-index/zimbra-form';
 import {
-  CARBONIO_CE_SUPPORTED_BROWSER_LINK,
   CARBONIO_LOGO_URL,
-  CARBONIO_SUPPORTED_BROWSER_LINK,
   CHROME,
   FIREFOX,
 } from '../constants';
@@ -26,7 +25,6 @@ import { getLoginConfig, type GetLoginConfigResponse } from '../services/login-p
 import { useLoginConfigStore } from '../store/login/store';
 import { prepareUrlForForward } from '../utils';
 import { FormSelector } from './form-selector';
-import { LinkText } from './link-text';
 import styles from './page-layout.module.css';
 
 type ConfigBasicSettingsProps = {
@@ -246,11 +244,11 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
             logoHtml
           )}
         </div>
-        {isAdvanced ? (
-          <FormSelector domain={domain} destinationUrl={destinationUrl ?? ''} />
-        ) : (
-          <ZimbraForm destinationUrl={destinationUrl ?? ''} />
-        )}
+        {/* {isAdvanced ? ( */}
+        <FormSelector domain={domain} destinationUrl={destinationUrl ?? ''} />
+        {/* ) : ( */}
+        {/* <ZimbraForm destinationUrl={destinationUrl ?? ''} /> */}
+        {/* )} */}
 
         <div className={styles.bottomSection}>
           <div className={styles.browserSupportRow}>
@@ -262,26 +260,9 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
               />
             </div>
             <zx-text size="small" color="secondary" weight="light">
-              <Trans
-                i18nKey={
-                  isSupportedBrowser ? 'browser_fully_supported' : 'browser_limited_supported'
-                }
-                defaults={
-                  isSupportedBrowser
-                    ? 'Your browser is fully <a>supported</a>'
-                    : 'Having troubles? Try a fully <a>supported</a> browser'
-                }
-                components={{
-                  a: (
-                    <LinkText
-                      to={
-                        isAdvanced
-                          ? CARBONIO_SUPPORTED_BROWSER_LINK
-                          : CARBONIO_CE_SUPPORTED_BROWSER_LINK
-                      }
-                    />
-                  ),
-                }}
+              <browser-support-message
+                is-supported-browser={isSupportedBrowser}
+                is-advanced={isAdvanced}
               />
             </zx-text>
           </div>

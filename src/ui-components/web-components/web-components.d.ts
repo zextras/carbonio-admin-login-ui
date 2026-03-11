@@ -60,6 +60,13 @@ declare global {
           },
           HTMLElement
         >;
+        'browser-support-message': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            'is-supported-browser'?: boolean;
+            'is-advanced'?: boolean;
+          },
+          HTMLElement
+        >;
       }
     }
   }
