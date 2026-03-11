@@ -41,10 +41,34 @@
   animation: fadeInRight 225ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.snackContent {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  align-items: center;
+}
+
+.snackContent > icon-wc {
+  flex-shrink: 0;
+}
+
+.snackContent > zx-text {
+  flex: 1 1 50%;
+  min-width: 0;
+}
+
+.snackContent > zx-button {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
 .progressBar {
   animation-name: shrink;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
   border-radius: 1rem 0 0 1rem;
   align-self: flex-end;
+  height: 0.25rem;
+  width: 100%;
 }
