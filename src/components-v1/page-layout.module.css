@@ -64,3 +64,19 @@
   padding-top: var(--padding-size-extralarge);
   padding-bottom: var(--padding-size-extralarge);
 }
+
+.browserSupportRow {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-top: var(--padding-size-large);
+  padding-bottom: var(--padding-size-large);
+}
+
+.logoPadding {
+  width: 100%;
+  padding: 28px 0 28px;
+}
+
+.iconPadding {
+  padding-right: var(--padding-size-extrasmall);
+}

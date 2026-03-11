@@ -24,7 +24,6 @@ import {
 } from '../constants';
 import { getLoginConfig, type GetLoginConfigResponse } from '../services/login-page-services';
 import { useLoginConfigStore } from '../store/login/store';
-import { Padding, Row } from '../ui-components/';
 import { prepareUrlForForward } from '../utils';
 import { CopyrightBanner } from './copyright-banner';
 import { FormSelector } from './form-selector';
@@ -247,7 +246,7 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
       <div className={styles.formContainer} data-testid="form-container">
         <div className={styles.formWrapper}>
           <div className={styles.logoSection}>
-            <Padding value="28px 0 28px" width="100%">
+            <div className={styles.logoPadding}>
               <div className={styles.logoCenter}>
                 {logo.url ? (
                   <a target="_blank" href={logo.url} rel="noreferrer" data-testid="logo-link">
@@ -257,7 +256,7 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
                   logoHtml
                 )}
               </div>
-            </Padding>
+            </div>
           </div>
           {isAdvanced ? (
             <FormSelector domain={domain} destinationUrl={destinationUrl ?? ''} />
@@ -266,14 +265,14 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
           )}
 
           <div className={styles.bottomSection}>
-            <Row padding={{ top: 'large', bottom: 'large' }} wrap="nowrap">
-              <Padding right="extrasmall">
+            <div className={styles.browserSupportRow}>
+              <div className={styles.iconPadding}>
                 <icon-wc
                   color="secondary"
                   icon={isSupportedBrowser ? 'CheckmarkOutline' : 'InfoOutline'}
                   size="medium"
                 />
-              </Padding>
+              </div>
               <zx-text size="small" color="secondary" weight="light">
                 <Trans
                   i18nKey={
@@ -297,7 +296,7 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
                   }}
                 />
               </zx-text>
-            </Row>
+            </div>
             <CopyrightBanner copyrightBanner={copyrightBanner} t={t} />
           </div>
         </div>
