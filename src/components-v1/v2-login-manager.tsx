@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import i18next from 'i18next';
 import { map } from 'lodash';
 import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
 import {
@@ -40,7 +40,7 @@ const mapOtpItems = (otpArray:Array<OtpItemProp>):Array<OtpItem> =>
 type V2LoginManagerProps = {configuration: Configuration; disableInputs?: boolean};
 
 export const V2LoginManager=({ configuration, disableInputs }:V2LoginManagerProps)=> {
-	const [t] = useTranslation();
+	const t = i18next.t.bind(i18next);
 	const [loadingCredentials, setLoadingCredentials] = useState(false);
 	const [loadingOtp, setLoadingOtp] = useState(false);
 	const [progress, setProgress] = useState(formState.credentials);

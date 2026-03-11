@@ -7,10 +7,9 @@
 import './browser-support-message';
 
 import clsx from 'clsx';
-import type { TFunction } from 'i18next';
+import i18next, { type TFunction } from 'i18next';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { browserName } from 'react-device-detect';
-import { useTranslation } from 'react-i18next';
 
 import backgroundImage from '../../assets/carbonio_light.jpg';
 import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
@@ -151,7 +150,7 @@ type PageLayoutProps = { version: number; isAdvanced: boolean };
 type Logo = { image: string; width: string; url?: string };
 
 export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
-  const [t] = useTranslation();
+  const t = i18next.t.bind(i18next);
   const [logo, setLogo] = useState<Logo | null>(null);
   const [serverError, setServerError] = useState(false);
 

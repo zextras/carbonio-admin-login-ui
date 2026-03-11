@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import i18next from 'i18next';
 import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import ChangePasswordForm from '../components-v1/change-password-form';
 import { CredentialsForm } from '../components-v1/credentials-form';
@@ -19,7 +19,7 @@ const formState = {
 };
 
 export const ZimbraForm = ({ destinationUrl }: { destinationUrl: string }) => {
-	const [t] = useTranslation();
+	const t = i18next.t.bind(i18next);
 	const [authError, setAuthError] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [progress, setProgress] = useState(formState.credentials);

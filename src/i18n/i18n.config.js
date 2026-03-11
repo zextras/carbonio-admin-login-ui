@@ -7,20 +7,15 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
-import { initReactI18next } from 'react-i18next';
 
 i18n
 	.use(Backend)
 	.use(LanguageDetector)
-	.use(initReactI18next)
 	.init({
-		react: {
-			useSuspense: false
-		},
 		fallbackLng: 'en',
 		debug: false,
 		interpolation: {
-			escapeValue: false // react already safes from xss
+			escapeValue: false
 		},
 		missingKeyHandler: (lng, ns, key, fallbackValue) => {
 			console.warn('Missing translation with key', key);

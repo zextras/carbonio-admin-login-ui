@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 import errorSVG from '../assets/carbonio-load-app-error.svg';
 import styles from './error-page.module.css';
 import { zxTextVars } from './ui-components/web-components/zx-text';
 
 export const ErrorPage = () => {
-  const [t] = useTranslation();
+  const t = i18next.t.bind(i18next);
   return (
     <div className={styles.outerContainer}>
       <div className={styles.horizontalContainer}>

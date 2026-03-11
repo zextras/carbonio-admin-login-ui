@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import i18next from 'i18next';
 import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { Snackbar } from '../ui-components';
 
 export const ServerNotResponding = () => {
-	const [t] = useTranslation();
+	const t = i18next.t.bind(i18next);
 	const [isOpen, setOpen] = useState(true);
 	const onCloseCbk = useCallback(() => setOpen(false), []);
 

@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import i18next from 'i18next';
 import { useCallback, useEffect,useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import {
 	BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY,
@@ -59,7 +59,7 @@ export const submitChangePassword = (
 };
 
 const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }: any) => {
-	const [t] = useTranslation();
+	const t = i18next.t.bind(i18next);
 
 	const [oldPassword, setOldPassword] = useState('');
 	const [newPassword, setNewPassword] = useState('');

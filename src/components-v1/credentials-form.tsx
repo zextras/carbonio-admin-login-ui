@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import i18next from 'i18next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { checkClassicUi } from '../services/login-page-services';
 import { Input, PasswordInput, Row } from '../ui-components';
@@ -35,7 +35,7 @@ export const CredentialsForm = ({
 	disableInputs,
 	loading = false
 }: CredentialsFormProps) => {
-	const [t] = useTranslation();
+	const t = i18next.t.bind(i18next);
 	const [username, setUsername] = useState(urlParams.get('username') || '');
 	const [password, setPassword] = useState('');
 

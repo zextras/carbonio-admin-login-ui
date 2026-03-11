@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import i18next from 'i18next';
 import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { postV1Login } from '../services/v1-service';
 import { Snackbar } from '../ui-components';
@@ -16,7 +16,7 @@ import OfflineModal from './modals';
 type V1LoginManagerProps = { configuration: Configuration; disableInputs: boolean };
 
 export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerProps) => {
-	const [t] = useTranslation();
+	const t = i18next.t.bind(i18next);
 
 	const [loading, setLoading] = useState(false);
 
