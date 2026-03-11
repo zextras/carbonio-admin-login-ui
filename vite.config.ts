@@ -12,7 +12,6 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 import pkg from './package.json';
 
-
 const rootDir = './';
 const packageName = 'carbonio-admin-ui';
 const basePath = `/static/iris/${packageName}/`;
@@ -68,88 +67,88 @@ function withLocationRewrite(config: {
 }
 
 export default defineConfig(({ mode }) => {
-	const pkgRel = mode === 'development' ? Date.now() : 1;
+  const pkgRel = mode === 'development' ? Date.now() : 1;
   const proxyTarget = getProxyTarget();
 
-	return {
-		root: 'src',
-		esbuild: {
-			target: 'esnext'
-		},
-		plugins: [
-    react({
+  return {
+    root: 'src',
+    esbuild: {
+      target: 'esnext',
+    },
+    plugins: [
+      react({
         babel: {
           plugins: [['@babel/plugin-proposal-decorators', { version: '2023-11' }]],
         },
       }),
-			viteStaticCopy({
-				targets: [
-					{ src: '../package/yap.json', dest: '.' },
-					{
-						src: '../package/PKGBUILD.template',
-						dest: 'package',
-						rename: 'PKGBUILD',
-						transform: (content: Buffer) => {
-							return content
-								.toString()
-								.replaceAll('{{version}}', pkg.version)
-								.replaceAll('{{pkgRel}}', `${pkgRel}`);
-						}
-					},
-					{ src: 'mockServiceWorker.js', dest: '.' }
-				]
-			})
-		],
-		resolve: {
-			alias: {
-				assets: resolve(__dirname, 'assets')
-			}
-		},
-		define: {
-			'import.meta.env.VITE_PACKAGE_VERSION': JSON.stringify(pkg.version)
-		},
-		build: {
-			outDir: '../dist',
-			emptyDirBeforeWrite: true,
-			sourcemap: true
-		},
-		        server: {
-            port: 3000,
-            strictPort: false,
-            // proxy: {
-            //   '/carbonioAdmin/static': {
-            //     target: proxyTarget,
-            //     changeOrigin: true,
-            //     secure: false,
-            //     rewrite: (path) => path.replace(/^\/carbonioAdmin\/static/, '/static'),
-            //     followRedirects: true,
-            //   },
-            //   '/logout': {
-            //     target: proxyTarget,
-            //     changeOrigin: true,
-            //     secure: false,
-            //   },
-            //   '/zx': {
-            //     target: proxyTarget,
-            //     changeOrigin: true,
-            //     secure: false,
-            //   },
-            //   '/services': {
-            //     target: proxyTarget,
-            //     changeOrigin: true,
-            //     secure: false,
-            //   },
-            //   '/login': {
-            //     target: proxyTarget,
-            //     changeOrigin: true,
-            //     secure: false,
-            //   },
-            //   '/service': {
-            //     target: proxyTarget,
-            //     changeOrigin: true,
-            //     secure: false,
-            //   },
-            // },
+      viteStaticCopy({
+        targets: [
+          { src: '../package/yap.json', dest: '.' },
+          {
+            src: '../package/PKGBUILD.template',
+            dest: 'package',
+            rename: 'PKGBUILD',
+            transform: (content: Buffer) => {
+              return content
+                .toString()
+                .replaceAll('{{version}}', pkg.version)
+                .replaceAll('{{pkgRel}}', `${pkgRel}`);
+            },
           },
-	};
+          { src: 'mockServiceWorker.js', dest: '.' },
+        ],
+      }),
+    ],
+    resolve: {
+      alias: {
+        assets: resolve(__dirname, 'assets'),
+      },
+    },
+    define: {
+      'import.meta.env.VITE_PACKAGE_VERSION': JSON.stringify(pkg.version),
+    },
+    build: {
+      outDir: '../dist',
+      emptyDirBeforeWrite: true,
+      sourcemap: true,
+    },
+    server: {
+      port: 3000,
+      strictPort: false,
+      proxy: {
+        //   '/carbonioAdmin/static': {
+        //     target: proxyTarget,
+        //     changeOrigin: true,
+        //     secure: false,
+        //     rewrite: (path) => path.replace(/^\/carbonioAdmin\/static/, '/static'),
+        //     followRedirects: true,
+        //   },
+        //   '/logout': {
+        //     target: proxyTarget,
+        //     changeOrigin: true,
+        //     secure: false,
+        //   },
+        '/zx': {
+          target: proxyTarget,
+          changeOrigin: true,
+          secure: false,
+        },
+        //   '/services': {
+        //     target: proxyTarget,
+        //     changeOrigin: true,
+        //     secure: false,
+        //   },
+        //   '/login': {
+        //     target: proxyTarget,
+        //     changeOrigin: true,
+        //     secure: false,
+        //   },
+        //   '/service': {
+        //     target: proxyTarget,
+        //     changeOrigin: true,
+        //     secure: false,
+        //   },
+      },
+    },
+  };
 });

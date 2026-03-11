@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-export const LinkText = ({ to }: { to: string }) => {
+import type { ReactNode } from 'react';
+
+export const LinkText = ({ to, children }: { to: string; children?: ReactNode }) => {
 	return (
 		<a
 			href={to || '#'}
@@ -15,6 +17,8 @@ export const LinkText = ({ to }: { to: string }) => {
 				cursor: 'pointer',
 				color: '#2b73d2'
 			}}
-		/>
+		>
+			{children}
+		</a>
 	);
 };

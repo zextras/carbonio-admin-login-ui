@@ -60,6 +60,11 @@ export class ZxButton extends LitElement {
       max-width: 100%;
     }
 
+    :host([width='fill']) {
+      display: block;
+      width: 100%;
+    }
+
     .grid {
       width: var(--btn-width);
       max-width: 100%;
