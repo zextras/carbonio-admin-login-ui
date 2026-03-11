@@ -20,7 +20,10 @@
   color: var(--btn-color);
   background-color: var(--btn-bg);
   cursor: pointer;
-  transition: color 0.2s ease-out, background-color 0.2s ease-out, border-color 0.2s ease-out;
+  transition:
+    color 0.2s ease-out,
+    background-color 0.2s ease-out,
+    border-color 0.2s ease-out;
 }
 
 .outlined {
@@ -117,23 +120,4 @@
 .grid > .button {
   grid-row: 1;
   grid-column: 1;
-}
-
-.secondaryAction {
-  grid-row: 1;
-  grid-column: 1;
-  justify-self: end;
-  margin-right: var(--secondary-margin, 0);
-  min-width: fit-content;
-  flex-shrink: 0;
-}
-
-.secondaryAction[data-loading='true'] {
-  opacity: 0;
-}
-
-.secondaryPlaceholder {
-  padding: var(--placeholder-padding, 0);
-  order: 3;
-  visibility: hidden;
 }
