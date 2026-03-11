@@ -67,6 +67,7 @@ declare global {
           },
           HTMLElement
         >;
+        'error-page': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
       }
     }
   }
