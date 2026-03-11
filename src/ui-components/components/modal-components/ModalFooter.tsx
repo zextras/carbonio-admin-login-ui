@@ -7,7 +7,6 @@ import clsx from 'clsx';
 import React, { useMemo } from 'react';
 
 import { type AnyColor } from '../../types/utils';
-import { Button } from '../Button';
 import { Container } from '../Container';
 import { Padding } from '../Padding';
 import { Tooltip } from '../Tooltip';
@@ -74,9 +73,9 @@ function ModalFooterContent({
 		let button;
 		if (type === 'error' && onErrorAction) {
 			button = (
-				<Button
+				<zx-button
 					className={styles.dismissButton}
-					onClick={onErrorAction}
+					onClick={onErrorAction as (e: Event) => void}
 					color="secondary"
 					label={errorActionLabel}
 				/>
@@ -85,21 +84,21 @@ function ModalFooterContent({
 			button =
 				(onSecondaryAction && secondaryActionLabel && (
 					<Tooltip disabled={!secondaryActionTooltip} label={secondaryActionTooltip}>
-						<Button
+						<zx-button
 							className={styles.dismissButton}
 							color="primary"
 							type="outlined"
-							onClick={onSecondaryAction}
+							onClick={onSecondaryAction as (e: Event) => void}
 							label={secondaryActionLabel}
 							disabled={secondaryActionDisabled}
 						/>
 					</Tooltip>
 				)) ||
 				(dismissLabel && onClose && (
-					<Button
+					<zx-button
 						className={styles.dismissButton}
 						color="secondary"
-						onClick={onClose}
+						onClick={onClose as (e: Event) => void}
 						label={dismissLabel}
 					/>
 				)) ||
@@ -140,10 +139,10 @@ function ModalFooterContent({
 				{secondaryButton}
 				{(onConfirm || onClose) && (
 					<Tooltip label={confirmTooltip} disabled={!confirmTooltip}>
-						<Button
+						<zx-button
 							className={styles.confirmButton}
 							color={confirmColor}
-							onClick={(onConfirm || onClose) as NonNullable<typeof onClose | typeof onConfirm>}
+							onClick={(onConfirm || onClose) as (e: Event) => void}
 							label={confirmLabel}
 							disabled={confirmDisabled}
 						/>

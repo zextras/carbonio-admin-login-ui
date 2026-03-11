@@ -6,7 +6,6 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import { Button } from '../Button';
 import { Row } from '../Row';
 import { Tooltip } from '../Tooltip';
 import styles from './ModalHeader.module.css';
@@ -39,7 +38,13 @@ function ModalHeader({
 			</zx-text>
 			{showCloseIcon && onClose && (
 				<Tooltip label={closeIconTooltip} disabled={!closeIconTooltip}>
-					<Button icon="Close" size="large" onClick={onClose} type="ghost" color="text" />
+					<zx-button
+						icon="Close"
+						size="large"
+						type="ghost"
+						color="text"
+						onClick={onClose as (e: Event) => void}
+					/>
 				</Tooltip>
 			)}
 		</Row>

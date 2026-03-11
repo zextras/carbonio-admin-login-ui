@@ -6,6 +6,7 @@
 
 import './i18n/i18n.config';
 import './index.css';
+import './ui-components/web-components/';
 
 import { StrictMode, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';

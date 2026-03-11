@@ -10,6 +10,11 @@ import React from 'react';
 import { type IconName, type IconSize } from './icon-registry';
 import { type TextOverflow, type TextSize, type TextWeight } from './zx-text';
 
+type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
+type ButtonWidth = 'fit' | 'fill';
+type ButtonIconPlacement = 'left' | 'right';
+type ButtonType = 'default' | 'outlined' | 'ghost';
+
 declare global {
   namespace React {
     namespace JSX {
@@ -34,6 +39,24 @@ declare global {
             overflow?: TextOverflow;
             disabled?: boolean;
             lineHeight?: number;
+          },
+          HTMLElement
+        >;
+        'zx-button': React.DetailedHTMLProps<
+          Omit<React.HTMLAttributes<HTMLElement>, 'onClick'> & {
+            type?: ButtonType;
+            size?: ButtonSize;
+            color?: string;
+            'background-color'?: string;
+            'label-color'?: string;
+            icon?: IconName;
+            'icon-placement'?: ButtonIconPlacement;
+            label?: string;
+            loading?: boolean;
+            disabled?: boolean;
+            width?: ButtonWidth;
+            'min-width'?: string;
+            onClick?: (e: Event) => void;
           },
           HTMLElement
         >;

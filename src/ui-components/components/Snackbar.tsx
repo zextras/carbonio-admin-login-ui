@@ -10,7 +10,6 @@ import React, { useCallback, useEffect } from 'react';
 
 import { resolveThemeColor } from '../theme/theme-utils';
 import { type IconName } from '../web-components/icon-registry';
-import { Button } from './Button';
 import { TIMERS } from './constants';
 import { Container } from './Container';
 import { Row } from './Row';
@@ -73,7 +72,7 @@ const Snackbar = ({
   progressBar = true,
   ref,
 }: SnackbarProps) => {
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((_e: Event | React.MouseEvent) => {
     onActionClick ? onActionClick() : onClose?.();
   }, [onActionClick, onClose]);
 
@@ -151,7 +150,7 @@ const Snackbar = ({
                   minWidth={0}
                   flexBasis={'fit-content'}
                 >
-                  <Button label={actionLabel} type="ghost" color="gray6" onClick={handleClick} />
+                  <zx-button label={actionLabel} type="ghost" color="gray6" onClick={handleClick} />
                 </Row>
               )}
             </Container>

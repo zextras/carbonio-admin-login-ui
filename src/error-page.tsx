@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 
 import errorSVG from '../assets/carbonio-load-app-error.svg';
 import styles from './error-page.module.css';
-import { Button } from './ui-components/';
 import { zxTextVars } from './ui-components/web-components/zx-text';
 
 export const ErrorPage = () => {
@@ -52,8 +51,8 @@ export const ErrorPage = () => {
             >
               {t('error.contact_support', 'Contact support or try refreshing the page')}
             </zx-text>
-            <Button
-              iconPlacement="left"
+            <zx-button
+              icon-placement="left"
               icon="Refresh"
               label={t('button.refresh_page', 'REFRESH')}
               type="outlined"

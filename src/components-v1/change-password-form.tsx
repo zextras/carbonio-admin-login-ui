@@ -21,7 +21,7 @@ import {
 	ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME,
 	ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
 	ZM_AUTH_TOKEN} from '../constants';
-import { Button, Input, PasswordInput,Row } from '../ui-components';
+import { Input, PasswordInput, Row } from '../ui-components';
 import { saveCredentials, setCookie } from '../utils';
 
 export const submitChangePassword = (
@@ -367,8 +367,8 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 				</Row>
 			)}
 			<Row orientation="vertical" crossAlignment="flex-start" padding={{ vertical: 'medium' }}>
-				<Button
-					onClick={submitChangePasswordCb}
+				<zx-button
+					onClick={submitChangePasswordCb as (e: Event) => void}
 					label={t('changePassword_confirm_label', 'Change password and login')}
 					width="fill"
 					loading={isLoading}

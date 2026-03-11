@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 
 import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
 import {
-	Button,
 	Checkbox,
 	Input,
 	Row,
@@ -208,8 +207,8 @@ export const V2LoginManager=({ configuration, disableInputs }:V2LoginManagerProp
 						</zx-text>
 					</Row>
 					<Row orientation="vertical" crossAlignment="flex-start" padding={{ vertical: 'small' }}>
-						<Button
-							onClick={submitOtpCb}
+						<zx-button
+							onClick={submitOtpCb as (e: Event) => void}
 							disabled={disableInputs}
 							label={t('login', 'Login')}
 							width="fill"

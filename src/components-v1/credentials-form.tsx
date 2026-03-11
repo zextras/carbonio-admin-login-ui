@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { checkClassicUi } from '../services/login-page-services';
-import { Button, Input, PasswordInput, Row } from '../ui-components';
+import { Input, PasswordInput, Row } from '../ui-components';
 import { setCookie } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -65,19 +65,18 @@ export const CredentialsForm = ({
 	const samlButton = useMemo(() => {
 		if (configuration?.authMethods?.includes('saml')) {
 			return (
-				<Button
+				<zx-button
 					type="outlined"
 					data-testid="loginSaml"
 					label={t('login_saml', 'Login SAML')}
 					color="primary"
 					disabled={disableInputs}
-					onClick={samlButtonCbk}
+					onClick={samlButtonCbk as (e: Event) => void}
 					style={{ height: '36px' }}
 				/>
 			);
 		}
 		return (
-			// used to keep the correct space where or not SAML is shown
 			<div style={{ minHeight: '20px' }} />
 		);
 	}, [configuration, disableInputs, samlButtonCbk, t]);
@@ -129,11 +128,11 @@ export const CredentialsForm = ({
 				crossAlignment="flex-start"
 				padding={{ bottom: 'large', top: 'small' }}
 			>
-				<Button
+				<zx-button
 					style={{ height: '36px' }}
 					loading={loading}
 					data-testid="login"
-					onClick={submitUserPassword}
+					onClick={submitUserPassword as (e: Event) => void}
 					disabled={disableInputs}
 					label={t('login', 'Login')}
 					width="fill"
