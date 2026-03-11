@@ -14,8 +14,6 @@ import { TIMERS } from './constants';
 import { Container } from './Container';
 import { Row } from './Row';
 import styles from './Snackbar.module.css';
-import { Portal } from './utilities/Portal';
-import { Transition } from './utilities/Transition';
 
 const icons: Record<'success' | 'info' | 'warning' | 'error', IconName> = {
   success: 'CheckmarkOutline',
@@ -37,46 +35,28 @@ type SnackbarProps = {
   onActionClick?: () => void;
   /** Callback to handle Snackbar closing */
   onClose?: () => void;
-  /** Disable the autoHide functionality */
-  disableAutoHide?: boolean;
-  /** Hide the button in the Snackbar */
-  hideButton?: boolean;
-  /** zIndex of the snackbar */
-  zIndex?: number;
   /** autoHide timing in milliseconds */
   autoHideTimeout?: number;
-  /** Window object to use as reference to determine the screenMode */
-  target?: Window;
-  /** Flag to disable the Portal implementation */
-  disablePortal?: boolean;
-  /**
-   * Show a progress bar for the auto-hide timeout counter.
-   * Be sure to have uniq keys when showing the progress bar on multiple snackbars.
-   */
-  progressBar?: boolean;
-  ref?: React.Ref<HTMLDivElement>;
 };
 
 const Snackbar = ({
   open = false,
   severity = 'info',
   label,
-  disableAutoHide = false,
-  hideButton = false,
   actionLabel = 'Ok',
   onActionClick,
   onClose,
-  zIndex = 1000,
   autoHideTimeout = TIMERS.SNACKBAR.DEFAULT_HIDE_TIMEOUT,
-  disablePortal = false,
-  progressBar = true,
-  ref,
 }: SnackbarProps) => {
-  const handleClick = useCallback((_e: Event | React.MouseEvent) => {
-    onActionClick ? onActionClick() : onClose?.();
+  const handleClick = useCallback(() => {
+    if (onActionClick) {
+      onActionClick();
+    } else if (onClose) {
+      onClose();
+    }
   }, [onActionClick, onClose]);
 
-  const enableTimeout = open && !disableAutoHide && onClose !== undefined;
+  const enableTimeout = open && onClose !== undefined;
 
   useEffect(() => {
     let timeout: number;
@@ -90,86 +70,81 @@ const Snackbar = ({
     };
   }, [onClose, autoHideTimeout, enableTimeout]);
 
+  if (!open) return null;
+
   return (
-    <Portal show={open} disablePortal={disablePortal}>
-      <Transition ref={ref} type="fade-in-right">
-        <div
-          className={styles.snackContainer}
-          style={
-            {
-              '--snackbar-z-index': zIndex,
-              '--snackbar-background-color': resolveThemeColor(severity, 'regular'),
-            } as React.CSSProperties
-          }
-          data-testid="snackbar"
+    <div
+      className={styles.snackContainer}
+      style={
+        {
+          '--snackbar-z-index': 1000,
+          '--snackbar-background-color': resolveThemeColor(severity, 'regular'),
+        } as React.CSSProperties
+      }
+      data-testid="snackbar"
+    >
+      <Container
+        orientation="horizontal"
+        mainAlignment="flex-start"
+        gap={'1rem'}
+        height="auto"
+        width="auto"
+        padding={{
+          top: '0.5rem',
+          right: '0.5rem',
+          bottom: '0.5rem',
+          left: '1.5rem',
+        }}
+        maxWidth={'100%'}
+      >
+        <Row flexShrink={0}>
+          <Row flexShrink={0}>
+            <icon-wc size="large" icon={icons[severity]} color="gray6"></icon-wc>
+          </Row>
+        </Row>
+        <Container
+          gap={'1rem'}
+          wrap={'wrap'}
+          flexBasis={'fit-content'}
+          mainAlignment={'flex-start'}
+          orientation={'row'}
+          minWidth={0}
         >
-          <Container
-            orientation="horizontal"
+          <Row
             mainAlignment="flex-start"
-            gap={'1rem'}
-            height="auto"
-            width="auto"
-            padding={{
-              top: '0.5rem',
-              right: hideButton ? '1.5rem' : '0.5rem',
-              bottom: '0.5rem',
-              left: '1.5rem',
-            }}
-            maxWidth={'100%'}
+            flexBasis={'50%'}
+            flexShrink={1}
+            flexGrow={1}
+            width={'auto'}
           >
-            <Row flexShrink={0}>
-              <Row flexShrink={0}>
-                <icon-wc size="large" icon={icons[severity]} color="gray6"></icon-wc>
-              </Row>
-            </Row>
-            <Container
-              gap={'1rem'}
-              wrap={'wrap'}
-              flexBasis={'fit-content'}
-              mainAlignment={'flex-start'}
-              orientation={'row'}
-              minWidth={0}
-            >
-              <Row
-                mainAlignment="flex-start"
-                flexBasis={'50%'}
-                flexShrink={1}
-                flexGrow={1}
-                width={'auto'}
-              >
-                <zx-text color="gray6" overflow="break-word">
-                  {label}
-                </zx-text>
-              </Row>
-              {!hideButton && (
-                <Row
-                  margin={{ left: 'auto', right: '0' }}
-                  wrap={'nowrap'}
-                  flexGrow={0}
-                  flexShrink={0}
-                  minWidth={0}
-                  flexBasis={'fit-content'}
-                >
-                  <zx-button label={actionLabel} type="ghost" color="gray6" onClick={handleClick} />
-                </Row>
-              )}
-            </Container>
-          </Container>
-          {enableTimeout && progressBar && (
-            <Container
-              className={styles.progressBar}
-              style={{ animationDuration: `${autoHideTimeout}ms` }}
-              height={'0.25rem'}
-              data-testid={'progress-bar'}
-              background={`${severity}.active`}
-              width={'100%'}
-            />
-          )}
-        </div>
-      </Transition>
-    </Portal>
+            <zx-text color="gray6" overflow="break-word">
+              {label}
+            </zx-text>
+          </Row>
+          <Row
+            margin={{ left: 'auto', right: '0' }}
+            wrap={'nowrap'}
+            flexGrow={0}
+            flexShrink={0}
+            minWidth={0}
+            flexBasis={'fit-content'}
+          >
+            <zx-button label={actionLabel} type="ghost" color="gray6" onClick={handleClick} />
+          </Row>
+        </Container>
+      </Container>
+      {enableTimeout && (
+        <Container
+          className={styles.progressBar}
+          style={{ animationDuration: `${autoHideTimeout}ms` }}
+          height={'0.25rem'}
+          data-testid={'progress-bar'}
+          background={`${severity}.active`}
+          width={'100%'}
+        />
+      )}
+    </div>
   );
 };
 
-export type { SnackbarProps };
 export { Snackbar };
