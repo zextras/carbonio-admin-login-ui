@@ -154,12 +154,6 @@ type PageLayoutProps = { version: number; isAdvanced: boolean };
 type Logo = { image: string; width: string; url?: string };
 
 export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
-  console.log(
-    '@@@@PageLayout component rendered with version:',
-    { version },
-    'isAdvanced:',
-    isAdvanced,
-  );
   const [t] = useTranslation();
   const [logo, setLogo] = useState<Logo | null>(null);
   const [serverError, setServerError] = useState(false);
@@ -243,62 +237,56 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
         '--background-image-retina': `url(${backgroundImageRetina})`,
       }}
     >
-      <div className={styles.formContainer} data-testid="form-container">
-        <div className={styles.formWrapper}>
-          <div className={styles.logoSection}>
-            <div className={styles.logoPadding}>
-              <div className={styles.logoCenter}>
-                {logo.url ? (
-                  <a target="_blank" href={logo.url} rel="noreferrer" data-testid="logo-link">
-                    {logoHtml}
-                  </a>
-                ) : (
-                  logoHtml
-                )}
-              </div>
-            </div>
-          </div>
-          {isAdvanced ? (
-            <FormSelector domain={domain} destinationUrl={destinationUrl ?? ''} />
+      <div className={styles.formWrapper} data-testid="form-container">
+        <div className={styles.logoSection}>
+          {logo.url ? (
+            <a target="_blank" href={logo.url} rel="noreferrer" data-testid="logo-link">
+              {logoHtml}
+            </a>
           ) : (
-            <ZimbraForm destinationUrl={destinationUrl ?? ''} />
+            logoHtml
           )}
+        </div>
+        {isAdvanced ? (
+          <FormSelector domain={domain} destinationUrl={destinationUrl ?? ''} />
+        ) : (
+          <ZimbraForm destinationUrl={destinationUrl ?? ''} />
+        )}
 
-          <div className={styles.bottomSection}>
-            <div className={styles.browserSupportRow}>
-              <div className={styles.iconPadding}>
-                <icon-wc
-                  color="secondary"
-                  icon={isSupportedBrowser ? 'CheckmarkOutline' : 'InfoOutline'}
-                  size="medium"
-                />
-              </div>
-              <zx-text size="small" color="secondary" weight="light">
-                <Trans
-                  i18nKey={
-                    isSupportedBrowser ? 'browser_fully_supported' : 'browser_limited_supported'
-                  }
-                  defaults={
-                    isSupportedBrowser
-                      ? 'Your browser is fully <a>supported</a>'
-                      : 'Having troubles? Try a fully <a>supported</a> browser'
-                  }
-                  components={{
-                    a: (
-                      <LinkText
-                        to={
-                          isAdvanced
-                            ? CARBONIO_SUPPORTED_BROWSER_LINK
-                            : CARBONIO_CE_SUPPORTED_BROWSER_LINK
-                        }
-                      />
-                    ),
-                  }}
-                />
-              </zx-text>
+        <div className={styles.bottomSection}>
+          <div className={styles.browserSupportRow}>
+            <div className={styles.iconPadding}>
+              <icon-wc
+                color="secondary"
+                icon={isSupportedBrowser ? 'CheckmarkOutline' : 'InfoOutline'}
+                size="medium"
+              />
             </div>
-            <CopyrightBanner copyrightBanner={copyrightBanner} t={t} />
+            <zx-text size="small" color="secondary" weight="light">
+              <Trans
+                i18nKey={
+                  isSupportedBrowser ? 'browser_fully_supported' : 'browser_limited_supported'
+                }
+                defaults={
+                  isSupportedBrowser
+                    ? 'Your browser is fully <a>supported</a>'
+                    : 'Having troubles? Try a fully <a>supported</a> browser'
+                }
+                components={{
+                  a: (
+                    <LinkText
+                      to={
+                        isAdvanced
+                          ? CARBONIO_SUPPORTED_BROWSER_LINK
+                          : CARBONIO_CE_SUPPORTED_BROWSER_LINK
+                      }
+                    />
+                  ),
+                }}
+              />
+            </zx-text>
           </div>
+          <CopyrightBanner copyrightBanner={copyrightBanner} t={t} />
         </div>
       </div>
     </div>

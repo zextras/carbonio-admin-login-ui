@@ -22,12 +22,6 @@
   }
 }
 
-.formContainer {
-  max-width: 100%;
-  max-height: 100vh;
-  box-shadow: 0px 0px 20px -7px rgba(0, 0, 0, 0.3);
-}
-
 .formWrapper {
   display: flex;
   flex-direction: column;
@@ -37,22 +31,20 @@
   align-items: center;
   width: 436px;
   max-width: 100%;
+  max-height: 100vh;
   min-height: 620px;
   overflow-y: auto;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 48px 48px 0;
+  box-shadow: 0px 0px 20px -7px rgba(0, 0, 0, 0.3);
 }
 
 .logoSection {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  height: auto;
-}
-
-.logoCenter {
-  display: flex;
+  justify-content: center;
   align-items: center;
+  width: 100%;
+  padding: 28px 0 28px;
 }
 
 .bottomSection {
@@ -70,11 +62,6 @@
   flex-wrap: nowrap;
   padding-top: var(--padding-size-large);
   padding-bottom: var(--padding-size-large);
-}
-
-.logoPadding {
-  width: 100%;
-  padding: 28px 0 28px;
 }
 
 .iconPadding {
