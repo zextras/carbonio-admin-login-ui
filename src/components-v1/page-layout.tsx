@@ -25,7 +25,6 @@ import {
 import { getLoginConfig, type GetLoginConfigResponse } from '../services/login-page-services';
 import { useLoginConfigStore } from '../store/login/store';
 import { prepareUrlForForward } from '../utils';
-import { CopyrightBanner } from './copyright-banner';
 import { FormSelector } from './form-selector';
 import { LinkText } from './link-text';
 import styles from './page-layout.module.css';
@@ -286,7 +285,16 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
               />
             </zx-text>
           </div>
-          <CopyrightBanner copyrightBanner={copyrightBanner} t={t} />
+          {copyrightBanner ? (
+            <zx-text size="small" overflow="break-word">
+              {copyrightBanner}
+            </zx-text>
+          ) : (
+            <zx-text size="small" overflow="break-word" data-testid="default-banner">
+              {t('copy_right', 'Copyright')} &copy; {` ${new Date().getFullYear()} Zextras, `}
+              {t('all_rights_reserved', 'All rights reserved')}
+            </zx-text>
+          )}
         </div>
       </div>
     </div>
