@@ -1,20 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
+ * SPDX-FileCopyrightText: 2025 Zextras <https://www.zextras.com>
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { resolve } from 'path';
-
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
+import svgr from 'vite-plugin-svgr';
 
-import pkg from './package.json';
-
-const rootDir = './';
-const packageName = 'carbonio-admin-ui';
-const basePath = `/static/iris/${packageName}/`;
+import tailwindcss from '@tailwindcss/vite';
+import { createBootstrapRolldownOptions } from './vite.rolldown.config';
 
 function getProxyTarget(): string {
   const target = process.env.VITE_TARGET || 'localhost';
@@ -66,89 +61,86 @@ function withLocationRewrite(config: {
   };
 }
 
-export default defineConfig(({ mode }) => {
-  const pkgRel = mode === 'development' ? Date.now() : 1;
+export default defineConfig(({ command, mode }) => {
+  const basePath = '/';
+  const isServeCommand = command === 'serve';
+  const isDev = mode === 'development';
   const proxyTarget = getProxyTarget();
+  if (isServeCommand) {
+    console.log('Proxy target:', `https://${proxyTarget}:6071`);
+  }
 
   return {
-    root: 'src',
-    esbuild: {
-      target: 'esnext',
-    },
     plugins: [
       react({
         babel: {
           plugins: [['@babel/plugin-proposal-decorators', { version: '2023-11' }]],
         },
       }),
-      viteStaticCopy({
-        targets: [
-          { src: '../package/yap.json', dest: '.' },
-          {
-            src: '../package/PKGBUILD.template',
-            dest: 'package',
-            rename: 'PKGBUILD',
-            transform: (content: Buffer) => {
-              return content
-                .toString()
-                .replaceAll('{{version}}', pkg.version)
-                .replaceAll('{{pkgRel}}', `${pkgRel}`);
-            },
-          },
-          { src: 'mockServiceWorker.js', dest: '.' },
-        ],
+      svgr({
+        svgrOptions: {
+          ref: true,
+          svgo: false,
+          titleProp: true,
+          exportType: 'default',
+        },
+        include: '**/*.svg',
+        exclude: '**/src/assets/**/*.svg',
       }),
+      tailwindcss(),
     ],
-    resolve: {
-      alias: {
-        assets: resolve(__dirname, 'assets'),
+
+    // resolve: {
+    //   alias: {
+    //     assets: resolve(__dirname, 'assets'),
+    //   },
+    // },
+    css: {
+      modules: {
+        localsConvention: 'camelCaseOnly',
       },
     },
     define: {
-      'import.meta.env.VITE_PACKAGE_VERSION': JSON.stringify(pkg.version),
+      'process.env.NODE_ENV': JSON.stringify(isDev ? 'development' : 'production'),
+      BASE_PATH: JSON.stringify(basePath),
     },
     build: {
-      outDir: '../dist',
-      emptyDirBeforeWrite: true,
-      sourcemap: true,
+      outDir: './dist',
+      emptyOutDir: true,
+      sourcemap: isDev,
+      rollupOptions: createBootstrapRolldownOptions(),
     },
-    server: {
-      port: 3000,
-      strictPort: false,
-      proxy: {
-        //   '/carbonioAdmin/static': {
-        //     target: proxyTarget,
-        //     changeOrigin: true,
-        //     secure: false,
-        //     rewrite: (path) => path.replace(/^\/carbonioAdmin\/static/, '/static'),
-        //     followRedirects: true,
-        //   },
-        //   '/logout': {
-        //     target: proxyTarget,
-        //     changeOrigin: true,
-        //     secure: false,
-        //   },
-        '/zx': {
-          target: proxyTarget,
-          changeOrigin: true,
-          secure: false,
-        },
-        //   '/services': {
-        //     target: proxyTarget,
-        //     changeOrigin: true,
-        //     secure: false,
-        //   },
-        //   '/login': {
-        //     target: proxyTarget,
-        //     changeOrigin: true,
-        //     secure: false,
-        //   },
-        //   '/service': {
-        //     target: proxyTarget,
-        //     changeOrigin: true,
-        //     secure: false,
-        //   },
-      },
-    },
+    base: '/',
+    publicDir: 'assets',
+    ...(isDev
+      ? {
+          server: {
+            port: 3000,
+            strictPort: false,
+            // proxy: {
+            //   '/zx': {
+            //     target: proxyTarget,
+            //     changeOrigin: true,
+            //     secure: false,
+            //   },
+            //   '/login': withLocationRewrite({
+            //     target: proxyTarget,
+            //     changeOrigin: true,
+            //     secure: false,
+            //   }),
+            //   '/service': withLocationRewrite({
+            //     target: proxyTarget,
+            //     changeOrigin: true,
+            //     secure: false,
+            //   }),
+            //   '/services': withLocationRewrite({
+            //     target: proxyTarget,
+            //     changeOrigin: true,
+            //     secure: false,
+            //   }),
+            // },
+          },
+        }
+      : {}),
   };
 });
