@@ -90,11 +90,6 @@ export default defineConfig(({ command, mode }) => {
       tailwindcss(),
     ],
 
-    // resolve: {
-    //   alias: {
-    //     assets: resolve(__dirname, 'assets'),
-    //   },
-    // },
     css: {
       modules: {
         localsConvention: 'camelCaseOnly',
