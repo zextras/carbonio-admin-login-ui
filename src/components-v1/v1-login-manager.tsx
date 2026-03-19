@@ -5,10 +5,10 @@
  */
 
 import i18next from 'i18next';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { postV1Login } from '../services/v1-service';
-import { Snackbar } from '../ui-components';
+import '../ui-components/web-components/zx-snackbar';
 import { saveCredentials } from '../utils';
 import { type Configuration, CredentialsForm } from './credentials-form';
 import OfflineModal from './modals';
@@ -69,14 +69,24 @@ export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerP
 	);
 
 	const onCloseCbk = useCallback(() => setDetailNetworkModal(false), [setDetailNetworkModal]);
-	const onSnackbarActionCbk = useCallback(
-		() => setDetailNetworkModal(true),
-		[setDetailNetworkModal]
-	);
-	const onCloseSnackbarCbk = useCallback(
-		() => setSnackbarNetworkError(false),
-		[setSnackbarNetworkError]
-	);
+
+	const snackbarRef = useRef<HTMLElement>(null);
+
+	useEffect(() => {
+		const snackbar = snackbarRef.current;
+		if (!snackbar) return;
+
+		const handleClose = () => setSnackbarNetworkError(false);
+		const handleAction = () => setDetailNetworkModal(true);
+
+		snackbar.addEventListener('snackbar:close', handleClose);
+		snackbar.addEventListener('snackbar:action-click', handleAction);
+
+		return () => {
+			snackbar.removeEventListener('snackbar:close', handleClose);
+			snackbar.removeEventListener('snackbar:action-click', handleAction);
+		};
+	}, []);
 
 	return (
 		<>
@@ -87,13 +97,12 @@ export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerP
 				submitCredentials={submitCredentials}
 				loading={loading}
 			/>
-			<Snackbar
+			<zx-snackbar
+				ref={snackbarRef}
 				open={snackbarNetworkError}
 				label={t('cant_login', 'Can not do the login now')}
-				actionLabel={t('details', 'Details')}
-				onActionClick={onSnackbarActionCbk}
-				onClose={onCloseSnackbarCbk}
-				autoHideTimeout={10000}
+				action-label={t('details', 'Details')}
+				auto-hide-timeout={10000}
 				severity="error"
 			/>
 			<OfflineModal open={detailNetworkModal} onClose={onCloseCbk} />

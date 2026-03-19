@@ -11,15 +11,11 @@ import i18next, { type TFunction } from 'i18next';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { browserName } from 'react-device-detect';
 
-import backgroundImage from '../../assets/carbonio_light.jpg';
-import backgroundImageRetina from '../../assets/carbonio_light-retina.jpg';
-import logoCarbonio from '../../assets/carbonio-admin-panel.svg';
+import backgroundImage from '../assets/carbonio_light.jpg';
+import backgroundImageRetina from '../assets/carbonio_light-retina.jpg';
+import logoCarbonio from '../assets/carbonio-admin-panel.svg';
 import { ServerNotResponding } from '../components-index/server-not-responding';
-import {
-  CARBONIO_LOGO_URL,
-  CHROME,
-  FIREFOX,
-} from '../constants';
+import { CARBONIO_LOGO_URL, CHROME, FIREFOX } from '../constants';
 import { getLoginConfig, type GetLoginConfigResponse } from '../services/login-page-services';
 import { useLoginConfigStore } from '../store/login/store';
 import { prepareUrlForForward } from '../utils';

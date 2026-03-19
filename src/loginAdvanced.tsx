@@ -6,45 +6,44 @@
 import { useEffect, useState } from 'react';
 
 import { PageLayout } from './components-v1/page-layout';
-import { ErrorPage } from './error-page';
 import { getLoginSupported } from './services/login-page-services';
 
 type Versions = {
-	minApiVersion: number;
-	maxApiVersion: number;
-	version: number;
+  minApiVersion: number;
+  maxApiVersion: number;
+  version: number;
 };
 
 export function LoginAdvanced() {
-	const [versions, setVersions] = useState<Versions>();
-	const [hasError, setHasError] = useState(false);
+  const [versions, setVersions] = useState<Versions>();
+  const [hasError, setHasError] = useState(false);
 
-	useEffect(() => {
-		const controller = new AbortController();
-		const { signal } = controller;
-		getLoginSupported(signal)
-			.then(({ minApiVersion, maxApiVersion }) => {
-				const v = maxApiVersion;
-				setVersions({
-					minApiVersion,
-					maxApiVersion,
-					version: v
-				});
-			})
-			.catch(() => setHasError(true));
-		return () => {
-			controller.abort();
-		};
-	}, []);
+  useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
+    getLoginSupported(signal)
+      .then(({ minApiVersion, maxApiVersion }) => {
+        const v = maxApiVersion;
+        setVersions({
+          minApiVersion,
+          maxApiVersion,
+          version: v,
+        });
+      })
+      .catch(() => setHasError(true));
+    return () => {
+      controller.abort();
+    };
+  }, []);
 
-	const notSupported = hasError || (versions && versions.version < versions.minApiVersion);
+  const notSupported = hasError || (versions && versions.version < versions.minApiVersion);
 
-	return (
-		<>
-			{versions && versions.version >= versions.minApiVersion && (
-				<PageLayout version={versions?.version} isAdvanced />
-			)}
-			{notSupported && <ErrorPage />}
-		</>
-	);
+  return (
+    <>
+      {versions && versions.version >= versions.minApiVersion && (
+        <PageLayout version={versions?.version} isAdvanced />
+      )}
+      {/* {notSupported && <ErrorPage />} */}
+    </>
+  );
 }

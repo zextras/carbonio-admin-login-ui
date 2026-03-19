@@ -6,7 +6,7 @@
 import '../theme/theme.css';
 
 import { css, html, LitElement, nothing, type TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { resolveThemeColor } from '../theme/theme-utils';
@@ -53,6 +53,7 @@ function getColorStyles(colorName: string, bgName: string): Record<string, strin
   };
 }
 
+@customElement('zx-button')
 export class ZxButton extends LitElement {
   static override styles = css`
     :host {
@@ -322,8 +323,4 @@ declare global {
   interface HTMLElementTagNameMap {
     'zx-button': ZxButton;
   }
-}
-
-if (!customElements.get('zx-button')) {
-  customElements.define('zx-button', ZxButton);
 }

@@ -14,6 +14,7 @@ type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';
 type ButtonIconPlacement = 'left' | 'right';
 type ButtonType = 'default' | 'outlined' | 'ghost';
+type SnackbarSeverity = 'success' | 'info' | 'warning' | 'error';
 
 declare global {
   namespace React {
@@ -68,6 +69,18 @@ declare global {
           HTMLElement
         >;
         'error-page': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+        'zx-snackbar': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            open?: boolean;
+            severity?: SnackbarSeverity;
+            label?: string;
+            actionLabel?: string;
+            autoHideTimeout?: number;
+            onClose?: () => void;
+            onActionClick?: () => void;
+          },
+          HTMLElement
+        >;
       }
     }
   }

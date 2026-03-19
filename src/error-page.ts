@@ -56,3 +56,9 @@ export class ErrorPage extends LitElement {
     `;
   }
 }
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'error-page': ErrorPage;
+  }
+}
