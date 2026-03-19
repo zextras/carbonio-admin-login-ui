@@ -1,16 +1,21 @@
 {
-	"extends": "@tsconfig/vite-react",
-	"compilerOptions": {
+  "extends": "@tsconfig/vite-react",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "ts-lit-plugin"
+      }
+    ],
     "jsx": "react",
-		"noEmit": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noImplicitOverride": true,
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"useDefineForClassFields": true,
-		"noUnusedParameters": true,
-		"noUncheckedIndexedAccess": true,
-		"types": ["vitest/globals"]
-	}
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitOverride": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "useDefineForClassFields": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
+    "types": ["vitest/globals"]
+  }
 }
