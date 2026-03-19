@@ -61,6 +61,10 @@ function withLocationRewrite(config: {
   };
 }
 
+const babelConfig = {
+  plugins: [['@babel/plugin-proposal-decorators', { version: '2023-11' }]],
+};
+
 export default defineConfig(({ command, mode }) => {
   const basePath = '/';
   const isServeCommand = command === 'serve';
@@ -73,9 +77,7 @@ export default defineConfig(({ command, mode }) => {
   return {
     plugins: [
       react({
-        babel: {
-          plugins: [['@babel/plugin-proposal-decorators', { version: '2023-11' }]],
-        },
+        babel: babelConfig,
       }),
       svgr({
         svgrOptions: {

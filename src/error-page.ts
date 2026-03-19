@@ -8,7 +8,7 @@ import i18next from 'i18next';
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import errorSVG from '../assets/carbonio-load-app-error.svg';
+import errorSVG from './assets/carbonio-load-app-error.svg';
 import { errorPageStyles } from './error-page.styles';
 
 @customElement('error-page')

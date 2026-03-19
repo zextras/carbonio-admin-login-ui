@@ -5,13 +5,13 @@
  */
 import './loading-view.css';
 
-import helmet from '../assets/carbonio-head.svg';
+import helmet from './assets/carbonio-head.svg';
 
 export const LoadingView = () => (
-	<div data-testid={'loading-view'} className="splash">
-		<img src={helmet} alt={'carbonio-head'} />
-		<div className="loader">
-			<div className="bar"></div>
-		</div>
-	</div>
+  <div data-testid={'loading-view'} className="splash">
+    <img src={helmet} alt={'carbonio-head'} />
+    <div className="loader">
+      <div className="bar"></div>
+    </div>
+  </div>
 );
