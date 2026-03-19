@@ -10,7 +10,7 @@ import '../theme/theme.css';
 // Import and export the web components to ensure they are bundled and registered
 export { DividerElement } from './divider-wc';
 export { IconWC } from './icon-wc';
-export { ZxSnackbar } from './snackbar';
 export { SpinnerWC } from './spinner-wc';
 export { ZxButton } from './zx-button';
+export { ZxSnackbar } from './zx-snackbar';
 export { ZxText } from './zx-text';

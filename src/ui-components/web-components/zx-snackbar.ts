@@ -111,6 +111,6 @@ if (!customElements.get('zx-snackbar')) {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'zx-snackbar': SnackbarWC;
+    'zx-snackbar': ZxSnackbar;
   }
 }
