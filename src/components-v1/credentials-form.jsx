@@ -10,7 +10,7 @@ import { Button, Input, PasswordInput, Row, Text } from '@zextras/carbonio-desig
 import { useTranslation } from 'react-i18next';
 
 import { checkClassicUi } from '../services/login-page-services';
-import { getCookieKeys, getCookie, setCookie } from '../utils';
+import { getCookieKeys, getCookie, setCookie, isSafeRedirect } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
 

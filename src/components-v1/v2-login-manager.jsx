@@ -22,7 +22,7 @@ import CredentialsForm from './credentials-form';
 import OfflineModal from './modals';
 import Spinner from './spinner';
 import { loginToCarbonioAdmin, submitOtp } from '../services/v2-service';
-import { saveCredentials } from '../utils';
+import { saveCredentials, isSafeRedirect } from '../utils';
 
 const formState = {
 	credentials: 'credentials',

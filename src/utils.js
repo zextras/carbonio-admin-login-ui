@@ -117,3 +117,12 @@ export const setCookie = (cName, cValue, expDays) => {
 		expDays && Number.isInteger(expDays) ? `expires=${date.toUTCString()}` : undefined;
 	document.cookie = `${cName}=${cValue}; ${expires || ''}; path=/`;
 };
+
+export const isSafeRedirect = (url) => {
+	try {
+		const parsed = new URL(url, window.location.origin);
+		return parsed.origin === window.location.origin;
+	} catch {
+		return false;
+	}
+};

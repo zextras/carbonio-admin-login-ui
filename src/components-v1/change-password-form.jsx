@@ -24,7 +24,7 @@ import {
 	PASSWORD_LOCKED,
 	ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS
 } from '../constants';
-import { saveCredentials, setCookie } from '../utils';
+import { isSafeRedirect, saveCredentials, setCookie } from '../utils';
 
 export const submitChangePassword = (username, oldPassword, newPassword) => {
 	return fetch('/service/admin/soap/ChangePasswordRequest', {

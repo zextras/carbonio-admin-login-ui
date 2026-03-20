@@ -6,15 +6,6 @@
 
 import { getDeviceModel, deviceId } from '../utils';
 
-export const isSafeRedirect = (url: string) => {
-	try {
-		const parsed = new URL(url, window.location.origin);
-		return parsed.origin === window.location.origin;
-	} catch {
-		return false;
-	}
-};
-
 export function submitOtp(id: string, code: string, trustDevice: boolean) {
 	return fetch('/zx/auth/v2/admin/otp/validate', {
 		method: 'POST',
