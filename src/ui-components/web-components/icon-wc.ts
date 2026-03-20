@@ -6,7 +6,7 @@
 import '../theme/theme.css';
 
 import { css, html, LitElement, nothing, type TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
@@ -20,6 +20,7 @@ type IconSizeValue = IconSize | string;
 
 const DEFAULT_ICON = 'AlertTriangleOutline';
 
+@customElement('icon-wc')
 export class IconWC extends LitElement {
   static override styles = css`
     :host {
@@ -114,8 +115,4 @@ declare global {
   interface HTMLElementTagNameMap {
     'icon-wc': IconWC;
   }
-}
-
-if (!customElements.get('icon-wc')) {
-  customElements.define('icon-wc', IconWC);
 }

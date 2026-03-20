@@ -5,11 +5,12 @@
  */
 import '../theme/theme.css';
 
-import { css, html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
-import { property } from 'lit/decorators.js';
+import { html, LitElement, type TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
 import { type Theme, theme } from '../theme/theme';
 import { resolveThemeColor } from '../theme/theme-utils';
+import { textStyles } from './zx-text.styles';
 
 export type TextSize = keyof Theme['font']['size'];
 export type TextWeight = keyof Theme['font']['weight'];
@@ -22,29 +23,9 @@ export const zxTextVars = {
   lineHeight: '--zx-text-line-height',
 } as const;
 
+@customElement('zx-text')
 export class ZxText extends LitElement {
-  static override styles = css`
-    :host {
-      display: block;
-      margin: 0;
-      max-width: 100%;
-      color: var(${unsafeCSS(zxTextVars.color)}, ${unsafeCSS(theme.color.text.regular)});
-      font-size: var(${unsafeCSS(zxTextVars.fontSize)}, ${unsafeCSS(theme.font.size.medium)});
-      font-weight: var(${unsafeCSS(zxTextVars.weight)}, ${unsafeCSS(theme.font.weight.regular)});
-      font-family: var(--text-font-family, var(--font-family));
-    }
-
-    :host([overflow='ellipsis']) {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    :host([overflow='break-word']) {
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-    }
-  `;
+  static override styles = textStyles;
 
   @property({ type: String, reflect: true })
   accessor color = 'text';
@@ -90,8 +71,4 @@ declare global {
   interface HTMLElementTagNameMap {
     'zx-text': ZxText;
   }
-}
-
-if (!customElements.get('zx-text')) {
-  customElements.define('zx-text', ZxText);
 }
