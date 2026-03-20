@@ -65,7 +65,7 @@ export const CredentialsForm = ({
 	const samlButton = useMemo(() => {
 		if (configuration?.authMethods?.includes('saml')) {
 			return (
-				<zx-button
+				<ds-button
 					type="outlined"
 					data-testid="loginSaml"
 					label={t('login_saml', 'Login SAML')}
@@ -128,7 +128,7 @@ export const CredentialsForm = ({
 				crossAlignment="flex-start"
 				padding={{ bottom: 'large', top: 'small' }}
 			>
-				<zx-button
+				<ds-button
 					style={{ height: '36px' }}
 					loading={loading}
 					data-testid="login"

@@ -42,14 +42,14 @@ export class ErrorPage extends LitElement {
             <zx-text style="--zx-text-font-size: 24px" weight="regular" color="secondary">
               ${i18next.t('error.contact_support', 'Contact support or try refreshing the page')}
             </zx-text>
-            <zx-button
+            <ds-button
               icon-placement="left"
               icon="Refresh"
               label=${i18next.t('button.refresh_page', 'REFRESH')}
               type="outlined"
               color="primary"
               @click=${(): void => window.location.reload()}
-            ></zx-button>
+            ></ds-button>
           </div>
         </div>
       </div>

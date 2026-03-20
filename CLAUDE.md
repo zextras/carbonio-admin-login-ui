@@ -44,7 +44,7 @@ npm run push-translations  # Push to i18n repository
 
 ### Web Components
 The codebase uses Lit-based web components in `src/ui-components/web-components/`:
-- `zx-button` - Button with loading states, icons, multiple styles
+- `ds-button` - Button with loading states, icons, multiple styles
 - `zx-text` - Typography component
 - `icon-wc`, `spinner-wc`, `divider-wc` - Utility components
 

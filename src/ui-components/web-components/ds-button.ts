@@ -11,7 +11,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 import { resolveThemeColor } from '../theme/theme-utils';
 import { type IconName } from './icon-registry';
-import { buttonStyles } from './zx-buttons.styles';
+import { buttonStyles } from './ds-buttons.styles';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';
@@ -54,8 +54,8 @@ function getColorStyles(colorName: string, bgName: string): Record<string, strin
   };
 }
 
-@customElement('zx-button')
-export class ZxButton extends LitElement {
+@customElement('ds-button')
+export class DsButton extends LitElement {
   static override styles = buttonStyles;
 
   @property({ type: String, reflect: true })
@@ -207,6 +207,6 @@ export class ZxButton extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'zx-button': ZxButton;
+    'ds-button': DsButton;
   }
 }

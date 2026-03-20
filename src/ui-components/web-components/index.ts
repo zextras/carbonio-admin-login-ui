@@ -11,6 +11,6 @@ import '../theme/theme.css';
 export { DividerElement } from './divider-wc';
 export { IconWC } from './icon-wc';
 export { SpinnerWC } from './spinner-wc';
-export { ZxButton } from './zx-button';
+export { DsButton } from './ds-button';
 export { ZxSnackbar } from './zx-snackbar';
 export { ZxText } from './zx-text';

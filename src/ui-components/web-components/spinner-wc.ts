@@ -13,11 +13,6 @@ import { spinnerStyles } from './spinner.styles';
 export class SpinnerWC extends LitElement {
   static override styles = spinnerStyles;
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.dataset.testid = 'spinner';
-  }
-
   override render() {
     return html`
       <svg viewBox="0 0 50 50">

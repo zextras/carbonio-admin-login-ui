@@ -69,7 +69,7 @@ export const snackbarStyles = css`
     min-width: 0;
   }
 
-  .snack-content > zx-button {
+  .snack-content > ds-button {
     margin-left: auto;
     flex-shrink: 0;
   }

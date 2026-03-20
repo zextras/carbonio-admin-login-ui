@@ -58,7 +58,7 @@
   min-width: 0;
 }
 
-.snackContent > zx-button {
+.snackContent > ds-button {
   margin-left: auto;
   flex-shrink: 0;
 }

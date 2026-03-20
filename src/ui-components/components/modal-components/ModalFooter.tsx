@@ -73,7 +73,7 @@ function ModalFooterContent({
 		let button;
 		if (type === 'error' && onErrorAction) {
 			button = (
-				<zx-button
+				<ds-button
 					className={styles.dismissButton}
 					onClick={onErrorAction as (e: Event) => void}
 					color="secondary"
@@ -84,7 +84,7 @@ function ModalFooterContent({
 			button =
 				(onSecondaryAction && secondaryActionLabel && (
 					<Tooltip disabled={!secondaryActionTooltip} label={secondaryActionTooltip}>
-						<zx-button
+						<ds-button
 							className={styles.dismissButton}
 							color="primary"
 							type="outlined"
@@ -95,12 +95,12 @@ function ModalFooterContent({
 					</Tooltip>
 				)) ||
 				(dismissLabel && onClose && (
-					<zx-button
-						className={styles.dismissButton}
-						color="secondary"
-						onClick={onClose as (e: Event) => void}
-						label={dismissLabel}
-					/>
+<ds-button
+					className={styles.dismissButton}
+					color="secondary"
+					onClick={onClose as (e: Event) => void}
+					label={dismissLabel}
+				/>
 				)) ||
 				undefined;
 		}
@@ -139,7 +139,7 @@ function ModalFooterContent({
 				{secondaryButton}
 				{(onConfirm || onClose) && (
 					<Tooltip label={confirmTooltip} disabled={!confirmTooltip}>
-						<zx-button
+						<ds-button
 							className={styles.confirmButton}
 							color={confirmColor}
 							onClick={(onConfirm || onClose) as (e: Event) => void}

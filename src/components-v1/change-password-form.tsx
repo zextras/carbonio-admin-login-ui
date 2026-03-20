@@ -367,7 +367,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 				</Row>
 			)}
 			<Row orientation="vertical" crossAlignment="flex-start" padding={{ vertical: 'medium' }}>
-				<zx-button
+				<ds-button
 					onClick={submitChangePasswordCb as (e: Event) => void}
 					label={t('changePassword_confirm_label', 'Change password and login')}
 					width="fill"

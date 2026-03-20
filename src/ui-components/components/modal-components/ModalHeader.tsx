@@ -38,7 +38,7 @@ function ModalHeader({
 			</zx-text>
 			{showCloseIcon && onClose && (
 				<Tooltip label={closeIconTooltip} disabled={!closeIconTooltip}>
-					<zx-button
+					<ds-button
 						icon="Close"
 						size="large"
 						type="ghost"

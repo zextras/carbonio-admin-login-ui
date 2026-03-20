@@ -91,12 +91,12 @@ export class ZxSnackbar extends LitElement {
         <div class="snack-content">
           <icon-wc size="large" icon=${icons[this.severity]} color="gray6"></icon-wc>
           <zx-text color="gray6" overflow="break-word">${this.label}</zx-text>
-          <zx-button
+          <ds-button
             label=${this.actionLabel}
             type="ghost"
             color="gray6"
             @click=${this.handleButtonClick}
-          ></zx-button>
+          ></ds-button>
         </div>
         <div class="progress-bar" style=${progressBarStyles} data-testid="progress-bar"></div>
       </div>

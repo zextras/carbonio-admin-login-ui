@@ -43,7 +43,7 @@ declare global {
           },
           HTMLElement
         >;
-        'zx-button': React.DetailedHTMLProps<
+        'ds-button': React.DetailedHTMLProps<
           Omit<React.HTMLAttributes<HTMLElement>, 'onClick'> & {
             type?: ButtonType;
             size?: ButtonSize;

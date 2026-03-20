@@ -86,7 +86,7 @@ const Snackbar = ({
         <zx-text color="gray6" overflow="break-word">
           {label}
         </zx-text>
-        <zx-button label={actionLabel} type="ghost" color="gray6" onClick={handleClick} />
+        <ds-button label={actionLabel} type="ghost" color="gray6" onClick={handleClick} />
       </div>
       {enableTimeout && (
         <div

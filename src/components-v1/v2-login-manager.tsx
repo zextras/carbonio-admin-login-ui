@@ -207,7 +207,7 @@ export const V2LoginManager=({ configuration, disableInputs }:V2LoginManagerProp
 						</zx-text>
 					</Row>
 					<Row orientation="vertical" crossAlignment="flex-start" padding={{ vertical: 'small' }}>
-						<zx-button
+						<ds-button
 							onClick={submitOtpCb as (e: Event) => void}
 							disabled={disableInputs}
 							label={t('login', 'Login')}
