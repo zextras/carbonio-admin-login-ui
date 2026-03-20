@@ -118,7 +118,11 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 						switch (res.status) {
 							case 200:
 								await saveCredentials(username, newPassword);
-								window.location.assign(configuration.destinationUrl);
+								if (isSafeRedirect(configuration.destination)) {
+									window.location.assign(configuration.destination);
+								} else {
+									window.location.assign('/');
+								}
 								break;
 							case 401:
 							case 500:

@@ -14,8 +14,15 @@ import OfflineModal from './modals';
 import Spinner from './spinner';
 import { postV1Login } from '../services/v1-service';
 import { saveCredentials } from '../utils';
+import { isSafeRedirect } from '../services/v2-service';
 
-export default function V1LoginManager({ configuration, disableInputs }) {
+export default function V1LoginManager({
+	configuration,
+	disableInputs
+}: {
+	configuration: any;
+	disableInputs: boolean;
+}) {
 	const [t] = useTranslation();
 
 	const [loading, setLoading] = useState(false);
@@ -34,7 +41,11 @@ export default function V1LoginManager({ configuration, disableInputs }) {
 					switch (res.status) {
 						case 200:
 							await saveCredentials(username, password);
-							window.location.assign(configuration.destinationUrl);
+							if (isSafeRedirect(configuration.destinationUrl)) {
+								window.location.assign(configuration.destinationUrl);
+							} else {
+								window.location.assign('/');
+							}
 							break;
 						case 401:
 							setAuthError(

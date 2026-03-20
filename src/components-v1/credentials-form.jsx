@@ -59,9 +59,13 @@ export default function CredentialsForm({
 	);
 
 	const samlButtonCbk = useCallback(() => {
-		window.location.assign(
-			`/zx/auth/startSamlWorkflow?redirectUrl=${configuration.destinationUrl}`
-		);
+		if (isSafeRedirect(configuration.destinationUrl)) {
+			window.location.assign(
+				`/zx/auth/startSamlWorkflow?redirectUrl=${configuration.destinationUrl}`
+			);
+		} else {
+			window.location.assign('/');
+		}
 	}, [configuration]);
 	const samlButton = useMemo(() => {
 		if (configuration.authMethods.includes('saml')) {

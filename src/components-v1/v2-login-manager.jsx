@@ -83,7 +83,11 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 						if (res.redirected) {
 							setProgress(formState.changePassword);
 						} else {
-							window.location.assign(configuration.destinationUrl);
+							if (isSafeRedirect(configuration.destinationUrl)) {
+								window.location.assign(configuration.destinationUrl);
+							} else {
+								window.location.assign('/');
+							}
 						}
 					} else {
 						setLoadingOtp(false);
