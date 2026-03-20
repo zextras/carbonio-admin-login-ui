@@ -11,6 +11,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 import { resolveThemeColor } from '../theme/theme-utils';
 import { type IconName } from './icon-registry';
+import { buttonStyles } from './zx-buttons.styles';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';
