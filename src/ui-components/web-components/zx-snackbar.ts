@@ -4,10 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import './icon-wc';
-
 import { html, LitElement, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { resolveThemeColor } from '../theme/theme-utils';
@@ -25,6 +23,7 @@ const icons: Record<'success' | 'info' | 'warning' | 'error', IconName> = {
 
 type SnackbarSeverity = 'success' | 'info' | 'warning' | 'error';
 
+@customElement('zx-snackbar')
 export class ZxSnackbar extends LitElement {
   static override styles = snackbarStyles;
 
@@ -103,10 +102,6 @@ export class ZxSnackbar extends LitElement {
       </div>
     `;
   }
-}
-
-if (!customElements.get('zx-snackbar')) {
-  customElements.define('zx-snackbar', ZxSnackbar);
 }
 
 declare global {
