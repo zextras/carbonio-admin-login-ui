@@ -7,16 +7,16 @@
 import { css, unsafeCSS } from 'lit';
 
 import { theme } from '../theme/theme';
-import { zxTextVars } from './zx-text';
+import { dsTextVars } from './ds-text';
 
 export const textStyles = css`
   :host {
     display: block;
     margin: 0;
     max-width: 100%;
-    color: var(${unsafeCSS(zxTextVars.color)}, ${unsafeCSS(theme.color.text.regular)});
-    font-size: var(${unsafeCSS(zxTextVars.fontSize)}, ${unsafeCSS(theme.font.size.medium)});
-    font-weight: var(${unsafeCSS(zxTextVars.weight)}, ${unsafeCSS(theme.font.weight.regular)});
+    color: var(${unsafeCSS(dsTextVars.color)}, ${unsafeCSS(theme.color.text.regular)});
+    font-size: var(${unsafeCSS(dsTextVars.fontSize)}, ${unsafeCSS(theme.font.size.medium)});
+    font-weight: var(${unsafeCSS(dsTextVars.weight)}, ${unsafeCSS(theme.font.weight.regular)});
     font-family: var(--text-font-family, var(--font-family));
   }
 

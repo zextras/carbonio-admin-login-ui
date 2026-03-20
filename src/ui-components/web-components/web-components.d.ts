@@ -8,7 +8,7 @@
 import React from 'react';
 
 import { type IconName, type IconSize } from './icon-registry';
-import { type TextOverflow, type TextSize, type TextWeight } from './zx-text';
+import { type TextOverflow, type TextSize, type TextWeight } from './ds-text';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';
@@ -32,7 +32,7 @@ declare global {
           },
           HTMLElement
         >;
-        'zx-text': React.DetailedHTMLProps<
+        'ds-text': React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             color?: string;
             size?: TextSize;

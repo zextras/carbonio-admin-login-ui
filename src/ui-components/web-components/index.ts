@@ -13,4 +13,4 @@ export { IconWC } from './icon-wc';
 export { SpinnerWC } from './spinner-wc';
 export { DsButton } from './ds-button';
 export { ZxSnackbar } from './zx-snackbar';
-export { ZxText } from './zx-text';
+export { DsText } from './ds-text';

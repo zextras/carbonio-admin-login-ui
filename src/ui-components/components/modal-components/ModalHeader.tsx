@@ -29,13 +29,13 @@ function ModalHeader({
 }: ModalHeaderProps): React.JSX.Element {
 	return (
 		<Row width="100%" padding={{ bottom: 'small' }}>
-			<zx-text
+			<ds-text
 				class={clsx(styles.modalTitle, centered && styles.centered)}
 				color={type === 'error' ? 'error' : undefined}
 				weight="bold"
 			>
 				{title}
-			</zx-text>
+			</ds-text>
 			{showCloseIcon && onClose && (
 				<Tooltip label={closeIconTooltip} disabled={!closeIconTooltip}>
 					<ds-button

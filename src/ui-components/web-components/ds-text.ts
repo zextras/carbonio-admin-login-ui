@@ -10,21 +10,21 @@ import { customElement, property } from 'lit/decorators.js';
 
 import { type Theme, theme } from '../theme/theme';
 import { resolveThemeColor } from '../theme/theme-utils';
-import { textStyles } from './zx-text.styles';
+import { textStyles } from './ds-text.styles';
 
 export type TextSize = keyof Theme['font']['size'];
 export type TextWeight = keyof Theme['font']['weight'];
 export type TextOverflow = 'ellipsis' | 'break-word';
 
-export const zxTextVars = {
-  fontSize: '--zx-text-font-size',
-  color: '--zx-text-color',
-  weight: '--zx-text-font-weight',
-  lineHeight: '--zx-text-line-height',
+export const dsTextVars = {
+  fontSize: '--ds-text-font-size',
+  color: '--ds-text-color',
+  weight: '--ds-text-font-weight',
+  lineHeight: '--ds-text-line-height',
 } as const;
 
-@customElement('zx-text')
-export class ZxText extends LitElement {
+@customElement('ds-text')
+export class DsText extends LitElement {
   static override styles = textStyles;
 
   @property({ type: String, reflect: true })
@@ -47,16 +47,16 @@ export class ZxText extends LitElement {
 
   override render(): TemplateResult {
     this.style.setProperty(
-      zxTextVars.color,
+      dsTextVars.color,
       resolveThemeColor(this.color, this.disabled ? 'disabled' : 'regular'),
     );
 
-    if (!this.style.getPropertyValue(zxTextVars.fontSize)) {
-      this.style.setProperty(zxTextVars.fontSize, theme.font.size[this.size]);
+    if (!this.style.getPropertyValue(dsTextVars.fontSize)) {
+      this.style.setProperty(dsTextVars.fontSize, theme.font.size[this.size]);
     }
 
-    if (!this.style.getPropertyValue(zxTextVars.weight)) {
-      this.style.setProperty(zxTextVars.weight, String(theme.font.weight[this.weight]));
+    if (!this.style.getPropertyValue(dsTextVars.weight)) {
+      this.style.setProperty(dsTextVars.weight, String(theme.font.weight[this.weight]));
     }
 
     if (this.lineHeight !== undefined) {
@@ -69,6 +69,6 @@ export class ZxText extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'zx-text': ZxText;
+    'ds-text': DsText;
   }
 }

@@ -52,7 +52,7 @@ const TooltipWrapper = ({
   };
 
   return (
-    <zx-text
+    <ds-text
       size={size}
       overflow={overflow}
       data-testid="tooltip"
@@ -61,7 +61,7 @@ const TooltipWrapper = ({
       {...rest}
     >
       {children}
-    </zx-text>
+    </ds-text>
   );
 };
 

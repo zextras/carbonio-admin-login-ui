@@ -254,22 +254,22 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
                 size="medium"
               />
             </div>
-            <zx-text size="small" color="secondary" weight="light">
+            <ds-text size="small" color="secondary" weight="light">
               <browser-support-message
                 is-supported-browser={isSupportedBrowser}
                 is-advanced={isAdvanced}
               />
-            </zx-text>
+            </ds-text>
           </div>
           {copyrightBanner ? (
-            <zx-text size="small" overflow="break-word">
+            <ds-text size="small" overflow="break-word">
               {copyrightBanner}
-            </zx-text>
+            </ds-text>
           ) : (
-            <zx-text size="small" overflow="break-word" data-testid="default-banner">
+            <ds-text size="small" overflow="break-word" data-testid="default-banner">
               {t('copy_right', 'Copyright')} &copy; {` ${new Date().getFullYear()} Zextras, `}
               {t('all_rights_reserved', 'All rights reserved')}
-            </zx-text>
+            </ds-text>
           )}
         </div>
       </div>

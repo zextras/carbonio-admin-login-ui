@@ -141,17 +141,17 @@ const DefaultLabelFactory = <T,>({
       >
         <Row takeAvailableSpace mainAlignment="unset">
           <Padding top="medium" width="100%">
-            <zx-text
+            <ds-text
               color={disabled ? 'secondary' : 'text'}
               className={styles.customText}
             >
               {selectedLabels}
-            </zx-text>
+            </ds-text>
           </Padding>
           <div className={styles.label} style={labelStyle}>
-            <zx-text size={hasSelection ? 'small' : 'medium'} color={labelColor}>
+            <ds-text size={hasSelection ? 'small' : 'medium'} color={labelColor}>
               {label}
-            </zx-text>
+            </ds-text>
           </div>
         </Row>
         <div className={styles.iconWrapper}>

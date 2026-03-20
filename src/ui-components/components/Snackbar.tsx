@@ -83,9 +83,9 @@ const Snackbar = ({
     >
       <div className={styles.snackContent}>
         <icon-wc size="large" icon={icons[severity]} color="gray6"></icon-wc>
-        <zx-text color="gray6" overflow="break-word">
+        <ds-text color="gray6" overflow="break-word">
           {label}
-        </zx-text>
+        </ds-text>
         <ds-button label={actionLabel} type="ghost" color="gray6" onClick={handleClick} />
       </div>
       {enableTimeout && (

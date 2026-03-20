@@ -13,9 +13,9 @@ export default function OfflineModal({ open, onClose }: any) {
 	const t = i18next.t.bind(i18next);
 	return (
 		<Modal title="Offline" open={open} onClose={onClose}>
-		<zx-text overflow="break-word" line-height={1.4} class={styles.paragraph} data-testid="offlineMsg">
+		<ds-text overflow="break-word" line-height={1.4} class={styles.paragraph} data-testid="offlineMsg">
 				{t('offline', 'You are currently offline, please check your internet connection')}
-    </zx-text>
+    </ds-text>
 		</Modal>
 	);
 }

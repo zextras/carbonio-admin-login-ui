@@ -90,7 +90,7 @@ export class ZxSnackbar extends LitElement {
       <div class="snack-container" style=${containerStyles} data-testid="snackbar">
         <div class="snack-content">
           <icon-wc size="large" icon=${icons[this.severity]} color="gray6"></icon-wc>
-          <zx-text color="gray6" overflow="break-word">${this.label}</zx-text>
+          <ds-text color="gray6" overflow="break-word">${this.label}</ds-text>
           <ds-button
             label=${this.actionLabel}
             type="ghost"

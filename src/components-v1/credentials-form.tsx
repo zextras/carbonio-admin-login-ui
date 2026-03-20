@@ -93,37 +93,37 @@ export const CredentialsForm = ({
       .catch(() => {});
   }, []);
 
-  return (
-    <form
-      onSubmit={(e) => e.preventDefault()}
-      style={{ width: '100%' }}
-      data-testid="credentials-form"
-    >
-      <Row padding={{ bottom: 'large' }}>
-        <Input
-          defaultValue={username}
-          disabled={disableInputs}
-          hasError={!!authError}
-          data-testid="username"
-          onChange={(e: any) => setUsername(e.target.value)}
-          label={t('username', 'Username')}
-          backgroundColor="gray5"
-        />
-      </Row>
-      <Row padding={{ bottom: 'small' }}>
-        <PasswordInput
-          defaultValue={password}
-          disabled={disableInputs}
-          data-testid="password"
-          hasError={!!authError}
-          onChange={(e: any) => setPassword(e.target.value)}
-          label={t('password', 'Password')}
-          backgroundColor="gray5"
-        />
-      </Row>
-      <zx-text color="error" size="small" overflow="break-word">
-        {authError || <br />}
-      </zx-text>
+	return (
+		<form
+			onSubmit={(e) => e.preventDefault()}
+			style={{ width: '100%' }}
+			data-testid="credentials-form"
+		>
+			<Row padding={{ bottom: 'large' }}>
+				<Input
+					defaultValue={username}
+					disabled={disableInputs}
+					hasError={!!authError}
+					data-testid="username"
+					onChange={(e: any) => setUsername(e.target.value)}
+					label={t('username', 'Username')}
+					backgroundColor="gray5"
+				/>
+			</Row>
+			<Row padding={{ bottom: 'small' }}>
+				<PasswordInput
+					defaultValue={password}
+					disabled={disableInputs}
+					data-testid="password"
+					hasError={!!authError}
+					onChange={(e: any) => setPassword(e.target.value)}
+					label={t('password', 'Password')}
+					backgroundColor="gray5"
+				/>
+			</Row>
+			<ds-text color="error" size="small" overflow="break-word">
+				{authError || <br />}
+			</ds-text>
 
       <Row
         orientation="vertical"

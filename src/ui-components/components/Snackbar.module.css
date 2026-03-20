@@ -53,7 +53,7 @@
   flex-shrink: 0;
 }
 
-.snackContent > zx-text {
+.snackContent > ds-text {
   flex: 1 1 50%;
   min-width: 0;
 }

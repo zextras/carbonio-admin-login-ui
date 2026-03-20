@@ -64,7 +64,7 @@ export const snackbarStyles = css`
     flex-shrink: 0;
   }
 
-  .snack-content > zx-text {
+  .snack-content > ds-text {
     flex: 1 1 50%;
     min-width: 0;
   }
