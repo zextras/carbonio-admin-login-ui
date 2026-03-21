@@ -1,30 +1,98 @@
 /*
- * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
+ * SPDX-FileCopyrightText: 2025 Zextras <https://www.zextras.com>
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
+import path from 'node:path';
+import { playwright } from '@vitest/browser-playwright';
+import svgr from 'vite-plugin-svgr';
+
+function getPlugins() {
+  return [
+    react({
+      babel: {
+        plugins: [['@babel/plugin-proposal-decorators', { version: '2023-11' }]],
+      },
+    }),
+    svgr({
+      svgrOptions: {
+        ref: true,
+        svgo: false,
+        titleProp: true,
+        exportType: 'default',
+      },
+      include: '**/*.svg',
+    }),
+  ];
+}
+
+function browserProjectConfig() {
+  return {
+    define: {
+      BASE_PATH: JSON.stringify(''),
+    },
+    test: {
+      name: 'browser',
+      maxConcurrency: 3,
+      setupFiles: ['./vitest-browser-setup.ts'],
+      sequence: {
+        groupOrder: 2,
+      },
+      fileParallelism: false,
+      retry: 2,
+      include: ['**/*.browser.test.{ts,tsx}'],
+      browser: {
+        enabled: true,
+        provider: playwright() as any,
+        instances: [{ browser: 'chromium' as const }],
+        viewport: { width: 834, height: 2000 },
+        headless: !!process.env.CI,
+        screenshotFailures: !process.env.CI,
+        providerOptions: { launch: { timeout: 60_000 } },
+      },
+      exclude: ['dist/**', 'node_modules/**'],
+      globals: true,
+      css: true,
+      clearMocks: true,
+      testTimeout: !!process.env.ci ? 20_000 : 10_000,
+      hookTimeout: 15_000,
+    },
+    plugins: getPlugins(),
+  };
+}
 
 export default defineConfig({
-	plugins: [react()],
-	test: {
-		globals: true,
-		environment: 'jsdom',
-		setupFiles: ['./src/test-setup.ts'],
-		include: ['src/**/*.{test,spec}.{ts,tsx,js,jsx}'],
-		css: {
-			modules: {
-				classNameStrategy: 'non-scoped'
-			}
-		},
-		includeSource: ['src/**/*.{ts,tsx}']
-	},
-	resolve: {
-		alias: {
-			assets: resolve(__dirname, 'assets')
-		}
-	}
+  server: {
+    fs: {
+      allow: ['../..'], // allow monorepo root
+    },
+  },
+  test: {
+    globals: true,
+    passWithNoTests: true,
+    maxConcurrency: 3,
+    projects: [browserProjectConfig()],
+
+    coverage: {
+      provider: 'istanbul',
+      reporter: ['text', 'json', 'html', 'lcov'],
+      reportsDirectory: './coverage',
+      exclude: [
+        'coverage/**',
+        'dist/**',
+        '**/node_modules/**',
+        '**/[.]**',
+        'packages/*/test{,s}/**',
+        '**/*.d.ts',
+        '**/{karma,vite,vitest,ava,babel,nyc,build}.config.*',
+        '**/.{eslint,mocha,prettier}rc.{js,cjs,yml}',
+        '**/*.config.{js,ts}',
+        '**/*.test.{ts,tsx}',
+        '**/*.spec.{ts,tsx}',
+      ],
+      include: ['src/**/*.{ts,tsx}'],
+    },
+  },
 });
