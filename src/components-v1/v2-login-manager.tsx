@@ -13,7 +13,7 @@ import { Checkbox, Input, Row, Select } from '../ui-components';
 import { saveCredentials } from '../utils';
 import ChangePasswordForm from './change-password-form';
 import { type Configuration, CredentialsForm } from './credentials-form';
-import OfflineModal from './modals';
+import OfflineModal from './offline-modal';
 
 const formState = {
   credentials: 'credentials',

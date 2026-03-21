@@ -1,26 +1,24 @@
 /*
- * SPDX-FileCopyrightText: 2021 Zextras <https://www.zextras.com>
+ * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../web-components/ds-divider';
+import '../ui-components/web-components/ds-divider';
 
+import i18next from 'i18next';
 import { useEffect, useRef } from 'react';
 
-import { Container } from './Container';
-import styles from './modal.module.css';
-import { Padding } from './Padding';
-import { Row } from './Row';
+import styles from './offline-modal.module.css';
 
 type ModalProps = {
   open: boolean;
   children: React.ReactNode | React.ReactNode[];
   onClose: (event: React.MouseEvent | KeyboardEvent) => void;
-  title: string;
 };
 
-export const Modal = ({ title, onClose, open, children }: ModalProps) => {
+export const OfflineModal = ({ onClose, open }: ModalProps) => {
+  const t = i18next.t.bind(i18next);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
   const onCloseRef = useRef(onClose);
@@ -70,9 +68,9 @@ export const Modal = ({ title, onClose, open, children }: ModalProps) => {
   return (
     <dialog ref={dialogRef} className={styles.dialog} onClose={handleClose}>
       <div className={styles.modalContent}>
-        <Row width="100%" padding={{ bottom: 'small' }}>
+        <div className={styles.modalHeader}>
           <ds-text className={styles.modalTitle} weight="bold">
-            {title}
+            {t('modal.offline.title', 'Offline')}
           </ds-text>
           <ds-button
             icon="Close"
@@ -81,27 +79,31 @@ export const Modal = ({ title, onClose, open, children }: ModalProps) => {
             color="text"
             onClick={onClose as (e: Event) => void}
           />
-        </Row>
+        </div>
         <ds-divider></ds-divider>
-        <div className={styles.modalBody}>{children}</div>
-        <ds-divider></ds-divider>
-        <Container orientation="horizontal" mainAlignment="flex-end" padding={{ top: 'large' }}>
-          <Container
-            className={styles.buttonContainer}
-            orientation="horizontal"
-            mainAlignment="flex-end"
+        <div className={styles.modalBody}>
+          <ds-text
+            overflow="break-word"
+            line-height={1.4}
+            className={styles.paragraph}
+            data-testid="offlineMsg"
           >
-            <Padding right="large" />
-            {onClose && (
-              <ds-button
-                className={styles.confirmButton}
-                color="primary"
-                onClick={onClose as (e: Event) => void}
-                label="OK"
-              />
+            {t(
+              'modal.offline.description',
+              'You are currently offline, please check your internet connection',
             )}
-          </Container>
-        </Container>
+          </ds-text>
+        </div>
+        <ds-divider></ds-divider>
+        <div className={styles.modalFooter}>
+          <div className={styles.spacer} />
+          <ds-button
+            className={styles.confirmButton}
+            color="primary"
+            onClick={onClose as (e: Event) => void}
+            label="OK"
+          />
+        </div>
       </div>
     </dialog>
   );

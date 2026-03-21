@@ -10,7 +10,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { postV1Login } from '../services/v1-service';
 import { isSafeRedirect, saveCredentials } from '../utils';
 import { type Configuration, CredentialsForm } from './credentials-form';
-import OfflineModal from './modals';
+import OfflineModal from './offline-modal';
 
 type V1LoginManagerProps = { configuration: Configuration; disableInputs: boolean };
 
