@@ -189,7 +189,6 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
           <Row padding={{ top: 'large' }}>
             <Select
               items={otpList}
-              background="gray5"
               label={t('choose_otp', 'Choose the OTP Method')}
               onChange={setOtpId}
               defaultSelection={otpList[0]}

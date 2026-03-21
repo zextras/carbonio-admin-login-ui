@@ -6,10 +6,9 @@
 
 import '../web-components/ds-icon';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-import { resolveThemeColor } from '../theme/theme-utils';
-import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from './constants';
+import { INPUT_DIVIDER_COLOR } from './constants';
 import { Container } from './Container';
 import { Dropdown, type DropdownItem, type DropdownProps } from './Dropdown';
 import { Padding } from './Padding';
@@ -19,7 +18,7 @@ import styles from './Select.module.css';
 type SelectItem<T = string> = {
   label: string;
   value: T;
-  disabled?: boolean;
+  disabled: boolean;
   customComponent?: React.ReactElement;
 };
 
@@ -27,29 +26,10 @@ type LabelFactoryProps<T = string> = {
   label: string | undefined;
   open: boolean;
   focus: boolean;
-  background: string;
-  multiple: boolean;
-  disabled: boolean;
   selected: SelectItem<T>[];
 };
 
-type MultipleSelectionOnChange<T = string> = (value: Array<SelectItem<T>>) => void;
-
 type SingleSelectionOnChange<T = string> = (value: T | null) => void;
-
-type UncontrolledMultipleSelection<T> = {
-  multiple: true;
-  selection?: never;
-  defaultSelection?: Array<SelectItem<T>>;
-  onChange: MultipleSelectionOnChange<T>;
-};
-
-type ControlledMultipleSelection<T> = {
-  multiple: true;
-  selection: Array<SelectItem<T>>;
-  defaultSelection?: never;
-  onChange: MultipleSelectionOnChange<T>;
-};
 
 type UncontrolledSingleSelection<T> = {
   multiple?: false;
@@ -58,51 +38,25 @@ type UncontrolledSingleSelection<T> = {
   onChange: SingleSelectionOnChange<T>;
 };
 
-type ControlledSingleSelection<T> = {
-  multiple?: false;
-  selection: SelectItem<T>;
-  defaultSelection?: never;
-  onChange: SingleSelectionOnChange<T>;
-};
-
 type SelectComponentProps<T> = {
   label?: string;
   background?: string;
-  disabled?: boolean;
   items: SelectItem<T>[];
-  /** Css display property of select */
-  display?: 'block' | 'inline-block';
-  /** Css width property of dropdown */
-  dropdownWidth?: string;
-  /** Css max-width property of dropdown */
-  dropdownMaxWidth?: string;
-  /** Css max-height property of dropdown */
-  dropdownMaxHeight?: string;
-  LabelFactory?: React.ComponentType<LabelFactoryProps<T>>;
   i18nAllLabel?: string;
   /** Flag to disable the Portal implementation of dropdown */
   disablePortal?: boolean;
   /** Whether to show checkboxes */
   showCheckbox?: boolean;
-} & (
-  | UncontrolledMultipleSelection<T>
-  | ControlledMultipleSelection<T>
-  | UncontrolledSingleSelection<T>
-  | ControlledSingleSelection<T>
-);
+} & UncontrolledSingleSelection<T>;
 
 type SelectProps<T = string> = SelectComponentProps<T> &
   Omit<DropdownProps, keyof SelectComponentProps<T> | 'children'>;
-
-type SelectType = <T = string>(p: SelectProps<T>) => React.ReactElement | null;
 
 const DefaultLabelFactory = <T,>({
   selected,
   label,
   open,
   focus,
-  background,
-  disabled,
 }: LabelFactoryProps<T>): React.JSX.Element => {
   const selectedLabels = useMemo(
     () => selected.reduce<string[]>((arr, obj) => [...arr, obj.label], []).join(', '),
@@ -110,14 +64,8 @@ const DefaultLabelFactory = <T,>({
   );
 
   const hasSelection = selected.length > 0;
-  const labelColor = (disabled && 'gray2') || ((open || focus) && 'primary') || 'secondary';
-  const iconColor = (disabled && 'gray2') || ((open || focus) && 'primary') || 'secondary';
-
-  const containerStyle: React.CSSProperties = {
-    '--select-bg': resolveThemeColor(background, 'regular'),
-    '--select-bg-hover': resolveThemeColor(background, 'hover'),
-    '--select-bg-focus': resolveThemeColor(background, 'focus'),
-  } as React.CSSProperties;
+  const labelColor = ((open || focus) && 'primary') || 'secondary';
+  const iconColor = ((open || focus) && 'primary') || 'secondary';
 
   const labelStyle: React.CSSProperties = {
     top: hasSelection ? 'calc(var(--padding-size-small) - 0.0625rem)' : '50%',
@@ -137,14 +85,10 @@ const DefaultLabelFactory = <T,>({
           vertical: 'small',
         }}
         className={`${styles.container}${focus ? ` ${styles.containerFocused}` : ''}`}
-        style={containerStyle}
       >
         <Row takeAvailableSpace mainAlignment="unset">
           <Padding top="medium" width="100%">
-            <ds-text
-              color={disabled ? 'secondary' : 'text'}
-              className={styles.customText}
-            >
+            <ds-text color="text" className={styles.customText}>
               {selectedLabels}
             </ds-text>
           </Padding>
@@ -163,65 +107,34 @@ const DefaultLabelFactory = <T,>({
   );
 };
 
-const SelectComponent = function SelectFn<T = string>({
-  background = INPUT_BACKGROUND_COLOR,
-  disabled = false,
+export const Select = function SelectFn<T = string>({
   items,
   label,
   onChange,
   defaultSelection,
-  multiple = false,
-  i18nAllLabel = 'All',
-  display = 'block',
-  dropdownMaxWidth,
-  dropdownMaxHeight,
-  LabelFactory = DefaultLabelFactory,
-  selection,
-  disablePortal = false,
-  showCheckbox = true,
-  ...rest
 }: SelectProps<T>): React.JSX.Element {
-  const initialState = defaultSelection ?? selection ?? [];
+  const initialState = defaultSelection ?? [];
   const [selected, setSelected] = useState<SelectItem<T>[]>(
     Array.isArray(initialState) ? initialState : [initialState],
   );
   const [open, setOpen] = useState(false);
   const [focus, setFocus] = useState(false);
 
-  const isControlled = selection !== undefined && selection !== null;
-
-  const updateMultipleSelection = useCallback(
-    (item: SelectItem<T>, isSelected: boolean) => {
-      const newSelected = isSelected
-        ? selected.filter((obj) => obj.value !== item.value)
-        : [...selected, item];
-      if (!isControlled) {
-        setSelected(newSelected);
-      }
-      (onChange as MultipleSelectionOnChange<T>)(newSelected);
-    },
-    [isControlled, onChange, selected],
-  );
-
   const updateSingleSelection = useCallback(
     (item: SelectItem<T>) => {
-      if (!isControlled) {
-        setSelected(item.value !== null && item.value !== undefined ? [item] : []);
-      }
+      setSelected(item.value !== null && item.value !== undefined ? [item] : []);
       (onChange as SingleSelectionOnChange<T>)(item.value);
     },
-    [isControlled, onChange],
+    [onChange],
   );
 
   const clickItemHandler = useCallback(
-    (item: SelectItem<T>, isSelected: boolean) => (): void => {
-      if (multiple) {
-        updateMultipleSelection(item, isSelected);
-      } else if (selected.length === 0 || item.value !== selected?.[0]?.value) {
+    (item: SelectItem<T>) => (): void => {
+      if (selected.length === 0 || item.value !== selected?.[0]?.value) {
         updateSingleSelection(item);
       }
     },
-    [multiple, selected, updateMultipleSelection, updateSingleSelection],
+    [selected, updateSingleSelection],
   );
 
   const mappedItems = useMemo(
@@ -231,14 +144,14 @@ const SelectComponent = function SelectFn<T = string>({
         return {
           id: `${index}-${item.label}`,
           label: item.label,
-          ...(showCheckbox ? { icon: isSelected ? 'CheckmarkSquare' : 'Square' } : {}),
-          onClick: clickItemHandler(item, isSelected),
+          icon: isSelected ? 'CheckmarkSquare' : 'Square',
+          onClick: clickItemHandler(item),
           selected: isSelected,
           disabled: item.disabled,
           customComponent: item.customComponent,
         };
       }),
-    [items, selected, showCheckbox, clickItemHandler],
+    [items, selected, clickItemHandler],
   );
 
   const onOpen = useCallback(() => setOpen(true), []);
@@ -246,86 +159,17 @@ const SelectComponent = function SelectFn<T = string>({
   const onFocus = useCallback(() => setFocus(true), []);
   const onBlur = useCallback(() => setFocus(false), []);
 
-  const toggleSelectAll = useCallback(
-    (isSelected: boolean) => (): void => {
-      if (isSelected) {
-        if (!isControlled) {
-          setSelected([]);
-        }
-        (onChange as MultipleSelectionOnChange<T>)([]);
-      } else {
-        const newSelected = items.filter((obj) => !obj.disabled);
-        if (!isControlled) {
-          setSelected(newSelected);
-        }
-        (onChange as MultipleSelectionOnChange<T>)(newSelected);
-      }
-    },
-    [isControlled, items, onChange],
-  );
-
-  const multipleMappedItems = useMemo((): DropdownItem[] => {
-    if (!multiple) return [];
-    const selectableItems = items.filter((obj) => !obj.disabled);
-    const alreadySelected = selected.filter((obj) => !obj.disabled);
-    const isSelected = alreadySelected.length === selectableItems.length;
-    return [
-      {
-        id: 'all',
-        label: i18nAllLabel,
-        ...(showCheckbox ? { icon: isSelected ? 'CheckmarkSquare' : 'Square' } : {}),
-        onClick: toggleSelectAll(isSelected),
-        selected: isSelected,
-      },
-      ...mappedItems,
-    ];
-  }, [multiple, items, selected, i18nAllLabel, showCheckbox, toggleSelectAll, mappedItems]);
-
-  useEffect(() => {
-    if (isControlled) {
-      if (multiple && selection instanceof Array) {
-        setSelected(selection);
-      } else if (!multiple && !(selection instanceof Array)) {
-        setSelected([selection]);
-      }
-    }
-  }, [isControlled, multiple, onChange, selection]);
-
   return (
     <Dropdown
-      display={display}
-      maxWidth={dropdownMaxWidth}
-      maxHeight={dropdownMaxHeight}
-      items={multiple ? multipleMappedItems : mappedItems}
-      multiple={multiple}
-      disabled={disabled}
+      display="block"
+      items={mappedItems}
       onOpen={onOpen}
       onClose={onClose}
       placement="bottom-end"
-      disablePortal={disablePortal}
-      {...rest}
     >
       <div onFocus={onFocus} onBlur={onBlur} tabIndex={0} className={styles.tabContainer}>
-        <LabelFactory
-          label={label}
-          open={open}
-          focus={focus}
-          background={background}
-          multiple={multiple}
-          disabled={disabled}
-          selected={selected}
-        />
+        <DefaultLabelFactory label={label} open={open} focus={focus} selected={selected} />
       </div>
     </Dropdown>
   );
-};
-
-const Select = SelectComponent as SelectType;
-
-export {
-  type MultipleSelectionOnChange,
-  Select,
-  type SelectItem,
-  type SelectProps,
-  type SingleSelectionOnChange,
 };
