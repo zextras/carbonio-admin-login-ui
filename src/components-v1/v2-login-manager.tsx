@@ -4,16 +4,17 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import './offline-modal';
+
 import i18next from 'i18next';
 import { map } from 'lodash';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
 import { Checkbox, Input, Row, Select } from '../ui-components';
 import { saveCredentials } from '../utils';
 import ChangePasswordForm from './change-password-form';
 import { type Configuration, CredentialsForm } from './credentials-form';
-import OfflineModal from './offline-modal';
 
 const formState = {
   credentials: 'credentials',
@@ -138,7 +139,6 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
     [otpId, otp, trustDevice, configuration?.destinationUrl],
   );
 
-  const onCloseCbk = useCallback(() => setDetailNetworkModal(false), [setDetailNetworkModal]);
   const onSnackbarActionCbk = useCallback(
     () => setDetailNetworkModal(true),
     [setDetailNetworkModal],
@@ -147,6 +147,20 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
     () => setSnackbarNetworkError(false),
     [setSnackbarNetworkError],
   );
+
+  const offlineModalRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const modal = offlineModalRef.current;
+    if (!modal) return;
+
+    const handleClose = () => setDetailNetworkModal(false);
+    modal.addEventListener('offline-modal:close', handleClose);
+
+    return () => {
+      modal.removeEventListener('offline-modal:close', handleClose);
+    };
+  }, [setDetailNetworkModal]);
 
   return (
     <>
@@ -233,7 +247,7 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
         autoHideTimeout={10000}
         severity="error"
       />
-      <OfflineModal open={detailNetworkModal} onClose={onCloseCbk} />
+      <offline-modal ref={offlineModalRef} open={detailNetworkModal} />
     </>
   );
 };

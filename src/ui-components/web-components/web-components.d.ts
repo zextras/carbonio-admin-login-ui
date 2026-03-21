@@ -82,6 +82,13 @@ declare global {
           },
           HTMLElement
         >;
+        'offline-modal': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            open?: boolean;
+            onofflineModalClose?: () => void;
+          },
+          HTMLElement
+        >;
       }
     }
   }

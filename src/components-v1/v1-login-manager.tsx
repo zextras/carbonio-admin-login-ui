@@ -4,13 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import './offline-modal';
+
 import i18next from 'i18next';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { postV1Login } from '../services/v1-service';
 import { isSafeRedirect, saveCredentials } from '../utils';
 import { type Configuration, CredentialsForm } from './credentials-form';
-import OfflineModal from './offline-modal';
 
 type V1LoginManagerProps = { configuration: Configuration; disableInputs: boolean };
 
@@ -71,9 +72,8 @@ export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerP
     [configuration?.destinationUrl, t],
   );
 
-  const onCloseCbk = useCallback(() => setDetailNetworkModal(false), [setDetailNetworkModal]);
-
   const snackbarRef = useRef<HTMLElement>(null);
+  const offlineModalRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const snackbar = snackbarRef.current;
@@ -90,6 +90,18 @@ export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerP
       snackbar.removeEventListener('snackbar:action-click', handleAction);
     };
   }, []);
+
+  useEffect(() => {
+    const modal = offlineModalRef.current;
+    if (!modal) return;
+
+    const handleClose = () => setDetailNetworkModal(false);
+    modal.addEventListener('offline-modal:close', handleClose);
+
+    return () => {
+      modal.removeEventListener('offline-modal:close', handleClose);
+    };
+  }, [setDetailNetworkModal]);
 
   return (
     <>
@@ -108,7 +120,7 @@ export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerP
         auto-hide-timeout={10000}
         severity="error"
       />
-      <OfflineModal open={detailNetworkModal} onClose={onCloseCbk} />
+      <offline-modal ref={offlineModalRef} open={detailNetworkModal} />
     </>
   );
 };
