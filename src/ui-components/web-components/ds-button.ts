@@ -10,8 +10,9 @@ import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { resolveThemeColor } from '../theme/theme-utils';
-import { type IconName } from './icon-registry';
 import { buttonStyles } from './ds-button.styles';
+import { dsTextVars } from './ds-text';
+import { type IconName } from './icon-registry';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';
@@ -54,8 +55,8 @@ function getColorStyles(colorName: string, bgName: string): Record<string, strin
   };
 }
 
-@customElement('zx-button')
-export class ZxButton extends LitElement {
+@customElement('ds-button')
+export class DsButton extends LitElement {
   static override styles = buttonStyles;
 
   @property({ type: String, reflect: true })
@@ -179,9 +180,12 @@ export class ZxButton extends LitElement {
                     '--text-order': this.iconPlacement === 'left' ? '2' : '1',
                   })}
                 >
-                  <zx-text color="currentColor" style=${`--zx-text-font-size: ${sizeConfig.label}`}>
+                  <ds-text
+                    color="currentColor"
+                    style=${`${dsTextVars.fontSize}: ${sizeConfig.label}`}
+                  >
                     ${this.label}
-                  </zx-text>
+                  </ds-text>
                 </span>
               `
             : nothing}
@@ -207,6 +211,6 @@ export class ZxButton extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'zx-button': ZxButton;
+    'ds-button': DsButton;
   }
 }

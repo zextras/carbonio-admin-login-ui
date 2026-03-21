@@ -48,6 +48,7 @@ export function App(): React.JSX.Element {
 
   return (
     <>
+      <ds-button label="pippo"></ds-button>
       <LoginAdvanced />
       {/* <Suspense fallback={<LoadingView />}> */}
       {/* {errorResponse && <error-page></error-page>} */}

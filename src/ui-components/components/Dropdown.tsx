@@ -54,22 +54,22 @@ function ListItemContent({
       <Container orientation="horizontal" mainAlignment="flex-start">
         {icon && (
           <Padding right="small">
-            <icon-wc
+            <ds-icon
               icon={icon}
               size="medium"
               color={disabled ? 'secondary' : 'text'}
               style={{ pointerEvents: 'none' }}
-            ></icon-wc>
+            ></ds-icon>
           </Padding>
         )}
-        <zx-text
+        <ds-text
           size={itemTextSize}
           weight={selected ? 'bold' : 'regular'}
           color={disabled ? 'secondary.regular' : 'text'}
           disabled={disabled}
         >
           {label}
-        </zx-text>
+        </ds-text>
       </Container>
     </Tooltip>
   );
@@ -266,7 +266,7 @@ function NestListItem({
               tooltipLabel={tooltipLabel}
             />
           )}
-          <icon-wc size="medium" icon="ChevronRight"></icon-wc>
+          <ds-icon size="medium" icon="ChevronRight"></ds-icon>
         </Container>
       </Dropdown>
     </Container>

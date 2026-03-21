@@ -8,9 +8,9 @@
 import '../theme/theme.css';
 
 // Import and export the web components to ensure they are bundled and registered
+export { DsButton } from './ds-button';
 export { DsDivider } from './ds-divider';
+export { DsSnackbar } from './ds-snackbar';
+export { DsText } from './ds-text';
 export { IconWC } from './icon-wc';
 export { SpinnerWC } from './spinner-wc';
-export { DsButton } from './ds-button';
-export { ZxSnackbar } from './zx-snackbar';
-export { DsText } from './ds-text';

@@ -8,7 +8,6 @@ import i18next from 'i18next';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { postV1Login } from '../services/v1-service';
-import '../ui-components/web-components/zx-snackbar';
 import { isSafeRedirect, saveCredentials } from '../utils';
 import { type Configuration, CredentialsForm } from './credentials-form';
 import OfflineModal from './modals';
@@ -101,7 +100,7 @@ export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerP
         submitCredentials={submitCredentials}
         loading={loading}
       />
-      <zx-snackbar
+      <ds-snackbar
         ref={snackbarRef}
         open={snackbarNetworkError}
         label={t('cant_login', 'Can not do the login now')}

@@ -106,11 +106,14 @@ const Input = ({
         '--input-color': resolveThemeColor(String(textColor), 'regular'),
         '--input-color-disabled': resolveThemeColor(String(textColor), 'disabled'),
         '--label-color': labelColor,
-      } as React.CSSProperties),
+      }) as React.CSSProperties,
     [textColor, labelColor],
   );
 
-  const descriptionTextColor = useMemo(() => (hasError && 'error') || (hasFocus && 'primary') || 'secondary',[hasError, hasFocus])
+  const descriptionTextColor = useMemo(
+    () => (hasError && 'error') || (hasFocus && 'primary') || 'secondary',
+    [hasError, hasFocus],
+  );
 
   return (
     <Container height="fit" width="fill" crossAlignment="flex-start">
@@ -167,9 +170,15 @@ const Input = ({
       </InputContainer>
       <ds-divider color={dividerColor}></ds-divider>
       {description !== undefined && (
-      <zx-text overflow="break-word" size="extrasmall" class={styles.inputDescription} color={descriptionTextColor} disabled={disabled} >
+        <ds-text
+          overflow="break-word"
+          size="extrasmall"
+          className={styles.inputDescription}
+          color={descriptionTextColor}
+          disabled={disabled}
+        >
           {description}
-          </zx-text>
+        </ds-text>
       )}
     </Container>
   );

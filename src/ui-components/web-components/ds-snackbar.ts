@@ -23,8 +23,8 @@ const icons: Record<'success' | 'info' | 'warning' | 'error', IconName> = {
 
 type SnackbarSeverity = 'success' | 'info' | 'warning' | 'error';
 
-@customElement('zx-snackbar')
-export class ZxSnackbar extends LitElement {
+@customElement('ds-snackbar')
+export class DsSnackbar extends LitElement {
   static override styles = snackbarStyles;
 
   @property({ type: Boolean, reflect: true })
@@ -106,6 +106,6 @@ export class ZxSnackbar extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'zx-snackbar': ZxSnackbar;
+    'ds-snackbar': DsSnackbar;
   }
 }

@@ -7,8 +7,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports
 import React from 'react';
 
-import { type IconName, type IconSize } from './icon-registry';
 import { type TextOverflow, type TextSize, type TextWeight } from './ds-text';
+import { type IconName, type IconSize } from './icon-registry';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';
@@ -20,9 +20,9 @@ declare global {
   namespace React {
     namespace JSX {
       interface IntrinsicElements {
-        'spinner-wc': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+        'ds-spinner': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
         'ds-divider': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-        'icon-wc': React.DetailedHTMLProps<
+        'ds-icon': React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             icon?: IconName;
             color?: string;
@@ -69,7 +69,7 @@ declare global {
           HTMLElement
         >;
         'error-page': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-        'zx-snackbar': React.DetailedHTMLProps<
+        'ds-snackbar': React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             open?: boolean;
             severity?: SnackbarSeverity;
