@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /*
  * SPDX-FileCopyrightText: 2021 Zextras <https://www.zextras.com>
  *
@@ -23,57 +25,14 @@ import { setupFloating } from '../floating-ui';
 import { resolveThemeColor } from '../theme/theme-utils';
 import { type AnyColor } from '../types/utils';
 import { type IconName } from '../web-components/icon-registry';
-import { FOCUSABLE_SELECTOR, TIMERS } from './constants';
+import { FOCUSABLE_SELECTOR } from './constants';
 import { Container } from './Container';
 import styles from './Dropdown.module.css';
-import { Padding } from './Padding';
-import { Tooltip } from './Tooltip';
-import { Portal } from './utilities/Portal';
-
-type TextSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 
 type ListItemContentProps = {
-  icon?: IconName;
   label: string;
   selected?: boolean;
-  disabled?: boolean;
-  itemTextSize: TextSize;
-  tooltipLabel?: string;
 };
-
-function ListItemContent({
-  icon,
-  label,
-  selected,
-  disabled,
-  itemTextSize,
-  tooltipLabel,
-}: Readonly<ListItemContentProps>): React.JSX.Element {
-  return (
-    <Tooltip disabled={!disabled || !tooltipLabel} label={tooltipLabel} placement="bottom-end">
-      <Container orientation="horizontal" mainAlignment="flex-start">
-        {icon && (
-          <Padding right="small">
-            <ds-icon
-              icon={icon}
-              size="medium"
-              color={disabled ? 'secondary' : 'text'}
-              style={{ pointerEvents: 'none' }}
-            ></ds-icon>
-          </Padding>
-        )}
-        <ds-text
-          size={itemTextSize}
-          weight={selected ? 'bold' : 'regular'}
-          color={disabled ? 'secondary.regular' : 'text'}
-          disabled={disabled}
-        >
-          {label}
-        </ds-text>
-      </Container>
-    </Tooltip>
-  );
-}
 
 function useContainerElStyle(
   selected: boolean | undefined,
@@ -93,216 +52,48 @@ function useContainerElStyle(
 type PopperListItemProps = ListItemContentProps &
   HTMLAttributes<HTMLDivElement> & {
     onClick?: (e: React.SyntheticEvent<HTMLElement> | KeyboardEvent) => void;
-    customComponent?: React.ReactNode;
     selectedBackgroundColor?: AnyColor;
     keepOpen?: boolean;
   };
 
 function PopperListItem({
-  icon,
-  label,
   onClick,
   selected,
-  customComponent,
-  disabled = false,
   selectedBackgroundColor,
-  itemTextSize,
   keepOpen,
-  tooltipLabel,
   ...rest
 }: Readonly<PopperListItemProps>): React.JSX.Element {
   const containerStyle = useContainerElStyle(selected, selectedBackgroundColor);
   return (
     <Container
       data-keep-open={keepOpen}
-      className={clsx(styles.containerEl, disabled && styles.disabled, selected && 'zapp-selected')}
+      className={clsx(styles.containerEl, selected && 'zapp-selected')}
       style={containerStyle}
       orientation="horizontal"
       mainAlignment="flex-start"
       padding={{ vertical: 'small', horizontal: 'large' }}
       background={selected && selectedBackgroundColor ? selectedBackgroundColor : undefined}
-      onClick={(!disabled && onClick) || undefined}
-      tabIndex={disabled ? -1 : 0}
+      onClick={onClick || undefined}
+      tabIndex={0}
       data-testid={'dropdown-item'}
       {...rest}
-    >
-      {customComponent || (
-        <ListItemContent
-          icon={icon}
-          label={label}
-          selected={selected}
-          disabled={disabled}
-          itemTextSize={itemTextSize}
-          tooltipLabel={tooltipLabel}
-        />
-      )}
-    </Container>
-  );
-}
-
-type NestListItemProps = PopperListItemProps & Pick<DropdownProps, 'onOpen' | 'onClose' | 'items'>;
-
-function NestListItem({
-  icon,
-  label,
-  onClick,
-  selected,
-  customComponent,
-  disabled = false,
-  items,
-  selectedBackgroundColor,
-  itemTextSize,
-  keepOpen,
-  tooltipLabel,
-  onOpen,
-  onClose,
-  ...rest
-}: Readonly<NestListItemProps>): React.JSX.Element {
-  const [open, setOpen] = useState(false);
-  const itemRef = useRef<HTMLDivElement | null>(null);
-  const [innerDropdownListElement, setInnerDropdownListElement] = useState<HTMLDivElement | null>(
-    null,
-  );
-  const setDropdownListRef = useCallback<React.RefCallback<HTMLDivElement>>((node) => {
-    setInnerDropdownListElement(node);
-  }, []);
-  const closeNestedDropdownTimeoutRef = useRef<number>(undefined);
-  const containerStyle = useContainerElStyle(selected, selectedBackgroundColor);
-
-  useEffect(
-    () => () => {
-      if (closeNestedDropdownTimeoutRef.current !== undefined) {
-        clearTimeout(closeNestedDropdownTimeoutRef.current);
-      }
-    },
-    [],
-  );
-
-  const openNestedDropdown = useCallback(() => {
-    if (closeNestedDropdownTimeoutRef.current !== undefined) {
-      clearTimeout(closeNestedDropdownTimeoutRef.current);
-      closeNestedDropdownTimeoutRef.current = undefined;
-    }
-    setOpen(true);
-    onOpen?.();
-  }, [onOpen]);
-
-  const closeNestedDropdown = useCallback(() => {
-    if (closeNestedDropdownTimeoutRef.current !== undefined) {
-      clearTimeout(closeNestedDropdownTimeoutRef.current);
-      closeNestedDropdownTimeoutRef.current = undefined;
-    }
-    const focusIsOnChild = itemRef.current?.contains(document.activeElement);
-    setOpen(false);
-    onClose?.();
-    if (focusIsOnChild) {
-      itemRef.current?.focus({ preventScroll: true });
-    }
-  }, [onClose]);
-
-  const closeOnMouseLeave = useCallback(
-    (event: Event) => {
-      if (event.target instanceof Node) {
-        const eventIsOnTrigger = itemRef.current?.contains(event.target);
-        const eventIsOnDropdown = innerDropdownListElement?.contains(event.target);
-        if (!eventIsOnDropdown && !eventIsOnTrigger) {
-          if (closeNestedDropdownTimeoutRef.current === undefined) {
-            closeNestedDropdownTimeoutRef.current = setTimeout(() => {
-              closeNestedDropdown();
-            }, TIMERS.DROPDOWN.CLOSE_NESTED) as unknown as number;
-          }
-        } else if (closeNestedDropdownTimeoutRef.current !== undefined) {
-          clearTimeout(closeNestedDropdownTimeoutRef.current);
-          closeNestedDropdownTimeoutRef.current = undefined;
-        }
-      }
-    },
-    [closeNestedDropdown, innerDropdownListElement],
-  );
-
-  useEffect(() => {
-    if (open) {
-      window.addEventListener('mouseover', closeOnMouseLeave);
-    }
-    return (): void => {
-      window.removeEventListener('mouseover', closeOnMouseLeave);
-    };
-  }, [closeOnMouseLeave, open]);
-
-  return (
-    <Container
-      data-keep-open={keepOpen}
-      ref={itemRef}
-      className={clsx(styles.containerEl, disabled && styles.disabled, selected && 'zapp-selected')}
-      style={containerStyle}
-      orientation="horizontal"
-      mainAlignment="flex-start"
-      onClick={disabled ? undefined : onClick}
-      tabIndex={disabled ? undefined : 0}
-      data-testid={'dropdown-item'}
-      onMouseEnter={openNestedDropdown}
-      {...rest}
-    >
-      <Dropdown
-        display="block"
-        items={items}
-        placement="right-start"
-        itemTextSize={itemTextSize}
-        _dropdownListRef={setDropdownListRef}
-        disablePortal
-      >
-        <Container
-          orientation="horizontal"
-          mainAlignment="space-between"
-          padding={{ vertical: 'small', horizontal: 'large' }}
-        >
-          {customComponent || (
-            <ListItemContent
-              icon={icon}
-              label={label}
-              selected={selected}
-              disabled={disabled}
-              itemTextSize={itemTextSize}
-              tooltipLabel={tooltipLabel}
-            />
-          )}
-          <ds-icon size="medium" icon="ChevronRight"></ds-icon>
-        </Container>
-      </Dropdown>
-    </Container>
+    ></Container>
   );
 }
 
 interface DropdownItem {
-  type?: 'divider';
   id: string;
   label?: string;
   icon?: IconName;
   onClick?: (e: React.SyntheticEvent<HTMLElement> | KeyboardEvent) => void;
   selected?: boolean;
-  customComponent?: React.ReactNode;
-  disabled?: boolean;
-  items?: Array<DropdownItem>;
-  keepOpen?: boolean;
-  tooltipLabel?: string;
 }
 
 type DropdownProps = Omit<HTMLAttributes<HTMLDivElement>, 'contextMenu'> & {
-  disabled?: boolean;
   items: Array<DropdownItem>;
-  display?: 'block' | 'inline-block';
-  maxWidth?: string;
-  maxHeight?: string;
-  disableRestoreFocus?: boolean;
-  disableAutoFocus?: boolean;
-  multiple?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
-  children: React.ReactElement;
   placement?: Placement;
-  disablePortal?: boolean;
-  preventDefault?: boolean;
-  itemTextSize?: TextSize;
   /** @internal */
   _dropdownListRef?:
     | React.RefCallback<HTMLDivElement>
@@ -310,21 +101,12 @@ type DropdownProps = Omit<HTMLAttributes<HTMLDivElement>, 'contextMenu'> & {
     | null;
 };
 
-const Dropdown = ({
-  disabled = false,
+export const Dropdown = ({
   items,
   placement = 'bottom-start' as const,
-  display = 'inline-block',
-  maxWidth = '18.75rem',
-  maxHeight = '50vh',
-  disableRestoreFocus = false,
-  disableAutoFocus = false,
-  multiple = false,
   onOpen,
   onClose,
   children,
-  disablePortal = false,
-  itemTextSize = 'medium',
   ...rest
 }: DropdownProps) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -347,19 +129,17 @@ const Dropdown = ({
       e?.preventDefault();
       setOpen(false);
       openRef.current = false;
-      if (!disableRestoreFocus) {
-        const triggerElement = innerTriggerRef.current;
-        if (triggerElement) {
-          if (triggerElement.matches(FOCUSABLE_SELECTOR)) {
-            triggerElement.focus();
-          } else {
-            triggerElement.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)?.focus();
-          }
+      const triggerElement = innerTriggerRef.current;
+      if (triggerElement) {
+        if (triggerElement.matches(FOCUSABLE_SELECTOR)) {
+          triggerElement.focus();
+        } else {
+          triggerElement.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)?.focus();
         }
       }
       onClose?.();
     },
-    [disableRestoreFocus, innerTriggerRef, onClose],
+    [innerTriggerRef, onClose],
   );
 
   const toggleOpen = useCallback<(e: React.SyntheticEvent | KeyboardEvent) => void>(
@@ -367,12 +147,12 @@ const Dropdown = ({
       if (openRef.current) {
         e.preventDefault();
         closePopper();
-      } else if (!disabled) {
+      } else {
         e.preventDefault();
         openPopper();
       }
     },
-    [closePopper, disabled, openPopper],
+    [closePopper, openPopper],
   );
 
   const triggerComponentLeftClickHandler = useCallback<React.ReactEventHandler>(
@@ -440,14 +220,14 @@ const Dropdown = ({
   const setPopperItemsRefAndFocus = useCallback<React.RefCallback<HTMLDivElement | null>>(
     (node) => {
       popperItemsRef.current = node;
-      if (node && !disableAutoFocus) {
+      if (node) {
         const itemToFocus = node.querySelector<HTMLElement>('.zapp-selected') ?? node.firstChild;
         if (itemToFocus instanceof HTMLElement) {
           itemToFocus.focus();
         }
       }
     },
-    [disableAutoFocus],
+    [],
   );
 
   useEffect(() => {
@@ -464,7 +244,7 @@ const Dropdown = ({
   useEffect(() => {
     const startSentinelRefElement = startSentinelRef.current;
     const endSentinelRefElement = endSentinelRef.current;
-    if (open && !disableAutoFocus) {
+    if (open) {
       startSentinelRefElement?.addEventListener('focus', onStartSentinelFocus);
       endSentinelRefElement?.addEventListener('focus', onEndSentinelFocus);
     }
@@ -472,14 +252,7 @@ const Dropdown = ({
       startSentinelRefElement?.removeEventListener('focus', onStartSentinelFocus);
       endSentinelRefElement?.removeEventListener('focus', onEndSentinelFocus);
     };
-  }, [
-    open,
-    startSentinelRef,
-    endSentinelRef,
-    onStartSentinelFocus,
-    onEndSentinelFocus,
-    disableAutoFocus,
-  ]);
+  }, [open, startSentinelRef, endSentinelRef, onStartSentinelFocus, onEndSentinelFocus]);
 
   const listItemClickHandler = useCallback<
     (
@@ -492,70 +265,34 @@ const Dropdown = ({
         if (!event.defaultPrevented) {
           onClick?.(event);
         }
-        if (!multiple && !keepOpen) {
+        if (!keepOpen) {
           closePopper();
         } else {
           event.stopPropagation();
         }
       },
-    [closePopper, multiple],
+    [closePopper],
   );
 
   const popperListItems = useMemo(() => {
     nestedDropdownsRef.current = [];
     if (items) {
-      return items.map(
-        ({
-          id,
-          icon,
-          label,
-          onClick,
-          selected,
-          customComponent,
-          items: subItems,
-          disabled: itemDisabled,
-          type,
-          keepOpen,
-          ...itemProps
-        }) => {
-          const nestedRef = React.createRef<HTMLDivElement>();
-          nestedDropdownsRef.current.push(nestedRef);
-          return (
-            (type === 'divider' && <ds-divider key={id}></ds-divider>) ||
-            (subItems && (
-              <NestListItem
-                icon={icon}
-                label={label ?? ''}
-                onClick={listItemClickHandler(onClick, keepOpen)}
-                keepOpen={keepOpen}
-                selected={selected}
-                key={id}
-                customComponent={customComponent}
-                disabled={itemDisabled}
-                items={subItems}
-                itemTextSize={itemTextSize}
-                {...itemProps}
-              />
-            )) || (
-              <PopperListItem
-                icon={icon}
-                label={label ?? ''}
-                onClick={listItemClickHandler(onClick, keepOpen)}
-                keepOpen={keepOpen}
-                selected={selected}
-                key={id}
-                customComponent={customComponent}
-                disabled={itemDisabled}
-                itemTextSize={itemTextSize}
-                {...itemProps}
-              />
-            )
-          );
-        },
-      );
+      return items.map(({ id, label, onClick, selected, ...itemProps }) => {
+        const nestedRef = React.createRef<HTMLDivElement>();
+        nestedDropdownsRef.current.push(nestedRef);
+        return (
+          <PopperListItem
+            label={label ?? ''}
+            onClick={listItemClickHandler(onClick, false)}
+            selected={selected}
+            key={id}
+            {...itemProps}
+          />
+        );
+      });
     }
     return null;
-  }, [items, listItemClickHandler, itemTextSize]);
+  }, [items, listItemClickHandler]);
 
   const popperListPreventDefaultHandler = useCallback<React.MouseEventHandler>((event) => {
     event?.preventDefault?.();
@@ -575,29 +312,39 @@ const Dropdown = ({
     return {
       width: `${triggerWidth}px`,
       maxWidth: '100%',
-      '--popper-max-height': maxHeight,
+      '--popper-max-height': '50vh',
     } as CSSProperties;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [maxWidth, maxHeight, open, innerTriggerRef]);
+  }, [open, innerTriggerRef]);
+
+  useEffect(() => {
+    const dropdownEl = dropdownRef.current;
+    if (dropdownEl) {
+      if (open) {
+        dropdownEl.showPopover();
+      } else {
+        dropdownEl.hidePopover();
+      }
+    }
+  }, [open]);
 
   return (
-    <div className={styles.popperDropdownWrapper} data-display={display} {...rest}>
+    <div className={styles.popperDropdownWrapper} {...rest}>
       {triggerComponent}
-      <Portal show={open} disablePortal={disablePortal}>
-        <div
-          ref={dropdownRef}
-          className={clsx(styles.popperList, open && styles.open)}
-          style={popperListStyle}
-          data-testid="dropdown-popper-list"
-          onClick={popperListPreventDefaultHandler}
-        >
-          <div tabIndex={0} ref={startSentinelRef} />
-          <div ref={setPopperItemsRefAndFocus}>{popperListItems}</div>
-          <div tabIndex={0} ref={endSentinelRef} />
-        </div>
-      </Portal>
+      <div
+        ref={dropdownRef}
+        popover="manual"
+        className={clsx(styles.popperList, open && styles.open)}
+        style={popperListStyle}
+        data-testid="dropdown-popper-list"
+        onClick={popperListPreventDefaultHandler}
+      >
+        <div ref={startSentinelRef} />
+        <div ref={setPopperItemsRefAndFocus}>{popperListItems}</div>
+        <div ref={endSentinelRef} />
+      </div>
     </div>
   );
 };
 
-export { Dropdown, type DropdownItem, type DropdownProps };
+export { type DropdownItem, type DropdownProps };

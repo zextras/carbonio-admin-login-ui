@@ -15,18 +15,16 @@ import { Padding } from './Padding';
 import { Row } from './Row';
 import styles from './Select.module.css';
 
-type SelectItem<T = string> = {
+type SelectItem = {
   label: string;
-  value: T;
-  disabled: boolean;
-  customComponent?: React.ReactElement;
+  value: string;
 };
 
-type LabelFactoryProps<T = string> = {
+type LabelFactoryProps = {
   label: string | undefined;
   open: boolean;
   focus: boolean;
-  selected: SelectItem<T>[];
+  selected: SelectItem[];
 };
 
 type SingleSelectionOnChange<T = string> = (value: T | null) => void;
@@ -34,14 +32,14 @@ type SingleSelectionOnChange<T = string> = (value: T | null) => void;
 type UncontrolledSingleSelection<T> = {
   multiple?: false;
   selection?: never;
-  defaultSelection?: SelectItem<T>;
+  defaultSelection?: SelectItem;
   onChange: SingleSelectionOnChange<T>;
 };
 
 type SelectComponentProps<T> = {
   label?: string;
   background?: string;
-  items: SelectItem<T>[];
+  items: Array<{ label: string; value: string }>;
   i18nAllLabel?: string;
   /** Flag to disable the Portal implementation of dropdown */
   disablePortal?: boolean;
@@ -52,12 +50,12 @@ type SelectComponentProps<T> = {
 type SelectProps<T = string> = SelectComponentProps<T> &
   Omit<DropdownProps, keyof SelectComponentProps<T> | 'children'>;
 
-const DefaultLabelFactory = <T,>({
+const DefaultLabelFactory = ({
   selected,
   label,
   open,
   focus,
-}: LabelFactoryProps<T>): React.JSX.Element => {
+}: LabelFactoryProps): React.JSX.Element => {
   const selectedLabels = useMemo(
     () => selected.reduce<string[]>((arr, obj) => [...arr, obj.label], []).join(', '),
     [selected],
@@ -114,22 +112,22 @@ export const Select = function SelectFn<T = string>({
   defaultSelection,
 }: SelectProps<T>): React.JSX.Element {
   const initialState = defaultSelection ?? [];
-  const [selected, setSelected] = useState<SelectItem<T>[]>(
+  const [selected, setSelected] = useState<SelectItem[]>(
     Array.isArray(initialState) ? initialState : [initialState],
   );
   const [open, setOpen] = useState(false);
   const [focus, setFocus] = useState(false);
 
   const updateSingleSelection = useCallback(
-    (item: SelectItem<T>) => {
+    (item: SelectItem) => {
       setSelected(item.value !== null && item.value !== undefined ? [item] : []);
-      (onChange as SingleSelectionOnChange<T>)(item.value);
+      (onChange as SingleSelectionOnChange)(item.value);
     },
     [onChange],
   );
 
   const clickItemHandler = useCallback(
-    (item: SelectItem<T>) => (): void => {
+    (item: SelectItem) => (): void => {
       if (selected.length === 0 || item.value !== selected?.[0]?.value) {
         updateSingleSelection(item);
       }
@@ -147,8 +145,6 @@ export const Select = function SelectFn<T = string>({
           icon: isSelected ? 'CheckmarkSquare' : 'Square',
           onClick: clickItemHandler(item),
           selected: isSelected,
-          disabled: item.disabled,
-          customComponent: item.customComponent,
         };
       }),
     [items, selected, clickItemHandler],
@@ -160,14 +156,8 @@ export const Select = function SelectFn<T = string>({
   const onBlur = useCallback(() => setFocus(false), []);
 
   return (
-    <Dropdown
-      display="block"
-      items={mappedItems}
-      onOpen={onOpen}
-      onClose={onClose}
-      placement="bottom-end"
-    >
-      <div onFocus={onFocus} onBlur={onBlur} tabIndex={0} className={styles.tabContainer}>
+    <Dropdown items={mappedItems} onOpen={onOpen} onClose={onClose}>
+      <div onFocus={onFocus} onBlur={onBlur} className={styles.tabContainer}>
         <DefaultLabelFactory label={label} open={open} focus={focus} selected={selected} />
       </div>
     </Dropdown>

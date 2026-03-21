@@ -18,7 +18,6 @@ import {
 import { setupFloating } from '../floating-ui';
 import { useCombinedRefs } from '../hooks/useCombinedRefs';
 import styles from './Tooltip.module.css';
-import { Portal } from './utilities/Portal';
 
 type TextSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type TextOverflow = 'ellipsis' | 'break-word';
@@ -32,6 +31,7 @@ type TooltipWrapperProps = {
   open: boolean;
   maxWidth: string;
   ref?: React.Ref<HTMLDivElement>;
+  popover?: string;
 } & React.HTMLAttributes<HTMLElement>;
 
 const TooltipWrapper = ({
@@ -42,6 +42,7 @@ const TooltipWrapper = ({
   overflow = 'break-word',
   className,
   style,
+  popover,
   ...rest
 }: TooltipWrapperProps) => {
   if (!open) return null;
@@ -56,8 +57,9 @@ const TooltipWrapper = ({
       size={size}
       overflow={overflow}
       data-testid="tooltip"
-      class={className}
+      className={className}
       style={tooltipStyle}
+      popover={popover}
       {...rest}
     >
       {children}
@@ -76,8 +78,6 @@ type TooltipProps = {
   maxWidth?: string;
   /** Whether to disable the tooltip and render only the child component */
   disabled?: boolean;
-  /** Flag to disable the Portal implementation */
-  disablePortal?: boolean;
   /** Show tooltip only when child has class Text and text content is partially hidden */
   overflowTooltip?: boolean;
   /** Tooltip trigger */
@@ -95,7 +95,6 @@ const Tooltip = ({
   maxWidth = '17.75rem',
   children,
   disabled = false,
-  disablePortal = false,
   overflowTooltip = false,
   triggerDelay = 500,
   triggerRef = createRef<HTMLElement>(),
@@ -167,22 +166,32 @@ const Tooltip = ({
     [],
   );
 
+  useEffect(() => {
+    const tooltipEl = tooltipRef.current;
+    if (tooltipEl) {
+      if (open && !disabled) {
+        tooltipEl.showPopover();
+      } else {
+        tooltipEl.hidePopover();
+      }
+    }
+  }, [open, disabled]);
+
   return (
     <>
       {cloneElement(children, {
         ref: combinedTriggerRef as React.RefObject<HTMLElement>,
       } as Partial<React.HTMLAttributes<HTMLElement>>)}
-      <Portal show={open && !disabled} disablePortal={disablePortal}>
-        <TooltipWrapper
-          ref={tooltipRef}
-          open={open}
-          maxWidth={maxWidth}
-          className={styles.tooltip}
-          {...rest}
-        >
-          {label}
-        </TooltipWrapper>
-      </Portal>
+      <TooltipWrapper
+        ref={tooltipRef}
+        open={open && !disabled}
+        maxWidth={maxWidth}
+        className={styles.tooltip}
+        popover="manual"
+        {...rest}
+      >
+        {label}
+      </TooltipWrapper>
     </>
   );
 };
