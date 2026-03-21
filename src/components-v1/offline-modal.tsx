@@ -3,27 +3,25 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import i18next from 'i18next';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import styles from './offline-modal.module.css';
 
 type ModalProps = {
   open: boolean;
-  onClose: (event: React.MouseEvent | KeyboardEvent) => void;
+  onClose: () => void;
 };
 
 export const OfflineModal = ({ onClose, open }: ModalProps) => {
   const t = i18next.t.bind(i18next);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
-  const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
+
     if (open) {
       previousActiveElement.current = document.activeElement as HTMLElement;
       dialog.showModal();
@@ -35,38 +33,46 @@ export const OfflineModal = ({ onClose, open }: ModalProps) => {
       document.body.style.scrollbarGutter = '';
       previousActiveElement.current?.focus();
     }
+
+    return () => {
+      // Clean up body styles if the component unmounts while open
+      document.body.style.overflow = '';
+      document.body.style.scrollbarGutter = '';
+    };
   }, [open]);
 
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    const handleBackdropClick = (event: MouseEvent): void => {
-      const rect = dialog.getBoundingClientRect();
-      const isBackdropClick =
-        event.clientX < rect.left ||
-        event.clientX > rect.right ||
-        event.clientY < rect.top ||
-        event.clientY > rect.bottom;
-
-      if (isBackdropClick) {
-        onCloseRef.current(event as unknown as React.MouseEvent);
+  const handleBackdropClick = useCallback(
+    (event: React.MouseEvent<HTMLDialogElement>) => {
+      // Only close if the click target is the dialog itself (the backdrop),
+      // not any of its children
+      if (event.target === dialogRef.current) {
+        onClose();
       }
-    };
+    },
+    [onClose],
+  );
 
-    dialog.addEventListener('click', handleBackdropClick);
-    return () => dialog.removeEventListener('click', handleBackdropClick);
-  }, []);
-
-  function handleClose(): void {
-    onClose(new KeyboardEvent('keydown', { key: 'Escape' }));
-  }
+  const handleCancel = useCallback(
+    (event: React.SyntheticEvent<HTMLDialogElement>) => {
+      // Prevent the native dialog close so we control state ourselves
+      event.preventDefault();
+      onClose();
+    },
+    [onClose],
+  );
 
   return (
-    <dialog ref={dialogRef} className={styles.dialog} onClose={handleClose}>
+    <dialog
+      ref={dialogRef}
+      className={styles.dialog}
+      onClick={handleBackdropClick}
+      onCancel={handleCancel}
+      aria-labelledby="offline-modal-title"
+      aria-describedby="offline-modal-description"
+    >
       <div className={styles.modalContent}>
         <div className={styles.modalHeader}>
-          <ds-text className={styles.modalTitle} weight="bold">
+          <ds-text id="offline-modal-title" className={styles.modalTitle} weight="bold">
             {t('modal.offline.title', 'Offline')}
           </ds-text>
           <ds-button
@@ -74,12 +80,14 @@ export const OfflineModal = ({ onClose, open }: ModalProps) => {
             size="large"
             type="ghost"
             color="text"
-            onClick={onClose as (e: Event) => void}
+            onClick={onClose}
+            aria-label={t('modal.offline.close', 'Close')}
           />
         </div>
-        <ds-divider></ds-divider>
+        <ds-divider />
         <div className={styles.modalBody}>
           <ds-text
+            id="offline-modal-description"
             overflow="break-word"
             line-height={1.4}
             className={styles.paragraph}
@@ -91,14 +99,13 @@ export const OfflineModal = ({ onClose, open }: ModalProps) => {
             )}
           </ds-text>
         </div>
-        <ds-divider></ds-divider>
+        <ds-divider />
         <div className={styles.modalFooter}>
-          <div className={styles.spacer} />
           <ds-button
             className={styles.confirmButton}
             color="primary"
             min-width="6.25rem"
-            onClick={onClose as (e: Event) => void}
+            onClick={onClose}
             label="OK"
           />
         </div>
