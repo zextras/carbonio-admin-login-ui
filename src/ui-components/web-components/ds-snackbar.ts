@@ -10,7 +10,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 import { resolveThemeColor } from '../theme/theme-utils';
 import { type IconName } from './icon-registry';
-import { snackbarStyles } from './snackbar.styles';
+import { snackbarStyles } from './ds-snackbar.styles';
 
 const DEFAULT_HIDE_TIMEOUT = 4000;
 

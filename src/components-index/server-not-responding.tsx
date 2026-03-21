@@ -7,24 +7,22 @@
 import i18next from 'i18next';
 import { useCallback, useState } from 'react';
 
-import { Snackbar } from '../ui-components';
-
 export const ServerNotResponding = () => {
-	const t = i18next.t.bind(i18next);
-	const [isOpen, setOpen] = useState(true);
-	const onCloseCbk = useCallback(() => setOpen(false), []);
+  const t = i18next.t.bind(i18next);
+  const [isOpen, setOpen] = useState(true);
+  const onCloseCbk = useCallback(() => setOpen(false), []);
 
-	return (
-		<Snackbar
-			open={isOpen}
-			label={t(
-				'server_not_responding',
-				'The server is not responding. Please contact your server administrator'
-			)}
-			onClose={onCloseCbk}
-			autoHideTimeout={10000}
-			severity="error"
-			data-testid="server-not-responding"
-		/>
-	);
+  return (
+    <ds-snackbar
+      open={isOpen}
+      label={t(
+        'server_not_responding',
+        'The server is not responding. Please contact your server administrator',
+      )}
+      onClose={onCloseCbk}
+      autoHideTimeout={10000}
+      severity="error"
+      data-testid="server-not-responding"
+    ></ds-snackbar>
+  );
 };
