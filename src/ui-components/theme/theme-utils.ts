@@ -9,7 +9,7 @@ type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyo
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
 
-const CSS_KEYWORDS = new Set(['currentColor', 'transparent', 'inherit', 'initial', 'unset']);
+const CSS_KEYWORDS = new Set(['currentColor', 'inherit', 'initial', 'unset']);
 const BASE_COLORS = new Set(['white', 'black']);
 
 export function resolveThemeColor(colorName: string, state: string): string {

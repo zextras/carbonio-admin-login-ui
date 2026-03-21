@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../ui-components/web-components/ds-divider';
-
 import i18next from 'i18next';
 import { useEffect, useRef } from 'react';
 
