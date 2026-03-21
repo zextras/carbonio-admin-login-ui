@@ -10,8 +10,8 @@ import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-@customElement('divider-wc')
-export class DividerElement extends LitElement {
+@customElement('ds-divider')
+export class DsDivider extends LitElement {
   static override styles = css`
     :host {
       display: block;
@@ -49,6 +49,6 @@ export class DividerElement extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'divider-wc': DividerElement;
+    'ds-divider': DsDivider;
   }
 }
