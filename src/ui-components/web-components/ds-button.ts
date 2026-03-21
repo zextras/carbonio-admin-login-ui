@@ -152,7 +152,7 @@ export class DsButton extends LitElement {
           ${this.loading
             ? html`
                 <div class="loading-container">
-                  <spinner-wc color="currentColor"></spinner-wc>
+                  <ds-spinner color="currentColor"></ds-spinner>
                 </div>
               `
             : nothing}

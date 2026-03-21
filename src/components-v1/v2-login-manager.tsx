@@ -169,7 +169,7 @@ export const V2LoginManager=({ configuration, disableInputs }:V2LoginManagerProp
 			)}
 			{progress === formState.waiting && (
 				<Row orientation="vertical" crossAlignment="center" padding={{ vertical: 'extralarge' }}>
-					<spinner-wc ></spinner-wc>
+					<ds-spinner ></ds-spinner>
 				</Row>
 			)}
 			{progress === formState.twoFactor && (

@@ -13,4 +13,4 @@ export { DsDivider } from './ds-divider';
 export { DsSnackbar } from './ds-snackbar';
 export { DsText } from './ds-text';
 export { DsIcon } from './ds-icon';
-export { SpinnerWC } from './spinner-wc';
+export { DsSpinner } from './ds-spinner';

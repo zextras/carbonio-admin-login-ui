@@ -9,8 +9,8 @@ import { customElement } from 'lit/decorators.js';
 
 import { spinnerStyles } from './spinner.styles';
 
-@customElement('spinner-wc')
-export class SpinnerWC extends LitElement {
+@customElement('ds-spinner')
+export class DsSpinner extends LitElement {
   static override styles = spinnerStyles;
 
   override render() {
@@ -24,6 +24,6 @@ export class SpinnerWC extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'spinner-wc': SpinnerWC;
+    'ds-spinner': DsSpinner;
   }
 }
