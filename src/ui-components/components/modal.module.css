@@ -1,0 +1,77 @@
+/*
+ * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90vw;
+  max-height: 90vh;
+  padding: 0;
+  border: none;
+  border-radius: 1rem;
+  background-color: var(--color-gray6, #1e1e1e);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+  overflow: visible;
+  color-scheme: dark;
+}
+
+.dialog::backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialog:focus {
+  outline: none;
+}
+
+.modalContent {
+  position: relative;
+  border-radius: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  min-width: 25rem;
+  width: 31.25rem;
+}
+
+.modalTitle {
+  box-sizing: border-box;
+  width: 100%;
+  flex-grow: 1;
+  flex-basis: 0;
+  line-height: 1.5;
+  padding: var(--padding-small) var(--padding-small) var(--padding-small) 0;
+}
+
+.modalBody {
+  overflow-y: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: var(--padding-large);
+  padding-bottom: var(--padding-large);
+  flex-grow: 1;
+}
+
+.modalBody::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.buttonContainer {
+  width: fit-content;
+  max-width: fit-content;
+  flex-grow: 1;
+}
+
+.confirmButton {
+  flex-basis: auto;
+  min-width: 6.25rem;
+  flex-shrink: 1;
+}

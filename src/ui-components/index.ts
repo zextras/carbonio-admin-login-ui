@@ -10,7 +10,7 @@ export * from './components/Checkbox';
 export * from './components/Container';
 export * from './components/Dropdown';
 export * from './components/Input';
-export * from './components/Modal';
+export * from './components/modal';
 export * from './components/Padding';
 export * from './components/PasswordInput';
 export * from './components/Row';
