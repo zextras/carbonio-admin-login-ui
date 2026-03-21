@@ -82,6 +82,15 @@ declare global {
           },
           HTMLElement
         >;
+        'ds-checkbox': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            value?: boolean;
+            label?: string;
+            disabled?: boolean;
+            onChange?: (e: CustomEvent<{ value: boolean }>) => void;
+          },
+          HTMLElement
+        >;
         'offline-modal': React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             open?: boolean;

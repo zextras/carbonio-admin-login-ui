@@ -9,6 +9,7 @@ import '../theme/theme.css';
 
 // Import and export the web components to ensure they are bundled and registered
 export { DsButton } from './ds-button';
+export { DsCheckbox } from './ds-checkbox';
 export { DsDivider } from './ds-divider';
 export { DsSnackbar } from './ds-snackbar';
 export { DsText } from './ds-text';

@@ -11,7 +11,7 @@ import { map } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
-import { Checkbox, Input, Row, Select } from '../ui-components';
+import { Input, Row, Select } from '../ui-components';
 import { saveCredentials } from '../utils';
 import ChangePasswordForm from './change-password-form';
 import { type Configuration, CredentialsForm } from './credentials-form';
@@ -53,7 +53,6 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
     [setOtp],
   );
   const [trustDevice, setTrustDevice] = useState(false);
-  const toggleTrustDevice = useCallback(() => setTrustDevice((v) => !v), [setTrustDevice]);
 
   const [email, setEmail] = useState('');
   const [loadingChangePassword, setLoadingChangePassword] = useState(false);
@@ -221,10 +220,10 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
             />
           </Row>
           <Row mainAlignment="flex-start">
-            <Checkbox
+            <ds-checkbox
               value={trustDevice}
               label={t('trust_device_and_ip', 'Trust this device and IP address')}
-              onClick={toggleTrustDevice}
+              onChange={(e: CustomEvent<{ value: boolean }>) => setTrustDevice(e.detail.value)}
             />
           </Row>
         </form>

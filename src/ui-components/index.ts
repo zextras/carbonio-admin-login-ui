@@ -6,21 +6,13 @@
 /* eslint-disable-next-line @typescript-eslint/triple-slash-reference */
 /// <reference path="./css-modules.d.ts" />
 
-export * from './components/Checkbox';
 export * from './components/Container';
 export * from './components/Dropdown';
 export * from './components/Input';
 export * from './components/Padding';
 export * from './components/PasswordInput';
 export * from './components/Row';
-export {
-  type MultipleSelectionOnChange,
-  Select,
-  type SelectItem,
-  type SelectProps,
-  type SingleSelectionOnChange,
-} from './components/Select';
-export * from './components/Snackbar';
+export { Select } from './components/Select';
 export * from './global';
 export * from './theme/theme';
 export * from './theme/theme-utils';
