@@ -8,7 +8,8 @@
 import React from 'react';
 
 import { type TextOverflow, type TextSize, type TextWeight } from './ds-text';
-import { type IconName, type IconSize } from './icon-registry';
+import { type IconName } from './icon-registry';
+import { type IconSize } from './ds-icon';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';

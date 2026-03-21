@@ -248,7 +248,7 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
         <div className={styles.bottomSection}>
           <div className={styles.browserSupportRow}>
             <div className={styles.iconPadding}>
-              <icon-wc
+              <ds-icon
                 color="secondary"
                 icon={isSupportedBrowser ? 'CheckmarkOutline' : 'InfoOutline'}
                 size="medium"

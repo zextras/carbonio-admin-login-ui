@@ -6,6 +6,7 @@
         "name": "ts-lit-plugin"
       }
     ],
+    "target": "ESNext",
     "jsx": "react",
     "noEmit": true,
     "resolveJsonModule": true,

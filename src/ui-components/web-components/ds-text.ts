@@ -10,18 +10,11 @@ import { customElement, property } from 'lit/decorators.js';
 
 import { type Theme, theme } from '../theme/theme';
 import { resolveThemeColor } from '../theme/theme-utils';
-import { textStyles } from './ds-text.styles';
+import { dsTextVars, textStyles } from './ds-text.styles';
 
 export type TextSize = keyof Theme['font']['size'];
 export type TextWeight = keyof Theme['font']['weight'];
 export type TextOverflow = 'ellipsis' | 'break-word';
-
-export const dsTextVars = {
-  fontSize: '--ds-text-font-size',
-  color: '--ds-text-color',
-  weight: '--ds-text-font-weight',
-  lineHeight: '--ds-text-line-height',
-} as const;
 
 @customElement('ds-text')
 export class DsText extends LitElement {

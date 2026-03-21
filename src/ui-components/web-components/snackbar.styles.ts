@@ -60,7 +60,7 @@ export const snackbarStyles = css`
     align-items: center;
   }
 
-  .snack-content > icon-wc {
+  .snack-content > ds-icon {
     flex-shrink: 0;
   }
 

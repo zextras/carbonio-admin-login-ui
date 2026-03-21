@@ -7,7 +7,13 @@
 import { css, unsafeCSS } from 'lit';
 
 import { theme } from '../theme/theme';
-import { dsTextVars } from './ds-text';
+
+export const dsTextVars = {
+  fontSize: '--ds-text-font-size',
+  color: '--ds-text-color',
+  weight: '--ds-text-font-weight',
+  lineHeight: '--ds-text-line-height',
+} as const;
 
 export const textStyles = css`
   :host {

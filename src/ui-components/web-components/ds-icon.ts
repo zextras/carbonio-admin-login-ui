@@ -20,8 +20,8 @@ type IconSizeValue = IconSize | string;
 
 const DEFAULT_ICON = 'AlertTriangleOutline';
 
-@customElement('icon-wc')
-export class IconWC extends LitElement {
+@customElement('ds-icon')
+export class DsIcon extends LitElement {
   static override styles = css`
     :host {
       display: inline-flex;
@@ -113,6 +113,6 @@ export class IconWC extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'icon-wc': IconWC;
+    'ds-icon': DsIcon;
   }
 }

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../web-components/icon-wc';
+import '../web-components/ds-icon';
 
 import React, { useCallback, useEffect } from 'react';
 
@@ -82,7 +82,7 @@ const Snackbar = ({
       data-testid="snackbar"
     >
       <div className={styles.snackContent}>
-        <icon-wc size="large" icon={icons[severity]} color="gray6"></icon-wc>
+        <ds-icon size="large" icon={icons[severity]} color="gray6"></ds-icon>
         <ds-text color="gray6" overflow="break-word">
           {label}
         </ds-text>

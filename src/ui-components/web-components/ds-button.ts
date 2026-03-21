@@ -11,7 +11,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 import { resolveThemeColor } from '../theme/theme-utils';
 import { buttonStyles } from './ds-button.styles';
-import { dsTextVars } from './ds-text';
+import { dsTextVars } from './ds-text.styles';
 import { type IconName } from './icon-registry';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
@@ -166,7 +166,7 @@ export class DsButton extends LitElement {
                     '--icon-order': this.iconPlacement === 'left' ? '1' : '2',
                   })}
                 >
-                  <icon-wc icon=${this.icon} color="currentColor" size=${sizeConfig.icon}></icon-wc>
+                  <ds-icon icon=${this.icon} color="currentColor" size=${sizeConfig.icon}></ds-icon>
                 </span>
               `
             : nothing}

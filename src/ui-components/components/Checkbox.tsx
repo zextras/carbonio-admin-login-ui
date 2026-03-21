@@ -52,7 +52,7 @@ export const Checkbox = ({ value, label, onClick, ...rest }: CheckboxProps) => {
       {...rest}
     >
       <div className={iconWrapperClassName} style={iconWrapperStyle} tabIndex={-1}>
-        <icon-wc icon={checked ? 'CheckmarkSquare' : 'Square'} color={iconColor} />
+        <ds-icon icon={checked ? 'CheckmarkSquare' : 'Square'} color={iconColor} />
       </div>
       {label && (
         <Padding left="small">
