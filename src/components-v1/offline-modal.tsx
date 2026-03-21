@@ -13,7 +13,6 @@ import styles from './offline-modal.module.css';
 
 type ModalProps = {
   open: boolean;
-  children: React.ReactNode | React.ReactNode[];
   onClose: (event: React.MouseEvent | KeyboardEvent) => void;
 };
 
@@ -100,6 +99,7 @@ export const OfflineModal = ({ onClose, open }: ModalProps) => {
           <ds-button
             className={styles.confirmButton}
             color="primary"
+            min-width="6.25rem"
             onClick={onClose as (e: Event) => void}
             label="OK"
           />
