@@ -11,6 +11,7 @@ import '../theme/theme.css';
 export { DsButton } from './ds-button';
 export { DsCheckbox } from './ds-checkbox';
 export { DsDivider } from './ds-divider';
+export { DsSelect } from './ds-select';
 export { DsSnackbar } from './ds-snackbar';
 export { DsText } from './ds-text';
 export { DsIcon } from './ds-icon';

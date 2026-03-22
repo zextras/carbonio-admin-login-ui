@@ -91,6 +91,16 @@ declare global {
           },
           HTMLElement
         >;
+        'ds-select': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            label?: string;
+            items?: Array<{ label: string; value: string }>;
+            'default-selection'?: { label: string; value: string };
+            disabled?: boolean;
+            onChange?: (e: CustomEvent<{ value: string; label: string }>) => void;
+          },
+          HTMLElement
+        >;
         'offline-modal': React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             open?: boolean;
