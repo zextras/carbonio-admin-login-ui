@@ -12,7 +12,6 @@ import { getPaddingVar } from '../theme/theme-utils';
 import { INPUT_DIVIDER_COLOR } from './constants';
 import { Dropdown, type DropdownItem, type DropdownProps } from './Dropdown';
 import { Padding } from './Padding';
-import { Row } from './Row';
 import styles from './Select.module.css';
 
 type SelectItem = {
@@ -85,7 +84,17 @@ const DefaultLabelFactory = ({
           boxSizing: 'border-box',
         }}
       >
-        <Row takeAvailableSpace mainAlignment="unset">
+        <div
+          style={{
+            display: 'flex',
+            flexGrow: 1,
+            flexBasis: '0',
+            justifyContent: 'unset',
+            alignItems: 'center',
+            minWidth: 0,
+            boxSizing: 'border-box',
+          }}
+        >
           <Padding top="medium" width="100%">
             <ds-text color="text" className={styles.customText}>
               {selectedLabels}
@@ -96,7 +105,7 @@ const DefaultLabelFactory = ({
               {label}
             </ds-text>
           </div>
-        </Row>
+        </div>
         <div className={styles.iconWrapper}>
           <ds-icon size="medium" icon={open ? 'ArrowUp' : 'ArrowDown'} color={iconColor}></ds-icon>
         </div>

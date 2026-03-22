@@ -11,7 +11,8 @@ import { map } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
-import { Input, Row, Select } from '../ui-components';
+import { Input } from '../ui-components/components/Input';
+import { Select } from '../ui-components/components/Select';
 import { saveCredentials } from '../utils';
 import ChangePasswordForm from './change-password-form';
 import { type Configuration, CredentialsForm } from './credentials-form';
@@ -173,27 +174,60 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
         />
       )}
       {progress === formState.waiting && (
-        <Row orientation="vertical" crossAlignment="center" padding={{ vertical: 'extralarge' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 'var(--padding-size-extralarge) 0',
+            boxSizing: 'border-box',
+          }}
+        >
           <ds-spinner></ds-spinner>
-        </Row>
+        </div>
       )}
       {progress === formState.twoFactor && (
         <form onSubmit={submitOtpCb} style={{ width: '100%' }}>
           <input type="submit" style={{ display: 'none' }} />
-          <Row padding={{ bottom: 'large' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '0 0 var(--padding-size-large) 0',
+              boxSizing: 'border-box',
+            }}
+          >
             <ds-text size="large" color="text" weight="bold">
               {t('two_step_authentication', 'Two-Step-Authentication')}
             </ds-text>
-          </Row>
-          <Row padding={{ top: 'large' }}>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 'var(--padding-size-large) 0 0 0',
+              boxSizing: 'border-box',
+            }}
+          >
             <Select
               items={otpList}
               label={t('choose_otp', 'Choose the OTP Method')}
               onChange={setOtpId}
               defaultSelection={otpList[0]}
             />
-          </Row>
-          <Row padding={{ top: 'large' }}>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 'var(--padding-size-large) 0 0 0',
+              boxSizing: 'border-box',
+            }}
+          >
             <Input
               defaultValue={otp}
               hasError={showOtpError}
@@ -202,15 +236,32 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
               label={t('type_otp', 'Type here One-Time-Password')}
               backgroundColor="gray5"
             />
-          </Row>
-          <Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              padding: 'var(--padding-size-extrasmall) 0 0 0',
+              boxSizing: 'border-box',
+            }}
+          >
             <ds-text color="error" size="small" overflow="break-word">
               {showOtpError &&
                 t('wrong_password', 'Wrong password, please check data and try again')}
               {!showOtpError && <br />}
             </ds-text>
-          </Row>
-          <Row orientation="vertical" crossAlignment="flex-start" padding={{ vertical: 'small' }}>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+              padding: 'var(--padding-size-small) 0',
+              boxSizing: 'border-box',
+            }}
+          >
             <ds-button
               onClick={submitOtpCb as (e: Event) => void}
               disabled={disableInputs}
@@ -218,14 +269,21 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
               width="fill"
               loading={loadingOtp}
             />
-          </Row>
-          <Row mainAlignment="flex-start">
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              boxSizing: 'border-box',
+            }}
+          >
             <ds-checkbox
               value={trustDevice}
               label={t('trust_device_and_ip', 'Trust this device and IP address')}
               onChange={(e: CustomEvent<{ value: boolean }>) => setTrustDevice(e.detail.value)}
             />
-          </Row>
+          </div>
         </form>
       )}
       {progress === formState.changePassword && (

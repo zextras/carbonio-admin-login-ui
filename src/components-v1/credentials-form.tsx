@@ -8,7 +8,8 @@ import i18next from 'i18next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { checkClassicUi } from '../services/login-page-services';
-import { Input, PasswordInput, Row } from '../ui-components';
+import { Input } from '../ui-components/components/Input';
+import { PasswordInput } from '../ui-components/components/PasswordInput';
 import { isSafeRedirect, setCookie } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -93,42 +94,63 @@ export const CredentialsForm = ({
       .catch(() => {});
   }, []);
 
-	return (
-		<form
-			onSubmit={(e) => e.preventDefault()}
-			style={{ width: '100%' }}
-			data-testid="credentials-form"
-		>
-			<Row padding={{ bottom: 'large' }}>
-				<Input
-					defaultValue={username}
-					disabled={disableInputs}
-					hasError={!!authError}
-					data-testid="username"
-					onChange={(e: any) => setUsername(e.target.value)}
-					label={t('username', 'Username')}
-					backgroundColor="gray5"
-				/>
-			</Row>
-			<Row padding={{ bottom: 'small' }}>
-				<PasswordInput
-					defaultValue={password}
-					disabled={disableInputs}
-					data-testid="password"
-					hasError={!!authError}
-					onChange={(e: any) => setPassword(e.target.value)}
-					label={t('password', 'Password')}
-					backgroundColor="gray5"
-				/>
-			</Row>
-			<ds-text color="error" size="small" overflow="break-word">
-				{authError || <br />}
-			</ds-text>
+  return (
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      style={{ width: '100%' }}
+      data-testid="credentials-form"
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 0 var(--padding-size-large) 0',
+          boxSizing: 'border-box',
+        }}
+      >
+        <Input
+          defaultValue={username}
+          disabled={disableInputs}
+          hasError={!!authError}
+          data-testid="username"
+          onChange={(e: any) => setUsername(e.target.value)}
+          label={t('username', 'Username')}
+          backgroundColor="gray5"
+        />
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 0 var(--padding-size-small) 0',
+          boxSizing: 'border-box',
+        }}
+      >
+        <PasswordInput
+          defaultValue={password}
+          disabled={disableInputs}
+          data-testid="password"
+          hasError={!!authError}
+          onChange={(e: any) => setPassword(e.target.value)}
+          label={t('password', 'Password')}
+          backgroundColor="gray5"
+        />
+      </div>
+      <ds-text color="error" size="small" overflow="break-word">
+        {authError || <br />}
+      </ds-text>
 
-      <Row
-        orientation="vertical"
-        crossAlignment="flex-start"
-        padding={{ bottom: 'large', top: 'small' }}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+          padding: 'var(--padding-size-small) 0 var(--padding-size-large) 0',
+          boxSizing: 'border-box',
+        }}
       >
         <ds-button
           style={{ height: '36px' }}
@@ -139,10 +161,18 @@ export const CredentialsForm = ({
           label={t('login', 'Login')}
           width="fill"
         />
-      </Row>
-      <Row mainAlignment="flex-end" padding={{ bottom: 'extralarge' }}>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          padding: '0 0 var(--padding-size-extralarge) 0',
+          boxSizing: 'border-box',
+        }}
+      >
         {samlButton}
-      </Row>
+      </div>
     </form>
   );
 };

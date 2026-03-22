@@ -22,7 +22,8 @@ import {
   ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
   ZM_AUTH_TOKEN,
 } from '../constants';
-import { Input, PasswordInput, Row } from '../ui-components';
+import { Input } from '../ui-components/components/Input';
+import { PasswordInput } from '../ui-components/components/PasswordInput';
 import { isSafeRedirect, saveCredentials, setCookie } from '../utils';
 
 export const submitChangePassword = (
@@ -306,83 +307,156 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
     ],
   );
 
-	return (
-		<form
-			onSubmit={submitChangePasswordCb}
-			style={{ width: '100%', height: 'auto', maxHeight: 'unset' }}
-		>
-			<input type="submit" style={{ display: 'none' }} />
-			<Row padding={{ bottom: 'large' }}>
-				<ds-text size="large" color="text" weight="bold">
-					{t('changePassword_title', 'Create a new password')}
-				</ds-text>
-			</Row>
-			<Row padding={{ top: 'large' }}>
-				<Input defaultValue={username} disabled label="Email" data-testid="email" />
-			</Row>
-			<Row padding={{ top: 'large' }}>
-				<PasswordInput
-					defaultValue={oldPassword}
-					hasError={showOldPasswordError}
-					onChange={onChangeOldPassword}
-					label={t('changePassword_oldPassword', 'Old password')}
-					backgroundColor="gray5"
-					data-testid="oldPassword"
-				/>
-			</Row>
-			{showOldPasswordError && (
-				<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-					<ds-text color="error" size="small" overflow="break-word">
-						{t('wrong_password', 'Wrong password, please check data and try again')}
-					</ds-text>
-				</Row>
-			)}
-			<Row padding={{ top: 'large' }}>
-				<PasswordInput
-					defaultValue={newPassword}
-					hasError={!!errorLabelNewPassword}
-					onChange={onChangeNewPassword}
-					label={t('changePassword_newPassword', 'New password')}
-					backgroundColor="gray5"
-					data-testid="newPassword"
-				/>
-			</Row>
-			{errorLabelNewPassword && (
-				<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-					<ds-text color="error" size="small" overflow="break-word">
-						{errorLabelNewPassword}
-					</ds-text>
-				</Row>
-			)}
-			<Row padding={{ top: 'large' }}>
-				<PasswordInput
-					defaultValue={confirmNewPassword}
-					hasError={!!errorLabelConfirmNewPassword}
-					onChange={onChangeConfirmNewPassword}
-					label={t('changePassword_confirmNewPassword', 'Confirm new password')}
-					backgroundColor="gray5"
-					data-testid="confirmNewPassword"
-				/>
-			</Row>
-			{errorLabelConfirmNewPassword && (
-				<Row padding={{ top: 'extrasmall' }} mainAlignment="flex-start">
-					<ds-text color="error" size="small" overflow="break-word">
-						{errorLabelConfirmNewPassword}
-					</ds-text>
-				</Row>
-			)}
-			<Row orientation="vertical" crossAlignment="flex-start" padding={{ vertical: 'medium' }}>
-				<ds-button
-					onClick={submitChangePasswordCb as (e: Event) => void}
-					label={t('changePassword_confirm_label', 'Change password and login')}
-					width="fill"
-					loading={isLoading}
-					disabled={!newPassword || confirmNewPassword !== newPassword || !!errorLabelNewPassword}
-					data-testid="submitChangePasswordBtn"
-				/>
-			</Row>
-		</form>
-	);
+  return (
+    <form
+      onSubmit={submitChangePasswordCb}
+      style={{ width: '100%', height: 'auto', maxHeight: 'unset' }}
+    >
+      <input type="submit" style={{ display: 'none' }} />
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 0 var(--padding-size-large) 0',
+          boxSizing: 'border-box',
+        }}
+      >
+        <ds-text size="large" color="text" weight="bold">
+          {t('changePassword_title', 'Create a new password')}
+        </ds-text>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 'var(--padding-size-large) 0 0 0',
+          boxSizing: 'border-box',
+        }}
+      >
+        <Input defaultValue={username} disabled label="Email" data-testid="email" />
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 'var(--padding-size-large) 0 0 0',
+          boxSizing: 'border-box',
+        }}
+      >
+        <PasswordInput
+          defaultValue={oldPassword}
+          hasError={showOldPasswordError}
+          onChange={onChangeOldPassword}
+          label={t('changePassword_oldPassword', 'Old password')}
+          backgroundColor="gray5"
+          data-testid="oldPassword"
+        />
+      </div>
+      {showOldPasswordError && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            padding: 'var(--padding-size-extrasmall) 0 0 0',
+            boxSizing: 'border-box',
+          }}
+        >
+          <ds-text color="error" size="small" overflow="break-word">
+            {t('wrong_password', 'Wrong password, please check data and try again')}
+          </ds-text>
+        </div>
+      )}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 'var(--padding-size-large) 0 0 0',
+          boxSizing: 'border-box',
+        }}
+      >
+        <PasswordInput
+          defaultValue={newPassword}
+          hasError={!!errorLabelNewPassword}
+          onChange={onChangeNewPassword}
+          label={t('changePassword_newPassword', 'New password')}
+          backgroundColor="gray5"
+          data-testid="newPassword"
+        />
+      </div>
+      {errorLabelNewPassword && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            padding: 'var(--padding-size-extrasmall) 0 0 0',
+            boxSizing: 'border-box',
+          }}
+        >
+          <ds-text color="error" size="small" overflow="break-word">
+            {errorLabelNewPassword}
+          </ds-text>
+        </div>
+      )}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 'var(--padding-size-large) 0 0 0',
+          boxSizing: 'border-box',
+        }}
+      >
+        <PasswordInput
+          defaultValue={confirmNewPassword}
+          hasError={!!errorLabelConfirmNewPassword}
+          onChange={onChangeConfirmNewPassword}
+          label={t('changePassword_confirmNewPassword', 'Confirm new password')}
+          backgroundColor="gray5"
+          data-testid="confirmNewPassword"
+        />
+      </div>
+      {errorLabelConfirmNewPassword && (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            padding: 'var(--padding-size-extrasmall) 0 0 0',
+            boxSizing: 'border-box',
+          }}
+        >
+          <ds-text color="error" size="small" overflow="break-word">
+            {errorLabelConfirmNewPassword}
+          </ds-text>
+        </div>
+      )}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+          padding: 'var(--padding-size-medium) 0',
+          boxSizing: 'border-box',
+        }}
+      >
+        <ds-button
+          onClick={submitChangePasswordCb as (e: Event) => void}
+          label={t('changePassword_confirm_label', 'Change password and login')}
+          width="fill"
+          loading={isLoading}
+          disabled={!newPassword || confirmNewPassword !== newPassword || !!errorLabelNewPassword}
+          data-testid="submitChangePasswordBtn"
+        />
+      </div>
+    </form>
+  );
 };
 
 export default ChangePasswordForm;
