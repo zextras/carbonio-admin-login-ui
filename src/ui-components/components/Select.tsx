@@ -11,7 +11,6 @@ import { useCallback, useMemo, useState } from 'react';
 import { getPaddingVar } from '../theme/theme-utils';
 import { INPUT_DIVIDER_COLOR } from './constants';
 import { Dropdown, type DropdownItem, type DropdownProps } from './Dropdown';
-import { Padding } from './Padding';
 import styles from './Select.module.css';
 
 type SelectItem = {
@@ -95,11 +94,9 @@ const DefaultLabelFactory = ({
             boxSizing: 'border-box',
           }}
         >
-          <Padding top="medium" width="100%">
-            <ds-text color="text" className={styles.customText}>
-              {selectedLabels}
-            </ds-text>
-          </Padding>
+          <ds-text color="text" className={styles.customText} style={{ width: '100%', paddingTop: 'var(--padding-size-medium)' }}>
+            {selectedLabels}
+          </ds-text>
           <div className={styles.label} style={labelStyle}>
             <ds-text size={hasSelection ? 'small' : 'medium'} color={labelColor}>
               {label}
