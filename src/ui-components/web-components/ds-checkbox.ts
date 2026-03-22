@@ -95,6 +95,7 @@ export class DsCheckbox extends LitElement {
           icon=${this.value ? 'CheckmarkSquare' : 'Square'}
           color="gray0"
           ?disabled=${this.disabled}
+          size="large"
         ></ds-icon>
       </div>
       ${this.label

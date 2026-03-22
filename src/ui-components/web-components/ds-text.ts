@@ -43,18 +43,9 @@ export class DsText extends LitElement {
       dsTextVars.color,
       resolveThemeColor(this.color, this.disabled ? 'disabled' : 'regular'),
     );
-
-    if (!this.style.getPropertyValue(dsTextVars.fontSize)) {
-      this.style.setProperty(dsTextVars.fontSize, theme.font.size[this.size]);
-    }
-
-    if (!this.style.getPropertyValue(dsTextVars.weight)) {
-      this.style.setProperty(dsTextVars.weight, String(theme.font.weight[this.weight]));
-    }
-
-    if (this.lineHeight !== undefined) {
-      this.style.setProperty('line-height', String(this.lineHeight));
-    }
+    this.style.setProperty(dsTextVars.fontSize, theme.font.size[this.size]);
+    this.style.setProperty(dsTextVars.weight, String(theme.font.weight[this.weight]));
+    this.style.setProperty('line-height', String(this.lineHeight));
 
     return html`<slot></slot>`;
   }
