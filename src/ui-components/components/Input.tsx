@@ -6,71 +6,33 @@
 
 import '../web-components/ds-divider';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useId, useMemo, useRef, useState } from 'react';
 
-import { useCombinedRefs } from '../hooks/useCombinedRefs';
 import { getPaddingVar, resolveThemeColor } from '../theme/theme-utils';
 import { type AnyColor } from '../types/utils';
 import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from './constants';
 import styles from './Input.module.css';
-import { InputContainer } from './InputContainer';
 
-type InputProps = React.HTMLAttributes<HTMLDivElement> & {
-  backgroundColor?: AnyColor;
-  disabled?: boolean;
-  textColor?: AnyColor;
-  borderColor?: AnyColor;
-  label?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputRef?: React.RefObject<HTMLInputElement> | null;
-  value?: string | number;
+export type InputProps = React.HTMLAttributes<HTMLDivElement> & {
   defaultValue?: string | number;
+  disabled?: boolean;
   hasError?: boolean;
-  autoFocus?: boolean;
-  autoComplete?: string;
-  inputName?: string;
-  CustomIcon?: React.ComponentType<{ hasError: boolean; hasFocus: boolean; disabled: boolean }>;
-  type?: string;
-  hideBorder?: boolean;
-  onEnter?: (e: KeyboardEvent) => void;
-  description?: string;
-  ref?: React.Ref<HTMLDivElement>;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  label?: string;
+  borderColor?: AnyColor;
 };
 
-type Input = React.Ref<InputProps & React.RefAttributes<HTMLDivElement>> & {
-  _newId?: number;
-};
-
-const Input = ({
-  autoFocus = false,
-  autoComplete = 'off',
-  borderColor = INPUT_DIVIDER_COLOR,
-  backgroundColor = INPUT_BACKGROUND_COLOR,
+export const Input = ({
   defaultValue,
   disabled = false,
-  textColor = 'text',
-  label,
-  inputRef = null,
-  value,
-  CustomIcon,
-  onChange,
   hasError = false,
-  inputName,
-  type = 'text',
-  hideBorder = false,
-  description,
-  ref,
-  ...rest
+  onChange,
+  label,
+  borderColor = INPUT_DIVIDER_COLOR,
 }: InputProps) => {
   const [hasFocus, setHasFocus] = useState(false);
-  const innerRef = useCombinedRefs<HTMLInputElement>(inputRef);
-  const [id] = useState(() => {
-    if (!Input._newId) {
-      Input._newId = 0;
-    }
-
-    return `input-${Input._newId++}`;
-  });
+  const innerRef = useRef<HTMLInputElement>(null);
+  const id = useId();
 
   const onInputFocus = useCallback(() => {
     if (!disabled && innerRef?.current) {
@@ -86,12 +48,9 @@ const Input = ({
   const dividerColor = useMemo<AnyColor>(
     () =>
       `${
-        (hideBorder && 'transparent') ||
-        (hasError && 'error') ||
-        (hasFocus && 'primary') ||
-        borderColor
+        (hasError && 'error') || (hasFocus && 'primary') || borderColor
       }${disabled ? '.disabled' : ''}`,
-    [borderColor, disabled, hasError, hasFocus, hideBorder],
+    [borderColor, disabled, hasError, hasFocus],
   );
 
   const labelColor = useMemo(() => {
@@ -102,16 +61,34 @@ const Input = ({
   const inputColor = useMemo<React.CSSProperties>(
     () =>
       ({
-        '--input-color': resolveThemeColor(String(textColor), 'regular'),
-        '--input-color-disabled': resolveThemeColor(String(textColor), 'disabled'),
+        '--input-color': resolveThemeColor('text', 'regular'),
+        '--input-color-disabled': resolveThemeColor('text', 'disabled'),
         '--label-color': labelColor,
       }) as React.CSSProperties,
-    [textColor, labelColor],
+    [labelColor],
   );
 
-  const descriptionTextColor = useMemo(
-    () => (hasError && 'error') || (hasFocus && 'primary') || 'secondary',
-    [hasError, hasFocus],
+  const containerStyle = useMemo<React.CSSProperties>(
+    () =>
+      ({
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexWrap: 'nowrap',
+        width: '100%',
+        height: 'fit-content',
+        padding: getPaddingVar({ horizontal: '0.75rem' }),
+        gap: '0.5rem',
+        borderRadius: 'var(--border-radius) var(--border-radius) 0 0',
+        boxSizing: 'border-box',
+        '--input-container-bg': resolveThemeColor(INPUT_BACKGROUND_COLOR, 'regular'),
+        '--input-container-bg-hover': resolveThemeColor(INPUT_BACKGROUND_COLOR, 'hover'),
+        '--input-container-bg-focus': resolveThemeColor(INPUT_BACKGROUND_COLOR, 'focus'),
+        '--input-container-bg-active': resolveThemeColor(INPUT_BACKGROUND_COLOR, 'active'),
+        '--input-container-bg-disabled': resolveThemeColor(INPUT_BACKGROUND_COLOR, 'disabled'),
+      }) as React.CSSProperties,
+    [],
   );
 
   return (
@@ -128,19 +105,10 @@ const Input = ({
         boxSizing: 'border-box',
       }}
     >
-      <InputContainer
-        ref={ref}
-        orientation="horizontal"
-        width="fill"
-        height="fit"
-        crossAlignment={'center'}
-        borderRadius="half"
-        background={backgroundColor}
+      <div
+        className={disabled ? styles.inputContainerDisabled : styles.inputContainer}
+        style={containerStyle}
         onClick={onInputFocus}
-        $disabled={disabled}
-        padding={{ horizontal: '0.75rem' }}
-        gap={'0.5rem'}
-        {...rest}
       >
         <div
           className={styles.relativeContainer}
@@ -161,16 +129,14 @@ const Input = ({
         >
           <input
             className={styles.input}
-            autoFocus={autoFocus || undefined}
-            autoComplete={autoComplete || 'off'}
+            autoComplete={'off'}
             ref={innerRef}
-            type={type}
+            type={'text'}
             onFocus={onInputFocus}
             onBlur={onInputBlur}
             id={id}
-            name={inputName ?? label}
+            name={label}
             defaultValue={defaultValue}
-            value={value}
             onChange={onChange}
             disabled={disabled}
             placeholder={label}
@@ -181,29 +147,8 @@ const Input = ({
             </label>
           )}
         </div>
-        {CustomIcon && (
-          <span style={{ display: 'flex', alignItems: 'center' }}>
-            <CustomIcon hasError={hasError} hasFocus={hasFocus} disabled={disabled} />
-          </span>
-        )}
-      </InputContainer>
+      </div>
       <ds-divider color={dividerColor}></ds-divider>
-      {description !== undefined && (
-        <ds-text
-          overflow="break-word"
-          size="extrasmall"
-          className={styles.inputDescription}
-          color={descriptionTextColor}
-          disabled={disabled}
-        >
-          {description}
-        </ds-text>
-      )}
     </div>
   );
 };
-
-Input._newId = 0;
-
-export { Input };
-export type { InputProps };

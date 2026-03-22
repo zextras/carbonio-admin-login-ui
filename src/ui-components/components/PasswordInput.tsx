@@ -8,9 +8,27 @@ import '../web-components/ds-icon';
 
 import React, { useCallback, useRef, useState } from 'react';
 
+import type { AnyColor } from '../types/utils';
 import { Input, type InputProps } from './Input';
 
-const PasswordInput = (props: InputProps) => {
+type Props = {
+  defaultValue: string | number;
+  disabled: boolean;
+  backgroundColor: AnyColor;
+  hasError: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  label: string;
+  borderColor: AnyColor;
+};
+
+const PasswordInput = ({
+  defaultValue,
+  disabled,
+  hasError,
+  onChange,
+  label,
+  borderColor,
+}: Props) => {
   const [show, setShow] = useState(false);
   const showRef = useRef(show);
 
@@ -53,7 +71,16 @@ const PasswordInput = (props: InputProps) => {
     [onShowClick],
   );
   return (
-    <Input ref={props.ref} {...props} type={show ? 'text' : 'password'} CustomIcon={CustomIcon} />
+    <Input
+      defaultValue={defaultValue}
+      disabled={disabled}
+      hasError={hasError}
+      onChange={onChange}
+      label={label}
+      borderColor={borderColor}
+      type={show ? 'text' : 'password'}
+      CustomIcon={CustomIcon}
+    />
   );
 };
 
