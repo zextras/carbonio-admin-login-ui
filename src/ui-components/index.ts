@@ -6,7 +6,6 @@
 /* eslint-disable-next-line @typescript-eslint/triple-slash-reference */
 /// <reference path="./css-modules.d.ts" />
 
-export * from './components/Dropdown';
 export * from './components/Input';
 export * from './components/PasswordInput';
 export { Select } from './components/Select';
