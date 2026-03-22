@@ -8,8 +8,8 @@ import '../web-components/ds-icon';
 
 import { useCallback, useMemo, useState } from 'react';
 
+import { getPaddingVar } from '../theme/theme-utils';
 import { INPUT_DIVIDER_COLOR } from './constants';
-import { Container } from './Container';
 import { Dropdown, type DropdownItem, type DropdownProps } from './Dropdown';
 import { Padding } from './Padding';
 import { Row } from './Row';
@@ -72,17 +72,18 @@ const DefaultLabelFactory = ({
 
   return (
     <>
-      <Container
-        orientation="horizontal"
-        width="fill"
-        crossAlignment="flex-end"
-        mainAlignment="space-between"
-        borderRadius="half"
-        padding={{
-          horizontal: 'large',
-          vertical: 'small',
-        }}
+      <div
         className={`${styles.container}${focus ? ` ${styles.containerFocused}` : ''}`}
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+          alignItems: 'flex-end',
+          justifyContent: 'space-between',
+          borderRadius: 'var(--border-radius) var(--border-radius) 0 0',
+          padding: getPaddingVar({ horizontal: 'large', vertical: 'small' }),
+          boxSizing: 'border-box',
+        }}
       >
         <Row takeAvailableSpace mainAlignment="unset">
           <Padding top="medium" width="100%">
@@ -99,7 +100,7 @@ const DefaultLabelFactory = ({
         <div className={styles.iconWrapper}>
           <ds-icon size="medium" icon={open ? 'ArrowUp' : 'ArrowDown'} color={iconColor}></ds-icon>
         </div>
-      </Container>
+      </div>
       <ds-divider color={open || focus ? 'primary' : INPUT_DIVIDER_COLOR}></ds-divider>
     </>
   );

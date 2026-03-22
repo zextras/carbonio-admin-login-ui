@@ -22,11 +22,10 @@ import React, {
 } from 'react';
 
 import { setupFloating } from '../floating-ui';
-import { resolveThemeColor } from '../theme/theme-utils';
+import { getPaddingVar, resolveThemeColor } from '../theme/theme-utils';
 import { type AnyColor } from '../types/utils';
 import { type IconName } from '../web-components/icon-registry';
 import { FOCUSABLE_SELECTOR } from './constants';
-import { Container } from './Container';
 import styles from './Dropdown.module.css';
 
 type ListItemContentProps = {
@@ -64,20 +63,27 @@ function PopperListItem({
   ...rest
 }: Readonly<PopperListItemProps>): React.JSX.Element {
   const containerStyle = useContainerElStyle(selected, selectedBackgroundColor);
+  const bgColor = selected && selectedBackgroundColor ? selectedBackgroundColor : undefined;
   return (
-    <Container
+    <div
       data-keep-open={keepOpen}
       className={clsx(styles.containerEl, selected && 'zapp-selected')}
-      style={containerStyle}
-      orientation="horizontal"
-      mainAlignment="flex-start"
-      padding={{ vertical: 'small', horizontal: 'large' }}
-      background={selected && selectedBackgroundColor ? selectedBackgroundColor : undefined}
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: getPaddingVar({ vertical: 'small', horizontal: 'large' }),
+        background: bgColor ? resolveThemeColor(String(bgColor), 'regular') : undefined,
+        borderRadius: 'var(--border-radius)',
+        boxSizing: 'border-box',
+        ...containerStyle,
+      }}
       onClick={onClick || undefined}
       tabIndex={0}
       data-testid={'dropdown-item'}
       {...rest}
-    ></Container>
+    ></div>
   );
 }
 

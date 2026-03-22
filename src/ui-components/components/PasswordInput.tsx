@@ -8,7 +8,6 @@ import '../web-components/ds-icon';
 
 import React, { useCallback, useRef, useState } from 'react';
 
-import { Container } from './Container';
 import { Input, type InputProps } from './Input';
 
 const PasswordInput = (props: InputProps) => {
@@ -33,10 +32,11 @@ const PasswordInput = (props: InputProps) => {
       hasFocus: boolean;
       disabled: boolean;
     }) => (
-      <Container
+      <div
         style={{
           cursor: disabled ? 'default' : 'pointer',
           userSelect: 'none',
+          display: 'flex',
         }}
         onClick={(ev: React.SyntheticEvent): void => {
           !disabled && onShowClick(ev);
@@ -48,7 +48,7 @@ const PasswordInput = (props: InputProps) => {
           color={(hasError && 'error') || (hasFocus && 'primary') || 'secondary'}
           disabled={disabled}
         ></ds-icon>
-      </Container>
+      </div>
     ),
     [onShowClick],
   );

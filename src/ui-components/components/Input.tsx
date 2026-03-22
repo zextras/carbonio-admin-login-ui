@@ -9,14 +9,13 @@ import '../web-components/ds-divider';
 import { useCallback, useMemo, useState } from 'react';
 
 import { useCombinedRefs } from '../hooks/useCombinedRefs';
-import { resolveThemeColor } from '../theme/theme-utils';
+import { getPaddingVar, resolveThemeColor } from '../theme/theme-utils';
 import { type AnyColor } from '../types/utils';
 import { INPUT_BACKGROUND_COLOR, INPUT_DIVIDER_COLOR } from './constants';
-import { Container, type ContainerProps } from './Container';
 import styles from './Input.module.css';
 import { InputContainer } from './InputContainer';
 
-type InputProps = ContainerProps & {
+type InputProps = React.HTMLAttributes<HTMLDivElement> & {
   backgroundColor?: AnyColor;
   disabled?: boolean;
   textColor?: AnyColor;
@@ -116,7 +115,19 @@ const Input = ({
   );
 
   return (
-    <Container height="fit" width="fill" crossAlignment="flex-start">
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: 'fit-content',
+        width: '100%',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        flexWrap: 'nowrap',
+        borderRadius: 'var(--border-radius)',
+        boxSizing: 'border-box',
+      }}
+    >
       <InputContainer
         ref={ref}
         orientation="horizontal"
@@ -131,14 +142,22 @@ const Input = ({
         gap={'0.5rem'}
         {...rest}
       >
-        <Container
+        <div
           className={styles.relativeContainer}
-          style={inputColor}
-          padding={{ vertical: label ? '0.0625rem' : '0.625rem' }}
-          mainAlignment={'flex-end'}
-          height={'fill'}
-          width={'fill'}
-          minHeight={'inherit'}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            flexWrap: 'nowrap',
+            borderRadius: 'var(--border-radius)',
+            boxSizing: 'border-box',
+            padding: getPaddingVar({ vertical: label ? '0.0625rem' : '0.625rem' }),
+            height: '100%',
+            width: '100%',
+            minHeight: 'inherit',
+            ...inputColor,
+          }}
         >
           <input
             className={styles.input}
@@ -161,7 +180,7 @@ const Input = ({
               {label}
             </label>
           )}
-        </Container>
+        </div>
         {CustomIcon && (
           <span style={{ display: 'flex', alignItems: 'center' }}>
             <CustomIcon hasError={hasError} hasFocus={hasFocus} disabled={disabled} />
@@ -180,7 +199,7 @@ const Input = ({
           {description}
         </ds-text>
       )}
-    </Container>
+    </div>
   );
 };
 
