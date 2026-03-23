@@ -18,7 +18,7 @@ i18n
       escapeValue: false,
     },
     missingKeyHandler: (lng, ns, key) => {
-      // eslint-disable-next-line no-console, no-undef
+      // eslint-disable-next-line no-console
       console.warn('Missing translation with key', key);
     },
     backend: {
