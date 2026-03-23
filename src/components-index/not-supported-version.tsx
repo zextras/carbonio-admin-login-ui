@@ -23,6 +23,6 @@ export const NotSupportedVersion = () => {
       autoHideTimeout={10000}
       severity="error"
       data-testid="not-supported-version"
-    />
+    ></ds-snackbar>
   );
 };
