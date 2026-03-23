@@ -3,10 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React from 'react';
-
-const PageLayoutV1 = React.lazy(() => import('./components-v1/page-layout'));
+import './components-v1/page-layout';
 
 export function LoginCE(): React.JSX.Element {
-	return <PageLayoutV1 isAdvanced={false} />;
+	return <page-layout is-advanced={false}></page-layout>;
 }

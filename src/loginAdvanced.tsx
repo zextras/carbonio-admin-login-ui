@@ -3,9 +3,10 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import './components-v1/page-layout';
+
 import { useEffect, useState } from 'react';
 
-import { PageLayout } from './components-v1/page-layout';
 import { getLoginSupported } from './services/login-page-services';
 
 type Versions = {
@@ -41,7 +42,7 @@ export function LoginAdvanced() {
   return (
     <>
       {versions && versions.version >= versions.minApiVersion && (
-        <PageLayout version={versions?.version} isAdvanced />
+        <page-layout version={versions?.version} is-advanced></page-layout>
       )}
       {notSupported && <error-page></error-page>}
     </>

@@ -178,6 +178,13 @@ declare global {
           },
           HTMLElement
         >;
+        'page-layout': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            version?: number;
+            'is-advanced'?: boolean;
+          },
+          HTMLElement
+        >;
       }
     }
   }
