@@ -7,13 +7,13 @@
 
 import '../components-index/not-supported-version';
 import '../components-index/server-not-responding';
+import './v2-login-manager';
 
 import { useEffect, useState } from 'react';
 
 import { doAuthLogout, getAuthSupported } from '../services/auth-configuration-service';
 import { type Configuration } from './credentials-form';
 import { V1LoginManager } from './v1-login-manager';
-import { V2LoginManager } from './v2-login-manager';
 
 export const FormSelector = ({
 	destinationUrl,
@@ -66,7 +66,13 @@ export const FormSelector = ({
 		configuration?.minApiVersion &&
 		configuration?.minApiVersion <= 2
 	)
-		return <V2LoginManager configuration={configuration} disableInputs={disableInputs} />;
+		return (
+			<v2-login-manager
+				destination-url={configuration.destinationUrl}
+				auth-methods={JSON.stringify(configuration.authMethods ?? [])}
+				disable-inputs={disableInputs}
+			></v2-login-manager>
+		);
 	if (
 		configuration.maxApiVersion &&
 		configuration.maxApiVersion >= 1 &&
