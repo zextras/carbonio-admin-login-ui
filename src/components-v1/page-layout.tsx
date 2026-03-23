@@ -5,6 +5,7 @@
  */
 
 import './browser-support-message';
+import './form-selector';
 import '../components-index/server-not-responding';
 import '../components-index/zimbra-form';
 
@@ -19,7 +20,6 @@ import logoCarbonio from '../assets/carbonio-admin-panel.svg';
 import { CARBONIO_LOGO_URL, CHROME, FIREFOX } from '../constants';
 import { getLoginConfig, type GetLoginConfigResponse } from '../services/login-page-services';
 import { prepareUrlForForward } from '../utils';
-import { FormSelector } from './form-selector';
 import styles from './page-layout.module.css';
 
 type ConfigBasicSettingsProps = {
@@ -239,7 +239,7 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
           )}
         </div>
         {isAdvanced ? (
-          <FormSelector domain={domain} destinationUrl={destinationUrl ?? ''} />
+          <form-selector domain={domain ?? null} destination-url={destinationUrl ?? ''}></form-selector>
         ) : (
           <zimbra-form destination-url={destinationUrl ?? ''}></zimbra-form>
         )}

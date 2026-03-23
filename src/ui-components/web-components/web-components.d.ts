@@ -171,6 +171,13 @@ declare global {
           },
           HTMLElement
         >;
+        'form-selector': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            'destination-url'?: string;
+            domain?: string | null;
+          },
+          HTMLElement
+        >;
       }
     }
   }
