@@ -50,7 +50,6 @@ export function App(): React.JSX.Element {
 
   return (
     <>
-      <LoginAdvanced />
       <Suspense fallback={<LoadingView />}>
         {errorResponse && <error-page></error-page>}
         {isLoading && <LoadingView />}
