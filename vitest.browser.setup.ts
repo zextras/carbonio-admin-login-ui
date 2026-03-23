@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import 'vitest-browser-react';
 
 import { afterAll, afterEach, beforeAll, beforeEach, vi } from 'vitest';
 

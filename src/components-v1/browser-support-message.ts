@@ -41,7 +41,7 @@ export class BrowserSupportMessage extends LitElement {
   }
 
   override render() {
-    const translated = i18next.t(this.i18nKey, {
+    const translated: string = i18next.t(this.i18nKey, {
       defaultValue: this.defaultValue,
     });
 
