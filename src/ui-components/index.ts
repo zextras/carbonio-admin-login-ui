@@ -9,6 +9,5 @@
 export * from './global';
 export * from './theme/theme';
 export * from './theme/theme-utils';
-export type { AnyColor } from './types/utils';
 export * from './web-components';
 export { type IconName } from './web-components/icon-registry';

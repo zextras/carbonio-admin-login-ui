@@ -97,7 +97,8 @@ export const setCookie = (cName: string, cValue: string, expDays?: number) => {
   document.cookie = `${cName}=${cValue}; ${expires || ''}; path=/`;
 };
 
-export const isSafeRedirect = (url: string) => {
+export const isSafeRedirect = (url?: string) => {
+  if (!url) return false;
   try {
     const parsed = new URL(url, window.location.origin);
     return parsed.origin === window.location.origin;

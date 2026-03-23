@@ -17,7 +17,6 @@ import backgroundImageRetina from '../assets/carbonio_light-retina.jpg';
 import logoCarbonio from '../assets/carbonio-admin-panel.svg';
 import { CARBONIO_LOGO_URL, CHROME, FIREFOX } from '../constants';
 import { getLoginConfig, type GetLoginConfigResponse } from '../services/login-page-services';
-import { useLoginConfigStore } from '../store/login/store';
 import { prepareUrlForForward } from '../utils';
 import { FormSelector } from './form-selector';
 import styles from './page-layout.module.css';
@@ -134,7 +133,6 @@ function processLoginConfig({
   }
 
   if (version === 3) {
-    useLoginConfigStore.setState(res);
     const v3Logo = applyV3Customization(res, _logo, setBg, setIsDefaultBg, setCopyrightBanner);
     setLogo(v3Logo);
   } else {
