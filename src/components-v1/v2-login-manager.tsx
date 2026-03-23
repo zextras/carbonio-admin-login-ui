@@ -12,7 +12,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
 import { saveCredentials } from '../utils';
-import ChangePasswordForm from './change-password-form';
 import { type Configuration } from './credentials-form';
 
 const formState = {
@@ -54,7 +53,6 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
   const [trustDevice, setTrustDevice] = useState(false);
 
   const [email, setEmail] = useState('');
-  const [loadingChangePassword, setLoadingChangePassword] = useState(false);
 
   const [snackbarNetworkError, setSnackbarNetworkError] = useState(false);
   const [detailNetworkModal, setDetailNetworkModal] = useState(false);
@@ -303,12 +301,10 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
         </form>
       )}
       {progress === formState.changePassword && (
-        <ChangePasswordForm
-          isLoading={loadingChangePassword}
-          setIsLoading={setLoadingChangePassword}
-          configuration={configuration}
+        <change-password-form
           username={email}
-        />
+          destination-url={configuration?.destinationUrl ?? ''}
+        ></change-password-form>
       )}
       <ds-snackbar
         open={snackbarNetworkError}

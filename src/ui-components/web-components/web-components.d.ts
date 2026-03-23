@@ -69,6 +69,13 @@ declare global {
           },
           HTMLElement
         >;
+        'change-password-form': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            username?: string;
+            'destination-url'?: string;
+          },
+          HTMLElement
+        >;
         'credentials-form': React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             'destination-url'?: string;

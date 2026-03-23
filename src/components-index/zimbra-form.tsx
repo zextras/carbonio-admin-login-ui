@@ -9,7 +9,6 @@ import '../components-v1/credentials-form';
 import i18next from 'i18next';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import ChangePasswordForm from '../components-v1/change-password-form';
 import { loginToCarbonioAdmin } from '../services/v2-service';
 
 const formState = {
@@ -24,7 +23,6 @@ export const ZimbraForm = ({ destinationUrl }: { destinationUrl: string }) => {
   const [authError, setAuthError] = useState<string | false>(false);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(formState.credentials);
-  const [loadingChangePassword, setLoadingChangePassword] = useState(false);
   const [email, setEmail] = useState('');
 
   const credentialsFormRef = useRef<HTMLElement>(null);
@@ -125,15 +123,10 @@ export const ZimbraForm = ({ destinationUrl }: { destinationUrl: string }) => {
         ></credentials-form>
       )}
       {progress === formState.changePassword && (
-        <ChangePasswordForm
-          isLoading={loadingChangePassword}
-          setIsLoading={setLoadingChangePassword}
-          configuration={{
-            destinationUrl: window.location.origin,
-            authMethods: ['zimbra'],
-          }}
+        <change-password-form
           username={email}
-        />
+          destination-url={window.location.origin}
+        ></change-password-form>
       )}
     </>
   );
