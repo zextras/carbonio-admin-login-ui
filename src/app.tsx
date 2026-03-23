@@ -6,11 +6,11 @@
 
 import './error-page';
 import './loading-view';
+import './login-ce';
 
 import React, { Suspense, useEffect, useState } from 'react';
 
 import { LoginAdvanced } from './loginAdvanced';
-import { LoginCE } from './loginCE';
 import { getAdvancedSupported } from './services/advanced-supported';
 
 type Error = {
@@ -54,7 +54,7 @@ export function App(): React.JSX.Element {
         {errorResponse && <error-page></error-page>}
         {isLoading && <loading-view></loading-view>}
         {supportedResponse && apiResponse.supported && <LoginAdvanced />}
-        {supportedResponse && !apiResponse.supported && <LoginCE />}
+        {supportedResponse && !apiResponse.supported && <login-ce></login-ce>}
       </Suspense>
     </>
   );
