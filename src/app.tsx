@@ -6,9 +6,11 @@
 
 import './error-page';
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
+import { LoadingView } from './loading-view';
 import { LoginAdvanced } from './loginAdvanced';
+import { LoginCE } from './loginCE';
 import { getAdvancedSupported } from './services/advanced-supported';
 
 type Error = {
@@ -48,14 +50,13 @@ export function App(): React.JSX.Element {
 
   return (
     <>
-      <ds-button label="pippo"></ds-button>
       <LoginAdvanced />
-      {/* <Suspense fallback={<LoadingView />}> */}
-      {/* {errorResponse && <error-page></error-page>} */}
-      {/*  {isLoading && <LoadingView />} */}
-      {/* {supportedResponse && apiResponse.supported && <LoginAdvanced />} */}
-      {/* {supportedResponse && !apiResponse.supported && <LoginCE />} */}
-      {/* </Suspense> */}
+      <Suspense fallback={<LoadingView />}>
+        {errorResponse && <error-page></error-page>}
+        {isLoading && <LoadingView />}
+        {supportedResponse && apiResponse.supported && <LoginAdvanced />}
+        {supportedResponse && !apiResponse.supported && <LoginCE />}
+      </Suspense>
     </>
   );
 }
