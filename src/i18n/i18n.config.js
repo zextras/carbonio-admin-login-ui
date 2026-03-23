@@ -22,7 +22,7 @@ i18n
       console.warn('Missing translation with key', key);
     },
     backend: {
-      loadPath: 'i18n/{{lng}}.json',
+      loadPath: 'translations/{{lng}}.json',
     },
   });
 

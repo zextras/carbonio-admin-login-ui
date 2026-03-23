@@ -1,26 +1,25 @@
 {
-	"compilerOptions": {
-		"plugins": [
-			{
-				"name": "ts-lit-plugin"
-			}
-		],
-		"target": "ESNext",
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"jsx": "react-jsx",
-		"noEmit": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noImplicitOverride": true,
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"useDefineForClassFields": true,
-		"noUnusedParameters": true,
-		"noUncheckedIndexedAccess": true,
-		"types": ["vitest/globals"],
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-		"skipLibCheck": true
-	}
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "ts-lit-plugin"
+      }
+    ],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitOverride": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "useDefineForClassFields": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
+    "types": ["vitest/globals"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true
+  }
 }
