@@ -7,9 +7,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports
 import React from 'react';
 
+import { type IconSize } from './ds-icon';
 import { type TextOverflow, type TextSize, type TextWeight } from './ds-text';
 import { type IconName } from './icon-registry';
-import { type IconSize } from './ds-icon';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';
@@ -98,6 +98,20 @@ declare global {
             'default-selection'?: { label: string; value: string };
             disabled?: boolean;
             onChange?: (e: CustomEvent<{ value: string; label: string }>) => void;
+          },
+          HTMLElement
+        >;
+        'ds-input': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            'default-value'?: string;
+            label?: string;
+            disabled?: boolean;
+            'has-error'?: boolean;
+            'border-color'?: string;
+            type?: 'text' | 'password' | 'email' | 'number';
+            name?: string;
+            autocomplete?: string;
+            onChange?: (e: CustomEvent<{ value: string }>) => void;
           },
           HTMLElement
         >;

@@ -11,7 +11,6 @@ import { map } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
-import { Input } from '../ui-components/components/Input';
 import { Select } from '../ui-components/components/Select';
 import { saveCredentials } from '../utils';
 import ChangePasswordForm from './change-password-form';
@@ -228,14 +227,13 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
               boxSizing: 'border-box',
             }}
           >
-            <Input
+            <ds-input
               defaultValue={otp}
               hasError={showOtpError}
               disabled={disableInputs}
               onChange={onChangeOtp}
               label={t('type_otp', 'Type here One-Time-Password')}
-              backgroundColor="gray5"
-            />
+            ></ds-input>
           </div>
           <div
             style={{
