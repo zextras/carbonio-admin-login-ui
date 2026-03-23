@@ -5,6 +5,7 @@
  */
 
 import './browser-support-message';
+import '../components-index/server-not-responding';
 
 import clsx from 'clsx';
 import i18next, { type TFunction } from 'i18next';
@@ -14,7 +15,6 @@ import { browserName } from 'react-device-detect';
 import backgroundImage from '../assets/carbonio_light.jpg';
 import backgroundImageRetina from '../assets/carbonio_light-retina.jpg';
 import logoCarbonio from '../assets/carbonio-admin-panel.svg';
-import { ServerNotResponding } from '../components-index/server-not-responding';
 import { CARBONIO_LOGO_URL, CHROME, FIREFOX } from '../constants';
 import { getLoginConfig, type GetLoginConfigResponse } from '../services/login-page-services';
 import { useLoginConfigStore } from '../store/login/store';
@@ -201,7 +201,7 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
     };
   }, [destinationUrl, t, domain, version, isAdvanced]);
 
-  if (serverError) return <ServerNotResponding />;
+  if (serverError) return <server-not-responding></server-not-responding>;
   if (!logo) return null;
 
   const logoHtml = (

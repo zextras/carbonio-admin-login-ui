@@ -72,6 +72,7 @@ declare global {
         'error-page': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
         'loading-view': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
         'not-supported-version': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+        'server-not-responding': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
         'ds-snackbar': React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             open?: boolean;

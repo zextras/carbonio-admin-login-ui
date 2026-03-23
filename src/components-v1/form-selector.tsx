@@ -6,10 +6,10 @@
  */
 
 import '../components-index/not-supported-version';
+import '../components-index/server-not-responding';
 
 import { useEffect, useState } from 'react';
 
-import { ServerNotResponding } from '../components-index/server-not-responding';
 import { doAuthLogout, getAuthSupported } from '../services/auth-configuration-service';
 import { type Configuration } from './credentials-form';
 import { V1LoginManager } from './v1-login-manager';
@@ -56,7 +56,7 @@ export const FormSelector = ({
 		}
 	}, [configuration]);
 
-	if (error) return <ServerNotResponding />;
+	if (error) return <server-not-responding></server-not-responding>;
 
 	if (configuration === null || !configuration.destinationUrl) return <div></div>;
 
