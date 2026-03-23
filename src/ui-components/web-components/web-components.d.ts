@@ -186,6 +186,7 @@ declare global {
           HTMLElement
         >;
         'login-ce': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+        'login-advanced': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
       }
     }
   }
