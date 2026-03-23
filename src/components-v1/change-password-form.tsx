@@ -22,7 +22,8 @@ import {
   ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
   ZM_AUTH_TOKEN,
 } from '../constants';
-import { Input } from '../ui-components/components/Input';
+import '../ui-components/web-components/ds-input';
+
 import { PasswordInput } from '../ui-components/components/PasswordInput';
 import { isSafeRedirect, saveCredentials, setCookie } from '../utils';
 
@@ -335,7 +336,12 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
           boxSizing: 'border-box',
         }}
       >
-        <Input defaultValue={username} disabled label="Email" data-testid="email" />
+        <ds-input
+          default-value={username}
+          disabled
+          label="Email"
+          data-testid="email"
+        ></ds-input>
       </div>
       <div
         style={{
@@ -351,7 +357,6 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
           hasError={showOldPasswordError}
           onChange={onChangeOldPassword}
           label={t('changePassword_oldPassword', 'Old password')}
-          backgroundColor="gray5"
           data-testid="oldPassword"
         />
       </div>
@@ -384,7 +389,6 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
           hasError={!!errorLabelNewPassword}
           onChange={onChangeNewPassword}
           label={t('changePassword_newPassword', 'New password')}
-          backgroundColor="gray5"
           data-testid="newPassword"
         />
       </div>
@@ -417,7 +421,6 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
           hasError={!!errorLabelConfirmNewPassword}
           onChange={onChangeConfirmNewPassword}
           label={t('changePassword_confirmNewPassword', 'Confirm new password')}
-          backgroundColor="gray5"
           data-testid="confirmNewPassword"
         />
       </div>

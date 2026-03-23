@@ -8,7 +8,6 @@ import i18next from 'i18next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { checkClassicUi } from '../services/login-page-services';
-import { Input } from '../ui-components/components/Input';
 import { PasswordInput } from '../ui-components/components/PasswordInput';
 import { isSafeRedirect, setCookie } from '../utils';
 
@@ -109,15 +108,14 @@ export const CredentialsForm = ({
           boxSizing: 'border-box',
         }}
       >
-        <Input
-          defaultValue={username}
-          disabled={disableInputs}
-          hasError={!!authError}
-          data-testid="username"
-          onChange={(e: any) => setUsername(e.target.value)}
-          label={t('username', 'Username')}
-          backgroundColor="gray5"
-        />
+        <ds-input
+           default-value={username}
+           disabled={disableInputs}
+           has-error={!!authError}
+           data-testid="username"
+           onChange={(e: CustomEvent<{ value: string }>) => setUsername(e.detail.value)}
+           label={t('username', 'Username')}
+         ></ds-input>
       </div>
       <div
         style={{
@@ -129,14 +127,13 @@ export const CredentialsForm = ({
         }}
       >
         <PasswordInput
-          defaultValue={password}
-          disabled={disableInputs}
-          data-testid="password"
-          hasError={!!authError}
-          onChange={(e: any) => setPassword(e.target.value)}
-          label={t('password', 'Password')}
-          backgroundColor="gray5"
-        />
+           defaultValue={password}
+           disabled={disableInputs}
+           data-testid="password"
+           hasError={!!authError}
+           onChange={(value: string) => setPassword(value)}
+           label={t('password', 'Password')}
+         />
       </div>
       <ds-text color="error" size="small" overflow="break-word">
         {authError || <br />}
