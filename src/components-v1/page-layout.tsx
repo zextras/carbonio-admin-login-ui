@@ -6,6 +6,7 @@
 
 import './browser-support-message';
 import '../components-index/server-not-responding';
+import '../components-index/zimbra-form';
 
 import clsx from 'clsx';
 import i18next, { type TFunction } from 'i18next';
@@ -237,11 +238,11 @@ export const PageLayout = ({ version, isAdvanced }: PageLayoutProps) => {
             logoHtml
           )}
         </div>
-        {/* {isAdvanced ? ( */}
-        <FormSelector domain={domain} destinationUrl={destinationUrl ?? ''} />
-        {/* ) : ( */}
-        {/* <ZimbraForm destinationUrl={destinationUrl ?? ''} /> */}
-        {/* )} */}
+        {isAdvanced ? (
+          <FormSelector domain={domain} destinationUrl={destinationUrl ?? ''} />
+        ) : (
+          <zimbra-form destination-url={destinationUrl ?? ''}></zimbra-form>
+        )}
 
         <div className={styles.bottomSection}>
           <div className={styles.browserSupportRow}>

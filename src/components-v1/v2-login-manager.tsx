@@ -121,13 +121,14 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
     const form = credentialsFormRef.current;
     if (!form) return;
 
-    const handleCredentialsSubmit = (e: CustomEvent<{ username: string; password: string }>) => {
-      submitCredentials(e.detail.username, e.detail.password);
+    const handleCredentialsSubmit = (e: Event) => {
+      const { username, password } = (e as CustomEvent<{ username: string; password: string }>).detail;
+      submitCredentials(username, password);
     };
-    form.addEventListener('credentials-submit', handleCredentialsSubmit as EventListener);
+    form.addEventListener('credentials-submit', handleCredentialsSubmit);
 
     return () => {
-      form.removeEventListener('credentials-submit', handleCredentialsSubmit as EventListener);
+      form.removeEventListener('credentials-submit', handleCredentialsSubmit);
     };
   }, [submitCredentials]);
 
