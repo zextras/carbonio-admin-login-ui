@@ -29,6 +29,24 @@ import {
 import { submitChangePassword } from '../services/change-password';
 import { isSafeRedirect, saveCredentials, setCookie } from '../utils';
 
+type PasswordErrorAttribute = {
+  n: string;
+  _content: string;
+};
+
+type PasswordErrorPayload = {
+  Body?: {
+    Fault?: {
+      Detail?: {
+        Error?: {
+          Code?: string;
+          a?: Array<PasswordErrorAttribute>;
+        };
+      };
+    };
+  };
+};
+
 @customElement('change-password-form')
 export class ChangePasswordForm extends LitElement {
   @property({ type: String })
@@ -123,13 +141,13 @@ export class ChangePasswordForm extends LitElement {
     this.loading = false;
   }
 
-  private handlePasswordError(payload: any): void {
+  private handlePasswordError(payload: PasswordErrorPayload): void {
     const t = i18next.t.bind(i18next);
     if (payload?.Body?.Fault?.Detail?.Error?.Code === INVALID_PASSWORD_ERR_CODE) {
       this.showOldPasswordError = false;
       const { a } = payload.Body.Fault.Detail.Error;
       let currNum = a
-        ? a.find((rec: any) => rec.n === BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY)
+        ? a.find((rec) => rec.n === BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY)
         : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_block_common_words', {
@@ -139,7 +157,7 @@ export class ChangePasswordForm extends LitElement {
         return;
       }
       currNum = a
-        ? a.find((rec: any) => rec.n === BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY)
+        ? a.find((rec) => rec.n === BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY)
         : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_block_personal_data', {
@@ -150,7 +168,7 @@ export class ChangePasswordForm extends LitElement {
         return;
       }
       currNum = a
-        ? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME)
+        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME)
         : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_maxLength', {
@@ -160,7 +178,7 @@ export class ChangePasswordForm extends LitElement {
         return;
       }
       currNum = a
-        ? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_LENGTH_ATTR_NAME)
+        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_LENGTH_ATTR_NAME)
         : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_minLength', {
@@ -170,7 +188,7 @@ export class ChangePasswordForm extends LitElement {
         return;
       }
       currNum = a
-        ? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_LOWERCASE_CHARS_ATTR_NAME)
+        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_LOWERCASE_CHARS_ATTR_NAME)
         : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_minLowerCaseChars', {
@@ -180,7 +198,7 @@ export class ChangePasswordForm extends LitElement {
         return;
       }
       currNum = a
-        ? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_NUMERIC_CHARS_ATTR_NAME)
+        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_NUMERIC_CHARS_ATTR_NAME)
         : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_minNumericChars', {
@@ -190,7 +208,7 @@ export class ChangePasswordForm extends LitElement {
         return;
       }
       currNum = a
-        ? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME)
+        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME)
         : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_minPunctuationChars', {
@@ -200,7 +218,7 @@ export class ChangePasswordForm extends LitElement {
         return;
       }
       currNum = a
-        ? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME)
+        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME)
         : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_minUppercaseChars', {
@@ -209,7 +227,7 @@ export class ChangePasswordForm extends LitElement {
         });
       }
       currNum = a
-        ? a.find((rec: any) => rec.n === ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS)
+        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS)
         : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_minDigitsOrPuncs', {

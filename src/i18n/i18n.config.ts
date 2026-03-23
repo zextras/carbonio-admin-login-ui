@@ -17,7 +17,7 @@ i18n
     interpolation: {
       escapeValue: false,
     },
-    missingKeyHandler: (lng, ns, key) => {
+    missingKeyHandler: (_lng, _ns, key) => {
       // eslint-disable-next-line no-console
       console.warn('Missing translation with key', key);
     },
