@@ -11,10 +11,9 @@ import { map } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { loginToCarbonioAdvancedAdmin, submitOtp } from '../services/v2-service';
-import { Select } from '../ui-components/components/Select';
 import { saveCredentials } from '../utils';
 import ChangePasswordForm from './change-password-form';
-import { type Configuration, CredentialsForm } from './credentials-form';
+import { type Configuration } from './credentials-form';
 
 const formState = {
   credentials: 'credentials',
@@ -40,14 +39,14 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
   const [loadingOtp, setLoadingOtp] = useState(false);
   const [progress, setProgress] = useState(formState.credentials);
 
-  const [authError, setAuthError] = useState(false);
+  const [authError, setAuthError] = useState<string | boolean>(false);
   const [showOtpError, setShowOtpError] = useState(false);
 
   const [otpList, setOtpList] = useState<Array<OtpItem>>([]);
   const [otpId, setOtpId] = useState('');
   const [otp, setOtp] = useState('');
   const onChangeOtp = useCallback(
-    (ev) => {
+    (ev: any) => {
       setOtp(ev.target.value);
     },
     [setOtp],
@@ -59,8 +58,12 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
 
   const [snackbarNetworkError, setSnackbarNetworkError] = useState(false);
   const [detailNetworkModal, setDetailNetworkModal] = useState(false);
+
+  const credentialsFormRef = useRef<HTMLElement>(null);
+  const offlineModalRef = useRef<HTMLElement>(null);
+
   const submitCredentials = useCallback(
-    async (username, password) => {
+    async (username: string, password: string) => {
       setLoadingCredentials(true);
       try {
         const res = await loginToCarbonioAdvancedAdmin(username, password);
@@ -116,6 +119,20 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
     [configuration?.destinationUrl, t],
   );
 
+  useEffect(() => {
+    const form = credentialsFormRef.current;
+    if (!form) return;
+
+    const handleCredentialsSubmit = (e: CustomEvent<{ username: string; password: string }>) => {
+      submitCredentials(e.detail.username, e.detail.password);
+    };
+    form.addEventListener('credentials-submit', handleCredentialsSubmit as EventListener);
+
+    return () => {
+      form.removeEventListener('credentials-submit', handleCredentialsSubmit as EventListener);
+    };
+  }, [submitCredentials]);
+
   const submitOtpCb = useCallback(
     (e: any) => {
       e.preventDefault();
@@ -147,8 +164,6 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
     [setSnackbarNetworkError],
   );
 
-  const offlineModalRef = useRef<HTMLElement>(null);
-
   useEffect(() => {
     const modal = offlineModalRef.current;
     if (!modal) return;
@@ -164,13 +179,14 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
   return (
     <>
       {progress === formState.credentials && (
-        <CredentialsForm
-          configuration={configuration}
-          disableInputs={!!disableInputs}
-          authError={authError}
-          submitCredentials={submitCredentials}
+        <credentials-form
+          ref={credentialsFormRef}
+          destination-url={configuration?.destinationUrl ?? ''}
+          auth-methods={JSON.stringify(configuration?.authMethods ?? [])}
+          disable-inputs={!!disableInputs}
+          auth-error={typeof authError === 'string' ? authError : ''}
           loading={loadingCredentials}
-        />
+        ></credentials-form>
       )}
       {progress === formState.waiting && (
         <div
@@ -211,11 +227,13 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
               boxSizing: 'border-box',
             }}
           >
-            <Select
+            <ds-select
               items={otpList}
               label={t('choose_otp', 'Choose the OTP Method')}
-              onChange={setOtpId}
-              defaultSelection={otpList[0]}
+              default-selection={otpList[0]}
+              onChange={(e: CustomEvent<{ value: string; label: string }>) =>
+                setOtpId(e.detail.value)
+              }
             />
           </div>
           <div
@@ -229,7 +247,7 @@ export const V2LoginManager = ({ configuration, disableInputs }: V2LoginManagerP
           >
             <ds-input
               defaultValue={otp}
-              hasError={showOtpError}
+              has-error={showOtpError}
               disabled={disableInputs}
               onChange={onChangeOtp}
               label={t('type_otp', 'Type here One-Time-Password')}
