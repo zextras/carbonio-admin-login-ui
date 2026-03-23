@@ -13,6 +13,7 @@ export { DsCheckbox } from './ds-checkbox';
 export { DsDivider } from './ds-divider';
 export { DsIcon } from './ds-icon';
 export { DsInput } from './ds-input';
+export { DsPasswordInput } from './ds-password-input';
 export { DsSelect } from './ds-select';
 export { DsSnackbar } from './ds-snackbar';
 export { DsSpinner } from './ds-spinner';

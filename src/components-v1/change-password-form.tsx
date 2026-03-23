@@ -23,8 +23,8 @@ import {
   ZM_AUTH_TOKEN,
 } from '../constants';
 import '../ui-components/web-components/ds-input';
+import '../ui-components/web-components/ds-password-input';
 
-import { PasswordInput } from '../ui-components/components/PasswordInput';
 import { isSafeRedirect, saveCredentials, setCookie } from '../utils';
 
 export const submitChangePassword = (
@@ -72,15 +72,15 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
   const [errorLabelConfirmNewPassword, setErrorLabelConfirmNewPassword] = useState('');
 
   const onChangeOldPassword = useCallback(
-    (ev) => setOldPassword(ev.target.value),
+    (e: CustomEvent<{ value: string }>) => setOldPassword(e.detail.value),
     [setOldPassword],
   );
   const onChangeNewPassword = useCallback(
-    (ev) => setNewPassword(ev.target.value),
+    (e: CustomEvent<{ value: string }>) => setNewPassword(e.detail.value),
     [setNewPassword],
   );
   const onChangeConfirmNewPassword = useCallback(
-    (ev) => setConfirmNewPassword(ev.target.value),
+    (e: CustomEvent<{ value: string }>) => setConfirmNewPassword(e.detail.value),
     [setConfirmNewPassword],
   );
 
@@ -352,13 +352,13 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
           boxSizing: 'border-box',
         }}
       >
-        <PasswordInput
-          defaultValue={oldPassword}
-          hasError={showOldPasswordError}
+        <ds-password-input
+          default-value={oldPassword}
+          has-error={showOldPasswordError}
           onChange={onChangeOldPassword}
           label={t('changePassword_oldPassword', 'Old password')}
           data-testid="oldPassword"
-        />
+        ></ds-password-input>
       </div>
       {showOldPasswordError && (
         <div
@@ -384,13 +384,13 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
           boxSizing: 'border-box',
         }}
       >
-        <PasswordInput
-          defaultValue={newPassword}
-          hasError={!!errorLabelNewPassword}
+        <ds-password-input
+          default-value={newPassword}
+          has-error={!!errorLabelNewPassword}
           onChange={onChangeNewPassword}
           label={t('changePassword_newPassword', 'New password')}
           data-testid="newPassword"
-        />
+        ></ds-password-input>
       </div>
       {errorLabelNewPassword && (
         <div
@@ -416,13 +416,13 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
           boxSizing: 'border-box',
         }}
       >
-        <PasswordInput
-          defaultValue={confirmNewPassword}
-          hasError={!!errorLabelConfirmNewPassword}
+        <ds-password-input
+          default-value={confirmNewPassword}
+          has-error={!!errorLabelConfirmNewPassword}
           onChange={onChangeConfirmNewPassword}
           label={t('changePassword_confirmNewPassword', 'Confirm new password')}
           data-testid="confirmNewPassword"
-        />
+        ></ds-password-input>
       </div>
       {errorLabelConfirmNewPassword && (
         <div

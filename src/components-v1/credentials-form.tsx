@@ -8,7 +8,7 @@ import i18next from 'i18next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { checkClassicUi } from '../services/login-page-services';
-import { PasswordInput } from '../ui-components/components/PasswordInput';
+import '../ui-components/web-components/ds-password-input';
 import { isSafeRedirect, setCookie } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -126,14 +126,14 @@ export const CredentialsForm = ({
           boxSizing: 'border-box',
         }}
       >
-        <PasswordInput
-           defaultValue={password}
+        <ds-password-input
+           default-value={password}
            disabled={disableInputs}
            data-testid="password"
-           hasError={!!authError}
-           onChange={(value: string) => setPassword(value)}
+           has-error={!!authError}
+           onChange={(e: CustomEvent<{ value: string }>) => setPassword(e.detail.value)}
            label={t('password', 'Password')}
-         />
+         ></ds-password-input>
       </div>
       <ds-text color="error" size="small" overflow="break-word">
         {authError || <br />}

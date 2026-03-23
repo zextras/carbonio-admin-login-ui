@@ -8,8 +8,8 @@
 import React from 'react';
 
 import { type IconSize } from './ds-icon';
-import { type TextOverflow, type TextSize, type TextWeight } from './ds-text';
 import { type IconName } from './icon-registry';
+import { type TextOverflow, type TextSize, type TextWeight } from './ds-text';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';
@@ -102,13 +102,26 @@ declare global {
           HTMLElement
         >;
         'ds-input': React.DetailedHTMLProps<
-          React.HTMLAttributes<HTMLElement> & {
+          Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
             'default-value'?: string;
             label?: string;
             disabled?: boolean;
             'has-error'?: boolean;
             'border-color'?: string;
             type?: 'text' | 'password' | 'email' | 'number';
+            name?: string;
+            autocomplete?: string;
+            onChange?: (e: CustomEvent<{ value: string }>) => void;
+          },
+          HTMLElement
+        >;
+        'ds-password-input': React.DetailedHTMLProps<
+          Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
+            'default-value'?: string;
+            label?: string;
+            disabled?: boolean;
+            'has-error'?: boolean;
+            'border-color'?: string;
             name?: string;
             autocomplete?: string;
             onChange?: (e: CustomEvent<{ value: string }>) => void;

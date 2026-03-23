@@ -7,7 +7,6 @@
 /// <reference path="./css-modules.d.ts" />
 
 export * from './components/Input';
-export * from './components/PasswordInput';
 export { Select } from './components/Select';
 export * from './global';
 export * from './theme/theme';
