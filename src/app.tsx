@@ -5,10 +5,10 @@
  */
 
 import './error-page';
+import './loading-view';
 
 import React, { Suspense, useEffect, useState } from 'react';
 
-import { LoadingView } from './loading-view';
 import { LoginAdvanced } from './loginAdvanced';
 import { LoginCE } from './loginCE';
 import { getAdvancedSupported } from './services/advanced-supported';
@@ -50,9 +50,9 @@ export function App(): React.JSX.Element {
 
   return (
     <>
-      <Suspense fallback={<LoadingView />}>
+      <Suspense fallback={<loading-view></loading-view>}>
         {errorResponse && <error-page></error-page>}
-        {isLoading && <LoadingView />}
+        {isLoading && <loading-view></loading-view>}
         {supportedResponse && apiResponse.supported && <LoginAdvanced />}
         {supportedResponse && !apiResponse.supported && <LoginCE />}
       </Suspense>

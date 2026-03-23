@@ -70,6 +70,7 @@ declare global {
           HTMLElement
         >;
         'error-page': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+        'loading-view': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
         'ds-snackbar': React.DetailedHTMLProps<
           React.HTMLAttributes<HTMLElement> & {
             open?: boolean;

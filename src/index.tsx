@@ -6,13 +6,13 @@
 
 import './i18n/i18n.config';
 import './index.css';
+import './loading-view';
 import './ui-components/web-components/';
 
 import { StrictMode, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { App } from './app';
-import { LoadingView } from './loading-view';
 
 function getAppRoot(): HTMLElement {
   const root = document.getElementById('app');
@@ -24,7 +24,7 @@ function getAppRoot(): HTMLElement {
 
 ReactDOM.createRoot(getAppRoot()).render(
   <StrictMode>
-    <Suspense fallback={<LoadingView />}>
+    <Suspense fallback={<loading-view></loading-view>}>
       <App />
     </Suspense>
   </StrictMode>,
