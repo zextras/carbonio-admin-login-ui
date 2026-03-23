@@ -69,6 +69,16 @@ declare global {
           },
           HTMLElement
         >;
+        'credentials-form': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            'destination-url'?: string;
+            'auth-methods'?: string;
+            'disable-inputs'?: boolean;
+            'auth-error'?: string;
+            loading?: boolean;
+          },
+          HTMLElement
+        >;
         'error-page': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
         'loading-view': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
         'not-supported-version': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;

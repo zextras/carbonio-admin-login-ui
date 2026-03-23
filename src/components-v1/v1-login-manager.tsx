@@ -11,7 +11,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { postV1Login } from '../services/v1-service';
 import { isSafeRedirect, saveCredentials } from '../utils';
-import { type Configuration, CredentialsForm } from './credentials-form';
+import { type Configuration } from './credentials-form';
 
 type V1LoginManagerProps = { configuration: Configuration; disableInputs: boolean };
 
@@ -20,10 +20,14 @@ export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerP
 
   const [loading, setLoading] = useState(false);
 
-  const [authError, setAuthError] = useState(false);
+  const [authError, setAuthError] = useState<string | boolean>(false);
 
   const [snackbarNetworkError, setSnackbarNetworkError] = useState(false);
   const [detailNetworkModal, setDetailNetworkModal] = useState(false);
+
+  const credentialsFormRef = useRef<HTMLElement>(null);
+  const snackbarRef = useRef<HTMLElement>(null);
+  const offlineModalRef = useRef<HTMLElement>(null);
 
   const submitCredentials = useCallback(
     async (username: string, password: string) => {
@@ -33,8 +37,8 @@ export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerP
         switch (res.status) {
           case 200:
             await saveCredentials(username, password);
-            if (isSafeRedirect(configuration.destinationUrl)) {
-              window.location.assign(configuration?.destinationUrl);
+            if (isSafeRedirect(configuration?.destinationUrl)) {
+              window.location.assign(configuration?.destinationUrl as string);
             } else {
               window.location.assign('/');
             }
@@ -72,8 +76,19 @@ export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerP
     [configuration?.destinationUrl, t],
   );
 
-  const snackbarRef = useRef<HTMLElement>(null);
-  const offlineModalRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const form = credentialsFormRef.current;
+    if (!form) return;
+
+    const handleCredentialsSubmit = (e: CustomEvent<{ username: string; password: string }>) => {
+      submitCredentials(e.detail.username, e.detail.password);
+    };
+    form.addEventListener('credentials-submit', handleCredentialsSubmit as EventListener);
+
+    return () => {
+      form.removeEventListener('credentials-submit', handleCredentialsSubmit as EventListener);
+    };
+  }, [submitCredentials]);
 
   useEffect(() => {
     const snackbar = snackbarRef.current;
@@ -105,13 +120,14 @@ export const V1LoginManager = ({ configuration, disableInputs }: V1LoginManagerP
 
   return (
     <>
-      <CredentialsForm
-        configuration={configuration}
-        disableInputs={disableInputs}
-        authError={authError}
-        submitCredentials={submitCredentials}
+      <credentials-form
+        ref={credentialsFormRef}
+        destination-url={configuration?.destinationUrl ?? ''}
+        auth-methods={JSON.stringify(configuration?.authMethods ?? [])}
+        disable-inputs={disableInputs}
+        auth-error={typeof authError === 'string' ? authError : ''}
         loading={loading}
-      />
+      ></credentials-form>
       <ds-snackbar
         ref={snackbarRef}
         open={snackbarNetworkError}
