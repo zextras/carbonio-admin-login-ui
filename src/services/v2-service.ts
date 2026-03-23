@@ -6,13 +6,13 @@
 
 import { deviceId, getDeviceModel } from '../utils';
 
-export function submitOtp(id: string, code: string, trustDevice: boolean) {
-	return fetch('/service/auth/v2/otp/validate', {
+export function submitOtp(id, code, trustDevice) {
+	return fetch('/zx/auth/v2/admin/otp/validate', {
 		method: 'POST',
 		headers: {
 			'X-Device-Model': getDeviceModel(),
 			'X-Device-Id': deviceId(),
-			'X-Service': 'WebUI',
+			'X-Service': 'WebAdminUI',
 			'Content-Type': 'application/json',
 			version: '2'
 		},
@@ -24,7 +24,7 @@ export function submitOtp(id: string, code: string, trustDevice: boolean) {
 	});
 }
 
-export function loginToCarbonioAdvancedAdmin(user:string, password:string) {
+export function loginToCarbonioAdvancedAdmin(user, password) {
 	return fetch(`/zx/auth/v2/admin/login`, {
 		method: 'POST',
 		headers: {
@@ -43,7 +43,7 @@ export function loginToCarbonioAdvancedAdmin(user:string, password:string) {
 	});
 }
 
-export function loginToCarbonioAdmin(username: string, password: string) {
+export function loginToCarbonioAdmin(username, password) {
 	return fetch(`/service/admin/soap/AuthRequest`, {
 		method: 'POST',
 		headers: {
