@@ -245,7 +245,6 @@ export class DsSelect extends LitElement {
       >
         ${this.items.map((item) => {
           const isSelected = item.value === this._selected?.value;
-          console.log({ isSelected }, { item: item.value });
           return html`
             <div
               class="dropdown-item"

@@ -9,20 +9,21 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 
 i18n
-	.use(Backend)
-	.use(LanguageDetector)
-	.init({
-		fallbackLng: 'en',
-		debug: false,
-		interpolation: {
-			escapeValue: false
-		},
-		missingKeyHandler: (lng, ns, key, fallbackValue) => {
-			console.warn('Missing translation with key', key);
-		},
-		backend: {
-			loadPath: 'i18n/{{lng}}.json'
-		}
-	});
+  .use(Backend)
+  .use(LanguageDetector)
+  .init({
+    fallbackLng: 'en',
+    debug: false,
+    interpolation: {
+      escapeValue: false,
+    },
+    missingKeyHandler: (lng, ns, key) => {
+      // eslint-disable-next-line no-console, no-undef
+      console.warn('Missing translation with key', key);
+    },
+    backend: {
+      loadPath: 'i18n/{{lng}}.json',
+    },
+  });
 
 export default i18n;

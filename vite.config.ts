@@ -65,7 +65,8 @@ export default defineConfig(({ command, mode }) => {
   const isDev = mode === 'development';
   const proxyTarget = getProxyTarget();
   if (isServeCommand) {
-    console.log('Proxy target:', `https://${proxyTarget}:6071`);
+    // eslint-disable-next-line no-console
+    console.log('Proxy target:', proxyTarget);
   }
 
   return {

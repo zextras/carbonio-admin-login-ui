@@ -3,22 +3,22 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
 import svgr from 'vite-plugin-svgr';
+import { defineConfig } from 'vitest/config';
 
 function getPlugins() {
-	return [
-		svgr({
-			svgrOptions: {
-				ref: true,
-				svgo: false,
-				titleProp: true,
-				exportType: 'default',
-			},
-			include: '**/*.svg',
-		}),
-	];
+  return [
+    svgr({
+      svgrOptions: {
+        ref: true,
+        svgo: false,
+        titleProp: true,
+        exportType: 'default',
+      },
+      include: '**/*.svg',
+    }),
+  ];
 }
 
 function browserProjectConfig() {
@@ -38,7 +38,7 @@ function browserProjectConfig() {
       include: ['**/*.browser.test.{ts,tsx}'],
       browser: {
         enabled: true,
-        provider: playwright() as any,
+        provider: playwright(),
         instances: [{ browser: 'chromium' as const }],
         viewport: { width: 834, height: 2000 },
         headless: !!process.env.CI,
@@ -49,7 +49,7 @@ function browserProjectConfig() {
       globals: true,
       css: true,
       clearMocks: true,
-      testTimeout: !!process.env.ci ? 20_000 : 10_000,
+      testTimeout: process.env.ci ? 20_000 : 10_000,
       hookTimeout: 15_000,
     },
     plugins: getPlugins(),

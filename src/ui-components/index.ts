@@ -3,8 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-/* eslint-disable-next-line @typescript-eslint/triple-slash-reference */
-/// <reference path="./css-modules.d.ts" />
 
 export * from './global';
 export * from './theme/theme';
