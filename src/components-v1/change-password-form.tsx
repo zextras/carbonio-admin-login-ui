@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import '../ui-components/web-components/ds-input';
+import '../ui-components/web-components/ds-password-input';
+
 import i18next from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -22,9 +25,6 @@ import {
   ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
   ZM_AUTH_TOKEN,
 } from '../constants';
-import '../ui-components/web-components/ds-input';
-import '../ui-components/web-components/ds-password-input';
-
 import { isSafeRedirect, saveCredentials, setCookie } from '../utils';
 
 export const submitChangePassword = (
@@ -336,12 +336,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
           boxSizing: 'border-box',
         }}
       >
-        <ds-input
-          default-value={username}
-          disabled
-          label="Email"
-          data-testid="email"
-        ></ds-input>
+        <ds-input default-value={username} disabled label="Email" data-testid="email"></ds-input>
       </div>
       <div
         style={{

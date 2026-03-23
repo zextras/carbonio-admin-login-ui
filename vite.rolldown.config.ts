@@ -20,14 +20,5 @@ export function createBootstrapRolldownOptions(): BuildOptions['rolldownOptions'
       },
       inlineDynamicImports: false,
     },
-    onwarn(warning, warn) {
-      if (
-        warning.code === 'SOURCEMAP_BROKEN' &&
-        warning.plugin === '@tailwindcss/vite:generate:build'
-      ) {
-        return;
-      }
-      warn(warning);
-    },
   };
 }

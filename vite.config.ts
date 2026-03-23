@@ -8,7 +8,6 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
-import tailwindcss from '@tailwindcss/vite';
 import { createBootstrapRolldownOptions } from './vite.rolldown.config';
 
 function getProxyTarget(): string {
@@ -89,7 +88,6 @@ export default defineConfig(({ command, mode }) => {
         include: '**/*.svg',
         exclude: '**/src/assets/**/*.svg',
       }),
-      tailwindcss(),
     ],
 
     css: {
