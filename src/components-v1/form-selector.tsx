@@ -5,9 +5,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import '../components-index/not-supported-version';
+
 import { useEffect, useState } from 'react';
 
-import { NotSupportedVersion } from '../components-index/not-supported-version';
 import { ServerNotResponding } from '../components-index/server-not-responding';
 import { doAuthLogout, getAuthSupported } from '../services/auth-configuration-service';
 import { type Configuration } from './credentials-form';
@@ -74,5 +75,5 @@ export const FormSelector = ({
 	)
 		return <V1LoginManager configuration={configuration} disableInputs={disableInputs} />;
 
-	return <NotSupportedVersion />;
+	return <not-supported-version></not-supported-version>;
 };
