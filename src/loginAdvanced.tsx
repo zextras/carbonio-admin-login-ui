@@ -43,7 +43,7 @@ export function LoginAdvanced() {
       {versions && versions.version >= versions.minApiVersion && (
         <PageLayout version={versions?.version} isAdvanced />
       )}
-      {/* {notSupported && <ErrorPage />} */}
+      {notSupported && <error-page></error-page>}
     </>
   );
 }

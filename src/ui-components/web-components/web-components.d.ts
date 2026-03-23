@@ -163,6 +163,14 @@ declare global {
           },
           HTMLElement
         >;
+        'v1-login-manager': React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLElement> & {
+            'destination-url'?: string;
+            'auth-methods'?: string;
+            'disable-inputs'?: boolean;
+          },
+          HTMLElement
+        >;
       }
     }
   }
