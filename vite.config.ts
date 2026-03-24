@@ -6,6 +6,7 @@
 
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
+import swc from 'unplugin-swc';
 
 import { createBootstrapRolldownOptions } from './vite.rolldown.config';
 
@@ -71,6 +72,17 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     plugins: [
+      swc.vite({
+        jsc: {
+          parser: {
+            syntax: 'typescript',
+            decorators: true,
+          },
+          transform: {
+            decoratorVersion: '2023-11',
+          },
+        },
+      }),
       svgr({
         svgrOptions: {
           ref: true,
