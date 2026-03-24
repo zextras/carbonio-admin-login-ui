@@ -4,6 +4,4 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-// Side-effect imports to load global type declarations
-import "./fonts/fonts.d.ts";
-import "./web-components/web-components.d.ts";
+import './fonts/fonts.d.ts';

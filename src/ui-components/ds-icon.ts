@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import '../theme/theme.css';
+import './theme/theme.css';
 
 import { css, html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
-import { resolveThemeColor } from '../theme/theme-utils';
+import { resolveThemeColor } from './theme/theme-utils';
 import { type IconName, iconRegistry } from './icon-registry';
 
 const ICON_SIZES = ['small', 'medium', 'large'] as const;

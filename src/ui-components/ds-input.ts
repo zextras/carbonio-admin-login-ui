@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../theme/theme.css';
+import './theme/theme.css';
 
 import { html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { resolveThemeColor } from '../theme/theme-utils';
+import { resolveThemeColor } from './theme/theme-utils';
 import { inputStyles } from './ds-input.styles';
 
 const INPUT_BACKGROUND_COLOR = 'gray5';

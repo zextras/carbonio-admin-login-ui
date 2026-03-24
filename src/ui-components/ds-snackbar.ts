@@ -8,7 +8,7 @@ import { html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { resolveThemeColor } from '../theme/theme-utils';
+import { resolveThemeColor } from './theme/theme-utils';
 import { snackbarStyles } from './ds-snackbar.styles';
 import { type IconName } from './icon-registry';
 

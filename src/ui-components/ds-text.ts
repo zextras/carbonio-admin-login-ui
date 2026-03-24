@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import '../theme/theme.css';
+import './theme/theme.css';
 
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { type Theme, theme } from '../theme/theme';
-import { resolveThemeColor } from '../theme/theme-utils';
+import { type Theme, theme } from './theme/theme';
+import { resolveThemeColor } from './theme/theme-utils';
 import { dsTextVars, textStyles } from './ds-text.styles';
 
 export type TextSize = keyof Theme['font']['size'];

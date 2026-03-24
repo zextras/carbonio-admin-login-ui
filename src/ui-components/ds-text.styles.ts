@@ -6,7 +6,7 @@
 
 import { css, unsafeCSS } from 'lit';
 
-import { theme } from '../theme/theme';
+import { theme } from './theme/theme';
 
 export const dsTextVars = {
   fontSize: '--ds-text-font-size',

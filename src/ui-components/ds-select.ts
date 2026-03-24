@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../theme/theme.css';
+import './theme/theme.css';
 
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { setupFloating } from '../floating-ui';
+import { setupFloating } from './floating-ui';
 import { selectStyles } from './ds-select.styles';
 
 type SelectItem = {

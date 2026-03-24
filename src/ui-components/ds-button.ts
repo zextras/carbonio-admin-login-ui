@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import '../theme/theme.css';
+import './theme/theme.css';
 
 import { html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { resolveThemeColor } from '../theme/theme-utils';
+import { resolveThemeColor } from './theme/theme-utils';
 import { buttonStyles } from './ds-button.styles';
 import { dsTextVars } from './ds-text.styles';
 import { type IconName } from './icon-registry';

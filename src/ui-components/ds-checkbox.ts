@@ -3,12 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import '../theme/theme.css';
+import './theme/theme.css';
 
 import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { resolveThemeColor } from '../theme/theme-utils';
+import { resolveThemeColor } from './theme/theme-utils';
 
 @customElement('ds-checkbox')
 export class DsCheckbox extends LitElement {
