@@ -9,10 +9,10 @@ import { html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { resolveThemeColor } from './theme/theme-utils';
 import { buttonStyles } from './ds-button.styles';
 import { dsTextVars } from './ds-text.styles';
 import { type IconName } from './icon-registry';
+import { resolveThemeColor } from './theme/theme-utils';
 
 type ButtonSize = 'extrasmall' | 'small' | 'medium' | 'large' | 'extralarge';
 type ButtonWidth = 'fit' | 'fill';

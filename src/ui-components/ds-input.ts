@@ -11,8 +11,8 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
-import { resolveThemeColor } from './theme/theme-utils';
 import { inputStyles } from './ds-input.styles';
+import { resolveThemeColor } from './theme/theme-utils';
 
 const INPUT_BACKGROUND_COLOR = 'gray5';
 const INPUT_DIVIDER_COLOR = 'gray3';

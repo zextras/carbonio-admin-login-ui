@@ -57,14 +57,10 @@
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
     "core-js": "^3.37.1",
-    "darkreader": "^4.9.87",
     "i18next": "^22.5.1",
     "i18next-browser-languagedetector": "^6.1.8",
     "i18next-http-backend": "^1.4.5",
-    "moment": "^2.29.4",
-    "polished": "^4.2.2",
-    "vite-plugin-svgr": "^4.5.0",
-    "zustand": "3.6.9"
+    "vite-plugin-svgr": "^4.5.0"
   },
   "browserslist": [
     ">1%",
