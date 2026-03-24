@@ -12,7 +12,7 @@ module.exports = {
 			}
 		}
 	},
-	plugins: ['notice', 'jest'],
+	plugins: ['notice'],
 	rules: {
 		'arrow-body-style': 'off',
 		'prefer-arrow-callback': 'off',
