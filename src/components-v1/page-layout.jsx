@@ -273,6 +273,11 @@ LinkText.propTypes = {
 	primaryColor: PropTypes.string
 };
 
+const getSafeRedirectUrl = (url) => {
+	if (url === null) return null;
+	return isSafeRedirect(url) ? prepareUrlForForward(url) : '/';
+};
+
 export default function PageLayout({ version, isAdvanced }) {
 	const [t] = useTranslation();
 	const screenMode = useScreenMode();
@@ -280,11 +285,7 @@ export default function PageLayout({ version, isAdvanced }) {
 	const [serverError, setServerError] = useState(false);
 
 	const urlParams = new URLSearchParams(window.location.search);
-	const rawDestinationUrl = urlParams.get('destinationUrl');
-	const safeRedirectUrl =
-		rawDestinationUrl && isSafeRedirect(rawDestinationUrl)
-			? prepareUrlForForward(rawDestinationUrl)
-			: '/';
+	const safeRedirectUrl = getSafeRedirectUrl(urlParams.get('destinationUrl'));
 	const [destinationUrl, setDestinationUrl] = useState(safeRedirectUrl);
 	const [domain, setDomain] = useState(urlParams.get('domain'));
 
