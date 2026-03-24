@@ -13,8 +13,7 @@ import CredentialsForm from './credentials-form';
 import OfflineModal from './modals';
 import Spinner from './spinner';
 import { postV1Login } from '../services/v1-service';
-import { saveCredentials } from '../utils';
-import { isSafeRedirect } from '../services/v2-service';
+import { isSafeRedirect, saveCredentials } from '../utils';
 
 export default function V1LoginManager({
 	configuration,
