@@ -7,14 +7,9 @@ import js from '@eslint/js';
 import typescriptParser from '@typescript-eslint/parser';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
-import { dirname } from 'path';
 import tseslint from 'typescript-eslint';
-import { fileURLToPath } from 'url';
 
 import noticeConfig from './notice.config.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 export default tseslint.config(
   js.configs.recommended,
@@ -37,10 +32,6 @@ export default tseslint.config(
     },
     languageOptions: {
       parser: typescriptParser,
-      parserOptions: {
-        project: './tsconfig.eslint.json',
-        tsconfigRootDir: __dirname,
-      },
     },
     rules: {
       'no-console': ['error', { allow: ['error'] }],

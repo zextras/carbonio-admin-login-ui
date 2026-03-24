@@ -4,11 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import notice from 'eslint-plugin-notice';
-import { dirname, resolve } from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const noticeRule = {
   ignores: [
@@ -26,7 +21,7 @@ const noticeRule = {
     'notice/notice': [
       'error',
       {
-        templateFile: resolve(__dirname, 'notice.template.ts'),
+        templateFile: './notice.template.ts',
         templateVars: {
           year: new Date().getFullYear(),
           author: 'Zextras <https://www.zextras.com>',
