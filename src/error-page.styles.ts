@@ -14,8 +14,8 @@ export const errorPageStyles = css`
     justify-content: center;
     gap: 10px;
     background: var(--color-gray5-regular);
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
   }
   .horizontal-container {
     display: flex;

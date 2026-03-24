@@ -34,7 +34,7 @@ export class ErrorPage extends LitElement {
             >
               ${i18next.t(
                 'error.loading_page',
-                "We're sorry, but there was an error trying to load this page.",
+                'We’re sorry, but there was an error trying to load this page.',
               )}
             </ds-text>
           </div>
@@ -45,7 +45,7 @@ export class ErrorPage extends LitElement {
             <ds-button
               icon-placement="left"
               icon="Refresh"
-              label=${i18next.t('button.refresh_page', 'REFRESH')}
+              .label=${i18next.t('button.refresh_page', 'REFRESH')}
               type="outlined"
               color="primary"
               @click=${(): void => window.location.reload()}
