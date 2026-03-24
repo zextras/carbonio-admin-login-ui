@@ -7,7 +7,7 @@
 import './i18n/i18n.config';
 import './index.css';
 import './loading-view';
-import './ui-components/web-components/';
+import './ui-components/';
 import './app';
 
 function getAppRoot(): HTMLElement {

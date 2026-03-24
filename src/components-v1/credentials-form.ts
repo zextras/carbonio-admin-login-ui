@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../ui-components/web-components/ds-password-input';
-
 import i18next from 'i18next';
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -109,30 +107,34 @@ export class CredentialsForm extends LitElement {
     const t = i18next.t.bind(i18next);
 
     return html`
-      <form @submit=${(e: Event) => e.preventDefault()} style="width: 100%" data-testid="credentials-form">
+      <form
+        @submit=${(e: Event) => e.preventDefault()}
+        style="width: 100%"
+        data-testid="credentials-form"
+      >
         <div
           style="display: flex; align-items: center; justify-content: center; padding: 0 0 var(--padding-size-large) 0; box-sizing: border-box"
         >
           <ds-input
-             default-value=${this.username}
-             ?disabled=${this.disableInputs}
-             ?has-error=${!!this.authError}
-             data-testid="username"
-             @change=${this.handleUsernameChange}
-             label=${t('username', 'Username')}
-           ></ds-input>
+            default-value=${this.username}
+            ?disabled=${this.disableInputs}
+            ?has-error=${!!this.authError}
+            data-testid="username"
+            @change=${this.handleUsernameChange}
+            label=${t('username', 'Username')}
+          ></ds-input>
         </div>
         <div
           style="display: flex; align-items: center; justify-content: center; padding: 0 0 var(--padding-size-small) 0; box-sizing: border-box"
         >
           <ds-password-input
-             default-value=${this.password}
-             ?disabled=${this.disableInputs}
-             data-testid="password"
-             ?has-error=${!!this.authError}
-             @change=${this.handlePasswordChange}
-             label=${t('password', 'Password')}
-           ></ds-password-input>
+            default-value=${this.password}
+            ?disabled=${this.disableInputs}
+            data-testid="password"
+            ?has-error=${!!this.authError}
+            @change=${this.handlePasswordChange}
+            label=${t('password', 'Password')}
+          ></ds-password-input>
         </div>
         <ds-text color="error" size="small" overflow="break-word">
           ${this.authError || html`<br />`}
@@ -142,14 +144,14 @@ export class CredentialsForm extends LitElement {
           style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: var(--padding-size-small) 0 var(--padding-size-large) 0; box-sizing: border-box"
         >
           <ds-button
-             style="height: 36px"
-             ?loading=${this.loading}
-             data-testid="login"
-             @click=${this.handleSubmit}
-             ?disabled=${this.disableInputs}
-             label=${t('login', 'Login')}
-             width="fill"
-           ></ds-button>
+            style="height: 36px"
+            ?loading=${this.loading}
+            data-testid="login"
+            @click=${this.handleSubmit}
+            ?disabled=${this.disableInputs}
+            label=${t('login', 'Login')}
+            width="fill"
+          ></ds-button>
         </div>
         <div
           style="display: flex; align-items: center; justify-content: flex-end; padding: 0 0 var(--padding-size-extralarge) 0; box-sizing: border-box"

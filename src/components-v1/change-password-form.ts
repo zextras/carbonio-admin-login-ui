@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import '../ui-components/web-components/ds-input';
-import '../ui-components/web-components/ds-password-input';
-
 import i18next from 'i18next';
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
@@ -80,7 +77,11 @@ export class ChangePasswordForm extends LitElement {
     e.preventDefault();
     this.loading = true;
 
-    if (this.newPassword && this.confirmNewPassword === this.newPassword && !this.errorLabelNewPassword) {
+    if (
+      this.newPassword &&
+      this.confirmNewPassword === this.newPassword &&
+      !this.errorLabelNewPassword
+    ) {
       submitChangePassword(this.username, this.oldPassword, this.newPassword)
         .then(async (res) => {
           let payload;
@@ -120,13 +121,10 @@ export class ChangePasswordForm extends LitElement {
               break;
             default:
               this.showOldPasswordError = false;
-              this.errorLabelNewPassword = i18next.t(
-                'changePassword_error_minLowerCaseChars',
-                {
-                  defaultValue: 'Expecting at least {{num}} lowercase characters',
-                  replace: { num: 6 },
-                },
-              );
+              this.errorLabelNewPassword = i18next.t('changePassword_error_minLowerCaseChars', {
+                defaultValue: 'Expecting at least {{num}} lowercase characters',
+                replace: { num: 6 },
+              });
               this.loading = false;
           }
         })
@@ -156,9 +154,7 @@ export class ChangePasswordForm extends LitElement {
         });
         return;
       }
-      currNum = a
-        ? a.find((rec) => rec.n === BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY)
-        : undefined;
+      currNum = a ? a.find((rec) => rec.n === BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY) : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_block_personal_data', {
           defaultValue:
@@ -167,9 +163,7 @@ export class ChangePasswordForm extends LitElement {
         });
         return;
       }
-      currNum = a
-        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME)
-        : undefined;
+      currNum = a ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME) : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_maxLength', {
           defaultValue: 'Maximum length is {{num}} characters',
@@ -177,9 +171,7 @@ export class ChangePasswordForm extends LitElement {
         });
         return;
       }
-      currNum = a
-        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_LENGTH_ATTR_NAME)
-        : undefined;
+      currNum = a ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_LENGTH_ATTR_NAME) : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_minLength', {
           defaultValue: 'Minimum length is {{num}} characters',
@@ -226,9 +218,7 @@ export class ChangePasswordForm extends LitElement {
           replace: { num: currNum._content },
         });
       }
-      currNum = a
-        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS)
-        : undefined;
+      currNum = a ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS) : undefined;
       if (currNum) {
         this.errorLabelNewPassword = t('changePassword_error_minDigitsOrPuncs', {
           defaultValue: 'Expecting at least {{num}} numeric or punctuation characters',
