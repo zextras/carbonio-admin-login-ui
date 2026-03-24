@@ -42,19 +42,33 @@ describe('isSafeRedirect', () => {
 
 	describe('should block dangerous URLs', () => {
 		it.each([
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['https://evil.com', 'external domain'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['https://evil.com/phishing-page', 'external domain with path'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['http://mail.example.com/inbox', 'same host but different scheme (http vs https)'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['https://subdomain.mail.example.com', 'subdomain of current origin'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['https://mail.example.com.evil.com', 'origin embedded in attacker domain'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['//evil.com', 'protocol-relative external URL'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['javascript:alert(document.cookie)', 'javascript: scheme'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['javascript:void(0)', 'javascript:void'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['javascript:eval(alert(1))', 'javascript:eval'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['data:text/html,<script>alert(1)</script>', 'data: URI with script'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==', 'data: URI base64 encoded'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['vbscript:msgbox("xss")', 'vbscript: scheme'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['blob:https://evil.com/some-id', 'blob: URI'],
+			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['ftp://files.example.com/secret', 'ftp: scheme']
 		])('%s (%s)', (url) => {
 			expect(isSafeRedirect(url)).toBe(false);
