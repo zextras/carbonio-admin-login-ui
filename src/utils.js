@@ -120,8 +120,8 @@ export const setCookie = (cName, cValue, expDays) => {
 
 export const isSafeRedirect = (url) => {
 	try {
-		const parsed = new URL(url, window.location.origin);
-		return parsed.origin === window.location.origin;
+		const parsed = new URL(url, globalThis.location.origin);
+		return parsed.origin === globalThis.location.origin;
 	} catch {
 		return false;
 	}
