@@ -16,7 +16,7 @@
     "test:watch": "vitest --browser --watch --open",
     "test:ci": "vitest run --coverage"
   },
-  "author": "",
+  "author": "Zextras <https://www.zextras.com>",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.39.1",
