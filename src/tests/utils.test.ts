@@ -76,6 +76,9 @@ describe('isSafeRedirect', () => {
 	});
 
 	describe('edge cases', () => {
+		it('should block falsy values', () => {
+			expect(isSafeRedirect(null)).toBe(false);
+		});
 		it('should block URLs with credentials in them', () => {
 			expect(isSafeRedirect('https://user:pass@evil.com')).toBe(false);
 		});
