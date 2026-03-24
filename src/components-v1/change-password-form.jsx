@@ -297,7 +297,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			errorLabelNewPassword,
 			username,
 			oldPassword,
-			configuration.destinationUrl
+			configuration.destination
 		]
 	);
 
