@@ -24,7 +24,7 @@ import {
 	PASSWORD_LOCKED,
 	ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS
 } from '../constants';
-import { isSafeRedirect, saveCredentials, setCookie } from '../utils';
+import { saveCredentials, setCookie } from '../utils';
 
 export const submitChangePassword = (username, oldPassword, newPassword) => {
 	return fetch('/service/admin/soap/ChangePasswordRequest', {
@@ -118,11 +118,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 						switch (res.status) {
 							case 200:
 								await saveCredentials(username, newPassword);
-								if (isSafeRedirect(configuration.destination)) {
-									window.location.assign(configuration.destination);
-								} else {
-									window.location.assign('/');
-								}
+								window.location.assign(configuration.destinationUrl);
 								break;
 							case 401:
 							case 500:
@@ -297,7 +293,7 @@ const ChangePasswordForm = ({ isLoading, setIsLoading, username, configuration }
 			errorLabelNewPassword,
 			username,
 			oldPassword,
-			configuration.destination
+			configuration.destinationUrl
 		]
 	);
 

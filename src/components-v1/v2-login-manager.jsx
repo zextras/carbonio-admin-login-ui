@@ -22,7 +22,7 @@ import CredentialsForm from './credentials-form';
 import OfflineModal from './modals';
 import Spinner from './spinner';
 import { loginToCarbonioAdmin, submitOtp } from '../services/v2-service';
-import { saveCredentials, isSafeRedirect } from '../utils';
+import { saveCredentials } from '../utils';
 
 const formState = {
 	credentials: 'credentials',
@@ -83,11 +83,7 @@ export default function V2LoginManager({ configuration, disableInputs }) {
 						if (res.redirected) {
 							setProgress(formState.changePassword);
 						} else {
-							if (isSafeRedirect(configuration.destinationUrl)) {
-								window.location.assign(configuration.destinationUrl);
-							} else {
-								window.location.assign('/');
-							}
+							window.location.assign(configuration.destinationUrl);
 						}
 					} else {
 						setLoadingOtp(false);

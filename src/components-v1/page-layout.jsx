@@ -39,7 +39,7 @@ import { useGetPrimaryColor } from '../primary-color/use-get-primary-color';
 import { getLoginConfig } from '../services/login-page-services';
 import { useLoginConfigStore } from '../store/login/store';
 import { ThemeCallbacksContext } from '../theme-provider/theme-provider';
-import { prepareUrlForForward } from '../utils';
+import { isSafeRedirect, prepareUrlForForward } from '../utils';
 
 const LoginContainer = styled(Container)`
 	padding: 0 100px;
@@ -280,9 +280,12 @@ export default function PageLayout({ version, isAdvanced }) {
 	const [serverError, setServerError] = useState(false);
 
 	const urlParams = new URLSearchParams(window.location.search);
-	const [destinationUrl, setDestinationUrl] = useState(
-		prepareUrlForForward(urlParams.get('destinationUrl'))
-	);
+	const rawDestinationUrl = urlParams.get('destinationUrl');
+	const safeRedirectUrl =
+		rawDestinationUrl && isSafeRedirect(rawDestinationUrl)
+			? prepareUrlForForward(rawDestinationUrl)
+			: '/';
+	const [destinationUrl, setDestinationUrl] = useState(safeRedirectUrl);
 	const [domain, setDomain] = useState(urlParams.get('domain'));
 
 	const [bg, setBg] = useState(backgroundImage);
@@ -303,8 +306,11 @@ export default function PageLayout({ version, isAdvanced }) {
 		if (isAdvanced) {
 			getLoginConfig(version, domain, window.location.hostname)
 				.then((res) => {
-					if (!destinationUrl)
-						setDestinationUrl(prepareUrlForForward(res.adminConsolePublicUrl ?? res.publicUrl));
+					if (!destinationUrl) {
+						const targetUrl = prepareUrlForForward(res.adminConsolePublicUrl ?? res.publicUrl);
+						const destinationUrl = isSafeRedirect(targetUrl) ? targetUrl : '/';
+						setDestinationUrl(destinationUrl);
+					}
 					if (!domain) setDomain(res.zimbraDomainName);
 
 					if (componentIsMounted) {

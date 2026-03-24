@@ -10,7 +10,7 @@ import { Button, Input, PasswordInput, Row, Text } from '@zextras/carbonio-desig
 import { useTranslation } from 'react-i18next';
 
 import { checkClassicUi } from '../services/login-page-services';
-import { getCookieKeys, getCookie, setCookie, isSafeRedirect } from '../utils';
+import { getCookieKeys, getCookie, setCookie } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -59,13 +59,9 @@ export default function CredentialsForm({
 	);
 
 	const samlButtonCbk = useCallback(() => {
-		if (isSafeRedirect(configuration.destinationUrl)) {
-			window.location.assign(
-				`/zx/auth/startSamlWorkflow?redirectUrl=${configuration.destinationUrl}`
-			);
-		} else {
-			window.location.assign('/');
-		}
+		window.location.assign(
+			`/zx/auth/startSamlWorkflow?redirectUrl=${configuration.destinationUrl}`
+		);
 	}, [configuration]);
 	const samlButton = useMemo(() => {
 		if (configuration.authMethods.includes('saml')) {
