@@ -308,8 +308,8 @@ export default function PageLayout({ version, isAdvanced }) {
 				.then((res) => {
 					if (!destinationUrl) {
 						const targetUrl = prepareUrlForForward(res.adminConsolePublicUrl ?? res.publicUrl);
-						const destinationUrl = isSafeRedirect(targetUrl) ? targetUrl : '/';
-						setDestinationUrl(destinationUrl);
+						const safeDestinationUrl = isSafeRedirect(targetUrl) ? targetUrl : '/';
+						setDestinationUrl(safeDestinationUrl);
 					}
 					if (!domain) setDomain(res.zimbraDomainName);
 
