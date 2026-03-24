@@ -3,13 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import './theme/theme.css';
 
-import { html, LitElement, type TemplateResult } from 'lit';
+import { html, LitElement, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import { dsTextVars, textStyles } from './ds-text.styles';
-import { type Theme, theme } from './theme/theme';
+import { type Theme } from './theme/theme';
 import { resolveThemeColor } from './theme/theme-utils';
 
 export type TextSize = keyof Theme['font']['size'];
@@ -38,15 +37,16 @@ export class DsText extends LitElement {
   @property({ type: Number, attribute: 'line-height' })
   accessor lineHeight: number | undefined;
 
-  override render(): TemplateResult {
-    this.style.setProperty(
-      dsTextVars.color,
-      resolveThemeColor(this.color, this.disabled ? 'disabled' : 'regular'),
-    );
-    this.style.setProperty(dsTextVars.fontSize, theme.font.size[this.size]);
-    this.style.setProperty(dsTextVars.weight, String(theme.font.weight[this.weight]));
-    this.style.setProperty('line-height', String(this.lineHeight));
+  override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('color') || changedProperties.has('disabled')) {
+      this.style.setProperty(
+        dsTextVars.color,
+        resolveThemeColor(this.color, this.disabled ? 'disabled' : 'regular'),
+      );
+    }
+  }
 
+  override render(): TemplateResult {
     return html`<slot></slot>`;
   }
 }
