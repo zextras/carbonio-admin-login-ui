@@ -24,7 +24,7 @@ import {
   ZM_AUTH_TOKEN,
 } from '../constants';
 import { submitChangePassword } from '../services/change-password';
-import { isSafeRedirect, saveCredentials, setCookie } from '../utils';
+import { saveCredentials, setCookie } from '../utils';
 
 type PasswordErrorAttribute = {
   n: string;
@@ -101,11 +101,7 @@ export class ChangePasswordForm extends LitElement {
           switch (res.status) {
             case 200:
               await saveCredentials(this.username, this.newPassword);
-              if (isSafeRedirect(this.destinationUrl)) {
-                window.location.assign(this.destinationUrl);
-              } else {
-                window.location.assign('/');
-              }
+              window.location.assign(this.destinationUrl);
               break;
             case 401:
             case 500:

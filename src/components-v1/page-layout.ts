@@ -4,11 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import './browser-support-message';
-import './form-selector';
-import '../components-index/server-not-responding';
-import '../components-index/zimbra-form';
-
 import i18next from 'i18next';
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
@@ -19,7 +14,7 @@ import backgroundImageRetinaUrl from '../assets/carbonio_light-retina.jpg';
 import logoCarbonio from '../assets/carbonio-admin-panel.svg';
 import { CARBONIO_LOGO_URL } from '../constants';
 import { getLoginConfig } from '../services/login-page-services';
-import { prepareUrlForForward } from '../utils';
+import { isSafeRedirect, prepareUrlForForward } from '../utils';
 import { pageLayoutStyles } from './page-layout.styles';
 import { type Logo, processLoginConfig } from './page-layout-utils';
 
@@ -71,16 +66,13 @@ export class PageLayout extends LitElement {
     }
 
     try {
-      const res = await getLoginConfig(
-        this.version,
-        this.domain,
-        window.location.hostname,
-      );
+      const res = await getLoginConfig(this.version, this.domain, window.location.hostname);
 
       if (!this._isConnected) return;
 
       if (!this.destinationUrl) {
-        this.destinationUrl = prepareUrlForForward(res.adminConsolePublicUrl ?? res.publicUrl) ?? '';
+        this.destinationUrl =
+          prepareUrlForForward(res.adminConsolePublicUrl ?? res.publicUrl) ?? '';
       }
       if (!this.domain) {
         this.domain = res.zimbraDomainName ?? '';
@@ -111,11 +103,19 @@ export class PageLayout extends LitElement {
     }
   }
 
+  private getSafeRedirectUrl = (url: string | null) => {
+    if (url === null) return null;
+    return isSafeRedirect(url) ? prepareUrlForForward(url) : '/';
+  };
+
   override connectedCallback(): void {
     super.connectedCallback();
     this._isConnected = true;
 
-    this.destinationUrl = prepareUrlForForward(this._urlParams.get('destinationUrl') ?? '') ?? '';
+    this.destinationUrl = this.getSafeRedirectUrl(
+      prepareUrlForForward(this._urlParams.get('destinationUrl')),
+    );
+
     this.domain = this._urlParams.get('domain');
 
     this.fetchLoginConfig();
@@ -169,9 +169,7 @@ export class PageLayout extends LitElement {
 
     if (this.copyrightBanner) {
       return html`
-        <ds-text size="small" overflow="break-word">
-          ${this.copyrightBanner}
-        </ds-text>
+        <ds-text size="small" overflow="break-word"> ${this.copyrightBanner} </ds-text>
       `;
     }
 
@@ -200,12 +198,11 @@ export class PageLayout extends LitElement {
     return html`
       <div
         class=${classMap(containerClasses)}
-        style="--background-image: url(${this.bg}); --background-image-retina: url(${backgroundImageRetinaUrl});"
+        style="--background-image: url(${this
+          .bg}); --background-image-retina: url(${backgroundImageRetinaUrl});"
       >
         <div class="formWrapper" data-testid="form-container">
-          <div class="logoSection">
-            ${this.renderLogo()}
-          </div>
+          <div class="logoSection">${this.renderLogo()}</div>
 
           ${this.isAdvanced
             ? html`
@@ -214,9 +211,7 @@ export class PageLayout extends LitElement {
                   destination-url=${this.destinationUrl}
                 ></form-selector>
               `
-            : html`
-                <zimbra-form destination-url=${this.destinationUrl}></zimbra-form>
-              `}
+            : html` <zimbra-form destination-url=${this.destinationUrl}></zimbra-form> `}
 
           <div class="bottomSection">
             <div class="browserSupportRow">
@@ -229,8 +224,8 @@ export class PageLayout extends LitElement {
               </div>
               <ds-text size="small" color="secondary" weight="light">
                 <browser-support-message
-                  is-supported-browser=${this.isSupportedBrowser}
-                  is-advanced=${this.isAdvanced}
+                  .is-supported-browser=${this.isSupportedBrowser}
+                  .is-advanced=${this.isAdvanced}
                 ></browser-support-message>
               </ds-text>
             </div>

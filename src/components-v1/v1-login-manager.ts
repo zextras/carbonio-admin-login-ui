@@ -11,7 +11,7 @@ import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import { postV1Login } from '../services/v1-service';
-import { isSafeRedirect, saveCredentials } from '../utils';
+import { saveCredentials } from '../utils';
 
 @customElement('v1-login-manager')
 export class V1LoginManager extends LitElement {
@@ -37,7 +37,8 @@ export class V1LoginManager extends LitElement {
   private accessor detailNetworkModal = false;
 
   private handleSubmitCredentials = async (e: Event): Promise<void> => {
-    const { username, password } = (e as CustomEvent<{ username: string; password: string }>).detail;
+    const { username, password } = (e as CustomEvent<{ username: string; password: string }>)
+      .detail;
     const t = i18next.t.bind(i18next);
 
     this.loading = true;
@@ -46,11 +47,7 @@ export class V1LoginManager extends LitElement {
       switch (res.status) {
         case 200:
           await saveCredentials(username, password);
-          if (isSafeRedirect(this.destinationUrl)) {
-            window.location.assign(this.destinationUrl);
-          } else {
-            window.location.assign('/');
-          }
+          window.location.assign(this.destinationUrl);
           break;
         case 401:
           this.authError = t(

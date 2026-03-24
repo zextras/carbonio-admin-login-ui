@@ -9,7 +9,7 @@ import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import { checkClassicUi } from '../services/login-page-services';
-import { isSafeRedirect, setCookie } from '../utils';
+import { setCookie } from '../utils';
 
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -79,11 +79,7 @@ export class CredentialsForm extends LitElement {
   }
 
   private handleSamlClick(): void {
-    if (isSafeRedirect(this.destinationUrl)) {
-      window.location.assign(`/zx/auth/startSamlWorkflow?redirectUrl=${this.destinationUrl}`);
-    } else {
-      window.location.assign('/');
-    }
+    window.location.assign(`/zx/auth/startSamlWorkflow?redirectUrl=${this.destinationUrl}`);
   }
 
   private renderSamlButton(): TemplateResult {
@@ -92,7 +88,7 @@ export class CredentialsForm extends LitElement {
         <ds-button
           type="outlined"
           data-testid="loginSaml"
-          label=${i18next.t('login_saml', 'Login SAML')}
+          .label=${i18next.t('login_saml', 'Login SAML')}
           color="primary"
           ?disabled=${this.disableInputs}
           @click=${this.handleSamlClick}
