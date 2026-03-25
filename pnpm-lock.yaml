@@ -36,6 +36,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.56.1
         version: 8.57.2(eslint@9.39.4)(typescript@5.9.3)
+      '@vitest/browser':
+        specifier: ^4.1.1
+        version: 4.1.1(msw@2.12.14(@types/node@22.19.15)(typescript@5.9.3))(vite@8.0.2(@types/node@22.19.15)(esbuild@0.27.4)(tsx@4.21.0))(vitest@4.1.1)
       '@vitest/browser-playwright':
         specifier: ^4.1.0
         version: 4.1.1(msw@2.12.14(@types/node@22.19.15)(typescript@5.9.3))(playwright@1.58.2)(vite@8.0.2(@types/node@22.19.15)(esbuild@0.27.4)(tsx@4.21.0))(vitest@4.1.1)
@@ -111,6 +114,9 @@ importers:
       vitest:
         specifier: ^4.1.0
         version: 4.1.1(@types/node@22.19.15)(@vitest/browser-playwright@4.1.1)(@vitest/browser-preview@4.1.1)(@vitest/ui@4.1.1)(jsdom@26.1.0)(msw@2.12.14(@types/node@22.19.15)(typescript@5.9.3))(vite@8.0.2(@types/node@22.19.15)(esbuild@0.27.4)(tsx@4.21.0))
+      vitest-browser-lit:
+        specifier: ^1.0.1
+        version: 1.0.1(lit@3.3.2)(vitest@4.1.1)
 
 packages:
 
@@ -2696,6 +2702,13 @@ packages:
         optional: true
       yaml:
         optional: true
+
+  vitest-browser-lit@1.0.1:
+    resolution: {integrity: sha512-gwstjT/pwWqk1TIk6KgcZCEPyDp69mxOPFXtyZs0wuGt7FPkLh+ihMrlvYKyT6o8S21ee6BpZsONwPAcC2ImQg==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      lit: '>3.0.0'
+      vitest: '>=4.0.0'
 
   vitest@4.1.1:
     resolution: {integrity: sha512-yF+o4POL41rpAzj5KVILUxm1GCjKnELvaqmU9TLLUbMfDzuN0UpUR9uaDs+mCtjPe+uYPksXDRLQGGPvj1cTmA==}
@@ -5384,6 +5397,11 @@ snapshots:
       esbuild: 0.27.4
       fsevents: 2.3.3
       tsx: 4.21.0
+
+  vitest-browser-lit@1.0.1(lit@3.3.2)(vitest@4.1.1):
+    dependencies:
+      lit: 3.3.2
+      vitest: 4.1.1(@types/node@22.19.15)(@vitest/browser-playwright@4.1.1)(@vitest/browser-preview@4.1.1)(@vitest/ui@4.1.1)(jsdom@26.1.0)(msw@2.12.14(@types/node@22.19.15)(typescript@5.9.3))(vite@8.0.2(@types/node@22.19.15)(esbuild@0.27.4)(tsx@4.21.0))
 
   vitest@4.1.1(@types/node@22.19.15)(@vitest/browser-playwright@4.1.1)(@vitest/browser-preview@4.1.1)(@vitest/ui@4.1.1)(jsdom@26.1.0)(msw@2.12.14(@types/node@22.19.15)(typescript@5.9.3))(vite@8.0.2(@types/node@22.19.15)(esbuild@0.27.4)(tsx@4.21.0)):
     dependencies:

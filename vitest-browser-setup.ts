@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import 'vitest-browser-lit';
 
 import { afterAll, afterEach, beforeAll, beforeEach, vi } from 'vitest';
 
