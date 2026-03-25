@@ -5,6 +5,12 @@
         "name": "ts-lit-plugin"
       }
     ],
+    "strict": true,
+    "noEmitOnError": true,
+    "verbatimModuleSyntax": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
@@ -18,8 +24,6 @@
     "noUnusedParameters": true,
     "noUncheckedIndexedAccess": true,
     "types": ["vitest/globals"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "skipLibCheck": true
   }
 }

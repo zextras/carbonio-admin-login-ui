@@ -11,7 +11,7 @@ import swc from 'unplugin-swc';
 import { createBootstrapRolldownOptions } from './vite.rolldown.config';
 
 function getProxyTarget(): string {
-  const target = process.env.VITE_TARGET || 'localhost';
+  const target = process.env['VITE_TARGET'] || 'localhost';
   return `https://${target}:6071`;
 }
 

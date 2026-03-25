@@ -136,7 +136,7 @@ export class DsInput extends LitElement {
 
     return html`
       <div class="input-wrapper">
-        <div
+        <label
           class=${classMap({ 'input-container': true })}
           style=${styleMap(containerBgStyles)}
           data-disabled=${String(this.disabled)}
@@ -161,9 +161,11 @@ export class DsInput extends LitElement {
               ?disabled=${this.disabled}
               placeholder=${this.label || ''}
             />
-            ${this.label
-              ? html` <label class="label" for="ds-input">${this.label}</label> `
-              : nothing}
+            ${
+              this.label
+                ? html` <label class="label" for="ds-input">${this.label}</label> `
+                : nothing
+            }
           </div>
         </div>
         <span class="icon-slot">

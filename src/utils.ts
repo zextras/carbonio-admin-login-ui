@@ -154,10 +154,9 @@ export const setCookie = (cName: string, cValue: string, expDays?: number) => {
   document.cookie = `${cName}=${cValue}; ${expires || ''}; path=/`;
 };
 
-export const isSafeRedirect = (url) => {
+export const isSafeRedirect = (url: string | null) => {
   if (typeof url !== 'string') return false;
   try {
-    // eslint-disable-next-line no-undef
     const parsed = new URL(url, globalThis.location.origin);
     if (/[\\]/.test(url)) return false;
     return ['http:', 'https:'].includes(parsed.protocol);

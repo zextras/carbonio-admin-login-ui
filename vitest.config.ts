@@ -7,6 +7,7 @@ import { playwright } from '@vitest/browser-playwright';
 import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
 
+const isCi = process?.env?.['CI'];
 function getPlugins() {
   return [
     svgr({
@@ -41,15 +42,15 @@ function browserProjectConfig() {
         provider: playwright(),
         instances: [{ browser: 'chromium' as const }],
         viewport: { width: 834, height: 2000 },
-        headless: !!process.env.CI,
-        screenshotFailures: !process.env.CI,
+        headless: !!isCi,
+        screenshotFailures: !isCi,
         providerOptions: { launch: { timeout: 60_000 } },
       },
       exclude: ['dist/**', 'node_modules/**'],
       globals: true,
       css: true,
       clearMocks: true,
-      testTimeout: process.env.ci ? 20_000 : 10_000,
+      testTimeout: isCi ? 20_000 : 10_000,
       hookTimeout: 15_000,
     },
     plugins: getPlugins(),

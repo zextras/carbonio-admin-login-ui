@@ -4,16 +4,20 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import js from '@eslint/js';
-import typescriptParser from '@typescript-eslint/parser';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
 import tseslint from 'typescript-eslint';
+import eslintPluginLit from 'eslint-plugin-lit';
+import eslintPluginWc from 'eslint-plugin-wc';
+import eslintPluginLitA11y from 'eslint-plugin-lit-a11y';
 
 import noticeConfig from './notice.config.js';
 
 export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  eslintPluginLit.configs['flat/recommended'],
+  eslintPluginWc.configs['flat/recommended'],
   {
     ignores: [
       'src/mockServiceWorker.js',
@@ -25,22 +29,52 @@ export default tseslint.config(
       '.reuse/template.js',
     ],
   },
+  // {
+  //   plugins: {
+  //     'lit-a11y': eslintPluginLitA11y,
+  //   },
+  //   rules: {
+  //     'lit-a11y/accessible-emoji': 'error',
+  //     'lit-a11y/accessible-name': 'error',
+  //     'lit-a11y/alt-text': 'error',
+  //     'lit-a11y/anchor-is-valid': 'error',
+  //     'lit-a11y/aria-activedescendant-has-tabindex': 'error',
+  //     'lit-a11y/aria-attr-valid-value': 'error',
+  //     'lit-a11y/aria-attrs': 'error',
+  //     'lit-a11y/aria-role': 'error',
+  //     'lit-a11y/aria-unsupported-elements': 'error',
+  //     'lit-a11y/autocomplete-valid': 'error',
+  //     'lit-a11y/click-events-have-key-events': 'error',
+  //     'lit-a11y/definition-list': 'error',
+  //     'lit-a11y/heading-hidden': 'error',
+  //     'lit-a11y/iframe-title': 'error',
+  //     'lit-a11y/img-redundant-alt': 'error',
+  //     'lit-a11y/list': 'error',
+  //     'lit-a11y/mouse-events-have-key-events': 'error',
+  //     'lit-a11y/no-access-key': 'error',
+  //     'lit-a11y/no-aria-slot': 'error',
+  //     'lit-a11y/no-autofocus': 'warn',
+  //     'lit-a11y/no-distracting-elements': 'error',
+  //     'lit-a11y/no-invalid-change-handler': 'error',
+  //     'lit-a11y/no-redundant-role': 'error',
+  //     'lit-a11y/obj-alt': 'error',
+  //     'lit-a11y/role-has-required-aria-attrs': 'error',
+  //     'lit-a11y/role-supports-aria-attr': 'error',
+  //     'lit-a11y/scope': 'error',
+  //     'lit-a11y/tabindex-no-positive': 'error',
+  //     'lit-a11y/valid-lang': 'error',
+  //   },
+  // },
   {
     plugins: {
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
     },
-    languageOptions: {
-      parser: typescriptParser,
-    },
     rules: {
       'no-console': ['error', { allow: ['error'] }],
       'unused-imports/no-unused-imports': 'error',
-      'unused-imports/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
-      '@typescript-eslint/no-unused-vars': 'error',
-      'no-duplicate-imports': 'error',
       '@typescript-eslint/ban-ts-comment': [
         'error',
         {

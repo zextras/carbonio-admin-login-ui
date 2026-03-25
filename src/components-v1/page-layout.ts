@@ -35,7 +35,7 @@ export class PageLayout extends LitElement {
   private accessor serverError = false;
 
   @state()
-  private accessor destinationUrl = '';
+  private accessor destinationUrl: string | null | undefined = '';
 
   @state()
   private accessor domain: string | null = null;
@@ -113,7 +113,7 @@ export class PageLayout extends LitElement {
     this._isConnected = true;
 
     this.destinationUrl = this.getSafeRedirectUrl(
-      prepareUrlForForward(this._urlParams.get('destinationUrl')),
+      prepareUrlForForward(this._urlParams.get('destinationUrl') ?? '') ?? '',
     );
 
     this.domain = this._urlParams.get('domain');
@@ -208,10 +208,10 @@ export class PageLayout extends LitElement {
             ? html`
                 <form-selector
                   domain=${this.domain ?? ''}
-                  destination-url=${this.destinationUrl}
+                  destination-url=${this.destinationUrl ?? ''}
                 ></form-selector>
               `
-            : html` <zimbra-form destination-url=${this.destinationUrl}></zimbra-form> `}
+            : html` <zimbra-form destination-url=${this.destinationUrl ?? ''}></zimbra-form> `}
 
           <div class="bottomSection">
             <div class="browserSupportRow">
