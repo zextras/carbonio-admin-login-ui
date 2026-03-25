@@ -219,7 +219,7 @@ export class V2LoginManager extends LitElement {
         <div
           style="display: flex; align-items: center; justify-content: center; padding: 0 0 var(--padding-size-large) 0; box-sizing: border-box"
         >
-          <ds-text size="large" color="text" weight="bold">
+          <ds-text as="h1" size="large" color="text" weight="bold">
             ${t('two_step_authentication', 'Two-Step-Authentication')}
           </ds-text>
         </div>
@@ -247,7 +247,7 @@ export class V2LoginManager extends LitElement {
         <div
           style="display: flex; align-items: center; justify-content: flex-start; padding: var(--padding-size-extrasmall) 0 0 0; box-sizing: border-box"
         >
-          <ds-text color="error" size="small" overflow="break-word">
+          <ds-text as="span" color="error" size="small" overflow="break-word">
             ${this.showOtpError
               ? t('wrong_password', 'Wrong password, please check data and try again')
               : html`<br />`}

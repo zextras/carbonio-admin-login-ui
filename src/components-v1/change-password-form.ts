@@ -267,7 +267,7 @@ export class ChangePasswordForm extends LitElement {
         <div
           style="display: flex; align-items: center; justify-content: center; padding: 0 0 var(--padding-size-large) 0; box-sizing: border-box"
         >
-          <ds-text size="large" color="text" weight="bold">
+          <ds-text as="h1" size="large" color="text" weight="bold">
             ${t('changePassword_title', 'Create a new password')}
           </ds-text>
         </div>
@@ -297,7 +297,7 @@ export class ChangePasswordForm extends LitElement {
               <div
                 style="display: flex; align-items: center; justify-content: flex-start; padding: var(--padding-size-extrasmall) 0 0 0; box-sizing: border-box"
               >
-                <ds-text color="error" size="small" overflow="break-word">
+                <ds-text as="span" color="error" size="small" overflow="break-word">
                   ${t('wrong_password', 'Wrong password, please check data and try again')}
                 </ds-text>
               </div>
@@ -319,7 +319,7 @@ export class ChangePasswordForm extends LitElement {
               <div
                 style="display: flex; align-items: center; justify-content: flex-start; padding: var(--padding-size-extrasmall) 0 0 0; box-sizing: border-box"
               >
-                <ds-text color="error" size="small" overflow="break-word">
+                <ds-text as="span" color="error" size="small" overflow="break-word">
                   ${this.errorLabelNewPassword}
                 </ds-text>
               </div>
@@ -341,7 +341,7 @@ export class ChangePasswordForm extends LitElement {
               <div
                 style="display: flex; align-items: center; justify-content: flex-start; padding: var(--padding-size-extrasmall) 0 0 0; box-sizing: border-box"
               >
-                <ds-text color="error" size="small" overflow="break-word">
+                <ds-text as="span" color="error" size="small" overflow="break-word">
                   ${this.errorLabelConfirmNewPassword}
                 </ds-text>
               </div>

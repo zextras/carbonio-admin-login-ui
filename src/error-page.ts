@@ -23,10 +23,11 @@ export class ErrorPage extends LitElement {
         </div>
         <div class="content-wrapper">
           <div class="text-group">
-            <ds-text style="--ds-text-font-size: 64px" weight="medium" color="primary">
+            <ds-text as="h1" style="--ds-text-font-size: 64px" weight="medium" color="primary">
               ${i18next.t('error.something_went_wrong', 'Something went wrong')}
             </ds-text>
             <ds-text
+              as="h2"
               overflow="break-word"
               style="--ds-text-font-size: 40px"
               weight="light"
@@ -39,7 +40,7 @@ export class ErrorPage extends LitElement {
             </ds-text>
           </div>
           <div class="row-wrapper">
-            <ds-text style="--ds-text-font-size: 24px" weight="regular" color="secondary">
+            <ds-text as="p" style="--ds-text-font-size: 24px" weight="regular" color="secondary">
               ${i18next.t('error.contact_support', 'Contact support or try refreshing the page')}
             </ds-text>
             <ds-button

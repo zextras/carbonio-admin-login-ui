@@ -181,6 +181,7 @@ export class DsButton extends LitElement {
                   })}
                 >
                   <ds-text
+                    as="span"
                     color="currentColor"
                     style=${`${dsTextVars.fontSize}: ${sizeConfig.label}`}
                   >

@@ -132,7 +132,7 @@ export class CredentialsForm extends LitElement {
             label=${t('password', 'Password')}
           ></ds-password-input>
         </div>
-        <ds-text color="error" size="small" overflow="break-word">
+        <ds-text as="span" color="error" size="small" overflow="break-word">
           ${this.authError || html`<br />`}
         </ds-text>
 

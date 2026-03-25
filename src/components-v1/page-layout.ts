@@ -169,12 +169,12 @@ export class PageLayout extends LitElement {
 
     if (this.copyrightBanner) {
       return html`
-        <ds-text size="small" overflow="break-word"> ${this.copyrightBanner} </ds-text>
+        <ds-text as="span" size="small" overflow="break-word"> ${this.copyrightBanner} </ds-text>
       `;
     }
 
     return html`
-      <ds-text size="small" overflow="break-word" data-testid="default-banner">
+      <ds-text as="span" size="small" overflow="break-word" data-testid="default-banner">
         ${t('copy_right', 'Copyright')} &copy; ${year} Zextras,
         ${t('all_rights_reserved', 'All rights reserved')}
       </ds-text>
@@ -222,7 +222,7 @@ export class PageLayout extends LitElement {
                   size="medium"
                 ></ds-icon>
               </div>
-              <ds-text size="small" color="secondary" weight="light">
+              <ds-text as="span" size="small" color="secondary" weight="light">
                 <browser-support-message
                   .is-supported-browser=${this.isSupportedBrowser}
                   .is-advanced=${this.isAdvanced}

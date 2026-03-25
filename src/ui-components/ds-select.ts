@@ -220,10 +220,10 @@ export class DsSelect extends LitElement {
       >
         <div class="trigger-inner">
           <div class="content-area">
-            <ds-text color="text" class="selected-text"> ${this._selected?.label ?? ''} </ds-text>
+            <ds-text as="span" color="text" class="selected-text"> ${this._selected?.label ?? ''} </ds-text>
           </div>
           <div class="label" data-has-selection=${String(this._hasSelection)}>
-            <ds-text size=${this._hasSelection ? 'small' : 'medium'} color=${this._accentColor}>
+            <ds-text as="label" size=${this._hasSelection ? 'small' : 'medium'} color=${this._accentColor}>
               ${this.label ?? ''}
             </ds-text>
           </div>
@@ -256,7 +256,7 @@ export class DsSelect extends LitElement {
               @keydown=${(e: KeyboardEvent): void => this._handleItemKeydown(e, item)}
             >
               <ds-icon icon=${isSelected ? 'CheckmarkSquare' : 'Square'} color="text"></ds-icon>
-              <ds-text color="text" weight=${isSelected ? 'bold' : 'regular'}
+              <ds-text as="span" color="text" weight=${isSelected ? 'bold' : 'regular'}
                 >${item.label}</ds-text
               >
             </div>

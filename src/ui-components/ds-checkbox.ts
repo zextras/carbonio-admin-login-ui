@@ -99,7 +99,7 @@ export class DsCheckbox extends LitElement {
         ></ds-icon>
       </div>
       ${this.label
-        ? html`<ds-text class="label" overflow="break-word" color="gray0">${this.label}</ds-text>`
+        ? html`<ds-text as="label" class="label" overflow="break-word" color="gray0">${this.label}</ds-text>`
         : null}
     `;
   }

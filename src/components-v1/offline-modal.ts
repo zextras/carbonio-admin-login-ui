@@ -78,7 +78,7 @@ export class OfflineModal extends LitElement {
       >
         <div class="modal-content">
           <div class="modal-header">
-            <ds-text id="offline-modal-title" class="modal-title" weight="bold">
+            <ds-text as="h2" id="offline-modal-title" class="modal-title" weight="bold">
               ${modalTitle}
             </ds-text>
             <ds-button
@@ -93,6 +93,7 @@ export class OfflineModal extends LitElement {
           <ds-divider></ds-divider>
           <div class="modal-body">
             <ds-text
+              as="p"
               id="offline-modal-description"
               overflow="break-word"
               line-height=${1.4}

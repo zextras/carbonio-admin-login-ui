@@ -90,7 +90,7 @@ export class DsSnackbar extends LitElement {
       <div class="snack-container" style=${containerStyles} data-testid="snackbar">
         <div class="snack-content">
           <ds-icon size="large" icon=${icons[this.severity]} color="gray6"></ds-icon>
-          <ds-text color="gray6" overflow="break-word">${this.label}</ds-text>
+          <ds-text as="span" color="gray6" overflow="break-word">${this.label}</ds-text>
           <ds-button
             label=${this.actionLabel}
             type="ghost"
