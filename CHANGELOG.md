@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.30](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.9.29...v0.9.30) (2026-03-25)
+
+
+### Bug Fixes
+
+* **root:** correct import sources in v1-login-manager ([6a2829e](https://github.com/zextras/carbonio-admin-login-ui/commit/6a2829e736337b87d4a6667b514569e780ecae28))
+
 ### [0.9.29](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.9.28...v0.9.29) (2026-02-24)
 
 ### [0.9.28](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.9.27...v0.9.28) (2026-02-23)
