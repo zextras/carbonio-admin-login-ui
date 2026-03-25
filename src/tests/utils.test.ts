@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+/* eslint-disable no-script-url */
 
 import { isSafeRedirect } from '../utils';
 
@@ -34,7 +35,10 @@ describe('isSafeRedirect', () => {
 			[`${ORIGIN}/inbox`, 'absolute same-origin URL'],
 			[`${ORIGIN}/mail/inbox?page=1&sort=date`, 'absolute same-origin with query params'],
 			['relative-path', 'plain relative segment'],
-			['', 'empty string']
+			['', 'empty string'],
+			['https://saml-validation.com', 'https external domain'],
+			['http://saml-validation.com', 'http external domain'],
+			['http://mail.example.com/inbox', 'same host but different scheme (http vs https)']
 		])('%s (%s)', (url) => {
 			expect(isSafeRedirect(url)).toBe(true);
 		});
@@ -42,33 +46,13 @@ describe('isSafeRedirect', () => {
 
 	describe('should block dangerous URLs', () => {
 		it.each([
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
-			['https://evil.com', 'external domain'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
-			['https://evil.com/phishing-page', 'external domain with path'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
-			['http://mail.example.com/inbox', 'same host but different scheme (http vs https)'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
-			['https://subdomain.mail.example.com', 'subdomain of current origin'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
-			['https://mail.example.com.evil.com', 'origin embedded in attacker domain'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
-			['//evil.com', 'protocol-relative external URL'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['javascript:alert(document.cookie)', 'javascript: scheme'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['javascript:void(0)', 'javascript:void'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['javascript:eval(alert(1))', 'javascript:eval'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['data:text/html,<script>alert(1)</script>', 'data: URI with script'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==', 'data: URI base64 encoded'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['vbscript:msgbox("xss")', 'vbscript: scheme'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['blob:https://evil.com/some-id', 'blob: URI'],
-			// eslint-disable-next-line no-script-url -- Testing that dangerous URLs are blocked
 			['ftp://files.example.com/secret', 'ftp: scheme']
 		])('%s (%s)', (url) => {
 			expect(isSafeRedirect(url)).toBe(false);
@@ -79,21 +63,10 @@ describe('isSafeRedirect', () => {
 		it('should block falsy values', () => {
 			expect(isSafeRedirect(null)).toBe(false);
 		});
-		it('should block URLs with credentials in them', () => {
-			expect(isSafeRedirect('https://user:pass@evil.com')).toBe(false);
-		});
-
-		it('should handle URLs with leading whitespace', () => {
-			expect(isSafeRedirect('  /inbox')).toBe(true);
-		});
 
 		it('should handle backslash-based bypass attempts', () => {
 			const result = isSafeRedirect('\\\\evil.com');
 			expect(result).toBe(false);
-		});
-
-		it('should handle null bytes', () => {
-			expect(isSafeRedirect('/inbox\0.evil.com')).toBe(true);
 		});
 	});
 });

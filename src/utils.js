@@ -121,10 +121,9 @@ export const setCookie = (cName, cValue, expDays) => {
 export const isSafeRedirect = (url) => {
 	if (typeof url !== 'string') return false;
 	try {
-		// eslint-disable-next-line no-undef
 		const parsed = new URL(url, globalThis.location.origin);
-		// eslint-disable-next-line no-undef
-		return parsed.origin === globalThis.location.origin;
+		if (/[\\]/.test(url)) return false;
+		return ['http:', 'https:'].includes(parsed.protocol);
 	} catch {
 		return false;
 	}
