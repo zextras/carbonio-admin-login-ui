@@ -21,3 +21,5 @@ package/src/
 
 .DS_Store
 /.eslintcache
+/.vitest-attachments
+*__screenshots__*
