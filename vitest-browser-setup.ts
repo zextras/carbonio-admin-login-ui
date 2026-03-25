@@ -6,21 +6,23 @@
 
 import { afterAll, afterEach, beforeAll, beforeEach, vi } from 'vitest';
 
+import { resetMockWorker, startMockWorker, stopMockWorker } from './tests-setup/browser/server';
+
 beforeAll(async () => {
-  // await startMockWorker();
+  await startMockWorker();
 });
 
 beforeEach(() => {
-  // resetMockWorker();
+  resetMockWorker();
 });
 
 afterAll(() => {
-  // stopMockWorker();
+  stopMockWorker();
   vi.clearAllMocks();
-  // resetMockWorker();
+  resetMockWorker();
 });
 
 afterEach(() => {
   vi.unstubAllGlobals();
-  // resetMockWorker();
+  resetMockWorker();
 });

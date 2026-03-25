@@ -5,6 +5,7 @@
  */
 import { playwright } from '@vitest/browser-playwright';
 import svgr from 'vite-plugin-svgr';
+import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
 
 const isCi = process?.env?.['CI'];
@@ -19,6 +20,23 @@ function getPlugins() {
       },
       include: '**/*.svg',
     }),
+  ];
+}
+
+function getBrowserPlugins() {
+  return [
+    swc.vite({
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          decorators: true,
+        },
+        transform: {
+          decoratorVersion: '2023-11',
+        },
+      },
+    }),
+    ...getPlugins(),
   ];
 }
 
@@ -82,10 +100,9 @@ function browserProjectConfig() {
       testTimeout: isCi ? 20_000 : 10_000,
       hookTimeout: 15_000,
     },
-    plugins: getPlugins(),
+    plugins: getBrowserPlugins(),
   };
 }
-
 export default defineConfig({
   server: {
     fs: {
