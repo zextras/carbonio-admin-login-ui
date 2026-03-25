@@ -18,6 +18,10 @@ export const dsTextVars = {
 export const textStyles = css`
   :host {
     display: block;
+  }
+
+  :host > * {
+    display: block;
     margin: 0;
     max-width: 100%;
     color: var(${unsafeCSS(dsTextVars.color)}, ${unsafeCSS(theme.color.text.regular)});
@@ -33,45 +37,45 @@ export const textStyles = css`
     font-family: var(--text-font-family, var(--font-family));
   }
 
-  :host([size='extrasmall']) {
+  :host([size='extrasmall']) > * {
     --ds-text-theme-size: ${unsafeCSS(theme.font.size.extrasmall)};
   }
 
-  :host([size='small']) {
+  :host([size='small']) > * {
     --ds-text-theme-size: ${unsafeCSS(theme.font.size.small)};
   }
 
-  :host([size='large']) {
+  :host([size='large']) > * {
     --ds-text-theme-size: ${unsafeCSS(theme.font.size.large)};
   }
 
-  :host([size='extralarge']) {
+  :host([size='extralarge']) > * {
     --ds-text-theme-size: ${unsafeCSS(theme.font.size.extralarge)};
   }
 
-  :host([weight='light']) {
+  :host([weight='light']) > * {
     --ds-text-theme-weight: ${unsafeCSS(theme.font.weight.light)};
   }
 
-  :host([weight='regular']) {
+  :host([weight='regular']) > * {
     --ds-text-theme-weight: ${unsafeCSS(theme.font.weight.regular)};
   }
 
-  :host([weight='medium']) {
+  :host([weight='medium']) > * {
     --ds-text-theme-weight: ${unsafeCSS(theme.font.weight.medium)};
   }
 
-  :host([weight='bold']) {
+  :host([weight='bold']) > * {
     --ds-text-theme-weight: ${unsafeCSS(theme.font.weight.bold)};
   }
 
-  :host([overflow='ellipsis']) {
+  :host([overflow='ellipsis']) > * {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  :host([overflow='break-word']) {
+  :host([overflow='break-word']) > * {
     overflow-wrap: break-word;
     word-wrap: break-word;
   }

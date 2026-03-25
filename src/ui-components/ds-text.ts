@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import { html, LitElement, type PropertyValues, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
@@ -14,21 +13,49 @@ import { resolveThemeColor } from './theme/theme-utils';
 export type TextSize = keyof Theme['font']['size'];
 export type TextWeight = keyof Theme['font']['weight'];
 export type TextOverflow = 'ellipsis' | 'break-word';
+export type TextTag =
+  | 'span'
+  | 'p'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'label'
+  | 'strong'
+  | 'em'
+  | 'small';
+
+const TAG_TEMPLATES: Record<TextTag, TemplateResult> = {
+  span: html`<span><slot></slot></span>`,
+  p: html`<p><slot></slot></p>`,
+  h1: html`<h1><slot></slot></h1>`,
+  h2: html`<h2><slot></slot></h2>`,
+  h3: html`<h3><slot></slot></h3>`,
+  h4: html`<h4><slot></slot></h4>`,
+  h5: html`<h5><slot></slot></h5>`,
+  h6: html`<h6><slot></slot></h6>`,
+  label: html`<label><slot></slot></label>`,
+  strong: html`<strong><slot></slot></strong>`,
+  em: html`<em><slot></slot></em>`,
+  small: html`<small><slot></slot></small>`,
+};
 
 @customElement('ds-text')
 export class DsText extends LitElement {
   static override styles = textStyles;
 
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   accessor color = 'text';
 
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   accessor size: TextSize = 'medium';
 
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   accessor weight: TextWeight = 'regular';
 
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   accessor overflow: TextOverflow = 'ellipsis';
 
   @property({ type: Boolean, reflect: true })
@@ -36,6 +63,9 @@ export class DsText extends LitElement {
 
   @property({ type: Number, attribute: 'line-height' })
   accessor lineHeight: number | undefined;
+
+  @property({ type: String })
+  accessor as: TextTag = 'span';
 
   override willUpdate(changedProperties: PropertyValues<this>): void {
     if (changedProperties.has('color') || changedProperties.has('disabled')) {
@@ -47,7 +77,7 @@ export class DsText extends LitElement {
   }
 
   override render(): TemplateResult {
-    return html`<slot></slot>`;
+    return TAG_TEMPLATES[this.as] ?? TAG_TEMPLATES['span'];
   }
 }
 
