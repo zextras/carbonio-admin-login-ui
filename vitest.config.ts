@@ -22,6 +22,35 @@ function getPlugins() {
   ];
 }
 
+function jsdomProjectConfig() {
+  return {
+    plugins: getPlugins(),
+    define: {
+      BASE_PATH: JSON.stringify(''),
+    },
+    test: {
+      name: 'unit',
+      environment: 'jsdom',
+      setupFiles: ['./vitest-jsdom-setup.ts'],
+      sequence: {
+        groupOrder: 1,
+      },
+      env: {
+        TZ: 'UTC',
+      },
+
+      include: ['src/**/*.test.{ts,tsx}', './fonts.d.ts'],
+      exclude: ['dist/**', 'node_modules/**', '**/*.browser.test.{ts,tsx}'],
+      globals: true,
+      css: true,
+      clearMocks: true,
+      mockReset: true,
+      restoreMocks: true,
+      testTimeout: isCi ? 20_000 : 10_000,
+      maxConcurrency: 3,
+    },
+  };
+}
 function browserProjectConfig() {
   return {
     define: {
@@ -67,7 +96,7 @@ export default defineConfig({
     globals: true,
     passWithNoTests: true,
     maxConcurrency: 3,
-    projects: [browserProjectConfig()],
+    projects: [browserProjectConfig(), jsdomProjectConfig()],
 
     coverage: {
       provider: 'istanbul',
