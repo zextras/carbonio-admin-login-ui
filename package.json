@@ -44,7 +44,7 @@
     "standard-version": "^9.5.0",
     "ts-lit-plugin": "^2.0.2",
     "tsx": "^4.21.0",
-    "typescript": "^5.7.2",
+    "typescript": "^6.0.0",
     "typescript-eslint": "^8.49.0",
     "unplugin-swc": "^1.5.9",
     "vite": "^8.0.0",
