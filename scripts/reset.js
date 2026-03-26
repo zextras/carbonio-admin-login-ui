@@ -1,16 +1,18 @@
-/* eslint-disable no-console */
 /*
  * SPDX-FileCopyrightText: 2026 Zextras <https://www.zextras.com>
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/* eslint-disable no-undef */
+/* eslint-disable no-console */
+
 import { execSync } from 'child_process';
 
 function reset() {
   console.log('Resetting project... ');
   try {
-    const execOptions = { stdio: 'inherit' as const };
+    const execOptions = { stdio: 'inherit' };
 
     const steps = [
       { name: 'Cleaning root', command: 'rm -rf node_modules pnpm-lock.yaml .turbo' },
