@@ -2,7 +2,11 @@
   "compilerOptions": {
     "plugins": [
       {
-        "name": "ts-lit-plugin"
+        "name": "ts-lit-plugin",
+        "rules": {
+          "no-unclosed-tag": "error",
+          "no-incompatible-type-binding": "error"
+        }
       }
     ],
     "strict": true,

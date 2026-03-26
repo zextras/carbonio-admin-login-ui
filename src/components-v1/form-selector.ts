@@ -93,7 +93,7 @@ export class FormSelector extends LitElement {
     return html`
       <v2-login-manager
         destination-url=${this.configuration!.destinationUrl}
-        auth-methods=${JSON.stringify(this.configuration!.authMethods ?? [])}
+        .auth-methods=${this.configuration!.authMethods ?? []}
         ?disable-inputs=${this.disableInputs}
       ></v2-login-manager>
     `;
@@ -103,7 +103,7 @@ export class FormSelector extends LitElement {
     return html`
       <v1-login-manager
         destination-url=${this.configuration!.destinationUrl}
-        auth-methods=${JSON.stringify(this.configuration!.authMethods ?? [])}
+        .auth-methods=${this.configuration!.authMethods ?? []}
         ?disable-inputs=${this.disableInputs}
       ></v1-login-manager>
     `;

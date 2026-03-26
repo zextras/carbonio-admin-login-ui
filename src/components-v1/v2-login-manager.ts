@@ -79,8 +79,8 @@ export class V2LoginManager extends LitElement {
   private accessor detailNetworkModal = false;
 
   private handleSubmitCredentials = async (e: Event): Promise<void> => {
-    const { username, password } = (e as CustomEvent<{ username: string; password: string }>).detail;
-    const t = i18next.t.bind(i18next);
+    const { username, password } = (e as CustomEvent<{ username: string; password: string }>)
+      .detail;
 
     this.loadingCredentials = true;
     try {
@@ -105,21 +105,24 @@ export class V2LoginManager extends LitElement {
           }
           break;
         case 401:
-          this.authError = t(
+          this.authError = i18next.t(
             'credentials_not_valid',
             'Credentials are not valid, please check data and try again',
           );
           this.loadingCredentials = false;
           break;
         case 403:
-          this.authError = t(
+          this.authError = i18next.t(
             'auth_not_valid',
             'The authentication policy needs more steps: please contact your administrator for more information',
           );
           this.loadingCredentials = false;
           break;
         case 502:
-          this.authError = t('server_unreachable', 'Error 502: Service Unreachable - Retry later.');
+          this.authError = i18next.t(
+            'server_unreachable',
+            'Error 502: Service Unreachable - Retry later.',
+          );
           this.loadingCredentials = false;
           break;
         default:
@@ -212,7 +215,6 @@ export class V2LoginManager extends LitElement {
   }
 
   private renderTwoFactorForm(): TemplateResult {
-    const t = i18next.t.bind(i18next);
     return html`
       <form @submit=${this.handleSubmitOtp} style="width: 100%">
         <input type="submit" style="display: none" />
@@ -220,7 +222,7 @@ export class V2LoginManager extends LitElement {
           style="display: flex; align-items: center; justify-content: center; padding: 0 0 var(--padding-size-large) 0; box-sizing: border-box"
         >
           <ds-text as="h1" size="large" color="text" weight="bold">
-            ${t('two_step_authentication', 'Two-Step-Authentication')}
+            ${i18next.t('two_step_authentication', 'Two-Step-Authentication')}
           </ds-text>
         </div>
         <div
@@ -228,7 +230,7 @@ export class V2LoginManager extends LitElement {
         >
           <ds-select
             .items=${this.otpList}
-            label=${t('choose_otp', 'Choose the OTP Method')}
+            label=${i18next.t('choose_otp', 'Choose the OTP Method')}
             .defaultSelection=${this.otpList[0]}
             @change=${this.handleOtpMethodChange}
           ></ds-select>
@@ -241,7 +243,7 @@ export class V2LoginManager extends LitElement {
             ?has-error=${this.showOtpError}
             ?disabled=${this.disableInputs}
             @change=${this.handleOtpChange}
-            label=${t('type_otp', 'Type here One-Time-Password')}
+            label=${i18next.t('type_otp', 'Type here One-Time-Password')}
           ></ds-input>
         </div>
         <div
@@ -249,7 +251,7 @@ export class V2LoginManager extends LitElement {
         >
           <ds-text as="span" color="error" size="small" overflow="break-word">
             ${this.showOtpError
-              ? t('wrong_password', 'Wrong password, please check data and try again')
+              ? i18next.t('wrong_password', 'Wrong password, please check data and try again')
               : html`<br />`}
           </ds-text>
         </div>
@@ -259,7 +261,7 @@ export class V2LoginManager extends LitElement {
           <ds-button
             @click=${this.handleSubmitOtp}
             ?disabled=${this.disableInputs}
-            label=${t('login', 'Login')}
+            label=${i18next.t('login', 'Login')}
             width="fill"
             ?loading=${this.loadingOtp}
           ></ds-button>
@@ -269,7 +271,7 @@ export class V2LoginManager extends LitElement {
         >
           <ds-checkbox
             .value=${this.trustDevice}
-            label=${t('trust_device_and_ip', 'Trust this device and IP address')}
+            label=${i18next.t('trust_device_and_ip', 'Trust this device and IP address')}
             @change=${this.handleTrustDeviceChange}
           ></ds-checkbox>
         </div>
@@ -291,7 +293,7 @@ export class V2LoginManager extends LitElement {
     return html`
       <ds-snackbar
         ?open=${this.snackbarNetworkError}
-        label=${t('cant_login', 'Can not do the login now')}
+        label=${i18next.t('cant_login', 'Can not do the login now')}
         actionLabel=${t('details', 'Details')}
         @action-click=${this.handleSnackbarAction}
         @close=${this.handleSnackbarClose}
@@ -330,9 +332,7 @@ export class V2LoginManager extends LitElement {
         content = html``;
     }
 
-    return html`
-      ${content} ${this.renderSnackbar()} ${this.renderOfflineModal()}
-    `;
+    return html` ${content} ${this.renderSnackbar()} ${this.renderOfflineModal()} `;
   }
 }
 

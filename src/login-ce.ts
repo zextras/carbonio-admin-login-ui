@@ -12,7 +12,7 @@ import { customElement } from 'lit/decorators.js';
 @customElement('login-ce')
 export class LoginCE extends LitElement {
   override render(): TemplateResult {
-    return html`<page-layout is-advanced=${false}></page-layout>`;
+    return html`<page-layout></page-layout>`;
   }
 }
 

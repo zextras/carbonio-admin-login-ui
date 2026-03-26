@@ -7,8 +7,8 @@ import js from '@eslint/js';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
 import tseslint from 'typescript-eslint';
-import eslintPluginLit from 'eslint-plugin-lit';
-import eslintPluginWc from 'eslint-plugin-wc';
+import lit from 'eslint-plugin-lit';
+import wc from 'eslint-plugin-wc';
 import eslintPluginLitA11y from 'eslint-plugin-lit-a11y';
 
 import noticeConfig from './notice.config.js';
@@ -16,8 +16,13 @@ import noticeConfig from './notice.config.js';
 export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  eslintPluginLit.configs['flat/recommended'],
-  eslintPluginWc.configs['flat/recommended'],
+  {
+    plugins: { lit, wc },
+    rules: {
+      ...lit.configs['flat/recommended'].rules,
+      ...wc.configs['flat/recommended'].rules,
+    },
+  },
   {
     ignores: [
       'src/mockServiceWorker.js',

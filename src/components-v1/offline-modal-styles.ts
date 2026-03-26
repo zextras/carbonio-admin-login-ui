@@ -21,7 +21,6 @@ export const offlineModalStyles = css`
     background-color: var(--color-gray6-regular);
     box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
     overflow: visible;
-    color-scheme: dark;
   }
 
   .dialog::backdrop {

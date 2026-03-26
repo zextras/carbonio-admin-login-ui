@@ -12,9 +12,10 @@ import en from '../translations/en.json';
 type DefaultNs = i18next.TypeOptions['defaultNS'];
 
 declare module 'i18next' {
-  interface CustomTypeOptions {
+  interface TypeOptions {
     resources: Record<DefaultNs, typeof en>;
     returnNull: false;
+    returnType: 'string';
     jsonFormat: 'v4';
     allowObjectInHTMLChildren: true;
   }

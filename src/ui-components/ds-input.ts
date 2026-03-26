@@ -161,13 +161,11 @@ export class DsInput extends LitElement {
               ?disabled=${this.disabled}
               placeholder=${this.label || ''}
             />
-            ${
-              this.label
-                ? html` <label class="label" for="ds-input">${this.label}</label> `
-                : nothing
-            }
+            ${this.label
+              ? html` <label class="label" for="ds-input">${this.label}</label> `
+              : nothing}
           </div>
-        </div>
+        </label>
         <span class="icon-slot">
           <slot name="icon"></slot>
         </span>

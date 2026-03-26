@@ -77,7 +77,7 @@ export class DsText extends LitElement {
   }
 
   override render(): TemplateResult {
-    return TAG_TEMPLATES[this.as] ?? TAG_TEMPLATES['span'];
+    return TAG_TEMPLATES[this.as];
   }
 }
 

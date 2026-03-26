@@ -23,7 +23,7 @@ export class ErrorPage extends LitElement {
         </div>
         <div class="content-wrapper">
           <div class="text-group">
-            <ds-text as="h1" style="--ds-text-font-size: 64px" weight="medium" color="primary">
+            <ds-text style="--ds-text-font-size: 64px" weight="medium" color="primary">
               ${i18next.t('error.something_went_wrong', 'Something went wrong')}
             </ds-text>
             <ds-text
