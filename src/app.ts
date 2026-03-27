@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import './ui-components';
 import './error-page';
 import './loading-view';
 import './login-advanced';
