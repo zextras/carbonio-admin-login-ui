@@ -19,6 +19,7 @@ function getPlugins() {
         exportType: 'default',
       },
       include: '**/*.svg',
+      exclude: '**/src/assets/**/*.svg',
     }),
   ];
 }
