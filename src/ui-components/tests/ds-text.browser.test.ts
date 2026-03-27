@@ -12,18 +12,24 @@ import type { DsText } from '../ds-text';
 import type { TextOverflow } from '../ds-text';
 import { dsTextVars } from '../ds-text.styles';
 
+let element: DsText;
+
 async function createDsText(attrs: Record<string, string> = {}, textContent = ''): Promise<DsText> {
-  const el = document.createElement('ds-text');
+  element = document.createElement('ds-text');
   for (const [key, value] of Object.entries(attrs)) {
-    el.setAttribute(key, value);
+    element.setAttribute(key, value);
   }
   if (textContent) {
-    el.textContent = textContent;
+    element.textContent = textContent;
   }
-  document.body.appendChild(el);
-  await el.updateComplete;
-  return el;
+  document.body.appendChild(element);
+  await element.updateComplete;
+  return element;
 }
+
+afterEach(() => {
+  element?.remove();
+});
 
 describe('ds-text', () => {
   describe('as property', () => {
@@ -35,11 +41,10 @@ describe('ds-text', () => {
       { tag: 'h5', role: 'heading', level: 5 },
       { tag: 'h6', role: 'heading', level: 6 },
     ])('should render a level $level heading when as="$tag"', async ({ tag, level }) => {
-      const el = await createDsText({ as: tag }, `Heading ${level}`);
+      await createDsText({ as: tag }, `Heading ${level}`);
       await expect
         .element(page.getByRole('heading', { name: `Heading ${level}`, level }))
         .toBeVisible();
-      el.remove();
     });
 
     it.each([
@@ -48,10 +53,9 @@ describe('ds-text', () => {
       { tag: 'em', role: 'emphasis' },
     ])('should render with role "$role" when as="$tag"', async ({ tag, role }) => {
       const text = `Content in ${tag}`;
-      const el = await createDsText({ as: tag }, text);
+      await createDsText({ as: tag }, text);
       await expect.element(page.getByRole(role)).toBeVisible();
       await expect.element(page.getByText(text)).toBeVisible();
-      el.remove();
     });
 
     it.each([{ tag: 'span' }, { tag: 'small' }, { tag: 'span' }])(
@@ -61,7 +65,6 @@ describe('ds-text', () => {
         const el = await createDsText({ as: tag }, text);
         await expect.element(page.getByText(text)).toBeVisible();
         expect(el.shadowRoot!.querySelector(tag)).not.toBeNull();
-        el.remove();
       },
     );
 
@@ -69,7 +72,6 @@ describe('ds-text', () => {
       const el = await createDsText({}, 'Default tag');
       expect(el.as).toBe('span');
       expect(el.shadowRoot!.querySelector('span')).not.toBeNull();
-      el.remove();
     });
 
     it('should switch the inner element when "as" changes dynamically', async () => {
@@ -83,7 +85,6 @@ describe('ds-text', () => {
         .element(page.getByRole('heading', { name: 'Dynamic content', level: 1 }))
         .toBeVisible();
       expect(el.shadowRoot!.querySelector('span')).toBeNull();
-      el.remove();
     });
   });
 
@@ -91,14 +92,12 @@ describe('ds-text', () => {
     it('should default to "text"', async () => {
       const el = await createDsText({}, 'Default color');
       expect(el.color).toBe('text');
-      el.remove();
     });
 
     it('should set the CSS variable when color="error"', async () => {
       const el = await createDsText({ color: 'error' }, 'Colored text');
       const cssVarValue = el.style.getPropertyValue(dsTextVars.color);
       expect(cssVarValue).toContain('error');
-      el.remove();
     });
 
     it('should update the CSS variable when color changes dynamically', async () => {
@@ -109,7 +108,6 @@ describe('ds-text', () => {
 
       const updatedColor = el.style.getPropertyValue(dsTextVars.color);
       expect(updatedColor).toContain('primary');
-      el.remove();
     });
   });
 
@@ -117,7 +115,6 @@ describe('ds-text', () => {
     it('should default to "medium"', async () => {
       const el = await createDsText({}, 'Default size');
       expect(el.size).toBe('medium');
-      el.remove();
     });
 
     it.each([
@@ -129,7 +126,6 @@ describe('ds-text', () => {
     ])('should accept size="$size"', async ({ size }) => {
       const el = await createDsText({ size }, 'Sized text');
       expect(el.size).toBe(size);
-      el.remove();
     });
   });
 
@@ -137,7 +133,6 @@ describe('ds-text', () => {
     it('should default to "regular"', async () => {
       const el = await createDsText({}, 'Default weight');
       expect(el.weight).toBe('regular');
-      el.remove();
     });
 
     it.each([{ weight: 'light' }, { weight: 'regular' }, { weight: 'medium' }, { weight: 'bold' }])(
@@ -145,7 +140,6 @@ describe('ds-text', () => {
       async ({ weight }) => {
         const el = await createDsText({ weight }, 'Weighted text');
         expect(el.weight).toBe(weight);
-        el.remove();
       },
     );
   });
@@ -154,7 +148,6 @@ describe('ds-text', () => {
     it('should default to "ellipsis"', async () => {
       const el = await createDsText({}, 'Default overflow');
       expect(el.overflow).toBe('ellipsis');
-      el.remove();
     });
 
     it.each([{ overflow: 'ellipsis' }, { overflow: 'break-word' }] satisfies {
@@ -162,7 +155,6 @@ describe('ds-text', () => {
     }[])('should accept overflow="$overflow"', async ({ overflow }) => {
       const el = await createDsText({ overflow }, 'Overflowed text');
       expect(el.overflow).toBe(overflow);
-      el.remove();
     });
   });
 
@@ -170,14 +162,12 @@ describe('ds-text', () => {
     it('should default to false', async () => {
       const el = await createDsText({}, 'Not disabled');
       expect(el.disabled).toBe(false);
-      el.remove();
     });
 
     it('should reflect the disabled attribute on the host', async () => {
       const el = await createDsText({ disabled: '' }, 'Disabled text');
       expect(el.disabled).toBe(true);
       expect(el.hasAttribute('disabled')).toBe(true);
-      el.remove();
     });
 
     it('should apply disabled color via CSS variable when disabled', async () => {
@@ -188,7 +178,6 @@ describe('ds-text', () => {
 
       const disabledColor = el.style.getPropertyValue(dsTextVars.color);
       expect(disabledColor).toContain('disabled');
-      el.remove();
     });
 
     it('should restore enabled color when disabled is removed', async () => {
@@ -199,7 +188,6 @@ describe('ds-text', () => {
 
       const enabledColor = el.style.getPropertyValue(dsTextVars.color);
       expect(enabledColor).not.toContain('disabled');
-      el.remove();
     });
   });
 
@@ -207,13 +195,11 @@ describe('ds-text', () => {
     it('should default to undefined', async () => {
       const el = await createDsText({}, 'Default line-height');
       expect(el.lineHeight).toBeUndefined();
-      el.remove();
     });
 
     it('should accept a numeric line-height via attribute', async () => {
       const el = await createDsText({ 'line-height': '24' }, 'Custom line-height');
       expect(el.lineHeight).toBe(24);
-      el.remove();
     });
 
     it('should update when line-height changes dynamically', async () => {
@@ -224,7 +210,6 @@ describe('ds-text', () => {
       await el.updateComplete;
 
       expect(el.lineHeight).toBe(32);
-      el.remove();
     });
   });
 
@@ -240,8 +225,6 @@ describe('ds-text', () => {
 
       const computedFontSize = window.getComputedStyle(innerEl).fontSize;
       expect(computedFontSize).toBe(customSize);
-
-      el.remove();
     });
   });
 });
