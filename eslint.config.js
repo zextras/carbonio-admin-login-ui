@@ -9,7 +9,7 @@ import unusedImports from 'eslint-plugin-unused-imports';
 import tseslint from 'typescript-eslint';
 import lit from 'eslint-plugin-lit';
 import wc from 'eslint-plugin-wc';
-import eslintPluginLitA11y from 'eslint-plugin-lit-a11y';
+// import eslintPluginLitA11y from 'eslint-plugin-lit-a11y';
 
 import noticeConfig from './notice.config.js';
 
