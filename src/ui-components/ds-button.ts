@@ -33,25 +33,18 @@ const DEFAULT_COLORS: Record<ButtonType, { backgroundColor: string; color: strin
   ghost: { backgroundColor: 'transparent', color: 'primary' },
 } as const;
 
-function getColorVar(colorName: string, state: string): string {
-  if (!colorName) return '';
-  const hexPattern = /^#([a-fA-F0-9]{3,4}|[a-fA-F0-9]{6}|[a-fA-F0-9]{8})$/;
-  if (hexPattern.test(colorName)) return colorName;
-  return resolveThemeColor(colorName, state);
-}
-
 function getColorStyles(colorName: string, bgName: string): Record<string, string> {
   return {
-    '--btn-color': getColorVar(colorName, 'regular'),
-    '--btn-color-hover': getColorVar(colorName, 'hover'),
-    '--btn-color-active': getColorVar(colorName, 'active'),
-    '--btn-color-focus': getColorVar(colorName, 'focus'),
-    '--btn-color-disabled': getColorVar(colorName, 'disabled'),
-    '--btn-bg': getColorVar(bgName, 'regular'),
-    '--btn-bg-hover': getColorVar(bgName, 'hover'),
-    '--btn-bg-active': getColorVar(bgName, 'active'),
-    '--btn-bg-focus': getColorVar(bgName, 'focus'),
-    '--btn-bg-disabled': getColorVar(bgName, 'disabled'),
+    '--btn-color': resolveThemeColor(colorName, 'regular'),
+    '--btn-color-hover': resolveThemeColor(colorName, 'hover'),
+    '--btn-color-active': resolveThemeColor(colorName, 'active'),
+    '--btn-color-focus': resolveThemeColor(colorName, 'focus'),
+    '--btn-color-disabled': resolveThemeColor(colorName, 'disabled'),
+    '--btn-bg': resolveThemeColor(bgName, 'regular'),
+    '--btn-bg-hover': resolveThemeColor(bgName, 'hover'),
+    '--btn-bg-active': resolveThemeColor(bgName, 'active'),
+    '--btn-bg-focus': resolveThemeColor(bgName, 'focus'),
+    '--btn-bg-disabled': resolveThemeColor(bgName, 'disabled'),
   };
 }
 
@@ -95,7 +88,11 @@ export class DsButton extends LitElement {
   @property({ type: String, reflect: true, attribute: 'min-width' })
   accessor minWidth: string | undefined;
 
-  private getColors(): { color: string; backgroundColor: string } {
+  private get sizeConfig(): (typeof SIZES)[ButtonSize] {
+    return SIZES[this.size];
+  }
+
+  private get colors(): { color: string; backgroundColor: string } {
     const defaults = DEFAULT_COLORS[this.type];
     const result = { ...defaults };
 
@@ -115,37 +112,64 @@ export class DsButton extends LitElement {
     return result;
   }
 
-  override render(): TemplateResult | typeof nothing {
-    const sizeConfig = SIZES[this.size];
-    const colors = this.getColors();
-    const buttonWidth = this.width === 'fill' ? '100%' : 'auto';
-    const gridWidth = this.width === 'fill' ? '100%' : 'fit-content';
+  private get buttonWidth(): string {
+    return this.width === 'fill' ? '100%' : 'auto';
+  }
 
-    const buttonStyles: Record<string, string> = {
-      '--btn-padding': sizeConfig.padding,
+  private get gridWidth(): string {
+    return this.width === 'fill' ? '100%' : 'fit-content';
+  }
+
+  private get buttonStyles(): Record<string, string> {
+    const styles: Record<string, string> = {
+      '--btn-padding': this.sizeConfig.padding,
       '--btn-padding-adjusted':
-        this.type === 'outlined' ? `calc(${sizeConfig.padding} - 0.0625rem)` : sizeConfig.padding,
-      '--btn-gap': sizeConfig.gap,
-      '--btn-width': buttonWidth,
-      ...getColorStyles(colors.color, colors.backgroundColor),
+        this.type === 'outlined'
+          ? `calc(${this.sizeConfig.padding} - 0.0625rem)`
+          : this.sizeConfig.padding,
+      '--btn-gap': this.sizeConfig.gap,
+      '--btn-width': this.buttonWidth,
+      ...getColorStyles(this.colors.color, this.colors.backgroundColor),
     };
 
     if (this.minWidth) {
-      buttonStyles['min-width'] = this.minWidth;
+      styles['min-width'] = this.minWidth;
     }
 
-    const gridStyles: Record<string, string> = {
-      '--btn-width': gridWidth,
-      '--secondary-margin': sizeConfig.padding,
+    return styles;
+  }
+
+  private get gridStyles(): Record<string, string> {
+    return {
+      '--btn-width': this.gridWidth,
+      '--secondary-margin': this.sizeConfig.padding,
     };
+  }
 
-    const hasContent = this.label || this.querySelector('slot') !== null;
+  private get hasContent(): boolean {
+    return Boolean(this.label || this.querySelector('slot') !== null);
+  }
 
+  private get iconStyles(): Record<string, string> {
+    return {
+      '--icon-size': this.sizeConfig.icon,
+      '--icon-order': this.iconPlacement === 'left' ? '1' : '2',
+    };
+  }
+
+  private get textStyles(): Record<string, string> {
+    return {
+      '--text-size': this.sizeConfig.label,
+      '--text-order': this.iconPlacement === 'left' ? '2' : '1',
+    };
+  }
+
+  override render(): TemplateResult | typeof nothing {
     return html`
-      <div class="grid" style=${styleMap(gridStyles)}>
+      <div class="grid" style=${styleMap(this.gridStyles)}>
         <button
           class=${this.type === 'outlined' ? 'button outlined' : 'button'}
-          style=${styleMap(buttonStyles)}
+          style=${styleMap(this.buttonStyles)}
           ?disabled=${this.disabled}
           tabindex=${this.disabled ? -1 : 0}
         >
@@ -161,12 +185,13 @@ export class DsButton extends LitElement {
                 <span
                   class="icon"
                   data-loading=${this.loading ? 'true' : nothing}
-                  style=${styleMap({
-                    '--icon-size': sizeConfig.icon,
-                    '--icon-order': this.iconPlacement === 'left' ? '1' : '2',
-                  })}
+                  style=${styleMap(this.iconStyles)}
                 >
-                  <ds-icon icon=${this.icon} color="currentColor" size=${sizeConfig.icon}></ds-icon>
+                  <ds-icon
+                    icon=${this.icon}
+                    color="currentColor"
+                    size=${this.sizeConfig.icon}
+                  ></ds-icon>
                 </span>
               `
             : nothing}
@@ -175,30 +200,24 @@ export class DsButton extends LitElement {
                 <span
                   class="text"
                   data-loading=${this.loading ? 'true' : nothing}
-                  style=${styleMap({
-                    '--text-size': sizeConfig.label,
-                    '--text-order': this.iconPlacement === 'left' ? '2' : '1',
-                  })}
+                  style=${styleMap(this.textStyles)}
                 >
                   <ds-text
                     as="span"
                     color="currentColor"
-                    style=${`${dsTextVars.fontSize}: ${sizeConfig.label}`}
+                    style=${`${dsTextVars.fontSize}: ${this.sizeConfig.label}`}
                   >
                     ${this.label}
                   </ds-text>
                 </span>
               `
             : nothing}
-          ${!this.label && hasContent
+          ${!this.label && this.hasContent
             ? html`
                 <span
                   class="text"
                   data-loading=${this.loading ? 'true' : nothing}
-                  style=${styleMap({
-                    '--text-size': sizeConfig.label,
-                    '--text-order': this.iconPlacement === 'left' ? '2' : '1',
-                  })}
+                  style=${styleMap(this.textStyles)}
                 >
                   <slot></slot>
                 </span>
