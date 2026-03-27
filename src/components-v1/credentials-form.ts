@@ -22,13 +22,13 @@ export type Configuration = {
 
 @customElement('credentials-form')
 export class CredentialsForm extends LitElement {
-  @property({ type: String })
+  @property({ type: String, attribute: 'auth-error' })
   accessor authError = '';
 
   @property({ type: Boolean })
   accessor loading = false;
 
-  @property({ type: Boolean })
+  @property({ type: Boolean, attribute: 'disable-inputs' })
   accessor disableInputs = false;
 
   @property({ type: String, attribute: 'destination-url' })

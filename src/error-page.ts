@@ -27,7 +27,6 @@ export class ErrorPage extends LitElement {
               ${i18next.t('error.something_went_wrong', 'Something went wrong')}
             </ds-text>
             <ds-text
-              as="h2"
               overflow="break-word"
               style="--ds-text-font-size: 40px"
               weight="light"

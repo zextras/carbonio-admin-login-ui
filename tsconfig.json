@@ -3,10 +3,11 @@
     "plugins": [
       {
         "name": "ts-lit-plugin",
+        "strict": true,
         "rules": {
-          "no-unclosed-tag": "error",
-          "no-incompatible-type-binding": "error"
-        }
+          "no-missing-import": "off"
+        },
+        "globalAttributes": ["popover"]
       }
     ],
     "strict": true,

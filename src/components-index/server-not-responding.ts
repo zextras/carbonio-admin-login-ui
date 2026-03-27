@@ -20,12 +20,12 @@ export class ServerNotResponding extends LitElement {
   override render(): TemplateResult {
     return html`
       <ds-snackbar
-        open=${this.open}
+        ?open=${this.open}
         label=${i18next.t(
           'server_not_responding',
           'The server is not responding. Please contact your server administrator',
         )}
-        autoHideTimeout=${10000}
+        auto-hide-timeout=${10000}
         severity="error"
         data-testid="server-not-responding"
         @close=${this.onClose}

@@ -18,11 +18,11 @@ export class V1LoginManager extends LitElement {
   @property({ type: String, attribute: 'destination-url' })
   accessor destinationUrl = '';
 
-  @property({ type: Array, attribute: 'auth-methods' })
-  accessor authMethods: Array<string> = [];
-
   @property({ type: Boolean, attribute: 'disable-inputs' })
   accessor disableInputs = false;
+
+  @property({ type: Array })
+  accessor authMethods: Array<string> = [];
 
   @state()
   private accessor loading = false;
@@ -116,10 +116,10 @@ export class V1LoginManager extends LitElement {
       <ds-snackbar
         ?open=${this.snackbarNetworkError}
         label=${t('cant_login', 'Can not do the login now')}
-        actionLabel=${t('details', 'Details')}
+        action-label=${t('details', 'Details')}
         @action-click=${this.handleSnackbarAction}
         @close=${this.handleSnackbarClose}
-        autoHideTimeout=${10000}
+        auto-hide-timeout=${10000}
         severity="error"
       ></ds-snackbar>
     `;

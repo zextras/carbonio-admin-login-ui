@@ -65,7 +65,7 @@ export class DsText extends LitElement {
   accessor lineHeight: number | undefined;
 
   @property({ type: String })
-  accessor as: TextTag = 'span';
+  accessor as!: TextTag;
 
   override willUpdate(changedProperties: PropertyValues<this>): void {
     if (changedProperties.has('color') || changedProperties.has('disabled')) {

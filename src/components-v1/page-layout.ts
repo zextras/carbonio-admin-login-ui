@@ -224,8 +224,8 @@ export class PageLayout extends LitElement {
               </div>
               <ds-text as="span" size="small" color="secondary" weight="light">
                 <browser-support-message
-                  .is-supported-browser=${this.isSupportedBrowser}
-                  .is-advanced=${this.isAdvanced}
+                  ?is-supported-browser=${this.isSupportedBrowser}
+                  ?is-advanced=${this.isAdvanced}
                 ></browser-support-message>
               </ds-text>
             </div>

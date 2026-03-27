@@ -220,10 +220,16 @@ export class DsSelect extends LitElement {
       >
         <div class="trigger-inner">
           <div class="content-area">
-            <ds-text as="span" color="text" class="selected-text"> ${this._selected?.label ?? ''} </ds-text>
+            <ds-text as="span" color="text" class="selected-text">
+              ${this._selected?.label ?? ''}
+            </ds-text>
           </div>
           <div class="label" data-has-selection=${String(this._hasSelection)}>
-            <ds-text as="label" size=${this._hasSelection ? 'small' : 'medium'} color=${this._accentColor}>
+            <ds-text
+              as="label"
+              size=${this._hasSelection ? 'small' : 'medium'}
+              color=${this._accentColor}
+            >
               ${this.label ?? ''}
             </ds-text>
           </div>
