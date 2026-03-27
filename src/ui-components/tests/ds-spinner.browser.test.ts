@@ -31,14 +31,12 @@ describe('ds-spinner', () => {
     it('should default to "primary"', async () => {
       const el = await createDsSpinner();
       expect(el.color).toBe('primary');
-      el.remove();
     });
 
     it('should set --border-color CSS variable with default color', async () => {
       const el = await createDsSpinner();
       const cssVarValue = el.style.getPropertyValue('--border-color');
       expect(cssVarValue).toContain('primary');
-      el.remove();
     });
 
     it.each([
@@ -50,7 +48,6 @@ describe('ds-spinner', () => {
     ])('should accept color="$color"', async ({ color }) => {
       const el = await createDsSpinner({ color });
       expect(el.color).toBe(color);
-      el.remove();
     });
 
     it('should update --border-color when color changes dynamically', async () => {
@@ -61,7 +58,6 @@ describe('ds-spinner', () => {
 
       const updatedColor = el.style.getPropertyValue('--border-color');
       expect(updatedColor).toContain('error');
-      el.remove();
     });
   });
 
@@ -70,21 +66,18 @@ describe('ds-spinner', () => {
       const el = await createDsSpinner();
       const svg = el.shadowRoot!.querySelector('svg');
       expect(svg).not.toBeNull();
-      el.remove();
     });
 
     it('should render an SVG with viewBox="0 0 50 50"', async () => {
       const el = await createDsSpinner();
       const svg = el.shadowRoot!.querySelector('svg');
       expect(svg!.getAttribute('viewBox')).toBe('0 0 50 50');
-      el.remove();
     });
 
     it('should render a circle element inside the SVG', async () => {
       const el = await createDsSpinner();
       const circle = el.shadowRoot!.querySelector('svg circle');
       expect(circle).not.toBeNull();
-      el.remove();
     });
 
     it('should render circle with correct attributes', async () => {
@@ -95,14 +88,12 @@ describe('ds-spinner', () => {
       expect(circle!.getAttribute('r')).toBe('20');
       expect(circle!.getAttribute('fill')).toBe('none');
       expect(circle!.getAttribute('stroke-width')).toBe('4');
-      el.remove();
     });
 
     it('should have the "path" class on the circle', async () => {
       const el = await createDsSpinner();
       const circle = el.shadowRoot!.querySelector('svg circle');
       expect(circle!.classList.contains('path')).toBe(true);
-      el.remove();
     });
 
     it('should apply stroke from --border-color CSS variable', async () => {
@@ -110,7 +101,6 @@ describe('ds-spinner', () => {
       const circle = el.shadowRoot!.querySelector('.path') as SVGCircleElement;
       const computedStyle = window.getComputedStyle(circle);
       expect(computedStyle.stroke).toBe('rgb(43, 115, 210)');
-      el.remove();
     });
   });
 
@@ -123,7 +113,6 @@ describe('ds-spinner', () => {
       const circle = el.shadowRoot!.querySelector('.path') as SVGCircleElement;
       const computedStyle = window.getComputedStyle(circle);
       expect(computedStyle.stroke).toBe('rgb(0, 255, 0)');
-      el.remove();
     });
   });
 });
