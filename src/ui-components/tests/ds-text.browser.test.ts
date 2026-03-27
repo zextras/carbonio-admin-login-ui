@@ -3,14 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import './ds-text';
+import '../ds-text';
 
 import { page } from '@vitest/browser/context';
 import { describe, expect, it } from 'vitest';
 
-import type { DsText } from './ds-text';
-import type { TextOverflow } from './ds-text';
-import { dsTextVars } from './ds-text.styles';
+import type { DsText } from '../ds-text';
+import type { TextOverflow } from '../ds-text';
+import { dsTextVars } from '../ds-text.styles';
 
 async function createDsText(attrs: Record<string, string> = {}, textContent = ''): Promise<DsText> {
   const el = document.createElement('ds-text');

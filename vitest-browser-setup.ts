@@ -5,12 +5,21 @@
  */
 import 'vitest-browser-lit';
 
+import i18next from 'i18next';
 import { afterAll, afterEach, beforeAll, beforeEach, vi } from 'vitest';
 
+import enTranslations from './translations/en.json';
 import { resetMockWorker, startMockWorker, stopMockWorker } from './tests-setup/browser/server';
 
 beforeAll(async () => {
   await startMockWorker();
+  await i18next.init({
+    lng: 'en',
+    fallbackLng: 'en',
+    resources: {
+      en: { translation: enTranslations },
+    },
+  });
 });
 
 beforeEach(() => {
