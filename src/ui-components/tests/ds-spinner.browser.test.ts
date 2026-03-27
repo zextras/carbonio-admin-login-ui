@@ -10,15 +10,21 @@ import { describe, expect, it } from 'vitest';
 
 import type { DsSpinner } from '../ds-spinner';
 
+let element: DsSpinner;
+
 async function createDsSpinner(attrs: Record<string, string> = {}): Promise<DsSpinner> {
-  const el = document.createElement('ds-spinner');
+  element = document.createElement('ds-spinner');
   for (const [key, value] of Object.entries(attrs)) {
-    el.setAttribute(key, value);
+    element.setAttribute(key, value);
   }
-  document.body.appendChild(el);
-  await el.updateComplete;
-  return el;
+  document.body.appendChild(element);
+  await element.updateComplete;
+  return element;
 }
+
+afterEach(() => {
+  element?.remove();
+});
 
 describe('ds-spinner', () => {
   describe('color property', () => {
