@@ -7,6 +7,16 @@
 import './theme/theme.css';
 
 export * from './global';
+export { DsButton } from './ds-button';
+export { DsCheckbox } from './ds-checkbox';
+export { DsDivider } from './ds-divider';
+export { DsIcon } from './ds-icon';
+export { DsInput } from './ds-input';
+export { DsPasswordInput } from './ds-password-input';
+export { DsSelect } from './ds-select';
+export { DsSnackbar } from './ds-snackbar';
+export { DsSpinner } from './ds-spinner';
+export { DsText } from './ds-text';
 export { type IconName } from './icon-registry';
 export * from './theme/theme';
 export * from './theme/theme-utils';
