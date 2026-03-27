@@ -17,7 +17,7 @@ export const spinnerStyles = css`
     height: 50px;
   }
   .path {
-    stroke: #0000ff;
+    stroke: var(--border-color);
     animation: dash 1.5s ease-in-out infinite;
   }
   @keyframes rotate {

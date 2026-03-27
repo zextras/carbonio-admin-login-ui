@@ -4,14 +4,24 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { html, LitElement, type PropertyValues } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
 import { spinnerStyles } from './spinner.styles';
+import { resolveThemeColor } from './theme/theme-utils';
 
 @customElement('ds-spinner')
 export class DsSpinner extends LitElement {
   static override styles = spinnerStyles;
+
+  @property({ type: String })
+  accessor color: string = 'primary';
+
+  override updated(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('color')) {
+      this.style.setProperty('--border-color', resolveThemeColor(this.color, 'regular'));
+    }
+  }
 
   override render() {
     return html`
