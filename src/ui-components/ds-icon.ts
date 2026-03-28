@@ -15,10 +15,11 @@ import { resolveThemeColor } from './theme/theme-utils';
 
 const ICON_SIZES = ['small', 'medium', 'large'] as const;
 export type IconSize = (typeof ICON_SIZES)[number];
-
 type IconSizeValue = IconSize | string;
 
-const DEFAULT_ICON = 'AlertTriangleOutline';
+const DEFAULT_ICON: IconName = 'AlertTriangleOutline';
+
+const SIZE_REGEX = /^[\d.]+(rem|px|em|vh|vw|%)$/;
 
 @customElement('ds-icon')
 export class DsIcon extends LitElement {
@@ -27,10 +28,6 @@ export class DsIcon extends LitElement {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-    }
-
-    :host([clickable]) {
-      cursor: pointer;
     }
 
     svg {
@@ -47,23 +44,24 @@ export class DsIcon extends LitElement {
     }
   `;
 
+  /** The icon name from the registry. Falls back to a default warning icon if not found. */
   @property({ type: String, reflect: true })
   accessor icon: IconName = DEFAULT_ICON;
 
+  /** Theme color token (e.g. 'text', 'primary', 'error'). */
   @property({ type: String, reflect: true })
-  accessor color = 'text';
+  accessor color: string = 'text';
 
+  /** Predefined size ('small' | 'medium' | 'large') or a CSS length value (e.g. '2rem'). */
   @property({ type: String, reflect: true })
   accessor size: IconSizeValue = 'medium';
 
+  /** When true, the icon is visually dimmed. */
   @property({ type: Boolean, reflect: true })
-  accessor disabled = false;
-
-  @property({ attribute: false })
-  accessor clickHandler: ((event: Event) => void) | undefined = undefined;
+  accessor disabled: boolean = false;
 
   private getSizeValue(size: IconSizeValue): string {
-    if (/^[\d.]+(rem|px|em|vh|vw|%)$/.test(size)) {
+    if (SIZE_REGEX.test(size)) {
       return size;
     }
     const validSize = ICON_SIZES.includes(size as IconSize) ? (size as IconSize) : 'medium';
@@ -74,21 +72,10 @@ export class DsIcon extends LitElement {
     return iconRegistry[this.icon] ?? iconRegistry[DEFAULT_ICON] ?? '';
   }
 
-  private handleClick(event: Event): void {
-    if (this.disabled) {
-      event.stopPropagation();
-      return;
-    }
-    this.clickHandler?.(event);
-  }
-
   override render(): TemplateResult | typeof nothing {
     const svgContent = this.getSvgContent();
-
-    if (this.clickHandler) {
-      this.setAttribute('clickable', '');
-    } else {
-      this.removeAttribute('clickable');
+    if (!svgContent) {
+      return nothing;
     }
 
     const styles = styleMap({
@@ -101,9 +88,8 @@ export class DsIcon extends LitElement {
         style=${styles}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        role="img"
-        aria-label=${this.icon}
-        @click=${this.handleClick}
+        role="presentation"
+        aria-hidden="true"
       >
         ${unsafeSVG(svgContent)}
       </svg>
