@@ -5,53 +5,15 @@
  */
 import './theme/theme.css';
 
-import { css, html, LitElement, type TemplateResult } from 'lit';
+import { html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import { checkboxStyles } from './ds-checkbox.styles';
 import { resolveThemeColor } from './theme/theme-utils';
 
 @customElement('ds-checkbox')
 export class DsCheckbox extends LitElement {
-  static override styles = css`
-    :host {
-      display: flex;
-      flex-direction: row;
-      width: fit-content;
-      height: fit-content;
-      align-items: flex-start;
-      cursor: default;
-    }
-
-    :host([disabled]) {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-
-    .icon-wrapper {
-      display: flex;
-      align-items: center;
-      height: calc(var(--font-size-medium, 1rem) * 1.5);
-      outline: none;
-    }
-
-    .icon-wrapper:focus ds-icon {
-      --icon-color: var(--ds-checkbox-focus);
-    }
-
-    .icon-wrapper:hover ds-icon {
-      --icon-color: var(--ds-checkbox-hover);
-    }
-
-    .icon-wrapper:active ds-icon {
-      --icon-color: var(--ds-checkbox-active);
-    }
-
-    .label {
-      padding-left: var(--padding-size-small, 0.5rem);
-      user-select: none;
-      line-height: 1.5;
-    }
-  `;
+  static override styles = checkboxStyles;
 
   @property({ type: Boolean, reflect: true })
   accessor value = false;
@@ -62,9 +24,10 @@ export class DsCheckbox extends LitElement {
   @property({ type: Boolean, reflect: true })
   accessor disabled = false;
 
-  private handleClick(): void {
-    if (this.disabled) return;
-    this.value = !this.value;
+  private handleChange(e: Event): void {
+    e.stopPropagation();
+    const input = e.target as HTMLInputElement;
+    this.value = input.checked;
     this.dispatchEvent(
       new CustomEvent('change', {
         detail: { value: this.value },
@@ -80,27 +43,27 @@ export class DsCheckbox extends LitElement {
     this.style.setProperty('--ds-checkbox-active', resolveThemeColor('gray0', 'active'));
 
     return html`
-      <div
-        class="icon-wrapper"
-        tabindex=${this.disabled ? -1 : 0}
-        @click=${this.handleClick}
-        @keydown=${(e: KeyboardEvent): void => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.handleClick();
-          }
-        }}
-      >
+      <label class="wrapper">
+        <input
+          type="checkbox"
+          .checked=${this.value}
+          ?disabled=${this.disabled}
+          @change=${this.handleChange}
+          aria-label=${this.label ?? 'checkbox'}
+        />
         <ds-icon
           icon=${this.value ? 'CheckmarkSquare' : 'Square'}
           color="gray0"
           ?disabled=${this.disabled}
           size="large"
+          aria-hidden="true"
         ></ds-icon>
-      </div>
-      ${this.label
-        ? html`<ds-text as="label" class="label" overflow="break-word" color="gray0">${this.label}</ds-text>`
-        : null}
+        ${this.label
+          ? html`<ds-text as="span" class="label" overflow="break-word" color="gray0"
+              >${this.label}</ds-text
+            >`
+          : nothing}
+      </label>
     `;
   }
 }

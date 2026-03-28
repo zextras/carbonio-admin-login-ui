@@ -102,7 +102,7 @@ export class DsIcon extends LitElement {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         role="img"
-        data-testid="icon: ${this.icon}"
+        aria-label=${this.icon}
         @click=${this.handleClick}
       >
         ${unsafeSVG(svgContent)}
