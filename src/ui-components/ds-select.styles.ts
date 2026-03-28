@@ -145,7 +145,7 @@ export const selectStyles = css`
     background: var(--color-gray5-hover);
   }
 
-  .dropdown-item:focus {
+  .dropdown-item.active {
     outline: none;
     background: var(--color-gray5-focus);
   }
