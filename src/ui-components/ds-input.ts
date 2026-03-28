@@ -17,6 +17,8 @@ import { resolveThemeColor } from './theme/theme-utils';
 const INPUT_BACKGROUND_COLOR = 'gray5';
 const INPUT_DIVIDER_COLOR = 'gray3';
 
+let instanceCounter = 0;
+
 function getDividerColor(color: string, disabled: boolean): string {
   const state = disabled ? 'disabled' : 'regular';
   return resolveThemeColor(color, state);
@@ -25,6 +27,8 @@ function getDividerColor(color: string, disabled: boolean): string {
 @customElement('ds-input')
 export class DsInput extends LitElement {
   static override styles = inputStyles;
+
+  private readonly _inputId = `ds-input-${++instanceCounter}`;
 
   @property({ type: String, attribute: 'default-value' })
   accessor defaultValue: string | undefined;
@@ -91,6 +95,7 @@ export class DsInput extends LitElement {
   }
 
   private _onInput(e: Event): void {
+    e.stopPropagation();
     this.dispatchEvent(
       new CustomEvent('input', {
         detail: { value: (e.target as HTMLInputElement).value },
@@ -101,6 +106,7 @@ export class DsInput extends LitElement {
   }
 
   private _onChange(e: Event): void {
+    e.stopPropagation();
     this.dispatchEvent(
       new CustomEvent('change', {
         detail: { value: (e.target as HTMLInputElement).value },
@@ -110,13 +116,13 @@ export class DsInput extends LitElement {
     );
   }
 
-  private get _dividerColor(): string {
+  private _getDividerColor(): string {
     const baseColor =
       (this.hasError && 'error') || (this._focused && 'primary') || this.borderColor;
     return getDividerColor(baseColor, this.disabled);
   }
 
-  private get _labelColor(): string {
+  private _getLabelColor(): string {
     const color = (this.hasError && 'error') || (this._focused && 'primary') || 'secondary';
     return resolveThemeColor(color, this.disabled ? 'disabled' : 'regular');
   }
@@ -131,27 +137,27 @@ export class DsInput extends LitElement {
     };
 
     const relativeContainerStyles = {
-      '--label-color': this._labelColor,
+      '--label-color': this._getLabelColor(),
     };
 
     return html`
       <div class="input-wrapper">
-        <label
+        <div
           class=${classMap({ 'input-container': true })}
           style=${styleMap(containerBgStyles)}
-          data-disabled=${String(this.disabled)}
+          ?data-disabled=${this.disabled}
           @click=${this._onContainerClick}
         >
           <div
             class="relative-container"
             style=${styleMap(relativeContainerStyles)}
-            data-has-label=${String(!!this.label)}
+            ?data-has-label=${!!this.label}
           >
             <input
               class="input"
               autocomplete=${this.autocomplete as 'on' | 'off'}
               type=${this.type}
-              id="ds-input"
+              id=${this._inputId}
               name=${this.name || ''}
               .defaultValue=${this.defaultValue ?? ''}
               @focus=${this._onInputFocus}
@@ -159,17 +165,17 @@ export class DsInput extends LitElement {
               @input=${this._onInput}
               @change=${this._onChange}
               ?disabled=${this.disabled}
-              placeholder=${this.label || ''}
+              aria-invalid=${this.hasError ? 'true' : 'false'}
             />
             ${this.label
-              ? html` <label class="label" for="ds-input">${this.label}</label> `
+              ? html`<label class="label" for=${this._inputId}>${this.label}</label>`
               : nothing}
           </div>
-        </label>
+        </div>
         <span class="icon-slot">
           <slot name="icon"></slot>
         </span>
-        <ds-divider color=${this._dividerColor}></ds-divider>
+        <ds-divider color=${this._getDividerColor()}></ds-divider>
       </div>
     `;
   }
