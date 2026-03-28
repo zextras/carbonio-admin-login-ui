@@ -38,7 +38,6 @@ export class DsDivider extends LitElement {
     });
 
     return html`<hr
-      data-testid="divider"
       role="separator"
       style=${styles}
       class="divider"
