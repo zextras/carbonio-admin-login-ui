@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-
 import './theme/theme.css';
 
 import { html, LitElement, nothing, type TemplateResult } from 'lit';
@@ -19,8 +18,8 @@ type InputType = 'text' | 'password';
 export class DsPasswordInput extends LitElement {
   static override styles = passwordInputStyles;
 
-  @property({ type: String, attribute: 'default-value' })
-  accessor defaultValue: string | undefined;
+  @property({ type: String, attribute: 'initial-value' })
+  accessor initialValue: string | undefined;
 
   @property({ type: String, reflect: true })
   accessor label: string | undefined;
@@ -31,6 +30,9 @@ export class DsPasswordInput extends LitElement {
   @property({ type: Boolean, attribute: 'has-error', reflect: true })
   accessor hasError = false;
 
+  @property({ type: String, attribute: 'error-message' })
+  accessor errorMessage: string | undefined;
+
   @property({ type: String, attribute: 'border-color' })
   accessor borderColor = INPUT_DIVIDER_COLOR;
 
@@ -38,7 +40,7 @@ export class DsPasswordInput extends LitElement {
   accessor name: string | undefined;
 
   @property({ type: String, reflect: true })
-  accessor autocomplete = 'off';
+  accessor autocomplete: string = 'current-password';
 
   @query('ds-input')
   private accessor _inputElement: HTMLElement | null = null;
@@ -68,17 +70,10 @@ export class DsPasswordInput extends LitElement {
     this._show = !this._show;
   }
 
-  private _onKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      this._toggleShow();
-    }
-  }
-
   private _onInputChange(event: Event): void {
     const customEvent = event as CustomEvent<{ value: string }>;
     this.dispatchEvent(
-      new CustomEvent('change', {
+      new CustomEvent('ds-change', {
         detail: { value: customEvent.detail.value },
         bubbles: true,
         composed: true,
@@ -89,7 +84,7 @@ export class DsPasswordInput extends LitElement {
   private _onInput(event: Event): void {
     const customEvent = event as CustomEvent<{ value: string }>;
     this.dispatchEvent(
-      new CustomEvent('input', {
+      new CustomEvent('ds-input', {
         detail: { value: customEvent.detail.value },
         bubbles: true,
         composed: true,
@@ -100,11 +95,11 @@ export class DsPasswordInput extends LitElement {
   override render(): TemplateResult | typeof nothing {
     const inputType: InputType = this._show ? 'text' : 'password';
     const iconName = this._show ? 'EyeOutline' : 'EyeOffOutline';
-    const ariaLabel = this._show ? 'Hide password' : 'Show password';
+    const errorId = 'error-msg';
 
     return html`
       <ds-input
-        .defaultValue=${this.defaultValue ?? ''}
+        .defaultValue=${this.initialValue ?? ''}
         .label=${this.label ?? ''}
         ?disabled=${this.disabled}
         ?has-error=${this.hasError}
@@ -112,6 +107,8 @@ export class DsPasswordInput extends LitElement {
         .name=${this.name ?? ''}
         .autocomplete=${this.autocomplete}
         .type=${inputType}
+        aria-invalid=${this.hasError ? 'true' : 'false'}
+        aria-describedby=${this.hasError && this.errorMessage ? errorId : nothing}
         @change=${this._onInputChange}
         @input=${this._onInput}
       >
@@ -120,14 +117,16 @@ export class DsPasswordInput extends LitElement {
           class="toggle-button"
           type="button"
           ?disabled=${this.disabled}
-          aria-label=${ariaLabel}
+          aria-label="Show password"
+          aria-pressed=${this._show ? 'true' : 'false'}
           @click=${this._toggleShow}
-          @keydown=${this._onKeyDown}
-          tabindex=${this.disabled ? -1 : 0}
         >
           <ds-icon .icon=${iconName} size="large" ?disabled=${this.disabled}></ds-icon>
         </button>
       </ds-input>
+      ${this.hasError && this.errorMessage
+        ? html`<span id=${errorId} class="error-message" role="alert">${this.errorMessage}</span>`
+        : nothing}
     `;
   }
 }
