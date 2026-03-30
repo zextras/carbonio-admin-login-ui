@@ -4,12 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import 'vitest-browser-lit';
+import './src/ui-components';
 
 import i18next from 'i18next';
 import { afterAll, afterEach, beforeAll, beforeEach, vi } from 'vitest';
 
-import enTranslations from './translations/en.json';
 import { resetMockWorker, startMockWorker, stopMockWorker } from './tests-setup/browser/server';
+import enTranslations from './translations/en.json';
 
 beforeAll(async () => {
   await startMockWorker();

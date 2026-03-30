@@ -3,11 +3,6 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import '../ds-button';
-import '../ds-icon';
-import '../ds-snackbar';
-import '../ds-text';
-import '../theme/theme.css';
 
 import { afterEach, describe, expect, it } from 'vitest';
 import { page } from 'vitest/browser';
