@@ -52,11 +52,10 @@ export class AppRoot extends LitElement {
     const isSupported = hasSupported && (this.apiResponse as { supported: boolean }).supported;
 
     return html`
-      <ds-snackbar open="" label="qualcosa di lungo che si vede meglio"></ds-snackbar>
-      <!-- ${hasError ? html`<error-page></error-page>` : nothing} -->
-      <!-- ${isLoading ? html`<loading-view></loading-view>` : nothing} -->
-      <!-- ${hasSupported && isSupported ? html`<login-advanced></login-advanced>` : nothing} -->
-      <!-- ${hasSupported && !isSupported ? html`<login-ce></login-ce>` : nothing} -->
+      ${hasError ? html`<error-page></error-page>` : nothing}
+      ${isLoading ? html`<loading-view></loading-view>` : nothing}
+      ${hasSupported && isSupported ? html`<login-advanced></login-advanced>` : nothing}
+      ${hasSupported && !isSupported ? html`<login-ce></login-ce>` : nothing}
     `;
   }
 }
