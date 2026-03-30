@@ -7,7 +7,7 @@
 import { html, LitElement, type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { spinnerStyles } from './spinner.styles';
+import { spinnerStyles } from './ds-spinner.styles';
 import { resolveThemeColor } from './theme/theme-utils';
 
 @customElement('ds-spinner')
