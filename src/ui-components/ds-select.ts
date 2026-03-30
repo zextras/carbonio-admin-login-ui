@@ -5,6 +5,9 @@
  */
 
 import './theme/theme.css';
+import './ds-text';
+import './ds-icon';
+import './ds-divider';
 
 import { html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
@@ -207,18 +210,14 @@ export class DsSelect extends LitElement {
       case 'ArrowDown':
         e.preventDefault();
         this._setActiveItemByIndex(
-          this._activeDescendantIndex < this.items.length - 1
-            ? this._activeDescendantIndex + 1
-            : 0,
+          this._activeDescendantIndex < this.items.length - 1 ? this._activeDescendantIndex + 1 : 0,
         );
         break;
 
       case 'ArrowUp':
         e.preventDefault();
         this._setActiveItemByIndex(
-          this._activeDescendantIndex > 0
-            ? this._activeDescendantIndex - 1
-            : this.items.length - 1,
+          this._activeDescendantIndex > 0 ? this._activeDescendantIndex - 1 : this.items.length - 1,
         );
         break;
 
@@ -247,10 +246,7 @@ export class DsSelect extends LitElement {
   private _handleTypeAhead(char: string): void {
     const lower = char.toLowerCase();
     const startIndex = this._activeDescendantIndex + 1;
-    const searchOrder = [
-      ...this.items.slice(startIndex),
-      ...this.items.slice(0, startIndex),
-    ];
+    const searchOrder = [...this.items.slice(startIndex), ...this.items.slice(0, startIndex)];
     const match = searchOrder.find((i) => i.label.toLowerCase().startsWith(lower));
     if (match) {
       this._setActiveItemByIndex(this.items.indexOf(match));

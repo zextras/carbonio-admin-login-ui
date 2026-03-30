@@ -5,6 +5,7 @@
  */
 
 import './theme/theme.css';
+import './ds-divider';
 
 import { html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';

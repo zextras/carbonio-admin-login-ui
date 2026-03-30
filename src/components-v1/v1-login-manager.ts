@@ -5,6 +5,8 @@
  */
 
 import './offline-modal';
+import './credentials-form';
+import '../ui-components/ds-snackbar';
 
 import i18next from 'i18next';
 import { html, LitElement, type TemplateResult } from 'lit';

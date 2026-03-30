@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import './ui-components';
 import './error-page';
 import './loading-view';
 import './login-advanced';
 import './login-ce';
+import './ui-components/ds-snackbar';
 
 import { html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement, state } from 'lit/decorators.js';

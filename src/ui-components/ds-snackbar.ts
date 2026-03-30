@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import './ds-icon';
+import './ds-button';
+import './ds-text';
+
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';

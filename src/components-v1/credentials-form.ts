@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import '../ui-components/ds-button';
+import '../ui-components/ds-input';
+import '../ui-components/ds-password-input';
+
 import i18next from 'i18next';
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -124,7 +128,7 @@ export class CredentialsForm extends LitElement {
           style="display: flex; align-items: center; justify-content: center; padding: 0 0 var(--padding-size-small) 0; box-sizing: border-box"
         >
           <ds-password-input
-            default-value=${this.password}
+            initial-value=${this.password}
             ?disabled=${this.disableInputs}
             data-testid="password"
             ?has-error=${!!this.authError}

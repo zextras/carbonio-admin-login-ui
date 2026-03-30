@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import './ui-components/ds-text';
+import './ui-components/ds-button';
+
 import i18next from 'i18next';
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';

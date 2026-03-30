@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import '../components-v1/credentials-form';
+import '../components-v1/change-password-form';
+
 import i18next from 'i18next';
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
@@ -40,7 +43,8 @@ export class ZimbraForm extends LitElement {
   private accessor credentialsForm: HTMLElement | null = null;
 
   private handleSubmitCredentials = async (e: Event): Promise<void> => {
-    const { username, password } = (e as CustomEvent<{ username: string; password: string }>).detail;
+    const { username, password } = (e as CustomEvent<{ username: string; password: string }>)
+      .detail;
     const t = i18next.t.bind(i18next);
 
     this.loading = true;

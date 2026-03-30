@@ -4,6 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import '../ui-components/ds-icon';
+import '../ui-components/ds-text';
+import './browser-support-message';
+import '../components-index/server-not-responding';
+import './form-selector';
+import '../components-index/zimbra-form';
+
 import i18next from 'i18next';
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';

@@ -4,6 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import '../ui-components/ds-text';
+import '../ui-components/ds-input';
+import '../ui-components/ds-password-input';
+import '../ui-components/ds-button';
+
 import i18next from 'i18next';
 import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
@@ -285,7 +290,7 @@ export class ChangePasswordForm extends LitElement {
           style="display: flex; align-items: center; justify-content: center; padding: var(--padding-size-large) 0 0 0; box-sizing: border-box"
         >
           <ds-password-input
-            default-value=${this.oldPassword}
+            initial-value=${this.oldPassword}
             ?has-error=${this.showOldPasswordError}
             @change=${this.handleOldPasswordChange}
             label=${t('changePassword_oldPassword', 'Old password')}
@@ -307,7 +312,7 @@ export class ChangePasswordForm extends LitElement {
           style="display: flex; align-items: center; justify-content: center; padding: var(--padding-size-large) 0 0 0; box-sizing: border-box"
         >
           <ds-password-input
-            default-value=${this.newPassword}
+            initial-value=${this.newPassword}
             ?has-error=${!!this.errorLabelNewPassword}
             @change=${this.handleNewPasswordChange}
             label=${t('changePassword_newPassword', 'New password')}
@@ -329,7 +334,7 @@ export class ChangePasswordForm extends LitElement {
           style="display: flex; align-items: center; justify-content: center; padding: var(--padding-size-large) 0 0 0; box-sizing: border-box"
         >
           <ds-password-input
-            default-value=${this.confirmNewPassword}
+            initial-value=${this.confirmNewPassword}
             ?has-error=${!!this.errorLabelConfirmNewPassword}
             @change=${this.handleConfirmPasswordChange}
             label=${t('changePassword_confirmNewPassword', 'Confirm new password')}

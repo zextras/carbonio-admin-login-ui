@@ -5,6 +5,9 @@
  */
 
 import '../ui-components/theme/theme.css';
+import '../ui-components/ds-text';
+import '../ui-components/ds-button';
+import '../ui-components/ds-divider';
 
 import i18next from 'i18next';
 import { html, LitElement, type TemplateResult } from 'lit';

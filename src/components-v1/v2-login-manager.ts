@@ -5,6 +5,14 @@
  */
 
 import './offline-modal';
+import '../ui-components/ds-text';
+import '../ui-components/ds-button';
+import '../ui-components/ds-checkbox';
+import './change-password-form';
+import '../ui-components/ds-snackbar';
+import './credentials-form';
+import '../ui-components/ds-select';
+import '../ui-components/ds-input';
 
 import i18next from 'i18next';
 import { html, LitElement, type TemplateResult } from 'lit';
