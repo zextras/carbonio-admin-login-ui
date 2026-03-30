@@ -29,8 +29,7 @@ export class ServerNotResponding extends LitElement {
         )}
         auto-hide-timeout=${10000}
         severity="error"
-        data-testid="server-not-responding"
-        @close=${this.onClose}
+        @snackbar:close=${this.onClose}
       ></ds-snackbar>
     `;
   }
