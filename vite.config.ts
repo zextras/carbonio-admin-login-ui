@@ -30,9 +30,7 @@ function copyPkgBuild(isDev: boolean): Plugin {
     name: 'copy-pkgbuild',
     writeBundle(options) {
       const outDir = options.dir || path.resolve(__dirname, 'dist');
-      const pkg = JSON.parse(
-        fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8'),
-      );
+      const pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8'));
       const template = fs.readFileSync(
         path.resolve(__dirname, 'package/PKGBUILD.template'),
         'utf-8',
@@ -55,6 +53,19 @@ function copyMockServiceWorker(): Plugin {
       fs.copyFileSync(
         path.resolve(__dirname, 'src/mockServiceWorker.js'),
         path.resolve(outDir, 'mockServiceWorker.js'),
+      );
+    },
+  };
+}
+
+function htmlMetaVersion(): Plugin {
+  return {
+    name: 'html-meta-version',
+    transformIndexHtml(html) {
+      const pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8'));
+      return html.replace(
+        '</head>',
+        `  <meta name="app-version" content="${pkg.version}" />\n  </head>`,
       );
     },
   };
@@ -125,6 +136,7 @@ export default defineConfig(({ command, mode }) => {
       copyYapJson(),
       copyPkgBuild(isDev),
       copyMockServiceWorker(),
+      htmlMetaVersion(),
       swc.vite({
         jsc: {
           parser: {
