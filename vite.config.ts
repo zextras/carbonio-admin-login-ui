@@ -17,9 +17,45 @@ function copyYapJson(): Plugin {
     name: 'copy-yap-json',
     writeBundle(options) {
       const outDir = options.dir || path.resolve(__dirname, 'dist');
-      const src = path.resolve(__dirname, 'package/yap.json');
-      const dest = path.resolve(outDir, 'yap.json');
-      fs.copyFileSync(src, dest);
+      fs.copyFileSync(
+        path.resolve(__dirname, 'package/yap.json'),
+        path.resolve(outDir, 'yap.json'),
+      );
+    },
+  };
+}
+
+function copyPkgBuild(isDev: boolean): Plugin {
+  return {
+    name: 'copy-pkgbuild',
+    writeBundle(options) {
+      const outDir = options.dir || path.resolve(__dirname, 'dist');
+      const pkg = JSON.parse(
+        fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8'),
+      );
+      const template = fs.readFileSync(
+        path.resolve(__dirname, 'package/PKGBUILD.template'),
+        'utf-8',
+      );
+      const content = template
+        .replaceAll('{{version}}', pkg.version)
+        .replaceAll('{{pkgRel}}', `${isDev ? Date.now() : 1}`);
+      const destDir = path.resolve(outDir, 'package');
+      fs.mkdirSync(destDir, { recursive: true });
+      fs.writeFileSync(path.resolve(destDir, 'PKGBUILD'), content);
+    },
+  };
+}
+
+function copyMockServiceWorker(): Plugin {
+  return {
+    name: 'copy-mock-service-worker',
+    writeBundle(options) {
+      const outDir = options.dir || path.resolve(__dirname, 'dist');
+      fs.copyFileSync(
+        path.resolve(__dirname, 'src/mockServiceWorker.js'),
+        path.resolve(outDir, 'mockServiceWorker.js'),
+      );
     },
   };
 }
@@ -87,6 +123,8 @@ export default defineConfig(({ command, mode }) => {
   return {
     plugins: [
       copyYapJson(),
+      copyPkgBuild(isDev),
+      copyMockServiceWorker(),
       swc.vite({
         jsc: {
           parser: {
