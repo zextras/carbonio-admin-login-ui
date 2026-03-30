@@ -27,11 +27,23 @@ export const snackbarStyles = css`
     }
   }
 
+  @keyframes fadeOutLeft {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(3.125rem);
+      opacity: 0;
+    }
+  }
+
   :host {
     display: none;
   }
 
-  :host([open]) {
+  :host([open]),
+  :host([closing]) {
     display: flex;
   }
 
@@ -50,6 +62,14 @@ export const snackbarStyles = css`
     max-width: 40%;
     gap: 0;
     animation: fadeInRight 225ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .snack-container.closing {
+    animation: fadeOutLeft 195ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .snack-container:not(.closing):hover .progress-bar {
+    animation-play-state: paused;
   }
 
   .snack-content {

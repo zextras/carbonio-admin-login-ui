@@ -5,7 +5,7 @@
  */
 
 import { html, LitElement, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { snackbarStyles } from './ds-snackbar.styles';
@@ -42,9 +42,29 @@ export class DsSnackbar extends LitElement {
   @property({ type: Number, attribute: 'auto-hide-timeout' })
   accessor autoHideTimeout = DEFAULT_HIDE_TIMEOUT;
 
-  private timeoutId: number | undefined;
+  @state()
+  accessor closing = false;
+
+  private timeoutId: ReturnType<typeof setTimeout> | undefined;
+  private timerStart = 0;
+  private remainingTime = 0;
+
+  private clearTimer(): void {
+    clearTimeout(this.timeoutId);
+    this.timeoutId = undefined;
+  }
+
+  private startTimer(duration: number): void {
+    this.clearTimer();
+    this.timerStart = Date.now();
+    this.remainingTime = duration;
+    this.timeoutId = setTimeout(() => {
+      this.handleClose();
+    }, duration);
+  }
 
   private handleClose(): void {
+    this.clearTimer();
     this.dispatchEvent(new CustomEvent('snackbar:close', { bubbles: true, composed: true }));
   }
 
@@ -57,24 +77,56 @@ export class DsSnackbar extends LitElement {
     this.handleClose();
   }
 
-  override updated(changedProperties: Map<string, unknown>): void {
-    if (changedProperties.has('open') || changedProperties.has('autoHideTimeout')) {
-      clearTimeout(this.timeoutId);
+  private handleMouseEnter(): void {
+    if (!this.open || this.closing) return;
+    this.clearTimer();
+    this.remainingTime = Math.max(0, this.remainingTime - (Date.now() - this.timerStart));
+  }
+
+  private handleMouseLeave(): void {
+    if (!this.open || this.closing) return;
+    this.startTimer(this.remainingTime);
+  }
+
+  private handleAnimationEnd(event: AnimationEvent): void {
+    if (event.animationName === 'fadeOutLeft' && this.closing) {
+      this.closing = false;
+      this.removeAttribute('closing');
+    }
+  }
+
+  override willUpdate(changedProperties: Map<string, unknown>): void {
+    if (changedProperties.has('open')) {
       if (this.open) {
-        this.timeoutId = setTimeout(() => {
-          this.handleClose();
-        }, this.autoHideTimeout) as unknown as number;
+        this.closing = false;
+        this.removeAttribute('closing');
+      } else if (changedProperties.get('open')) {
+        this.closing = true;
+        this.setAttribute('closing', '');
       }
     }
   }
 
+  override updated(changedProperties: Map<string, unknown>): void {
+    if (changedProperties.has('open')) {
+      if (this.open) {
+        this.startTimer(this.autoHideTimeout);
+      } else {
+        this.clearTimer();
+      }
+    }
+    if (changedProperties.has('autoHideTimeout') && this.open && !this.closing) {
+      this.startTimer(this.autoHideTimeout);
+    }
+  }
+
   override disconnectedCallback(): void {
-    clearTimeout(this.timeoutId);
+    this.clearTimer();
     super.disconnectedCallback();
   }
 
   override render() {
-    if (!this.open) return nothing;
+    if (!this.open && !this.closing) return nothing;
 
     const containerStyles = styleMap({
       '--snackbar-z-index': '1000',
@@ -87,7 +139,16 @@ export class DsSnackbar extends LitElement {
     });
 
     return html`
-      <div class="snack-container" style=${containerStyles} data-testid="snackbar">
+      <div
+        class="snack-container${this.closing ? ' closing' : ''}"
+        style=${containerStyles}
+        role="status"
+        aria-live="polite"
+        data-testid="snackbar"
+        @mouseenter=${this.handleMouseEnter}
+        @mouseleave=${this.handleMouseLeave}
+        @animationend=${this.handleAnimationEnd}
+      >
         <div class="snack-content">
           <ds-icon size="large" icon=${icons[this.severity]} color="gray6"></ds-icon>
           <ds-text as="span" color="gray6" overflow="break-word">${this.label}</ds-text>
@@ -95,6 +156,7 @@ export class DsSnackbar extends LitElement {
             label=${this.actionLabel}
             type="ghost"
             color="gray6"
+            aria-label=${this.actionLabel}
             @click=${this.handleButtonClick}
           ></ds-button>
         </div>
