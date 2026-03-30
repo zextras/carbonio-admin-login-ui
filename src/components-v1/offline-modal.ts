@@ -101,7 +101,6 @@ export class OfflineModal extends LitElement {
               overflow="break-word"
               line-height=${1.4}
               class="paragraph"
-              data-testid="offlineMsg"
             >
               ${modalDescription}
             </ds-text>

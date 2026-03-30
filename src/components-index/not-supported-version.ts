@@ -29,7 +29,6 @@ export class NotSupportedVersion extends LitElement {
         )}
         auto-hide-timeout=${10000}
         severity="error"
-        data-testid="not-supported-version"
         @close=${this.onClose}
       ></ds-snackbar>
     `;

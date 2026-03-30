@@ -150,21 +150,11 @@ export class PageLayout extends LitElement {
     if (!this.logo) return html``;
 
     const logoImage = html`
-      <img
-        alt="Logo"
-        src=${this.logo.image}
-        width=${this.logo.width}
-        class="logoImage"
-        data-testid="logo"
-      />
+      <img alt="Logo" src=${this.logo.image} width=${this.logo.width} class="logoImage" />
     `;
 
     if (this.logo.url) {
-      return html`
-        <a target="_blank" href=${this.logo.url} rel="noreferrer" data-testid="logo-link">
-          ${logoImage}
-        </a>
-      `;
+      return html` <a target="_blank" href=${this.logo.url} rel="noreferrer"> ${logoImage} </a> `;
     }
 
     return logoImage;
@@ -181,7 +171,7 @@ export class PageLayout extends LitElement {
     }
 
     return html`
-      <ds-text as="span" size="small" overflow="break-word" data-testid="default-banner">
+      <ds-text as="span" size="small" overflow="break-word">
         ${t('copy_right', 'Copyright')} &copy; ${year} Zextras,
         ${t('all_rights_reserved', 'All rights reserved')}
       </ds-text>
@@ -208,7 +198,7 @@ export class PageLayout extends LitElement {
         style="--background-image: url(${this
           .bg}); --background-image-retina: url(${backgroundImageRetinaUrl});"
       >
-        <div class="formWrapper" data-testid="form-container">
+        <div class="formWrapper">
           <div class="logoSection">${this.renderLogo()}</div>
 
           ${this.isAdvanced

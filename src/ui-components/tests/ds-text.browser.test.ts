@@ -5,8 +5,8 @@
  */
 import '../ds-text';
 
-import { page } from '@vitest/browser/context';
 import { describe, expect, it } from 'vitest';
+import { page } from 'vitest/browser';
 
 import type { DsText } from '../ds-text';
 import type { TextOverflow } from '../ds-text';

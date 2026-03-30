@@ -279,12 +279,7 @@ export class ChangePasswordForm extends LitElement {
         <div
           style="display: flex; align-items: center; justify-content: center; padding: var(--padding-size-large) 0 0 0; box-sizing: border-box"
         >
-          <ds-input
-            default-value=${this.username}
-            disabled
-            label="Email"
-            data-testid="email"
-          ></ds-input>
+          <ds-input default-value=${this.username} disabled label="Email"></ds-input>
         </div>
         <div
           style="display: flex; align-items: center; justify-content: center; padding: var(--padding-size-large) 0 0 0; box-sizing: border-box"
@@ -294,7 +289,6 @@ export class ChangePasswordForm extends LitElement {
             ?has-error=${this.showOldPasswordError}
             @change=${this.handleOldPasswordChange}
             label=${t('changePassword_oldPassword', 'Old password')}
-            data-testid="oldPassword"
           ></ds-password-input>
         </div>
         ${this.showOldPasswordError
@@ -316,7 +310,6 @@ export class ChangePasswordForm extends LitElement {
             ?has-error=${!!this.errorLabelNewPassword}
             @change=${this.handleNewPasswordChange}
             label=${t('changePassword_newPassword', 'New password')}
-            data-testid="newPassword"
           ></ds-password-input>
         </div>
         ${this.errorLabelNewPassword
@@ -338,7 +331,6 @@ export class ChangePasswordForm extends LitElement {
             ?has-error=${!!this.errorLabelConfirmNewPassword}
             @change=${this.handleConfirmPasswordChange}
             label=${t('changePassword_confirmNewPassword', 'Confirm new password')}
-            data-testid="confirmNewPassword"
           ></ds-password-input>
         </div>
         ${this.errorLabelConfirmNewPassword
@@ -363,7 +355,6 @@ export class ChangePasswordForm extends LitElement {
             ?disabled=${!this.newPassword ||
             this.confirmNewPassword !== this.newPassword ||
             !!this.errorLabelNewPassword}
-            data-testid="submitChangePasswordBtn"
           ></ds-button>
         </div>
       </form>

@@ -17,7 +17,7 @@ export class LoadingView extends LitElement {
   override render(): TemplateResult {
     return html`
       <img src=${helmet} alt="carbonio-head" />
-      <div class="loader" data-testid="loading-view">
+      <div class="loader">
         <div class="bar"></div>
       </div>
     `;

@@ -148,7 +148,6 @@ export class DsSnackbar extends LitElement {
         style=${containerStyles}
         role="status"
         aria-live="polite"
-        data-testid="snackbar"
         @mouseenter=${this.handleMouseEnter}
         @mouseleave=${this.handleMouseLeave}
         @animationend=${this.handleAnimationEnd}
@@ -164,7 +163,7 @@ export class DsSnackbar extends LitElement {
             @click=${this.handleButtonClick}
           ></ds-button>
         </div>
-        <div class="progress-bar" style=${progressBarStyles} data-testid="progress-bar"></div>
+        <div class="progress-bar" style=${progressBarStyles}></div>
       </div>
     `;
   }

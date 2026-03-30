@@ -91,7 +91,6 @@ export class CredentialsForm extends LitElement {
       return html`
         <ds-button
           type="outlined"
-          data-testid="loginSaml"
           .label=${i18next.t('login_saml', 'Login SAML')}
           color="primary"
           ?disabled=${this.disableInputs}
@@ -107,11 +106,7 @@ export class CredentialsForm extends LitElement {
     const t = i18next.t.bind(i18next);
 
     return html`
-      <form
-        @submit=${(e: Event) => e.preventDefault()}
-        style="width: 100%"
-        data-testid="credentials-form"
-      >
+      <form @submit=${(e: Event) => e.preventDefault()} style="width: 100%">
         <div
           style="display: flex; align-items: center; justify-content: center; padding: 0 0 var(--padding-size-large) 0; box-sizing: border-box"
         >
@@ -119,7 +114,6 @@ export class CredentialsForm extends LitElement {
             default-value=${this.username}
             ?disabled=${this.disableInputs}
             ?has-error=${!!this.authError}
-            data-testid="username"
             @change=${this.handleUsernameChange}
             label=${t('username', 'Username')}
           ></ds-input>
@@ -130,7 +124,6 @@ export class CredentialsForm extends LitElement {
           <ds-password-input
             initial-value=${this.password}
             ?disabled=${this.disableInputs}
-            data-testid="password"
             ?has-error=${!!this.authError}
             @change=${this.handlePasswordChange}
             label=${t('password', 'Password')}
@@ -146,7 +139,6 @@ export class CredentialsForm extends LitElement {
           <ds-button
             style="height: 36px"
             ?loading=${this.loading}
-            data-testid="login"
             @click=${this.handleSubmit}
             ?disabled=${this.disableInputs}
             label=${t('login', 'Login')}
