@@ -4,11 +4,25 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { defineConfig } from 'vite';
+import fs from 'node:fs';
+import path from 'node:path';
+import { defineConfig, type Plugin } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import swc from 'unplugin-swc';
 
 import { createBootstrapRolldownOptions } from './vite.rolldown.config';
+
+function copyYapJson(): Plugin {
+  return {
+    name: 'copy-yap-json',
+    writeBundle(options) {
+      const outDir = options.dir || path.resolve(__dirname, 'dist');
+      const src = path.resolve(__dirname, 'package/yap.json');
+      const dest = path.resolve(outDir, 'yap.json');
+      fs.copyFileSync(src, dest);
+    },
+  };
+}
 
 function getProxyTarget(): string {
   const target = process.env['VITE_TARGET'] || 'localhost';
@@ -72,6 +86,7 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     plugins: [
+      copyYapJson(),
       swc.vite({
         jsc: {
           parser: {
