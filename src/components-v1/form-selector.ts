@@ -9,7 +9,7 @@ import '../components-index/server-not-responding';
 import './v1-login-manager';
 import './v2-login-manager';
 
-import { html, LitElement, type TemplateResult } from 'lit';
+import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import { doAuthLogout, getAuthSupported } from '../services/auth-configuration-service';
@@ -17,6 +17,12 @@ import { type Configuration } from './credentials-form';
 
 @customElement('form-selector')
 export class FormSelector extends LitElement {
+  static override styles = css`
+    :host {
+      width: 100%;
+    }
+  `;
+
   @property({ type: String, attribute: 'destination-url' })
   accessor destinationUrl = '';
 
