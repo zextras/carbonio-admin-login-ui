@@ -9,7 +9,7 @@ import type { BuildOptions } from 'vite';
 export function createBootstrapRolldownOptions(): BuildOptions['rolldownOptions'] {
   return {
     output: {
-      entryFileNames: 'shell.mjs',
+      entryFileNames: 'main.js',
       chunkFileNames: '[name].[hash].chunk.mjs',
       assetFileNames: (assetInfo: { names?: string[]; name?: string }) => {
         const fileName = assetInfo.names?.[0] || assetInfo.name || '';
@@ -18,7 +18,6 @@ export function createBootstrapRolldownOptions(): BuildOptions['rolldownOptions'
         }
         return '[name].[hash][extname]';
       },
-      inlineDynamicImports: false,
     },
   };
 }

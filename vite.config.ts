@@ -9,7 +9,6 @@ import path from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import swc from 'unplugin-swc';
-
 import { createBootstrapRolldownOptions } from './vite.rolldown.config';
 
 function copyYapJson(): Plugin {
@@ -17,10 +16,7 @@ function copyYapJson(): Plugin {
     name: 'copy-yap-json',
     writeBundle(options) {
       const outDir = options.dir || path.resolve(__dirname, 'dist');
-      fs.copyFileSync(
-        path.resolve(__dirname, 'package/yap.json'),
-        path.resolve(outDir, 'yap.json'),
-      );
+      fs.copyFileSync(path.resolve(__dirname, 'yap.json'), path.resolve(outDir, 'yap.json'));
     },
   };
 }
@@ -76,53 +72,8 @@ function getProxyTarget(): string {
   return `https://${target}:6071`;
 }
 
-// function withLocationRewrite(config: {
-//   target: string;
-//   changeOrigin: boolean;
-//   secure: boolean;
-// }): object {
-//   return {
-//     ...config,
-//     cookieDomainRewrite: { '*': 'localhost' },
-//     configure: (proxy: any) => {
-//       proxy.on('proxyReq', (proxyReq: any, req: any) => {
-//         const targetUrl = new URL(config.target);
-//         proxyReq.setHeader('Origin', targetUrl.origin);
-//         if (req.headers['referer']) {
-//           proxyReq.setHeader(
-//             'Referer',
-//             req.headers['referer'].replace('http://localhost:3000', targetUrl.origin),
-//           );
-//         }
-//       });
-//
-//       proxy.on('proxyRes', (proxyRes: any) => {
-//         const cookies = proxyRes.headers['set-cookie'];
-//         if (cookies) {
-//           if (Array.isArray(cookies)) {
-//             proxyRes.headers['set-cookie'] = cookies.map((cookie: string) =>
-//               cookie.replace(/;\s*Secure/gi, '').replace(/;\s*SameSite=\w+/gi, ''),
-//             );
-//           } else if (typeof cookies === 'string') {
-//             proxyRes.headers['set-cookie'] = cookies
-//               .replace(/;\s*Secure/gi, '')
-//               .replace(/;\s*SameSite=\w+/gi, '');
-//           }
-//         }
-//         const location = proxyRes.headers['location'];
-//         if (location) {
-//           proxyRes.headers['location'] = location.replace(
-//             /https:\/\/[^/]+/,
-//             'http://localhost:3000',
-//           );
-//         }
-//       });
-//     },
-//   };
-// }
-
 export default defineConfig(({ command, mode }) => {
-  const basePath = '/';
+  const basePath = '/static/login/';
   const isServeCommand = command === 'serve';
   const isDev = mode === 'development';
   const proxyTarget = getProxyTarget();
@@ -169,7 +120,7 @@ export default defineConfig(({ command, mode }) => {
       sourcemap: isDev,
       rollupOptions: createBootstrapRolldownOptions(),
     },
-    base: '/',
+    base: '/static/login/',
     publicDir: 'assets',
     ...(isDev
       ? {
