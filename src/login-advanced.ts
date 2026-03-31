@@ -29,10 +29,14 @@ export class LoginAdvanced extends LitElement {
   private _abortController: AbortController | null = null;
 
   private get notSupported(): boolean {
-    return this.hasError || (this.versions !== undefined && this.versions.version < this.versions.minApiVersion);
+    return (
+      this.hasError ||
+      (this.versions !== undefined && this.versions.version < this.versions.minApiVersion)
+    );
   }
 
   override connectedCallback(): void {
+    super.connectedCallback();
     this._abortController = new AbortController();
     const { signal } = this._abortController;
 
@@ -54,6 +58,7 @@ export class LoginAdvanced extends LitElement {
   }
 
   override disconnectedCallback(): void {
+    super.disconnectedCallback();
     this._abortController?.abort();
   }
 
