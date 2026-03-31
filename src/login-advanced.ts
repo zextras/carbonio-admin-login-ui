@@ -36,7 +36,7 @@ export class LoginAdvanced extends LitElement {
   }
 
   override connectedCallback(): void {
-    super.connectedCallback();
+    super.connectedCallback?.();
     this._abortController = new AbortController();
     const { signal } = this._abortController;
 
@@ -58,7 +58,7 @@ export class LoginAdvanced extends LitElement {
   }
 
   override disconnectedCallback(): void {
-    super.disconnectedCallback();
+    super.disconnectedCallback?.();
     this._abortController?.abort();
   }
 

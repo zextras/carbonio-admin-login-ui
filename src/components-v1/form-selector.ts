@@ -74,8 +74,8 @@ export class FormSelector extends LitElement {
   }
 
   override disconnectedCallback(): void {
-    this._isConnected = false;
     super.disconnectedCallback();
+    this._isConnected = false;
   }
 
   protected override updated(changedProperties: Map<string, unknown>): void {

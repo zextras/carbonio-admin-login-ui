@@ -59,9 +59,9 @@ export class OfflineModal extends LitElement {
   }
 
   override disconnectedCallback(): void {
+    super.disconnectedCallback();
     document.body.style.overflow = '';
     document.body.style.scrollbarGutter = '';
-    super.disconnectedCallback();
   }
 
   override render(): TemplateResult {

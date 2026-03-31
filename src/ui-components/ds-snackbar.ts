@@ -125,8 +125,8 @@ export class DsSnackbar extends LitElement {
   }
 
   override disconnectedCallback(): void {
-    this.clearTimer();
     super.disconnectedCallback();
+    this.clearTimer();
   }
 
   override render() {
