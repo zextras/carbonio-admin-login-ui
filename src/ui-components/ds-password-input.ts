@@ -50,6 +50,9 @@ export class DsPasswordInput extends LitElement {
   @state()
   private accessor _show = false;
 
+  @state()
+  private accessor _focused = false;
+
   override focus(): void {
     (this._inputElement as HTMLElement & { focus: () => void })?.focus();
   }
@@ -70,6 +73,14 @@ export class DsPasswordInput extends LitElement {
 
   private _toggleShow(): void {
     this._show = !this._show;
+  }
+
+  private _onFocus(): void {
+    this._focused = true;
+  }
+
+  private _onBlur(): void {
+    this._focused = false;
   }
 
   private _onInputChange(event: Event): void {
@@ -97,6 +108,7 @@ export class DsPasswordInput extends LitElement {
   override render(): TemplateResult | typeof nothing {
     const inputType: InputType = this._show ? 'text' : 'password';
     const iconName = this._show ? 'EyeOutline' : 'EyeOffOutline';
+    const iconColor = this._focused ? 'primary' : 'gray1';
     const errorId = 'error-msg';
 
     return html`
@@ -113,6 +125,8 @@ export class DsPasswordInput extends LitElement {
         aria-describedby=${this.hasError && this.errorMessage ? errorId : nothing}
         @change=${this._onInputChange}
         @input=${this._onInput}
+        @focus=${this._onFocus}
+        @blur=${this._onBlur}
       >
         <button
           slot="icon"
@@ -123,7 +137,12 @@ export class DsPasswordInput extends LitElement {
           aria-pressed=${this._show ? 'true' : 'false'}
           @click=${this._toggleShow}
         >
-          <ds-icon .icon=${iconName} size="large" ?disabled=${this.disabled}></ds-icon>
+          <ds-icon
+            .icon=${iconName}
+            .color=${iconColor}
+            size="large"
+            ?disabled=${this.disabled}
+          ></ds-icon>
         </button>
       </ds-input>
       ${this.hasError && this.errorMessage

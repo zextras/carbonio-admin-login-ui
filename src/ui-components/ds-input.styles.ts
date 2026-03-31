@@ -32,7 +32,7 @@ export const inputStyles = css`
     flex-wrap: nowrap;
     width: 100%;
     height: fit-content;
-    padding: 0 var(--padding-size-large, 1rem);
+    padding: 0 var(--padding-size-medium, 1rem);
     gap: 0.5rem;
     border-radius: var(--border-radius, 0.25rem) var(--border-radius, 0.25rem) 0 0;
     box-sizing: border-box;
@@ -71,7 +71,8 @@ export const inputStyles = css`
     box-sizing: border-box;
     padding: var(--padding-vertical, 0.625rem) 0;
     height: 100%;
-    width: 100%;
+    flex: 1;
+    min-width: 0;
     min-height: inherit;
     position: relative;
     --input-color: var(--color-text-regular);
@@ -146,5 +147,6 @@ export const inputStyles = css`
   .icon-slot {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
   }
 `;

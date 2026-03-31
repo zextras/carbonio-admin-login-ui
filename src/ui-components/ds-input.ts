@@ -152,10 +152,11 @@ export class DsInput extends LitElement {
           <div
             class="relative-container"
             style=${styleMap(relativeContainerStyles)}
-            ?data-has-label=${!!this.label}
+            data-has-label=${!!this.label}
           >
             <input
               class="input"
+              placeholder=" "
               autocomplete=${this.autocomplete as 'on' | 'off'}
               type=${this.type}
               id=${this._inputId}
@@ -172,10 +173,10 @@ export class DsInput extends LitElement {
               ? html`<label class="label" for=${this._inputId}>${this.label}</label>`
               : nothing}
           </div>
+          <span class="icon-slot">
+            <slot name="icon"></slot>
+          </span>
         </div>
-        <span class="icon-slot">
-          <slot name="icon"></slot>
-        </span>
         <ds-divider color=${this._getDividerColor()}></ds-divider>
       </div>
     `;
