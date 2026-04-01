@@ -104,7 +104,6 @@ export const selectStyles = css`
     display: block;
     visibility: visible;
     pointer-events: auto;
-    width: 100%;
   }
 
   .dropdown::-webkit-scrollbar {

@@ -19,7 +19,8 @@ export function setupFloating(
 		computePosition(reference, floating, options).then(({ x, y }) => {
 			Object.assign(floating.style, {
 				left: `${x}px`,
-				top: `${y}px`
+				top: `${y}px`,
+				width: `${(reference as HTMLElement).offsetWidth}px`
 			});
 		});
 	});
