@@ -74,37 +74,45 @@ function simpleParsePaddingVar(size: string): string {
   return explodedSizes.join(' ');
 }
 
+type PaddingDirection = {
+  key: string;
+  indices: Array<number>;
+};
+
+const PADDING_DIRECTIONS: Array<PaddingDirection> = [
+  { key: 'vertical', indices: [0, 2] },
+  { key: 'horizontal', indices: [1, 3] },
+  { key: 'top', indices: [0] },
+  { key: 'right', indices: [1] },
+  { key: 'bottom', indices: [2] },
+  { key: 'left', indices: [3] },
+];
+
 export function getPaddingVar(padding: string | PaddingVarObj | 0): string | undefined {
   if (padding === 0 || padding === '0') return '0';
   if (typeof padding === 'string') {
     return simpleParsePaddingVar(padding);
   }
-  if ('value' in padding && padding.value !== undefined && padding.value !== '') {
-    return getPaddingVar(padding.value);
+
+  const shorthand = 'value' in padding
+    ? padding.value
+    : 'all' in padding
+      ? padding.all
+      : undefined;
+
+  if (shorthand !== undefined && shorthand !== '') {
+    return getPaddingVar(shorthand);
   }
-  if ('all' in padding && padding.all !== undefined && padding.all !== '') {
-    return getPaddingVar(padding.all);
+
+  const sides: Array<string> = ['0', '0', '0', '0'];
+  for (const { key, indices } of PADDING_DIRECTIONS) {
+    if (key in padding) {
+      const value = String((padding as Record<string, unknown>)[key]);
+      for (const i of indices) {
+        sides[i] = value;
+      }
+    }
   }
-  const p = ['0', '0', '0', '0'];
-  if ('vertical' in padding && padding.vertical) {
-    p[0] = String(padding.vertical);
-    p[2] = String(padding.vertical);
-  }
-  if ('horizontal' in padding && padding.horizontal) {
-    p[1] = String(padding.horizontal);
-    p[3] = String(padding.horizontal);
-  }
-  if ('top' in padding && padding.top) {
-    p[0] = String(padding.top);
-  }
-  if ('right' in padding && padding.right) {
-    p[1] = String(padding.right);
-  }
-  if ('bottom' in padding && padding.bottom) {
-    p[2] = String(padding.bottom);
-  }
-  if ('left' in padding && padding.left) {
-    p[3] = String(padding.left);
-  }
-  return p.map((val) => paddingTokenToVar(val)).join(' ');
+
+  return sides.map((val) => paddingTokenToVar(val)).join(' ');
 }
