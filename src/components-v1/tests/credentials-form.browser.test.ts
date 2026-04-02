@@ -101,4 +101,22 @@ describe('CredentialsForm', () => {
 
     expect(preventDefaultSpy).toHaveBeenCalled();
   });
+
+  it('should submit credentials when pressing Enter in the password field', async () => {
+    const submitHandler = vi.fn();
+    const el = await createCredentialsForm();
+    el.addEventListener('credentials-submit', submitHandler);
+    await el.updateComplete;
+
+    await userEvent.fill(page.getByRole('textbox', { name: 'Username' }), 'enteruser');
+    await userEvent.keyboard('{Tab}');
+    await userEvent.fill(page.getByRole('textbox', { name: 'Password' }), 'enterpassword');
+    await userEvent.keyboard('{Enter}');
+
+    expect(submitHandler).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: expect.objectContaining({ username: 'enteruser', password: 'enterpassword' }),
+      }),
+    );
+  });
 });

@@ -82,6 +82,12 @@ export class CredentialsForm extends LitElement {
     this.password = e.detail.value;
   }
 
+  private handleKeydown(e: KeyboardEvent): void {
+    if (e.key === 'Enter') {
+      this.handleSubmit(e);
+    }
+  }
+
   private handleSamlClick(): void {
     globalThis.location.assign(`/zx/auth/startSamlWorkflow?redirectUrl=${this.destinationUrl}`);
   }
@@ -106,7 +112,7 @@ export class CredentialsForm extends LitElement {
     const t = i18next.t.bind(i18next);
 
     return html`
-      <form @submit=${(e: Event) => e.preventDefault()} style="width: 100%">
+      <form @submit=${this.handleSubmit} @keydown=${this.handleKeydown} style="width: 100%">
         <div
           style="display: flex; align-items: center; justify-content: center; padding: 0 0 var(--padding-size-large) 0; box-sizing: border-box"
         >
@@ -114,7 +120,7 @@ export class CredentialsForm extends LitElement {
             default-value=${this.username}
             ?disabled=${this.disableInputs}
             ?has-error=${!!this.authError}
-            @change=${this.handleUsernameChange}
+            @input=${this.handleUsernameChange}
             label=${t('username', 'Username')}
           ></ds-input>
         </div>
@@ -125,7 +131,7 @@ export class CredentialsForm extends LitElement {
             initial-value=${this.password}
             ?disabled=${this.disableInputs}
             ?has-error=${!!this.authError}
-            @change=${this.handlePasswordChange}
+            @input=${this.handlePasswordChange}
             label=${t('password', 'Password')}
           ></ds-password-input>
         </div>
