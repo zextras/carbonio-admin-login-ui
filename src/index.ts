@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import './i18n/i18n.config';
 import './index.css';
 import './loading-view';
 import './app';
