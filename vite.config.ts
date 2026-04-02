@@ -173,6 +173,11 @@ export default defineConfig(({ command, mode }) => {
             port: 3000,
             strictPort: false,
             proxy: {
+              '/static/login/i18n': {
+                target: proxyTarget,
+                changeOrigin: true,
+                secure: false,
+              },
               '/zx': {
                 target: proxyTarget,
                 changeOrigin: true,

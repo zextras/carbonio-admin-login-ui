@@ -8,7 +8,7 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 
-i18n
+const i18nReady = i18n
   .use(Backend)
   .use(LanguageDetector)
   .init({
@@ -22,8 +22,9 @@ i18n
       console.warn('Missing translation with key', key);
     },
     backend: {
-      loadPath: 'translations/{{lng}}.json',
+      loadPath: 'i18n/{{lng}}.json',
     },
   });
 
+export { i18nReady };
 export default i18n;

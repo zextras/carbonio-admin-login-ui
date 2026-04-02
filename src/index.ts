@@ -9,6 +9,8 @@ import './index.css';
 import './loading-view';
 import './app';
 
+import { i18nReady } from './i18n/i18n.config';
+
 function getAppRoot(): HTMLElement {
   const root = document.getElementById('app');
   if (!root) {
@@ -23,4 +25,6 @@ function mountApp(): void {
   root.appendChild(appElement);
 }
 
-document.addEventListener('DOMContentLoaded', mountApp);
+document.addEventListener('DOMContentLoaded', () => {
+  i18nReady.then(mountApp);
+});
