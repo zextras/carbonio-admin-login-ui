@@ -49,6 +49,63 @@ type PasswordErrorPayload = {
   };
 };
 
+const PASSWORD_ERROR_RULES = [
+  {
+    attrName: BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY,
+    i18nKey: 'changePassword_error_block_common_words',
+    defaultValue: 'Invalid password: password is known to be too common: {{str}}',
+    replaceKey: 'str',
+  },
+  {
+    attrName: BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY,
+    i18nKey: 'changePassword_error_block_personal_data',
+    defaultValue: 'Invalid password: password contains username or other personal data: {{str}}',
+    replaceKey: 'str',
+  },
+  {
+    attrName: ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME,
+    i18nKey: 'changePassword_error_maxLength',
+    defaultValue: 'Maximum length is {{num}} characters',
+    replaceKey: 'num',
+  },
+  {
+    attrName: ZIMBRA_PASSWORD_MIN_LENGTH_ATTR_NAME,
+    i18nKey: 'changePassword_error_minLength',
+    defaultValue: 'Minimum length is {{num}} characters',
+    replaceKey: 'num',
+  },
+  {
+    attrName: ZIMBRA_PASSWORD_MIN_LOWERCASE_CHARS_ATTR_NAME,
+    i18nKey: 'changePassword_error_minLowerCaseChars',
+    defaultValue: 'Expecting at least {{num}} lowercase characters',
+    replaceKey: 'num',
+  },
+  {
+    attrName: ZIMBRA_PASSWORD_MIN_NUMERIC_CHARS_ATTR_NAME,
+    i18nKey: 'changePassword_error_minNumericChars',
+    defaultValue: 'Expecting at least {{num}} numeric characters',
+    replaceKey: 'num',
+  },
+  {
+    attrName: ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME,
+    i18nKey: 'changePassword_error_minPunctuationChars',
+    defaultValue: 'Expecting at least {{num}} punctuation characters',
+    replaceKey: 'num',
+  },
+  {
+    attrName: ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME,
+    i18nKey: 'changePassword_error_minUppercaseChars',
+    defaultValue: 'Expecting at least {{num}} uppercase characters',
+    replaceKey: 'num',
+  },
+  {
+    attrName: ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS,
+    i18nKey: 'changePassword_error_minDigitsOrPuncs',
+    defaultValue: 'Expecting at least {{num}} numeric or punctuation characters',
+    replaceKey: 'num',
+  },
+];
+
 @customElement('change-password-form')
 export class ChangePasswordForm extends LitElement {
   @property({ type: String })
@@ -142,104 +199,53 @@ export class ChangePasswordForm extends LitElement {
 
   private handlePasswordError(payload: PasswordErrorPayload): void {
     const t = i18next.t.bind(i18next);
-    if (payload?.Body?.Fault?.Detail?.Error?.Code === INVALID_PASSWORD_ERR_CODE) {
-      this.showOldPasswordError = false;
-      const { a } = payload.Body.Fault.Detail.Error;
-      let currNum = a
-        ? a.find((rec) => rec.n === BLOCK_COMMON_WORDS_IN_PASSWORD_POLICY)
-        : undefined;
-      if (currNum) {
-        this.errorLabelNewPassword = t('changePassword_error_block_common_words', {
-          defaultValue: 'Invalid password: password is known to be too common: {{str}}',
-          replace: { str: currNum._content },
-        });
-        return;
+    const errorCode = payload?.Body?.Fault?.Detail?.Error?.Code;
+    this.showOldPasswordError = false;
+
+    if (errorCode === INVALID_PASSWORD_ERR_CODE) {
+      const attributes = payload?.Body?.Fault?.Detail?.Error?.a;
+      const errorMsg = this.findPasswordAttributeError(attributes);
+      if (errorMsg) {
+        this.errorLabelNewPassword = errorMsg;
       }
-      currNum = a ? a.find((rec) => rec.n === BLOCK_PERSONAL_DATA_IN_PASSWORD_POLICY) : undefined;
-      if (currNum) {
-        this.errorLabelNewPassword = t('changePassword_error_block_personal_data', {
-          defaultValue:
-            'Invalid password: password contains username or other personal data: {{str}}',
-          replace: { str: currNum._content },
-        });
-        return;
-      }
-      currNum = a ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MAX_LENGTH_ATTR_NAME) : undefined;
-      if (currNum) {
-        this.errorLabelNewPassword = t('changePassword_error_maxLength', {
-          defaultValue: 'Maximum length is {{num}} characters',
-          replace: { num: currNum._content },
-        });
-        return;
-      }
-      currNum = a ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_LENGTH_ATTR_NAME) : undefined;
-      if (currNum) {
-        this.errorLabelNewPassword = t('changePassword_error_minLength', {
-          defaultValue: 'Minimum length is {{num}} characters',
-          replace: { num: currNum._content },
-        });
-        return;
-      }
-      currNum = a
-        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_LOWERCASE_CHARS_ATTR_NAME)
-        : undefined;
-      if (currNum) {
-        this.errorLabelNewPassword = t('changePassword_error_minLowerCaseChars', {
-          defaultValue: 'Expecting at least {{num}} lowercase characters',
-          replace: { num: currNum._content },
-        });
-        return;
-      }
-      currNum = a
-        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_NUMERIC_CHARS_ATTR_NAME)
-        : undefined;
-      if (currNum) {
-        this.errorLabelNewPassword = t('changePassword_error_minNumericChars', {
-          defaultValue: 'Expecting at least {{num}} numeric characters',
-          replace: { num: currNum._content },
-        });
-        return;
-      }
-      currNum = a
-        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_PUNCTUATION_CHARS_ATTR_NAME)
-        : undefined;
-      if (currNum) {
-        this.errorLabelNewPassword = t('changePassword_error_minPunctuationChars', {
-          defaultValue: 'Expecting at least {{num}} punctuation characters',
-          replace: { num: currNum._content },
-        });
-        return;
-      }
-      currNum = a
-        ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_UPPERCASE_CHARS_ATTR_NAME)
-        : undefined;
-      if (currNum) {
-        this.errorLabelNewPassword = t('changePassword_error_minUppercaseChars', {
-          defaultValue: 'Expecting at least {{num}} uppercase characters',
-          replace: { num: currNum._content },
-        });
-      }
-      currNum = a ? a.find((rec) => rec.n === ZIMBRA_PASSWORD_MIN_DIGITS_OR_PUNCS) : undefined;
-      if (currNum) {
-        this.errorLabelNewPassword = t('changePassword_error_minDigitsOrPuncs', {
-          defaultValue: 'Expecting at least {{num}} numeric or punctuation characters',
-          replace: { num: currNum._content },
-        });
-      }
-    } else if (payload?.Body?.Fault?.Detail?.Error?.Code === PASSWORD_LOCKED) {
-      this.showOldPasswordError = false;
+      return;
+    }
+
+    if (errorCode === PASSWORD_LOCKED) {
       this.errorLabelNewPassword = t('changePassword_error_passwordLocked', {
         defaultValue: "Password is locked and can't be changed",
       });
-    } else if (payload?.Body?.Fault?.Detail?.Error?.Code === PASSWORD_RECENTLY_USED_ERR_CODE) {
-      this.showOldPasswordError = false;
+      return;
+    }
+
+    if (errorCode === PASSWORD_RECENTLY_USED_ERR_CODE) {
       this.errorLabelNewPassword = t('changePassword_error_passwordRecentlyUsed', {
         defaultValue: 'Password recently used',
       });
-    } else {
-      this.showOldPasswordError = true;
-      this.errorLabelNewPassword = '';
+      return;
     }
+
+    this.showOldPasswordError = true;
+    this.errorLabelNewPassword = '';
+  }
+
+  private findPasswordAttributeError(
+    attributes: Array<PasswordErrorAttribute> | undefined,
+  ): string {
+    if (!attributes) return '';
+    const t = i18next.t.bind(i18next);
+
+    for (const rule of PASSWORD_ERROR_RULES) {
+      const match = attributes.find((rec) => rec.n === rule.attrName);
+      if (match) {
+        return t(rule.i18nKey, {
+          defaultValue: rule.defaultValue,
+          replace: { [rule.replaceKey]: match._content },
+        });
+      }
+    }
+
+    return '';
   }
 
   private handleOldPasswordChange(e: CustomEvent<{ value: string }>): void {
