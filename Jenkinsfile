@@ -12,5 +12,7 @@ library(
 )
 
 zappPipeline(
-    disableAutoTranslationsSync: true
+    disableAutoTranslationsSync: true,
+    preTestScript: 'pnpm dlx playwright install --with-deps',
+    testScript: 'test:ci'
 )
