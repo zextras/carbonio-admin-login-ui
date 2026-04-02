@@ -223,7 +223,7 @@ describe('ds-text', () => {
 
       const innerEl = el.shadowRoot!.querySelector(el.as) as HTMLElement;
 
-      const computedFontSize = window.getComputedStyle(innerEl).fontSize;
+      const computedFontSize = globalThis.getComputedStyle(innerEl).fontSize;
       expect(computedFontSize).toBe(customSize);
     });
   });

@@ -262,7 +262,7 @@ describe('ds-button', () => {
 
     it('should set display: block on host when width="fill"', async () => {
       const el = await createDsButton({ width: 'fill' });
-      const computedStyle = window.getComputedStyle(el);
+      const computedStyle = globalThis.getComputedStyle(el);
       expect(computedStyle.display).toBe('block');
     });
   });

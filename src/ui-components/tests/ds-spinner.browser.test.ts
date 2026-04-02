@@ -99,7 +99,7 @@ describe('ds-spinner', () => {
     it('should apply stroke from --border-color CSS variable', async () => {
       const el = await createDsSpinner({ color: 'primary' });
       const circle = el.shadowRoot!.querySelector('.path') as SVGCircleElement;
-      const computedStyle = window.getComputedStyle(circle);
+      const computedStyle = globalThis.getComputedStyle(circle);
       expect(computedStyle.stroke).toBe('rgb(43, 115, 210)');
     });
   });
@@ -111,7 +111,7 @@ describe('ds-spinner', () => {
       await el.updateComplete;
 
       const circle = el.shadowRoot!.querySelector('.path') as SVGCircleElement;
-      const computedStyle = window.getComputedStyle(circle);
+      const computedStyle = globalThis.getComputedStyle(circle);
       expect(computedStyle.stroke).toBe('rgb(0, 255, 0)');
     });
   });
