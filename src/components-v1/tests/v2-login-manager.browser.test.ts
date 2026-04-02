@@ -7,6 +7,7 @@ import '../v2-login-manager';
 
 import { HttpResponse } from 'msw';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { page } from 'vitest/browser';
 
 import { createBrowserAPIInterceptor } from '../../../tests-setup/browser/server';
 import type { V2LoginManager } from '../v2-login-manager';
@@ -49,34 +50,6 @@ function submitCredentials(el: V2LoginManager, username = DEFAULT_USERNAME, pass
   );
 }
 
-async function waitForShadowSelector(
-  root: ShadowRoot | null | undefined,
-  selector: string,
-  timeout = 5000,
-): Promise<Element | null> {
-  const start = Date.now();
-  while (Date.now() - start < timeout) {
-    const el = root?.querySelector(selector) ?? null;
-    if (el) return el;
-    await new Promise((r) => setTimeout(r, 50));
-  }
-  return root?.querySelector(selector) ?? null;
-}
-
-async function waitForShadowText(
-  root: ShadowRoot | null | undefined,
-  text: string,
-  timeout = 5000,
-): Promise<boolean> {
-  const start = Date.now();
-  while (Date.now() - start < timeout) {
-    const content = root?.innerHTML ?? '';
-    if (content.includes(text)) return true;
-    await new Promise((r) => setTimeout(r, 50));
-  }
-  return false;
-}
-
 describe('V2LoginManager', () => {
   beforeEach(() => {
     vi.spyOn(navigator.credentials, 'store').mockResolvedValue(undefined);
@@ -91,8 +64,7 @@ describe('V2LoginManager', () => {
     const el = createV2LoginManager();
     await el.updateComplete;
 
-    const credentialsForm = el.shadowRoot?.querySelector('credentials-form');
-    expect(credentialsForm).toBeTruthy();
+    await expect.element(page.getByRole('textbox', { name: 'Username' })).toBeVisible();
   });
 
   it('should show 2FA form on successful login with 2FA enabled', async () => {
@@ -104,10 +76,10 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    const found = await waitForShadowText(el.shadowRoot, 'Two-Step-Authentication');
-    expect(found).toBe(true);
+    await expect
+      .element(page.getByRole('heading', { name: 'Two-Step-Authentication' }))
+      .toBeVisible();
   });
 
   it('should redirect to destinationUrl on successful login without 2FA', async () => {
@@ -127,10 +99,8 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    await new Promise((r) => setTimeout(r, 500));
-    expect(navigatedUrls).toContain(DESTINATION_URL);
+    await expect.poll(() => navigatedUrls).toContain(DESTINATION_URL);
 
     navigation.removeEventListener('navigate', handleNavigate);
   });
@@ -144,13 +114,10 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    const found = await waitForShadowText(
-      el.shadowRoot,
-      'Credentials are not valid, please check data and try again',
-    );
-    expect(found).toBe(true);
+    await expect
+      .element(page.getByText('Credentials are not valid, please check data and try again'))
+      .toBeVisible();
   });
 
   it('should show auth policy error on 403 response', async () => {
@@ -162,13 +129,14 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    const found = await waitForShadowText(
-      el.shadowRoot,
-      'The authentication policy needs more steps: please contact your administrator',
-    );
-    expect(found).toBe(true);
+    await expect
+      .element(
+        page.getByText(
+          'The authentication policy needs more steps: please contact your administrator',
+        ),
+      )
+      .toBeVisible();
   });
 
   it('should show server unreachable error on 502 response', async () => {
@@ -180,13 +148,10 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    const found = await waitForShadowText(
-      el.shadowRoot,
-      'Error 502: Service Unreachable - Retry later.',
-    );
-    expect(found).toBe(true);
+    await expect
+      .element(page.getByText('Error 502: Service Unreachable - Retry later.'))
+      .toBeVisible();
   });
 
   it('should show snackbar network error on unexpected status', async () => {
@@ -198,10 +163,8 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    const found = await waitForShadowText(el.shadowRoot, 'Can not do the login now');
-    expect(found).toBe(true);
+    await expect.element(page.getByText('Can not do the login now')).toBeVisible();
   });
 
   it('should render OTP select and input in 2FA form', async () => {
@@ -213,13 +176,11 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    const hasOtpSelect = await waitForShadowText(el.shadowRoot, 'Choose the OTP Method');
-    expect(hasOtpSelect).toBe(true);
-
-    const hasOtpInput = await waitForShadowText(el.shadowRoot, 'Type here One-Time-Password');
-    expect(hasOtpInput).toBe(true);
+    await expect.element(page.getByRole('combobox')).toBeVisible();
+    await expect
+      .element(page.getByRole('textbox', { name: 'Type here One-Time-Password' }))
+      .toBeVisible();
   });
 
   it('should redirect to destinationUrl on successful OTP validation', async () => {
@@ -242,18 +203,12 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    const twoFactorForm = await waitForShadowSelector(el.shadowRoot, 'form');
-    expect(twoFactorForm).toBeTruthy();
+    const loginButton = page.getByRole('button', { name: 'Login' });
+    await expect.element(loginButton).toBeVisible();
+    await loginButton.click();
 
-    (twoFactorForm as HTMLFormElement).dispatchEvent(
-      new Event('submit', { bubbles: true, cancelable: true }),
-    );
-    await el.updateComplete;
-
-    await new Promise((r) => setTimeout(r, 500));
-    expect(navigatedUrls).toContain(DESTINATION_URL);
+    await expect.poll(() => navigatedUrls).toContain(DESTINATION_URL);
 
     navigation.removeEventListener('navigate', handleNavigate);
   });
@@ -270,21 +225,14 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    const twoFactorForm = await waitForShadowSelector(el.shadowRoot, 'form');
-    expect(twoFactorForm).toBeTruthy();
+    const loginButton = page.getByRole('button', { name: 'Login' });
+    await expect.element(loginButton).toBeVisible();
+    await loginButton.click();
 
-    (twoFactorForm as HTMLFormElement).dispatchEvent(
-      new Event('submit', { bubbles: true, cancelable: true }),
-    );
-    await el.updateComplete;
-
-    const found = await waitForShadowText(
-      el.shadowRoot,
-      'Wrong password, please check data and try again',
-    );
-    expect(found).toBe(true);
+    await expect
+      .element(page.getByText('Wrong password, please check data and try again'))
+      .toBeVisible();
   });
 
   it('should show trust device checkbox in 2FA form', async () => {
@@ -296,10 +244,10 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    const found = await waitForShadowText(el.shadowRoot, 'Trust this device and IP address');
-    expect(found).toBe(true);
+    await expect
+      .element(page.getByRole('checkbox', { name: 'Trust this device and IP address' }))
+      .toBeVisible();
   });
 
   it('should show change password form when login response is redirected', async () => {
@@ -314,10 +262,10 @@ describe('V2LoginManager', () => {
     await el.updateComplete;
 
     submitCredentials(el);
-    await el.updateComplete;
 
-    const changePasswordForm = await waitForShadowSelector(el.shadowRoot, 'change-password-form');
-    expect(changePasswordForm).toBeTruthy();
+    await expect
+      .element(page.getByRole('heading', { name: 'Create a new password' }))
+      .toBeVisible();
 
     globalThis.fetch = originalFetch;
   });
@@ -331,7 +279,6 @@ describe('V2LoginManager', () => {
     submitCredentials(el);
     await el.updateComplete;
 
-    const credentialsForm = el.shadowRoot?.querySelector('credentials-form');
-    expect(credentialsForm).toBeTruthy();
+    await expect.element(page.getByRole('textbox', { name: 'Username' })).toBeVisible();
   });
 });
