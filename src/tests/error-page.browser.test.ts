@@ -3,13 +3,13 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import './error-page';
-import './ui-components';
+import '../error-page';
+import '../ui-components';
 
 import { describe, expect, it } from 'vitest';
 import { page } from 'vitest/browser';
 
-import type { ErrorPage } from './error-page';
+import type { ErrorPage } from '../error-page';
 
 async function createErrorPage(): Promise<ErrorPage> {
   const el = document.createElement('error-page') as ErrorPage;

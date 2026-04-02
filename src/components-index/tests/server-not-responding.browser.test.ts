@@ -34,7 +34,7 @@ describe('server-not-responding', () => {
     it('should render ds-snackbar content when open is true (default)', async () => {
       el = await createServerNotResponding();
       const snackbar = page.getByText(
-        /The server is not responding\. Please contact your server administator/,
+        /The server is not responding\. Please contact your server administrator/,
       );
       await expect.element(snackbar).toBeVisible();
     });

@@ -40,7 +40,7 @@ describe('FormSelector', () => {
 
     await expect
       .element(
-        page.getByText('The server is not responding. Please contact your server administator'),
+        page.getByText('The server is not responding. Please contact your server administrator'),
       )
       .toBeVisible();
   });

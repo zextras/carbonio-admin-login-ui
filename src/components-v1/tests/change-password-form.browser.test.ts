@@ -74,7 +74,7 @@ describe('ChangePasswordForm', () => {
     await fillPasswordInput('New password', 'newpassword');
     await fillPasswordInput('Confirm new password', 'differentpassword');
 
-    await expect.element(page.getByText("Passwords don't match")).toBeVisible();
+    await expect.element(page.getByText('Confirm password not valid')).toBeVisible();
   });
 
   it('should submit form and handle API response', async () => {
