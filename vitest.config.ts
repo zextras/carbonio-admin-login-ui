@@ -11,21 +11,6 @@ import { defineConfig } from 'vitest/config';
 const isCi = process?.env?.['CI'];
 function getPlugins() {
   return [
-    svgr({
-      svgrOptions: {
-        ref: true,
-        svgo: false,
-        titleProp: true,
-        exportType: 'default',
-      },
-      include: '**/*.svg',
-      exclude: '**/src/assets/**/*.svg',
-    }),
-  ];
-}
-
-function getBrowserPlugins() {
-  return [
     swc.vite({
       jsc: {
         parser: {
@@ -37,7 +22,16 @@ function getBrowserPlugins() {
         },
       },
     }),
-    ...getPlugins(),
+    svgr({
+      svgrOptions: {
+        ref: true,
+        svgo: false,
+        titleProp: true,
+        exportType: 'default',
+      },
+      include: '**/*.svg',
+      exclude: '**/src/assets/**/*.svg',
+    }),
   ];
 }
 
@@ -101,7 +95,7 @@ function browserProjectConfig() {
       testTimeout: isCi ? 20_000 : 10_000,
       hookTimeout: 15_000,
     },
-    plugins: getBrowserPlugins(),
+    plugins: getPlugins(),
   };
 }
 export default defineConfig({
