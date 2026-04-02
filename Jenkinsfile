@@ -13,6 +13,6 @@ library(
 
 zappPipeline(
     disableAutoTranslationsSync: true,
-    preTestScript: 'pnpm dlx playwright@1.58.2 install --with-deps chromium',
+    preTestScript: 'pnpm exec playwright install --with-deps chromium',
     testScript: 'test:ci'
 )
