@@ -29,7 +29,7 @@ import {
   ZM_AUTH_TOKEN,
 } from '../constants';
 import { submitChangePassword } from '../services/change-password';
-import { navigateTo, saveCredentials, setCookie } from '../utils';
+import { saveCredentials, setCookie } from '../utils';
 
 type PasswordErrorAttribute = {
   n: string;
@@ -163,7 +163,7 @@ export class ChangePasswordForm extends LitElement {
           switch (res.status) {
             case 200:
               await saveCredentials(this.username, this.newPassword);
-              navigateTo(this.destinationUrl);
+              globalThis.location.assign(this.destinationUrl);
               break;
             case 401:
             case 500:
