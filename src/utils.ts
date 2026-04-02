@@ -99,13 +99,11 @@ type PasswordCredentialConstructor = {
 
 declare const PasswordCredential: PasswordCredentialConstructor;
 
-export async function saveCredentials(id: string, password: string): Promise<void> {
+export async function saveCredentials(id: string, password: string) {
   if ('PasswordCredential' in window) {
     const cred = new PasswordCredential({ id, password, name: id });
     await navigator.credentials.store(cred);
-    return undefined;
   }
-  return Promise.resolve();
 }
 
 export function prepareUrlForForward(oUrl: string | undefined) {
