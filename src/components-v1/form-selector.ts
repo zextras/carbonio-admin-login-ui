@@ -124,7 +124,7 @@ export class FormSelector extends LitElement {
       return this.renderServerError();
     }
 
-    if (this.configuration === null || !this.configuration.destinationUrl) {
+    if (!this.configuration?.destinationUrl) {
       return this.renderLoading();
     }
 
