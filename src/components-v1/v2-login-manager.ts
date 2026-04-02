@@ -86,7 +86,7 @@ export class V2LoginManager extends LitElement {
   @state()
   private accessor detailNetworkModal = false;
 
-  private handleSubmitCredentials = async (e: Event): Promise<void> => {
+  private readonly handleSubmitCredentials = async (e: Event): Promise<void> => {
     const { username, password } = (e as CustomEvent<{ username: string; password: string }>)
       .detail;
 
@@ -142,7 +142,7 @@ export class V2LoginManager extends LitElement {
     }
   };
 
-  private handleSubmitOtp = (e: Event): void => {
+  private readonly handleSubmitOtp = (e: Event): void => {
     e.preventDefault();
     this.loadingOtp = true;
     submitOtp(this.otpId, this.otp, this.trustDevice)
@@ -168,25 +168,25 @@ export class V2LoginManager extends LitElement {
     this.otp = value;
   };
 
-  private handleOtpMethodChange = (e: Event): void => {
+  private readonly handleOtpMethodChange = (e: Event): void => {
     const { value } = (e as CustomEvent<{ value: string; label: string }>).detail;
     this.otpId = value;
   };
 
-  private handleTrustDeviceChange = (e: Event): void => {
+  private readonly handleTrustDeviceChange = (e: Event): void => {
     const { value } = (e as CustomEvent<{ value: boolean }>).detail;
     this.trustDevice = value;
   };
 
-  private handleSnackbarAction = (): void => {
+  private readonly handleSnackbarAction = (): void => {
     this.detailNetworkModal = true;
   };
 
-  private handleSnackbarClose = (): void => {
+  private readonly handleSnackbarClose = (): void => {
     this.snackbarNetworkError = false;
   };
 
-  private handleOfflineModalClose = (): void => {
+  private readonly handleOfflineModalClose = (): void => {
     this.detailNetworkModal = false;
   };
 

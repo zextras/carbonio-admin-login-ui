@@ -58,7 +58,7 @@ export class PageLayout extends LitElement {
 
   private _isConnected = false;
 
-  private _urlParams = new URLSearchParams(window.location.search);
+  private readonly _urlParams = new URLSearchParams(window.location.search);
 
   private get isSupportedBrowser(): boolean {
     const ua = navigator.userAgent;
@@ -110,7 +110,7 @@ export class PageLayout extends LitElement {
     }
   }
 
-  private getSafeRedirectUrl = (url: string | null) => {
+  private readonly getSafeRedirectUrl = (url: string | null) => {
     if (url === null) return null;
     return isSafeRedirect(url) ? prepareUrlForForward(url) : '/';
   };

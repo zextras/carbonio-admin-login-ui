@@ -48,7 +48,7 @@ export class ZimbraForm extends LitElement {
   @query('credentials-form')
   private accessor credentialsForm: HTMLElement | null = null;
 
-  private handleSubmitCredentials = async (e: Event): Promise<void> => {
+  private readonly handleSubmitCredentials = async (e: Event): Promise<void> => {
     const { username, password } = (e as CustomEvent<{ username: string; password: string }>)
       .detail;
     const t = i18next.t.bind(i18next);

@@ -168,6 +168,7 @@ export class DsButton extends LitElement {
   }
 
   override render(): TemplateResult | typeof nothing {
+    const dataIsLoading = this.loading ? 'true' : nothing;
     return html`
       <div class="grid" style=${styleMap(this.gridStyles)}>
         <button
@@ -185,11 +186,7 @@ export class DsButton extends LitElement {
             : nothing}
           ${this.icon
             ? html`
-                <span
-                  class="icon"
-                  data-loading=${this.loading ? 'true' : nothing}
-                  style=${styleMap(this.iconStyles)}
-                >
+                <span class="icon" data-loading=${dataIsLoading} style=${styleMap(this.iconStyles)}>
                   <ds-icon
                     icon=${this.icon}
                     color="currentColor"
@@ -200,11 +197,7 @@ export class DsButton extends LitElement {
             : nothing}
           ${this.label
             ? html`
-                <span
-                  class="text"
-                  data-loading=${this.loading ? 'true' : nothing}
-                  style=${styleMap(this.textStyles)}
-                >
+                <span class="text" data-loading=${dataIsLoading} style=${styleMap(this.textStyles)}>
                   <ds-text
                     as="span"
                     color="currentColor"
@@ -217,11 +210,7 @@ export class DsButton extends LitElement {
             : nothing}
           ${!this.label && this.hasContent
             ? html`
-                <span
-                  class="text"
-                  data-loading=${this.loading ? 'true' : nothing}
-                  style=${styleMap(this.textStyles)}
-                >
+                <span class="text" data-loading=${dataIsLoading} style=${styleMap(this.textStyles)}>
                   <slot></slot>
                 </span>
               `

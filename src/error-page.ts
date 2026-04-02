@@ -19,7 +19,7 @@ import { errorPageStyles } from './error-page.styles';
 export class ErrorPage extends LitElement {
   static override styles = errorPageStyles;
 
-  private imageLoaded = this.preloadImage(errorSVG);
+  private readonly imageLoaded = this.preloadImage(errorSVG);
 
   private preloadImage(src: string): Promise<string> {
     return new Promise((resolve) => {

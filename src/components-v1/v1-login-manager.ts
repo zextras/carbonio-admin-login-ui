@@ -38,7 +38,7 @@ export class V1LoginManager extends LitElement {
   @state()
   private accessor detailNetworkModal = false;
 
-  private handleSubmitCredentials = async (e: Event): Promise<void> => {
+  private readonly handleSubmitCredentials = async (e: Event): Promise<void> => {
     const { username, password } = (e as CustomEvent<{ username: string; password: string }>)
       .detail;
     const t = i18next.t.bind(i18next);
@@ -78,15 +78,15 @@ export class V1LoginManager extends LitElement {
     }
   };
 
-  private handleSnackbarAction = (): void => {
+  private readonly handleSnackbarAction = (): void => {
     this.detailNetworkModal = true;
   };
 
-  private handleSnackbarClose = (): void => {
+  private readonly handleSnackbarClose = (): void => {
     this.snackbarNetworkError = false;
   };
 
-  private handleOfflineModalClose = (): void => {
+  private readonly handleOfflineModalClose = (): void => {
     this.detailNetworkModal = false;
   };
 
