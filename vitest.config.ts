@@ -4,12 +4,34 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { playwright } from '@vitest/browser-playwright';
+import babel from 'vite-plugin-babel';
 import svgr from 'vite-plugin-svgr';
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
 
 const isCi = process?.env?.['CI'];
+
 function getPlugins() {
+  return [
+    svgr({
+      svgrOptions: {
+        ref: true,
+        svgo: false,
+        titleProp: true,
+        exportType: 'default',
+      },
+      include: '**/*.svg',
+      exclude: '**/src/assets/**/*.svg',
+    }),
+    babel({
+      babelConfig: {
+        plugins: [['@babel/plugin-proposal-decorators', { version: '2023-11' }]],
+      },
+    }),
+  ];
+}
+
+function getBrowserPlugins() {
   return [
     swc.vite({
       jsc: {
@@ -22,16 +44,7 @@ function getPlugins() {
         },
       },
     }),
-    svgr({
-      svgrOptions: {
-        ref: true,
-        svgo: false,
-        titleProp: true,
-        exportType: 'default',
-      },
-      include: '**/*.svg',
-      exclude: '**/src/assets/**/*.svg',
-    }),
+    ...getPlugins(),
   ];
 }
 
@@ -51,7 +64,6 @@ function jsdomProjectConfig() {
       env: {
         TZ: 'UTC',
       },
-
       include: ['src/**/*.test.{ts,tsx}', './fonts.d.ts'],
       exclude: ['dist/**', 'node_modules/**', '**/*.browser.test.{ts,tsx}'],
       globals: true,
@@ -64,6 +76,7 @@ function jsdomProjectConfig() {
     },
   };
 }
+
 function browserProjectConfig() {
   return {
     define: {
@@ -95,9 +108,10 @@ function browserProjectConfig() {
       testTimeout: isCi ? 20_000 : 10_000,
       hookTimeout: 15_000,
     },
-    plugins: getPlugins(),
+    plugins: getBrowserPlugins(),
   };
 }
+
 export default defineConfig({
   server: {
     fs: {
@@ -109,7 +123,6 @@ export default defineConfig({
     passWithNoTests: true,
     maxConcurrency: 3,
     projects: [browserProjectConfig(), jsdomProjectConfig()],
-
     coverage: {
       provider: 'istanbul',
       reporter: ['text', 'json', 'html', 'lcov'],
