@@ -10,7 +10,6 @@ import i18next from 'i18next';
 import { afterAll, afterEach, beforeAll, beforeEach, vi } from 'vitest';
 
 import { resetMockWorker, startMockWorker, stopMockWorker } from './tests-setup/browser/server';
-import enTranslations from './translations/en.json';
 
 beforeAll(async () => {
   await startMockWorker();
@@ -18,7 +17,7 @@ beforeAll(async () => {
     lng: 'en',
     fallbackLng: 'en',
     resources: {
-      en: { translation: enTranslations },
+      en: { translation: {} },
     },
   });
 });
