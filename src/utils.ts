@@ -19,11 +19,11 @@ function getBrowserInfo(): { name: string; version: string } {
     version = match?.[1] ?? 'Unknown';
   } else if (ua.includes('Chrome')) {
     name = 'Chrome';
-    const match = ua.match(/Chrome\/(\d+(?:\.\d+)?)/);
+    const match = /Chrome\/(\d+(?:\.\d+)?)/.exec(ua);
     version = match?.[1] ?? 'Unknown';
   } else if (ua.includes('Safari')) {
     name = 'Safari';
-    const match = ua.match(/Version\/(\d+(?:\.\d+)?)/);
+    const match = /Version\/(\d+(?:\.\d+)?)/.exec(ua);
     version = match?.[1] ?? 'Unknown';
   }
 
@@ -93,9 +93,7 @@ type PasswordCredentialData = {
   name?: string;
 };
 
-type PasswordCredentialConstructor = {
-  new (data: PasswordCredentialData): Credential;
-};
+type PasswordCredentialConstructor = new (data: PasswordCredentialData) => Credential;
 
 declare const PasswordCredential: PasswordCredentialConstructor;
 
