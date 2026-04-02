@@ -163,7 +163,7 @@ export class V2LoginManager extends LitElement {
       });
   };
 
-  private handleOtpChange = (e: Event): void => {
+  private readonly handleOtpChange = (e: Event): void => {
     const { value } = (e as CustomEvent<{ value: string }>).detail;
     this.otp = value;
   };

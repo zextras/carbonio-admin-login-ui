@@ -94,14 +94,12 @@ export function getPaddingVar(padding: string | PaddingVarObj | 0): string | und
     return simpleParsePaddingVar(padding);
   }
 
-  const shorthand = 'value' in padding
-    ? padding.value
-    : 'all' in padding
-      ? padding.all
-      : undefined;
+  if ('value' in padding && padding.value !== undefined && padding.value !== '') {
+    return getPaddingVar(padding.value);
+  }
 
-  if (shorthand !== undefined && shorthand !== '') {
-    return getPaddingVar(shorthand);
+  if ('all' in padding && padding.all !== undefined && padding.all !== '') {
+    return getPaddingVar(padding.all);
   }
 
   const sides: Array<string> = ['0', '0', '0', '0'];
