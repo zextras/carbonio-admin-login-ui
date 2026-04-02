@@ -49,17 +49,17 @@ function getOsInfo(): { name: string; version: string } {
     version = '7';
   } else if (ua.includes('Mac OS X')) {
     name = 'macOS';
-    const match = ua.match(/Mac OS X (\d+[._]\d+(?:[._]\d+)?)/);
+    const match = /Mac OS X (\d+[._]\d+(?:[._]\d+)?)/.exec(ua);
     version = match?.[1]?.replace('_', '.') ?? 'Unknown';
   } else if (ua.includes('Linux')) {
     name = 'Linux';
   } else if (ua.includes('Android')) {
     name = 'Android';
-    const match = ua.match(/Android (\d+(?:\.\d+)?)/);
+    const match = /Android (\d+(?:\.\d+)?)/.exec(ua);
     version = match?.[1] ?? 'Unknown';
   } else if (ua.includes('iPhone') || ua.includes('iPad')) {
     name = 'iOS';
-    const match = ua.match(/OS (\d+[._]\d+(?:[._]\d+)?)/);
+    const match = /OS (\d+[._]\d+(?:[._]\d+)?)/.exec(ua);
     version = match?.[1]?.replace('_', '.') ?? 'Unknown';
   }
 
