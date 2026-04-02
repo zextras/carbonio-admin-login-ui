@@ -58,7 +58,7 @@ export class PageLayout extends LitElement {
 
   private _isConnected = false;
 
-  private readonly _urlParams = new URLSearchParams(window.location.search);
+  private readonly _urlParams = new URLSearchParams(globalThis.location.search);
 
   private get isSupportedBrowser(): boolean {
     const ua = navigator.userAgent;
@@ -73,7 +73,7 @@ export class PageLayout extends LitElement {
     }
 
     try {
-      const res = await getLoginConfig(this.version, this.domain, window.location.hostname);
+      const res = await getLoginConfig(this.version, this.domain, globalThis.location.hostname);
 
       if (!this._isConnected) return;
 

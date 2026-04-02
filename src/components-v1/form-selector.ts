@@ -59,7 +59,7 @@ export class FormSelector extends LitElement {
   }
 
   private handleLogout(): void {
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(globalThis.location.search);
     if (this.configuration && urlParams.has('loginOp') && urlParams.get('loginOp') === 'logout') {
       doAuthLogout(this.configuration).catch(() => {
         // Logout failed - silently ignore

@@ -49,7 +49,7 @@ export class V1LoginManager extends LitElement {
       switch (res.status) {
         case 200:
           await saveCredentials(username, password);
-          window.location.assign(this.destinationUrl);
+          globalThis.location.assign(this.destinationUrl);
           break;
         case 401:
           this.authError = t(
@@ -119,8 +119,8 @@ export class V1LoginManager extends LitElement {
         ?open=${this.snackbarNetworkError}
         label=${t('cant_login', 'Can not do the login now')}
         action-label=${t('details', 'Details')}
-        @action-click=${this.handleSnackbarAction}
-        @close=${this.handleSnackbarClose}
+        @snackbar:action-click=${this.handleSnackbarAction}
+        @snackbar:close=${this.handleSnackbarClose}
         auto-hide-timeout=${10000}
         severity="error"
       ></ds-snackbar>

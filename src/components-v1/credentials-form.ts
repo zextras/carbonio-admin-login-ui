@@ -15,7 +15,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { checkClassicUi } from '../services/login-page-services';
 import { setCookie } from '../utils';
 
-const urlParams = new URLSearchParams(window.location.search);
+const urlParams = new URLSearchParams(globalThis.location.search);
 
 export type Configuration = {
   destinationUrl: string;
@@ -83,7 +83,7 @@ export class CredentialsForm extends LitElement {
   }
 
   private handleSamlClick(): void {
-    window.location.assign(`/zx/auth/startSamlWorkflow?redirectUrl=${this.destinationUrl}`);
+    globalThis.location.assign(`/zx/auth/startSamlWorkflow?redirectUrl=${this.destinationUrl}`);
   }
 
   private renderSamlButton(): TemplateResult {

@@ -11,17 +11,17 @@ import { isSafeRedirect } from '../utils';
 const ORIGIN = 'https://mail.example.com';
 
 describe('isSafeRedirect', () => {
-  const originalLocation = window.location;
+  const originalLocation = globalThis.location;
 
   beforeEach(() => {
-    Object.defineProperty(window, 'location', {
+    Object.defineProperty(globalThis, 'location', {
       writable: true,
       value: { ...originalLocation, origin: ORIGIN },
     });
   });
 
   afterEach(() => {
-    Object.defineProperty(window, 'location', {
+    Object.defineProperty(globalThis, 'location', {
       writable: true,
       value: originalLocation,
     });

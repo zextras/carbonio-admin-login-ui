@@ -73,7 +73,7 @@ export class ErrorPage extends LitElement {
                     .label=${i18next.t('button.refresh_page', 'REFRESH')}
                     type="outlined"
                     color="primary"
-                    @click=${(): void => window.location.reload()}
+                    @click=${(): void => globalThis.location.reload()}
                   ></ds-button>
                 </div>
               </div>

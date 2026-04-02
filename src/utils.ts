@@ -114,7 +114,7 @@ export function prepareUrlForForward(oUrl: string | undefined) {
   } catch {
     return undefined;
   }
-  const urlParams = new URLSearchParams(window.location.search);
+  const urlParams = new URLSearchParams(globalThis.location.search);
   const blackListedQueryStrings = [
     'loginOp',
     'loginNewPassword',

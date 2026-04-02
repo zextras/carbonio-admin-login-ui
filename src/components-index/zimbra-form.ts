@@ -75,7 +75,7 @@ export class ZimbraForm extends LitElement {
       }
       switch (res.status) {
         case 200:
-          window.location.assign('/carbonioAdmin');
+          globalThis.location.assign('/carbonioAdmin');
           break;
         case 401:
         case 500:
@@ -141,7 +141,7 @@ export class ZimbraForm extends LitElement {
       return html`
         <change-password-form
           username=${this.email}
-          destination-url=${window.location.origin}
+          destination-url=${globalThis.location.origin}
         ></change-password-form>
       `;
     }

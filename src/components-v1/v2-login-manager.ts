@@ -303,8 +303,8 @@ export class V2LoginManager extends LitElement {
         ?open=${this.snackbarNetworkError}
         label=${i18next.t('cant_login', 'Can not do the login now')}
         action-label=${t('details', 'Details')}
-        @action-click=${this.handleSnackbarAction}
-        @close=${this.handleSnackbarClose}
+        @snackbar:action-click=${this.handleSnackbarAction}
+        @snackbar:close=${this.handleSnackbarClose}
         auto-hide-timeout=${10000}
         severity="error"
       ></ds-snackbar>

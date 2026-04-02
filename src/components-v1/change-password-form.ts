@@ -163,7 +163,7 @@ export class ChangePasswordForm extends LitElement {
           switch (res.status) {
             case 200:
               await saveCredentials(this.username, this.newPassword);
-              window.location.assign(this.destinationUrl);
+              globalThis.location.assign(this.destinationUrl);
               break;
             case 401:
             case 500:
