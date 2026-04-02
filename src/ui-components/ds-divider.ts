@@ -12,7 +12,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 
 @customElement('ds-divider')
 export class DsDivider extends LitElement {
-  static override styles = css`
+  static override readonly styles = css`
     :host {
       display: block;
       width: 100%;

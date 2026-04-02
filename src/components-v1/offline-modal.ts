@@ -17,7 +17,7 @@ import { offlineModalStyles } from './offline-modal-styles';
 
 @customElement('offline-modal')
 export class OfflineModal extends LitElement {
-  static override styles = offlineModalStyles;
+  static override readonly styles = offlineModalStyles;
 
   @property({ type: Boolean, reflect: true })
   accessor open = false;

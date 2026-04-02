@@ -17,7 +17,7 @@ import { errorPageStyles } from './error-page.styles';
 
 @customElement('error-page')
 export class ErrorPage extends LitElement {
-  static override styles = errorPageStyles;
+  static override readonly styles = errorPageStyles;
 
   private readonly imageLoaded = this.preloadImage(errorSVG);
 

@@ -44,7 +44,7 @@ const TAG_TEMPLATES: Record<TextTag, TemplateResult> = {
 
 @customElement('ds-text')
 export class DsText extends LitElement {
-  static override styles = textStyles;
+  static override readonly styles = textStyles;
 
   @property({ type: String })
   accessor color = 'text';

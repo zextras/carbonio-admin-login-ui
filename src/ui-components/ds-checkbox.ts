@@ -15,7 +15,7 @@ import { resolveThemeColor } from './theme/theme-utils';
 
 @customElement('ds-checkbox')
 export class DsCheckbox extends LitElement {
-  static override styles = checkboxStyles;
+  static override readonly styles = checkboxStyles;
 
   @property({ type: Boolean, reflect: true })
   accessor value = false;

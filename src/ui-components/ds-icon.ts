@@ -23,7 +23,7 @@ const SIZE_REGEX = /^[\d.]+(rem|px|em|vh|vw|%)$/;
 
 @customElement('ds-icon')
 export class DsIcon extends LitElement {
-  static override styles = css`
+  static override readonly styles = css`
     :host {
       display: inline-flex;
       align-items: center;

@@ -12,7 +12,7 @@ import { CARBONIO_CE_SUPPORTED_BROWSER_LINK, CARBONIO_SUPPORTED_BROWSER_LINK } f
 
 @customElement('browser-support-message')
 export class BrowserSupportMessage extends LitElement {
-  static override styles = css`
+  static override readonly styles = css`
     a {
       text-decoration-line: underline;
       cursor: pointer;

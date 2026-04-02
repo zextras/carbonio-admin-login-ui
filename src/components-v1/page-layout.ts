@@ -27,7 +27,7 @@ import { type Logo, processLoginConfig } from './page-layout-utils';
 
 @customElement('page-layout')
 export class PageLayout extends LitElement {
-  static override styles = pageLayoutStyles;
+  static override readonly styles = pageLayoutStyles;
 
   @property({ type: Number })
   accessor version = 1;

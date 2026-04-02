@@ -29,7 +29,7 @@ type SnackbarSeverity = 'success' | 'info' | 'warning' | 'error';
 
 @customElement('ds-snackbar')
 export class DsSnackbar extends LitElement {
-  static override styles = snackbarStyles;
+  static override readonly styles = snackbarStyles;
 
   @property({ type: Boolean, reflect: true })
   accessor open = false;

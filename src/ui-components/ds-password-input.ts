@@ -18,7 +18,7 @@ type InputType = 'text' | 'password';
 
 @customElement('ds-password-input')
 export class DsPasswordInput extends LitElement {
-  static override styles = passwordInputStyles;
+  static override readonly styles = passwordInputStyles;
 
   @property({ type: String, attribute: 'initial-value' })
   accessor initialValue: string | undefined;

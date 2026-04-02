@@ -12,7 +12,7 @@ import { loadingViewStyles } from './loading-view.styles';
 
 @customElement('loading-view')
 export class LoadingView extends LitElement {
-  static override styles = loadingViewStyles;
+  static override readonly styles = loadingViewStyles;
 
   override render(): TemplateResult {
     return html`

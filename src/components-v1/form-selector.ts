@@ -17,7 +17,7 @@ import { type Configuration } from './credentials-form';
 
 @customElement('form-selector')
 export class FormSelector extends LitElement {
-  static override styles = css`
+  static override readonly styles = css`
     :host {
       width: 100%;
     }

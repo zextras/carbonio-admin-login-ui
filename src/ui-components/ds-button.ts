@@ -53,7 +53,7 @@ function getColorStyles(colorName: string, bgName: string): Record<string, strin
 
 @customElement('ds-button')
 export class DsButton extends LitElement {
-  static override styles = buttonStyles;
+  static override readonly styles = buttonStyles;
 
   @property({ type: String, reflect: true })
   accessor type: ButtonType = 'default';

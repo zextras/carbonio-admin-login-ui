@@ -9,7 +9,7 @@ import '../components-v1/change-password-form';
 
 import i18next from 'i18next';
 import { css, html, LitElement, type TemplateResult } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 
 import { loginToCarbonioAdmin } from '../services/v2-service';
 
@@ -24,7 +24,7 @@ type FormState = (typeof FORM_STATE)[keyof typeof FORM_STATE];
 
 @customElement('zimbra-form')
 export class ZimbraForm extends LitElement {
-  static override styles = css`
+  static override readonly styles = css`
     :host {
       width: 100%;
     }
@@ -44,9 +44,6 @@ export class ZimbraForm extends LitElement {
 
   @state()
   private accessor email = '';
-
-  @query('credentials-form')
-  private accessor credentialsForm: HTMLElement | null = null;
 
   private readonly handleSubmitCredentials = async (e: Event): Promise<void> => {
     const { username, password } = (e as CustomEvent<{ username: string; password: string }>)

@@ -27,7 +27,7 @@ function getDividerColor(color: string, disabled: boolean): string {
 
 @customElement('ds-input')
 export class DsInput extends LitElement {
-  static override styles = inputStyles;
+  static override readonly styles = inputStyles;
 
   private readonly _inputId = `ds-input-${++instanceCounter}`;
 

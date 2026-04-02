@@ -12,7 +12,7 @@ import { resolveThemeColor } from './theme/theme-utils';
 
 @customElement('ds-spinner')
 export class DsSpinner extends LitElement {
-  static override styles = spinnerStyles;
+  static override readonly styles = spinnerStyles;
 
   @property({ type: String })
   accessor color: string = 'primary';
