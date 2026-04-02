@@ -11,11 +11,11 @@ function getBrowserInfo(): { name: string; version: string } {
 
   if (ua.includes('Firefox')) {
     name = 'Firefox';
-    const match = ua.match(/Firefox\/(\d+(?:\.\d+)?)/);
+    const match = /Firefox\/(\d+(?:\.\d+)?)/.exec(ua);
     version = match?.[1] ?? 'Unknown';
   } else if (ua.includes('Edg/')) {
     name = 'Edge';
-    const match = ua.match(/Edg\/(\d+(?:\.\d+)?)/);
+    const match = /Edg\/(\d+(?:\.\d+)?)/.exec(ua);
     version = match?.[1] ?? 'Unknown';
   } else if (ua.includes('Chrome')) {
     name = 'Chrome';

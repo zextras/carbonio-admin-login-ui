@@ -15,7 +15,6 @@ import { resolveThemeColor } from './theme/theme-utils';
 
 const ICON_SIZES = ['small', 'medium', 'large'] as const;
 export type IconSize = (typeof ICON_SIZES)[number];
-type IconSizeValue = string;
 
 const DEFAULT_ICON: IconName = 'AlertTriangleOutline';
 
@@ -54,13 +53,13 @@ export class DsIcon extends LitElement {
 
   /** Predefined size ('small' | 'medium' | 'large') or a CSS length value (e.g. '2rem'). */
   @property({ type: String, reflect: true })
-  accessor size: IconSizeValue = 'medium';
+  accessor size: string = 'medium';
 
   /** When true, the icon is visually dimmed. */
   @property({ type: Boolean, reflect: true })
   accessor disabled: boolean = false;
 
-  private getSizeValue(size: IconSizeValue): string {
+  private getSizeValue(size: string): string {
     if (SIZE_REGEX.test(size)) {
       return size;
     }
