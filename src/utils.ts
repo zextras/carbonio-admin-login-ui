@@ -98,7 +98,7 @@ type PasswordCredentialConstructor = new (data: PasswordCredentialData) => Crede
 declare const PasswordCredential: PasswordCredentialConstructor;
 
 export async function saveCredentials(id: string, password: string) {
-  if ('PasswordCredential' in window) {
+  if ('PasswordCredential' in globalThis) {
     const cred = new PasswordCredential({ id, password, name: id });
     await navigator.credentials.store(cred);
   }
