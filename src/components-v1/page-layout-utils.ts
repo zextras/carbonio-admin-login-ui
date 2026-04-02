@@ -18,7 +18,11 @@ type ConfigBasicSettingsProps = {
   setIsDefaultBg: (isDefault: boolean) => void;
 };
 
-export function configureBasicSettings({ res, setBg, setIsDefaultBg }: ConfigBasicSettingsProps): void {
+export function configureBasicSettings({
+  res,
+  setBg,
+  setIsDefaultBg,
+}: ConfigBasicSettingsProps): void {
   if (res.loginPageBackgroundImage) {
     setBg(res.loginPageBackgroundImage);
     setIsDefaultBg(false);

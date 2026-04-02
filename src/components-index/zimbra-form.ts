@@ -79,7 +79,7 @@ export class ZimbraForm extends LitElement {
           this.authError = t(
             'credentials_not_valid',
             'Credentials are not valid, please check data and try again',
-          ) as string;
+          );
           this.loading = false;
           break;
         case 403:
@@ -96,16 +96,16 @@ export class ZimbraForm extends LitElement {
         default:
           this.loading = false;
       }
-    } catch (err_1: unknown) {
+    } catch (_error: unknown) {
       this.loading = false;
-      if (err_1 instanceof Error) {
-        if (err_1.message.startsWith('authentication failed')) {
+      if (_error instanceof Error) {
+        if (_error.message.startsWith('authentication failed')) {
           this.authError = t(
             'credentials_not_valid',
             'Credentials are not valid, please check data and try again',
           );
         } else {
-          this.authError = err_1.message;
+          this.authError = _error.message;
         }
       }
     }

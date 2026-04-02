@@ -45,7 +45,7 @@ export class FormSelector extends LitElement {
       const res = await getAuthSupported(this.domain);
       if (this._isConnected) {
         this.configuration = {
-          ...(this.configuration ?? {}),
+          ...this.configuration,
           ...res,
           destinationUrl: this.destinationUrl,
         };

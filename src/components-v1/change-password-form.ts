@@ -186,12 +186,10 @@ export class ChangePasswordForm extends LitElement {
               this.loading = false;
           }
         })
-        .catch((err) => {
+        .catch(() => {
           this.loading = false;
-          if (err.message.startsWith('authentication failed')) {
-            this.showOldPasswordError = true;
-            this.errorLabelNewPassword = '';
-          }
+          this.showOldPasswordError = true;
+          this.errorLabelNewPassword = '';
         });
     }
     this.loading = false;
@@ -207,8 +205,8 @@ export class ChangePasswordForm extends LitElement {
       const errorMsg = this.findPasswordAttributeError(attributes);
       if (errorMsg) {
         this.errorLabelNewPassword = errorMsg;
+        return;
       }
-      return;
     }
 
     if (errorCode === PASSWORD_LOCKED) {
