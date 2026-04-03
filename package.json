@@ -43,7 +43,7 @@
     "lit-analyzer": "2.0.3",
     "msw": "2.12.14",
     "playwright": "1.59.1",
-    "sonar-scanner": "3.1.0",
+    "sonarqube-scanner": "4.3.5",
     "ts-lit-plugin": "2.0.2",
     "typescript": "6.0.2",
     "typescript-eslint": "8.58.0",
