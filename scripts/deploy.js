@@ -74,7 +74,7 @@ const deploy = () => {
   run('./scripts/build_packages.sh');
 
   // 3. Find the newest .deb file in the artifacts directory
-  console.log('🔍 Searching for the newest artifact...', 'blue');
+  console.log('🔍 Searching for the newest artifact...');
   const newestArtifact = findNewestArtifact(config.artifactsDir, config.packagePattern);
 
   if (!newestArtifact) {
@@ -82,20 +82,20 @@ const deploy = () => {
     process.exit(1);
   }
 
-  console.log(`✅ Found artifact: ${newestArtifact.name}`, 'green');
+  console.log(`✅ Found artifact: ${newestArtifact.name}`);
 
   // 4. SCP the file
-  console.log('⬆️ Uploading to server...', 'blue');
+  console.log('⬆️ Uploading to server...');
   run(`scp ${newestArtifact.path} ${config.remoteUser}@${config.remoteHost}:${config.remoteDest}`);
 
   // 5. SSH and Install
-  console.log('🛠️ Installing on remote...', 'blue');
+  console.log('🛠️ Installing on remote...');
   const remotePath = `${config.remoteDest}/${newestArtifact.name}`;
   run(
     `ssh ${config.remoteUser}@${config.remoteHost} "apt install ${remotePath} --reinstall -y --allow-downgrades"`,
   );
 
-  console.log('\n✨ Deployment Complete!', 'green');
+  console.log('\n✨ Deployment Complete!');
 };
 
 deploy();
