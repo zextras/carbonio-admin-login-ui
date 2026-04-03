@@ -42,7 +42,7 @@ export const resetMockWorker = () => {
 export const createBrowserAPIInterceptor = async (
   method: 'get' | 'post',
   url: string,
-  response: () => HttpResponse,
+  response: () => HttpResponse<DefaultBodyType>,
 ): Promise<BrowserAPIInterceptor> => {
   let calledTimes = 0;
   const requests: Array<StrictRequest<DefaultBodyType>> = [];

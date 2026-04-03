@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { HttpResponse } from 'msw';
+import { type DefaultBodyType, HttpResponse } from 'msw';
 import { describe, expect, it } from 'vitest';
 
 import { createAPIInterceptor } from '../../../tests-setup/jsdom/server';
@@ -13,7 +13,7 @@ import { getAdvancedSupported } from '../advanced-supported';
 const okStatuses = [200, 201, 202];
 const notOkStatuses = [418, 404, 500, 502, 302];
 
-function mockAdvancedSupported(supplier: () => HttpResponse) {
+function mockAdvancedSupported(supplier: () => HttpResponse<DefaultBodyType>) {
   createAPIInterceptor('get', '/services/catalog/services', supplier);
 }
 

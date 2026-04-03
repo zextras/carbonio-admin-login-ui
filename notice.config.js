@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import notice from 'eslint-plugin-notice';
+import { fixupPluginRules } from '@eslint/compat';
 
 const noticeRule = {
   ignores: [
@@ -15,7 +16,7 @@ const noticeRule = {
     '**/notice.template.ts',
   ],
   plugins: {
-    notice: notice,
+    notice: fixupPluginRules(notice),
   },
   rules: {
     'notice/notice': [
@@ -36,4 +37,4 @@ const noticeRule = {
   },
 };
 
-export default noticeRule;
+export default [noticeRule];
