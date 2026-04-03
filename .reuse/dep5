@@ -26,7 +26,31 @@ Files: package.json
 Copyright: 2021 Zextras <https://www.zextras.com>
 License: AGPL-3.0-only
 
+Files: yap.json
+Copyright: 2021 Zextras <https://www.zextras.com>
+License: AGPL-3.0-only
+
+Files: scripts/*
+Copyright: 2021 Zextras <https://www.zextras.com>
+License: AGPL-3.0-only
+
 Files: package-lock.json
+Copyright: 2021 Zextras <https://www.zextras.com>
+License: AGPL-3.0-only
+
+Files: package-lock.json
+Copyright: 2021 Zextras <https://www.zextras.com>
+License: AGPL-3.0-only
+
+Files: pnpm**
+Copyright: 2021 Zextras <https://www.zextras.com>
+License: AGPL-3.0-only
+
+Files: tsconfig**
+Copyright: 2021 Zextras <https://www.zextras.com>
+License: AGPL-3.0-only
+
+Files: .prettierrc 
 Copyright: 2021 Zextras <https://www.zextras.com>
 License: AGPL-3.0-only
 
@@ -38,7 +62,11 @@ Files: CHANGELOG.md
 Copyright: 2021 Zextras <https://www.zextras.com>
 License: AGPL-3.0-only
 
-Files: assets/*
+Files: src/ui-components/fonts/* 
+Copyright: 2021 Zextras <https://www.zextras.com>
+License: AGPL-3.0-only
+
+Files: src/assets/*
 Copyright: 2021 Zextras <https://www.zextras.com>
 License: CC-BY-NC-SA-4.0
 

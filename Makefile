@@ -52,9 +52,9 @@ build: build-js build-package
 ## build-js: Install dependencies and build JavaScript/TypeScript
 build-js:
 	@echo "Installing npm dependencies..."
-	npm install
+	pnpm install
 	@echo "Building JavaScript/TypeScript..."
-	npm run build
+	pnpm run build
 	@echo "Preparing package sources..."
 	cp dist/package/PKGBUILD package/PKGBUILD
 	tar -czf package/$(PKGNAME)-dist.tar.gz dist

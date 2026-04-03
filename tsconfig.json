@@ -1,12 +1,34 @@
 {
-	"extends": "@zextras/carbonio-ui-configs/rules/typescript.json",
-	"compilerOptions": {
-		"skipLibCheck": true,
-		"jsx": "react",
-		"allowJs": true,
-		"checkJs": false,
-		"resolveJsonModule": true
-	},
-	"include": ["types/**/*.d.ts", "src/**/*.ts", "src/**/*.tsx", "src/**/*.jsx", "./global.d.ts"],
-	"exclude": ["./node_modules/*"]
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "ts-lit-plugin",
+        "strict": true,
+        "rules": {
+          "no-missing-import": "error"
+        },
+        "globalAttributes": ["popover"]
+      }
+    ],
+    "strict": true,
+    "noEmitOnError": true,
+    "verbatimModuleSyntax": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitOverride": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "useDefineForClassFields": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
+    "types": ["vitest/globals"],
+    "skipLibCheck": true
+  }
 }

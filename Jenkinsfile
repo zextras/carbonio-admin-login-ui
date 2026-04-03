@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 library(
-    identifier: 'jenkins-lib-ui@1.0.8',
+    identifier: 'jenkins-lib-ui@1.0.11',
     retriever: modernSCM([
         $class: 'GitSCMSource',
         credentialsId: 'jenkins-integration-with-github-account',
@@ -12,5 +12,7 @@ library(
 )
 
 zappPipeline(
-    disableAutoTranslationsSync: true
+    disableAutoTranslationsSync: true,
+    preTestScript: 'pnpm exec playwright install --with-deps chromium',
+    testScript: 'test:ci'
 )
