@@ -16,13 +16,13 @@ import { setupWorker } from 'msw/browser';
 const handleGetTranslations: HttpResponseResolver<never, never> = async () => HttpResponse.json({});
 const defaultHandlers = [http.get('/i18n/en.json', handleGetTranslations)];
 
-export const worker = setupWorker(...defaultHandlers);
+const worker = setupWorker(...defaultHandlers);
 
 type HandlerRequest<T> = DefaultBodyType & {
   Body: Record<string, T>;
 };
 
-export type BrowserAPIInterceptor = {
+type BrowserAPIInterceptor = {
   getLastRequest: () => StrictRequest<DefaultBodyType>;
   getCalledTimes: () => number;
 };
@@ -61,41 +61,6 @@ export const createBrowserAPIInterceptor = async (
   };
 };
 
-export const createBrowserSoapAPIInterceptor = <RequestParamsType, ResponseType = never>(
-  apiAction: string,
-  response?: ResponseType,
-): Promise<RequestParamsType> =>
-  new Promise<RequestParamsType>((resolve, reject) => {
-    worker.use(
-      http.post<never, HandlerRequest<RequestParamsType>>(
-        `/service/admin/soap/${apiAction}Request`,
-        async ({ request }) => {
-          if (!request) {
-            reject(new Error('Empty request'));
-            return HttpResponse.json(
-              {},
-              {
-                status: 500,
-                statusText: 'Empty request',
-              },
-            );
-          }
-
-          const reqActionParamWrapper = `${apiAction}Request`;
-          const requestContent = await request.json();
-          const params = requestContent?.Body?.[reqActionParamWrapper] as RequestParamsType;
-          resolve(params);
-
-          return HttpResponse.json({
-            Body: {
-              [`${apiAction}Response`]: response || {},
-            },
-          });
-        },
-      ),
-    );
-  });
-
 const advancedSupportedURL = '/services/catalog/services';
 export const advancedSupportedApiForBrowser = {
   withError: async (): Promise<BrowserAPIInterceptor> =>
@@ -109,26 +74,6 @@ export const advancedSupportedApiForBrowser = {
       HttpResponse.json({ items: ['carbonio-preview', 'carbonio-mailbox'] }, { status: 200 }),
     ),
 };
-
-export const minMaxVersionApiForBrowser = async (
-  supplier: () => HttpResponse<DefaultBodyType>,
-): Promise<BrowserAPIInterceptor> =>
-  await createBrowserAPIInterceptor('get', '/zx/auth/supported', supplier);
-
-export const loginConfigApiForBrowser = async (
-  supplier: () => HttpResponse<DefaultBodyType>,
-): Promise<BrowserAPIInterceptor> =>
-  await createBrowserAPIInterceptor('get', '/zx/login/v3/config', supplier);
-
-export const getInfoRequestApiForBrowser = async (
-  supplier: () => HttpResponse<DefaultBodyType>,
-): Promise<BrowserAPIInterceptor> =>
-  await createBrowserAPIInterceptor('post', '/service/admin/soap/GetInfoRequest', supplier);
-
-export const getAllConfigRequestApiForBrowser = async (
-  supplier: () => HttpResponse<DefaultBodyType>,
-): Promise<BrowserAPIInterceptor> =>
-  await createBrowserAPIInterceptor('post', '/service/admin/soap/GetAllConfigRequest', supplier);
 
 export const delayedSoapApiForBrowser = <RequestParamsType, ResponseType = never>(
   apiAction: string,

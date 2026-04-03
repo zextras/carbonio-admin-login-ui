@@ -53,3 +53,9 @@ export class BrowserSupportMessage extends LitElement {
     return html`${unsafeHTML(interpolated)}`;
   }
 }
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'browser-support-message': BrowserSupportMessage;
+  }
+}

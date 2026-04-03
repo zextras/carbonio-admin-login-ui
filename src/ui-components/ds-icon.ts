@@ -14,7 +14,7 @@ import { type IconName, iconRegistry } from './icon-registry';
 import { resolveThemeColor } from './theme/theme-utils';
 
 const ICON_SIZES = ['small', 'medium', 'large'] as const;
-export type IconSize = (typeof ICON_SIZES)[number];
+type IconSize = (typeof ICON_SIZES)[number];
 
 const DEFAULT_ICON: IconName = 'AlertTriangleOutline';
 

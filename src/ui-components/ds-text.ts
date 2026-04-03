@@ -10,10 +10,10 @@ import { dsTextVars, textStyles } from './ds-text.styles';
 import { type Theme } from './theme/theme';
 import { resolveThemeColor } from './theme/theme-utils';
 
-export type TextSize = keyof Theme['font']['size'];
-export type TextWeight = keyof Theme['font']['weight'];
-export type TextOverflow = 'ellipsis' | 'break-word';
-export type TextTag =
+type TextSize = keyof Theme['font']['size'];
+type TextWeight = keyof Theme['font']['weight'];
+type TextOverflow = 'ellipsis' | 'break-word';
+type TextTag =
   | 'span'
   | 'p'
   | 'h1'

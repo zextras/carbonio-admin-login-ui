@@ -11,7 +11,7 @@ import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 @customElement('not-supported-version')
-export class NotSupportedVersion extends LitElement {
+class NotSupportedVersion extends LitElement {
   @property({ type: Boolean, reflect: true })
   accessor open = true;
 

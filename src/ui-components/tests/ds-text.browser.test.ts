@@ -9,7 +9,6 @@ import { describe, expect, it } from 'vitest';
 import { page } from 'vitest/browser';
 
 import type { DsText } from '../ds-text';
-import type { TextOverflow } from '../ds-text';
 import { dsTextVars } from '../ds-text.styles';
 
 let element: DsText;
@@ -150,12 +149,13 @@ describe('ds-text', () => {
       expect(el.overflow).toBe('ellipsis');
     });
 
-    it.each([{ overflow: 'ellipsis' }, { overflow: 'break-word' }] satisfies {
-      overflow: TextOverflow;
-    }[])('should accept overflow="$overflow"', async ({ overflow }) => {
-      const el = await createDsText({ overflow }, 'Overflowed text');
-      expect(el.overflow).toBe(overflow);
-    });
+    it.each([{ overflow: 'ellipsis' }, { overflow: 'break-word' }])(
+      'should accept overflow="$overflow"',
+      async ({ overflow }) => {
+        const el = await createDsText({ overflow }, 'Overflowed text');
+        expect(el.overflow).toBe(overflow);
+      },
+    );
   });
 
   describe('disabled property', () => {

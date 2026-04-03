@@ -4,21 +4,11 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-type Error = {
-  errorMessage: string;
-};
-
-type Success = {
-  supported: boolean;
-};
-
-export type GetAdvancedSupportedResponse = Promise<Success | Error>;
-
-function errorMessage(): Error {
+function errorMessage() {
   return { errorMessage: 'Failed to check Advanced installation' };
 }
 
-export const getAdvancedSupported = (): GetAdvancedSupportedResponse =>
+export const getAdvancedSupported = () =>
   fetch('/services/catalog/services')
     .then(async (res) => {
       if (res.ok) {
