@@ -38,6 +38,7 @@ describe('i18n.config', () => {
         fallbackLng: expect.arrayContaining(['en']),
         debug: false,
         interpolation: { escapeValue: false },
+        detection: { caches: [] },
         backend: { loadPath: 'i18n/{{lng}}.json' },
       }),
     );
