@@ -29,7 +29,7 @@ export const getSetupServer = (): SetupServer => server;
 export const createAPIInterceptor = (
   method: 'get' | 'post' | 'put' | 'delete',
   url: string,
-  response: () => HttpResponse<DefaultBodyType>,
+  response: () => HttpResponse,
 ): APIInterceptor => {
   let calledTimes = 0;
   const requests: Array<StrictRequest<DefaultBodyType>> = [];

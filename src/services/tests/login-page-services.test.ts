@@ -101,7 +101,7 @@ describe('checkClassicUi', () => {
 
   it('should return hasClassic true on 200', async () => {
     createAPIInterceptor('get', CLASSIC_UI_URL, () =>
-      HttpResponse.html('', { status: 200 }),
+      HttpResponse.text('', { status: 200, headers: { 'Content-Type': 'text/html' } }),
     );
 
     const result = await checkClassicUi();
@@ -119,7 +119,7 @@ describe('checkClassicUi', () => {
 
   it('should return hasClassic true on other success status codes', async () => {
     createAPIInterceptor('get', CLASSIC_UI_URL, () =>
-      HttpResponse.html('', { status: 204 }),
+      HttpResponse.text('', { status: 204, headers: { 'Content-Type': 'text/html' } }),
     );
 
     const result = await checkClassicUi();
