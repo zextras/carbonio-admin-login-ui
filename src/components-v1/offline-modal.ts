@@ -37,6 +37,12 @@ export class OfflineModal extends LitElement {
     }
   }
 
+  private handleBackdropKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      this.handleClose();
+    }
+  }
+
   private handleCancel(event: Event): void {
     event.preventDefault();
     this.handleClose();
@@ -75,6 +81,7 @@ export class OfflineModal extends LitElement {
       <dialog
         class="dialog"
         @click=${this.handleBackdropClick}
+        @keydown=${this.handleBackdropKeydown}
         @cancel=${this.handleCancel}
         aria-labelledby="offline-modal-title"
         aria-describedby="offline-modal-description"

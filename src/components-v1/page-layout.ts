@@ -172,7 +172,8 @@ export class PageLayout extends LitElement {
 
     return html`
       <ds-text as="span" size="small" overflow="break-word">
-        ${t('copy_right', 'Copyright')} &copy; ${year} Zextras,
+        ${t('copy_right', 'Copyright')}
+        <span role="img" aria-label="copyright">&copy;</span> ${year} Zextras,
         ${t('all_rights_reserved', 'All rights reserved')}
       </ds-text>
     `;

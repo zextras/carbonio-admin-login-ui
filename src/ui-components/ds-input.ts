@@ -85,6 +85,12 @@ export class DsInput extends LitElement {
     }
   }
 
+  private _onContainerKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this._onContainerClick();
+    }
+  }
+
   private _onInputFocus(): void {
     this._focused = true;
     this.dispatchEvent(new FocusEvent('focus', { bubbles: true, composed: true }));
@@ -148,6 +154,7 @@ export class DsInput extends LitElement {
           style=${styleMap(containerBgStyles)}
           ?data-disabled=${this.disabled}
           @click=${this._onContainerClick}
+          @keydown=${this._onContainerKeydown}
         >
           <div
             class="relative-container"

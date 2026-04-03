@@ -38,7 +38,6 @@ export class DsDivider extends LitElement {
     });
 
     return html`<hr
-      role="separator"
       style=${styles}
       class="divider"
       aria-orientation="horizontal"

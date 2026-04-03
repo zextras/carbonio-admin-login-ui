@@ -388,6 +388,12 @@ export class DsSelect extends LitElement {
               aria-selected=${isSelected}
               data-value=${item.value}
               @click=${(): void => this._handleSelect(item)}
+              @keydown=${(e: KeyboardEvent): void => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  this._handleSelect(item);
+                }
+              }}
             >
               <ds-icon icon=${isSelected ? 'CheckmarkSquare' : 'Square'} color="text"></ds-icon>
               <ds-text as="span" color="text" weight=${isSelected ? 'bold' : 'regular'}>
