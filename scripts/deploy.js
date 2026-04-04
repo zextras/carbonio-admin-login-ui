@@ -7,7 +7,7 @@
 /* eslint-disable no-console */
 
 import { execSync } from 'child_process';
-import { readdirSync, statSync } from 'fs';
+import { existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 
 const parseArgs = (args) => {
@@ -23,7 +23,6 @@ const createConfig = (remoteHost) => ({
   remoteHost,
   remoteDest: '/tmp',
   artifactsDir: './artifacts/ubuntu-jammy',
-  packagePattern: 'carbonio-admin-login-ui',
 });
 
 const run = (command) => {
@@ -36,19 +35,13 @@ const run = (command) => {
   }
 };
 
-const findNewestArtifact = (artifactsDir, packagePattern) => {
+const findArtifact = (artifactsDir) => {
   const filesInDir = readdirSync(artifactsDir);
-
-  const matchingFiles = filesInDir
-    .filter((file) => file.startsWith(packagePattern) && file.endsWith('.deb'))
-    .map((file) => ({
-      name: file,
-      path: join(artifactsDir, file),
-      time: statSync(join(artifactsDir, file)).mtimeMs,
-    }))
-    .sort((a, b) => b.time - a.time);
-
-  return matchingFiles[0];
+  if (filesInDir.length === 0) return undefined;
+  return {
+    name: filesInDir[0],
+    path: join(artifactsDir, filesInDir[0]),
+  };
 };
 
 const deploy = () => {
@@ -70,27 +63,30 @@ const deploy = () => {
   run(buildCommand);
 
   // 2. Create the .deb packages
+  if (existsSync('artifacts')) {
+    execSync('rm -rf artifacts');
+  }
   console.log('📦 Packaging...');
   run('./scripts/build_packages.sh');
 
   // 3. Find the newest .deb file in the artifacts directory
   console.log('🔍 Searching for the newest artifact...');
-  const newestArtifact = findNewestArtifact(config.artifactsDir, config.packagePattern);
+  const artifact = findArtifact(config.artifactsDir);
 
-  if (!newestArtifact) {
+  if (!artifact) {
     console.error(`❌ Could not find a .deb file in ${config.artifactsDir} matching the pattern.`);
     process.exit(1);
   }
 
-  console.log(`✅ Found artifact: ${newestArtifact.name}`);
+  console.log(`✅ Found artifact: ${artifact.name}`);
 
   // 4. SCP the file
   console.log('⬆️ Uploading to server...');
-  run(`scp ${newestArtifact.path} ${config.remoteUser}@${config.remoteHost}:${config.remoteDest}`);
+  run(`scp ${artifact.path} ${config.remoteUser}@${config.remoteHost}:${config.remoteDest}`);
 
   // 5. SSH and Install
   console.log('🛠️ Installing on remote...');
-  const remotePath = `${config.remoteDest}/${newestArtifact.name}`;
+  const remotePath = `${config.remoteDest}/${artifact.name}`;
   run(
     `ssh ${config.remoteUser}@${config.remoteHost} "apt install ${remotePath} --reinstall -y --allow-downgrades"`,
   );

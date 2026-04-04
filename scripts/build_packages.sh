@@ -17,3 +17,5 @@ docker run --rm \
   -v "$(pwd)":/tmp/build \
   "docker.io/m0rf30/yap-${OS}:1.8" \
   build "${OS}" /tmp/build/
+
+sudo chown -R "$(id -u):$(id -g)" "$(pwd)/artifacts"
