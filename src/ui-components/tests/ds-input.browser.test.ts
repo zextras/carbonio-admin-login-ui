@@ -1,8 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2025 Zextras <https://www.zextras.com>
+ * SPDX-FileCopyrightText: 2026 Zextras <https://www.zextras.com>
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
 import '../ds-input';
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -175,6 +176,32 @@ describe('ds-input', () => {
       el.disabled = false;
       await el.updateComplete;
       await expect.element(textbox).toBeEnabled();
+    });
+
+    it('should apply disabled cursor style to input container when disabled', async () => {
+      const el = await createDsInput({ disabled: '' });
+      const container = el.querySelector('.input-container')!;
+      expect(getComputedStyle(container).cursor).toBe('default');
+    });
+
+    it('should apply text cursor style to input container when enabled', async () => {
+      const el = await createDsInput();
+      const container = el.querySelector('.input-container')!;
+      expect(getComputedStyle(container).cursor).toBe('text');
+    });
+
+    it('should toggle disabled cursor style dynamically', async () => {
+      const el = await createDsInput();
+      const container = el.querySelector('.input-container')!;
+      expect(getComputedStyle(container).cursor).toBe('text');
+
+      el.disabled = true;
+      await el.updateComplete;
+      expect(getComputedStyle(container).cursor).toBe('default');
+
+      el.disabled = false;
+      await el.updateComplete;
+      expect(getComputedStyle(container).cursor).toBe('text');
     });
   });
 
