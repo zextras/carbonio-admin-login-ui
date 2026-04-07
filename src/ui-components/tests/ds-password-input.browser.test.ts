@@ -63,7 +63,7 @@ describe('ds-password-input', () => {
   describe('password visibility toggle', () => {
     it('should set input type to password by default', async () => {
       const el = await createDsPasswordInput();
-      const dsInput = el.shadowRoot!.querySelector(
+      const dsInput = el.querySelector(
         'ds-input',
       ) as HTMLElement & { type: string };
       expect(dsInput.type).toBe('password');
@@ -73,7 +73,7 @@ describe('ds-password-input', () => {
       const el = await createDsPasswordInput();
       const toggle = page.getByRole('button', { name: 'Show password' });
       await userEvent.click(toggle);
-      const dsInput = el.shadowRoot!.querySelector(
+      const dsInput = el.querySelector(
         'ds-input',
       ) as HTMLElement & { type: string };
       expect(dsInput.type).toBe('text');
@@ -84,7 +84,7 @@ describe('ds-password-input', () => {
       const toggle = page.getByRole('button', { name: 'Show password' });
       await userEvent.click(toggle);
       await userEvent.click(toggle);
-      const dsInput = el.shadowRoot!.querySelector(
+      const dsInput = el.querySelector(
         'ds-input',
       ) as HTMLElement & { type: string };
       expect(dsInput.type).toBe('password');
@@ -109,7 +109,7 @@ describe('ds-password-input', () => {
       const el = await createDsPasswordInput({ disabled: '' });
       const toggle = page.getByRole('button', { name: 'Show password' });
       await userEvent.click(toggle, { force: true });
-      const dsInput = el.shadowRoot!.querySelector(
+      const dsInput = el.querySelector(
         'ds-input',
       ) as HTMLElement & { type: string };
       expect(dsInput.type).toBe('password');

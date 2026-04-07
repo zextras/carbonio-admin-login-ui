@@ -4,15 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { css } from 'lit';
-
-export const inputStyles = css`
-  :host {
+export const inputStyles = `
+  ds-input {
     display: block;
     width: 100%;
   }
 
-  .input-wrapper {
+  ds-input .input-wrapper {
     display: flex;
     flex-direction: column;
     height: fit-content;
@@ -24,7 +22,7 @@ export const inputStyles = css`
     box-sizing: border-box;
   }
 
-  .input-container {
+  ds-input .input-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -44,24 +42,24 @@ export const inputStyles = css`
     transition: background 0.2s ease-out;
   }
 
-  .input-container:hover {
+  ds-input .input-container:hover {
     background: var(--input-container-bg-hover);
   }
 
-  .input-container:focus-within {
+  ds-input .input-container:focus-within {
     background: var(--input-container-bg-focus);
   }
 
-  .input-container:active {
+  ds-input .input-container:active {
     background: var(--input-container-bg-active);
   }
 
-  .input-container[data-disabled='true'] {
+  ds-input .input-container[data-disabled] {
     cursor: default;
     background: var(--input-container-bg-disabled);
   }
 
-  .relative-container {
+  ds-input .relative-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,15 +78,15 @@ export const inputStyles = css`
     --label-color: var(--label-color);
   }
 
-  .relative-container[data-has-label='true'] {
+  ds-input .relative-container[data-has-label='true'] {
     --padding-vertical: 0.0625rem;
   }
 
-  .relative-container[data-has-label='false'] {
+  ds-input .relative-container[data-has-label='false'] {
     --padding-vertical: 0.625rem;
   }
 
-  .input {
+  ds-input .input {
     border: none !important;
     height: auto !important;
     width: 100%;
@@ -103,17 +101,17 @@ export const inputStyles = css`
     padding: 0;
   }
 
-  .input:disabled {
+  ds-input .input:disabled {
     color: var(--input-color-disabled);
   }
 
-  .input::placeholder {
+  ds-input .input::placeholder {
     color: transparent;
     font-size: 0;
     user-select: none;
   }
 
-  .label {
+  ds-input .label {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -137,14 +135,14 @@ export const inputStyles = css`
     pointer-events: none;
   }
 
-  .input:focus ~ .label,
-  .input:not(:placeholder-shown) ~ .label {
+  ds-input .input:focus ~ .label,
+  ds-input .input:not(:placeholder-shown) ~ .label {
     top: 0;
     transform: translateY(0);
     font-size: var(--font-size-extrasmall, 0.625rem);
   }
 
-  .icon-slot {
+  ds-input .icon-slot {
     display: flex;
     align-items: center;
     flex-shrink: 0;

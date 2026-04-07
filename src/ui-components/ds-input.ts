@@ -13,6 +13,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { inputStyles } from './ds-input.styles';
+import { injectStyles } from './inject-styles';
 import { resolveThemeColor } from './theme/theme-utils';
 
 const INPUT_BACKGROUND_COLOR = 'gray5';
@@ -27,7 +28,10 @@ function getDividerColor(color: string, disabled: boolean): string {
 
 @customElement('ds-input')
 export class DsInput extends LitElement {
-  static override readonly styles = inputStyles;
+  override createRenderRoot() {
+    injectStyles('ds-input', inputStyles, this.getRootNode() as Document | ShadowRoot);
+    return this;
+  }
 
   private readonly _inputId = `ds-input-${++instanceCounter}`;
 
@@ -54,6 +58,9 @@ export class DsInput extends LitElement {
 
   @property({ type: String, reflect: true })
   accessor autocomplete = 'off';
+
+  @property({ attribute: false })
+  accessor icon: TemplateResult<1> | typeof nothing = nothing;
 
   @query('input')
   private accessor _inputElement: HTMLInputElement | null = null;
@@ -181,7 +188,7 @@ export class DsInput extends LitElement {
               : nothing}
           </div>
           <span class="icon-slot">
-            <slot name="icon"></slot>
+            ${this.icon}
           </span>
         </div>
         <ds-divider color=${this._getDividerColor()}></ds-divider>

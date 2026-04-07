@@ -26,6 +26,9 @@ export type Configuration = {
 
 @customElement('credentials-form')
 export class CredentialsForm extends LitElement {
+  override createRenderRoot() {
+    return this;
+  }
   @property({ type: String, attribute: 'auth-error' })
   accessor authError = '';
 
@@ -122,6 +125,7 @@ export class CredentialsForm extends LitElement {
             ?has-error=${!!this.authError}
             @input=${this.handleUsernameChange}
             label=${t('username', 'Username')}
+            autocomplete="username"
           ></ds-input>
         </div>
         <div

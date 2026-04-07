@@ -4,15 +4,13 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { css } from 'lit';
-
-export const passwordInputStyles = css`
-  :host {
+export const passwordInputStyles = `
+  ds-password-input {
     display: block;
     width: 100%;
   }
 
-  .toggle-button {
+  ds-password-input .toggle-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,13 +21,13 @@ export const passwordInputStyles = css`
     outline: none;
   }
 
-  .toggle-button:focus {
+  ds-password-input .toggle-button:focus {
     outline: 2px solid var(--color-primary-regular, #0d6efd);
     outline-offset: 2px;
     border-radius: var(--border-radius, 0.25rem);
   }
 
-  .toggle-button:disabled {
+  ds-password-input .toggle-button:disabled {
     cursor: default;
   }
 `;
