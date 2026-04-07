@@ -54,7 +54,7 @@ export const inputStyles = `
     background: var(--input-container-bg-active);
   }
 
-  ds-input .input-container[data-disabled='true'] {
+  ds-input .input-container[data-disabled] {
     cursor: default;
     background: var(--input-container-bg-disabled);
   }
