@@ -11,6 +11,7 @@ import { html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 
 import { passwordInputStyles } from './ds-password-input.styles';
+import { injectStyles } from './inject-styles';
 
 const INPUT_DIVIDER_COLOR = 'gray3';
 
@@ -19,6 +20,11 @@ type InputType = 'text' | 'password';
 @customElement('ds-password-input')
 export class DsPasswordInput extends LitElement {
   override createRenderRoot() {
+    injectStyles(
+      'ds-password-input',
+      passwordInputStyles,
+      this.getRootNode() as Document | ShadowRoot,
+    );
     return this;
   }
 
@@ -73,9 +79,9 @@ export class DsPasswordInput extends LitElement {
     }
   }
 
-  private _toggleShow = (): void => {
+  private _toggleShow(): void {
     this._show = !this._show;
-  };
+  }
 
   private _onFocus(): void {
     this._focused = true;
@@ -114,7 +120,6 @@ export class DsPasswordInput extends LitElement {
     const errorId = 'error-msg';
 
     return html`
-      <style>${passwordInputStyles}</style>
       <ds-input
         .defaultValue=${this.initialValue ?? ''}
         .label=${this.label ?? ''}
@@ -131,7 +136,7 @@ export class DsPasswordInput extends LitElement {
             ?disabled=${this.disabled}
             aria-label="Show password"
             aria-pressed=${this._show ? 'true' : 'false'}
-            @click=${this._toggleShow}
+            @click=${() => this._toggleShow()}
           >
             <ds-icon
               .icon=${iconName}

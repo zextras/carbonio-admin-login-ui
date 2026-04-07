@@ -13,6 +13,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 import { inputStyles } from './ds-input.styles';
+import { injectStyles } from './inject-styles';
 import { resolveThemeColor } from './theme/theme-utils';
 
 const INPUT_BACKGROUND_COLOR = 'gray5';
@@ -28,6 +29,7 @@ function getDividerColor(color: string, disabled: boolean): string {
 @customElement('ds-input')
 export class DsInput extends LitElement {
   override createRenderRoot() {
+    injectStyles('ds-input', inputStyles, this.getRootNode() as Document | ShadowRoot);
     return this;
   }
 
@@ -153,7 +155,6 @@ export class DsInput extends LitElement {
     };
 
     return html`
-      <style>${inputStyles}</style>
       <div class="input-wrapper">
         <div
           class=${classMap({ 'input-container': true })}
