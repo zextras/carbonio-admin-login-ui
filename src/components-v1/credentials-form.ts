@@ -122,6 +122,7 @@ export class CredentialsForm extends LitElement {
             ?has-error=${!!this.authError}
             @input=${this.handleUsernameChange}
             label=${t('username', 'Username')}
+            autocomplete="username"
           ></ds-input>
         </div>
         <div
