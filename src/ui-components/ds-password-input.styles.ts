@@ -10,7 +10,7 @@ export const passwordInputStyles = `
     width: 100%;
   }
 
-  .toggle-button {
+  ds-password-input .toggle-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,13 +21,13 @@ export const passwordInputStyles = `
     outline: none;
   }
 
-  .toggle-button:focus {
+  ds-password-input .toggle-button:focus {
     outline: 2px solid var(--color-primary-regular, #0d6efd);
     outline-offset: 2px;
     border-radius: var(--border-radius, 0.25rem);
   }
 
-  .toggle-button:disabled {
+  ds-password-input .toggle-button:disabled {
     cursor: default;
   }
 `;
