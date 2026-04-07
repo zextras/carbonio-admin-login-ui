@@ -57,6 +57,9 @@ export class DsInput extends LitElement {
   @property({ type: String, reflect: true })
   accessor autocomplete = 'off';
 
+  @property({ attribute: false })
+  accessor icon: TemplateResult<1> | typeof nothing = nothing;
+
   @query('input')
   private accessor _inputElement: HTMLInputElement | null = null;
 
@@ -184,7 +187,7 @@ export class DsInput extends LitElement {
               : nothing}
           </div>
           <span class="icon-slot">
-            <slot name="icon"></slot>
+            ${this.icon}
           </span>
         </div>
         <ds-divider color=${this._getDividerColor()}></ds-divider>

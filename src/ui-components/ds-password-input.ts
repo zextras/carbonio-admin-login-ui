@@ -124,30 +124,30 @@ export class DsPasswordInput extends LitElement {
         .name=${this.name ?? ''}
         .autocomplete=${this.autocomplete}
         .type=${inputType}
+        .icon=${html`
+          <button
+            class="toggle-button"
+            type="button"
+            ?disabled=${this.disabled}
+            aria-label="Show password"
+            aria-pressed=${this._show ? 'true' : 'false'}
+            @click=${() => this._toggleShow()}
+          >
+            <ds-icon
+              .icon=${iconName}
+              .color=${iconColor}
+              size="large"
+              ?disabled=${this.disabled}
+            ></ds-icon>
+          </button>
+        `}
         aria-invalid=${this.hasError ? 'true' : 'false'}
         aria-describedby=${this.hasError && this.errorMessage ? errorId : nothing}
         @change=${this._onInputChange}
         @input=${this._onInput}
         @focus=${this._onFocus}
         @blur=${this._onBlur}
-      >
-        <button
-          slot="icon"
-          class="toggle-button"
-          type="button"
-          ?disabled=${this.disabled}
-          aria-label="Show password"
-          aria-pressed=${this._show ? 'true' : 'false'}
-          @click=${this._toggleShow}
-        >
-          <ds-icon
-            .icon=${iconName}
-            .color=${iconColor}
-            size="large"
-            ?disabled=${this.disabled}
-          ></ds-icon>
-        </button>
-      </ds-input>
+      ></ds-input>
       ${this.hasError && this.errorMessage
         ? html`<span id=${errorId} class="error-message" role="alert">${this.errorMessage}</span>`
         : nothing}
