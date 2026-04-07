@@ -27,7 +27,9 @@ function getDividerColor(color: string, disabled: boolean): string {
 
 @customElement('ds-input')
 export class DsInput extends LitElement {
-  static override readonly styles = inputStyles;
+  override createRenderRoot() {
+    return this;
+  }
 
   private readonly _inputId = `ds-input-${++instanceCounter}`;
 
@@ -148,6 +150,7 @@ export class DsInput extends LitElement {
     };
 
     return html`
+      <style>${inputStyles}</style>
       <div class="input-wrapper">
         <div
           class=${classMap({ 'input-container': true })}

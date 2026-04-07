@@ -4,10 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { css } from 'lit';
-
-export const passwordInputStyles = css`
-  :host {
+export const passwordInputStyles = `
+  ds-password-input {
     display: block;
     width: 100%;
   }

@@ -26,6 +26,9 @@ export type Configuration = {
 
 @customElement('credentials-form')
 export class CredentialsForm extends LitElement {
+  override createRenderRoot() {
+    return this;
+  }
   @property({ type: String, attribute: 'auth-error' })
   accessor authError = '';
 

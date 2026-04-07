@@ -93,7 +93,7 @@ describe('CredentialsForm', () => {
   it('should prevent default form submission', async () => {
     const el = await createCredentialsForm();
 
-    const form = el.shadowRoot!.querySelector('form')!;
+    const form = el.querySelector('form')!;
     const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
     const preventDefaultSpy = vi.spyOn(submitEvent, 'preventDefault');
 
