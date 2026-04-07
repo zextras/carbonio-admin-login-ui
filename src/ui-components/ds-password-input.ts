@@ -73,9 +73,9 @@ export class DsPasswordInput extends LitElement {
     }
   }
 
-  private _toggleShow(): void {
+  private _toggleShow = (): void => {
     this._show = !this._show;
-  }
+  };
 
   private _onFocus(): void {
     this._focused = true;
@@ -131,7 +131,7 @@ export class DsPasswordInput extends LitElement {
             ?disabled=${this.disabled}
             aria-label="Show password"
             aria-pressed=${this._show ? 'true' : 'false'}
-            @click=${() => this._toggleShow()}
+            @click=${this._toggleShow}
           >
             <ds-icon
               .icon=${iconName}
