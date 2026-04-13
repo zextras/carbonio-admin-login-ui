@@ -35,7 +35,7 @@ describe('ds-spinner', () => {
 
     it('should set --border-color CSS variable with default color', async () => {
       const el = await createDsSpinner();
-      const svg = el.shadowRoot!.querySelector('svg') as HTMLElement;
+      const svg = el.shadowRoot!.querySelector('svg') as SVGElement;
       const cssVarValue = svg.style.getPropertyValue('--ds-spinner-color');
       expect(cssVarValue).toContain('primary');
     });
@@ -57,7 +57,7 @@ describe('ds-spinner', () => {
       el.color = 'error';
       await el.updateComplete;
 
-      const svg = el.shadowRoot!.querySelector('svg') as HTMLElement;
+      const svg = el.shadowRoot!.querySelector('svg') as SVGElement;
       const updatedColor = svg.style.getPropertyValue('--ds-spinner-color');
       expect(updatedColor).toContain('error');
     });
