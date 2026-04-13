@@ -33,7 +33,7 @@ describe('ds-spinner', () => {
       expect(el.color).toBe('primary');
     });
 
-    it('should set --border-color CSS variable with default color', async () => {
+    it('should set --ds-spinner-color CSS variable with default color', async () => {
       const el = await createDsSpinner();
       const svg = el.shadowRoot!.querySelector('svg') as SVGElement;
       const cssVarValue = svg.style.getPropertyValue('--ds-spinner-color');
@@ -51,7 +51,7 @@ describe('ds-spinner', () => {
       expect(el.color).toBe(color);
     });
 
-    it('should update --border-color when color changes dynamically', async () => {
+    it('should update --ds-spinner-color when color changes dynamically', async () => {
       const el = await createDsSpinner({ color: 'primary' });
 
       el.color = 'error';
