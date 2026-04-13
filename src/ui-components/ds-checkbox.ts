@@ -11,7 +11,6 @@ import { html, LitElement, nothing, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import { checkboxStyles } from './ds-checkbox.styles';
-import { resolveThemeColor } from './theme/theme-utils';
 
 @customElement('ds-checkbox')
 export class DsCheckbox extends LitElement {
@@ -40,10 +39,6 @@ export class DsCheckbox extends LitElement {
   }
 
   override render(): TemplateResult {
-    this.style.setProperty('--ds-checkbox-focus', resolveThemeColor('gray0', 'focus'));
-    this.style.setProperty('--ds-checkbox-hover', resolveThemeColor('gray0', 'hover'));
-    this.style.setProperty('--ds-checkbox-active', resolveThemeColor('gray0', 'active'));
-
     return html`
       <label class="wrapper">
         <input

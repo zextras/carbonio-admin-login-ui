@@ -1,9 +1,12 @@
-import { css } from 'lit';
 /*
  * SPDX-FileCopyrightText: 2026 Zextras <https://www.zextras.com>
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+import { css, unsafeCSS } from 'lit';
+
+import { resolveThemeColor } from './theme/theme-utils';
+
 export const checkboxStyles = css`
   :host {
     display: flex;
@@ -37,15 +40,15 @@ export const checkboxStyles = css`
   }
 
   input:focus-visible + ds-icon {
-    --icon-color: var(--ds-checkbox-focus);
+    --icon-color: ${unsafeCSS(resolveThemeColor('gray0', 'focus'))};
   }
 
   .wrapper:hover ds-icon {
-    --icon-color: var(--ds-checkbox-hover);
+    --icon-color: ${unsafeCSS(resolveThemeColor('gray0', 'hover'))};
   }
 
   .wrapper:active ds-icon {
-    --icon-color: var(--ds-checkbox-active);
+    --icon-color: ${unsafeCSS(resolveThemeColor('gray0', 'active'))};
   }
 
   .label {
