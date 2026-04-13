@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { html, LitElement, type PropertyValues } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import { spinnerStyles } from './ds-spinner.styles';
 import { resolveThemeColor } from './theme/theme-utils';
@@ -17,15 +18,12 @@ export class DsSpinner extends LitElement {
   @property({ type: String })
   accessor color: string = 'primary';
 
-  override updated(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('color')) {
-      this.style.setProperty('--border-color', resolveThemeColor(this.color, 'regular'));
-    }
-  }
-
   override render() {
     return html`
-      <svg viewBox="0 0 50 50">
+      <svg
+        viewBox="0 0 50 50"
+        style=${styleMap({ '--ds-spinner-color': resolveThemeColor(this.color, 'regular') })}
+      >
         <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="4" />
       </svg>
     `;

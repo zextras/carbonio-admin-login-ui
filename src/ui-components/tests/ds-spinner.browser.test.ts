@@ -33,9 +33,10 @@ describe('ds-spinner', () => {
       expect(el.color).toBe('primary');
     });
 
-    it('should set --border-color CSS variable with default color', async () => {
+    it('should set --ds-spinner-color CSS variable with default color', async () => {
       const el = await createDsSpinner();
-      const cssVarValue = el.style.getPropertyValue('--border-color');
+      const svg = el.shadowRoot!.querySelector('svg') as SVGElement;
+      const cssVarValue = svg.style.getPropertyValue('--ds-spinner-color');
       expect(cssVarValue).toContain('primary');
     });
 
@@ -50,13 +51,14 @@ describe('ds-spinner', () => {
       expect(el.color).toBe(color);
     });
 
-    it('should update --border-color when color changes dynamically', async () => {
+    it('should update --ds-spinner-color when color changes dynamically', async () => {
       const el = await createDsSpinner({ color: 'primary' });
 
       el.color = 'error';
       await el.updateComplete;
 
-      const updatedColor = el.style.getPropertyValue('--border-color');
+      const svg = el.shadowRoot!.querySelector('svg') as SVGElement;
+      const updatedColor = svg.style.getPropertyValue('--ds-spinner-color');
       expect(updatedColor).toContain('error');
     });
   });
@@ -105,9 +107,9 @@ describe('ds-spinner', () => {
   });
 
   describe('custom styling', () => {
-    it('should allow overriding --border-color after element creation', async () => {
+    it('should allow overriding --ds-spinner-border-color after element creation', async () => {
       const el = await createDsSpinner();
-      el.style.setProperty('--border-color', '#00ff00');
+      el.style.setProperty('--ds-spinner-border-color', '#00ff00');
       await el.updateComplete;
 
       const circle = el.shadowRoot!.querySelector('.path') as SVGCircleElement;
