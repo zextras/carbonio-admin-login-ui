@@ -3,8 +3,9 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { html, LitElement, type PropertyValues, type TemplateResult } from 'lit';
+import { html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import { dsTextVars, textStyles } from './ds-text.styles';
 import { type Theme } from './theme/theme';
@@ -27,21 +28,6 @@ type TextTag =
   | 'em'
   | 'small';
 
-const TAG_TEMPLATES: Record<TextTag, TemplateResult> = {
-  span: html`<span><slot></slot></span>`,
-  p: html`<p><slot></slot></p>`,
-  h1: html`<h1><slot></slot></h1>`,
-  h2: html`<h2><slot></slot></h2>`,
-  h3: html`<h3><slot></slot></h3>`,
-  h4: html`<h4><slot></slot></h4>`,
-  h5: html`<h5><slot></slot></h5>`,
-  h6: html`<h6><slot></slot></h6>`,
-  label: html`<label><slot></slot></label>`,
-  strong: html`<strong><slot></slot></strong>`,
-  em: html`<em><slot></slot></em>`,
-  small: html`<small><slot></slot></small>`,
-};
-
 @customElement('ds-text')
 export class DsText extends LitElement {
   static override readonly styles = textStyles;
@@ -49,13 +35,13 @@ export class DsText extends LitElement {
   @property({ type: String })
   accessor color = 'text';
 
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   accessor size: TextSize = 'medium';
 
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   accessor weight: TextWeight = 'regular';
 
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   accessor overflow: TextOverflow = 'ellipsis';
 
   @property({ type: Boolean, reflect: true })
@@ -67,17 +53,40 @@ export class DsText extends LitElement {
   @property({ type: String })
   accessor as: TextTag = 'span';
 
-  override willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('color') || changedProperties.has('disabled')) {
-      this.style.setProperty(
-        dsTextVars.color,
-        resolveThemeColor(this.color, this.disabled ? 'disabled' : 'regular'),
-      );
-    }
-  }
-
   override render(): TemplateResult {
-    return TAG_TEMPLATES[this.as];
+    const styles = {
+      [dsTextVars.color]: resolveThemeColor(this.color, this.disabled ? 'disabled' : 'regular'),
+      ...(this.lineHeight !== undefined && { [dsTextVars.lineHeight]: String(this.lineHeight) }),
+    };
+
+    const tagStyle = styleMap(styles);
+
+    switch (this.as) {
+      case 'p':
+        return html`<p style=${tagStyle}><slot></slot></p>`;
+      case 'h1':
+        return html`<h1 style=${tagStyle}><slot></slot></h1>`;
+      case 'h2':
+        return html`<h2 style=${tagStyle}><slot></slot></h2>`;
+      case 'h3':
+        return html`<h3 style=${tagStyle}><slot></slot></h3>`;
+      case 'h4':
+        return html`<h4 style=${tagStyle}><slot></slot></h4>`;
+      case 'h5':
+        return html`<h5 style=${tagStyle}><slot></slot></h5>`;
+      case 'h6':
+        return html`<h6 style=${tagStyle}><slot></slot></h6>`;
+      case 'label':
+        return html`<label style=${tagStyle}><slot></slot></label>`;
+      case 'strong':
+        return html`<strong style=${tagStyle}><slot></slot></strong>`;
+      case 'em':
+        return html`<em style=${tagStyle}><slot></slot></em>`;
+      case 'small':
+        return html`<small style=${tagStyle}><slot></slot></small>`;
+      default:
+        return html`<span style=${tagStyle}><slot></slot></span>`;
+    }
   }
 }
 
