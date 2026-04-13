@@ -107,9 +107,9 @@ describe('ds-spinner', () => {
   });
 
   describe('custom styling', () => {
-    it('should allow overriding --border-color after element creation', async () => {
+    it('should allow overriding --ds-spinner-border-color after element creation', async () => {
       const el = await createDsSpinner();
-      el.style.setProperty('--border-color', '#00ff00');
+      el.style.setProperty('--ds-spinner-border-color', '#00ff00');
       await el.updateComplete;
 
       const circle = el.shadowRoot!.querySelector('.path') as SVGCircleElement;
