@@ -5,6 +5,7 @@
   "type": "module",
   "main": "src/index.html",
   "scripts": {
+    "bump-version": "semantic-release",
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode='development'",
@@ -51,7 +52,14 @@
     "vite": "8.0.3",
     "vite-plugin-babel": "1.6.0",
     "vitest": "4.1.2",
-    "vitest-browser-lit": "1.0.1"
+    "vitest-browser-lit": "1.0.1",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/commit-analyzer": "13.0.1",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "12.0.2",
+    "@semantic-release/npm": "13.1.3",
+    "@semantic-release/release-notes-generator": "14.1.0",
+    "semantic-release": "25.0.2"
   },
   "dependencies": {
     "@floating-ui/dom": "1.7.6",
