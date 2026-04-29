@@ -23,7 +23,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "7.29.0",
-    "@eslint/compat": "2.0.3",
+    "@eslint/compat": "2.0.5",
     "@eslint/js": "10.0.1",
     "@swc/core": "1.15.32",
     "@types/node": "22.0.0",
@@ -31,7 +31,7 @@
     "@vitest/browser-preview": "4.1.2",
     "@vitest/coverage-istanbul": "4.1.2",
     "@vitest/ui": "4.1.2",
-    "eslint": "10.1.0",
+    "eslint": "10.2.1",
     "eslint-plugin-lit": "2.2.1",
     "eslint-plugin-lit-a11y": "5.1.1",
     "eslint-plugin-notice": "1.0.0",
