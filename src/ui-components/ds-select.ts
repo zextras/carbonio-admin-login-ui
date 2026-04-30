@@ -41,6 +41,9 @@ export class DsSelect extends LitElement {
   @property({ type: Boolean, reflect: true })
   accessor disabled = false;
 
+  @property({ type: Boolean, attribute: 'has-error', reflect: true })
+  accessor hasError = false;
+
   @state()
   private accessor _selected: SelectItem | null = null;
 
@@ -309,6 +312,7 @@ export class DsSelect extends LitElement {
   }
 
   private get _accentColor(): string {
+    if (this.hasError) return 'error';
     return this._active ? 'primary' : 'secondary';
   }
 
