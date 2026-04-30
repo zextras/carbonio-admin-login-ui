@@ -22,7 +22,7 @@ importers:
         version: 3.0.4
       vite-plugin-svgr:
         specifier: 5.2.0
-        version: 5.2.0(typescript@6.0.3)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+        version: 5.2.0(typescript@6.0.3)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
     devDependencies:
       '@babel/plugin-proposal-decorators':
         specifier: 7.29.0
@@ -41,10 +41,10 @@ importers:
         version: 22.0.0
       '@vitest/browser-playwright':
         specifier: 4.1.2
-        version: 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(playwright@1.59.1)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
+        version: 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(playwright@1.59.1)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
       '@vitest/browser-preview':
         specifier: 4.1.2
-        version: 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
+        version: 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
       '@vitest/coverage-istanbul':
         specifier: 4.1.2
         version: 4.1.2(vitest@4.1.2)
@@ -103,14 +103,14 @@ importers:
         specifier: 1.5.9
         version: 1.5.9(@swc/core@1.15.32)
       vite:
-        specifier: 8.0.3
-        version: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)
+        specifier: 8.0.5
+        version: 8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)
       vite-plugin-babel:
         specifier: 1.6.0
-        version: 1.6.0(@babel/core@7.29.0)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+        version: 1.6.0(@babel/core@7.29.0)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
       vitest:
         specifier: 4.1.2
-        version: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+        version: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
       vitest-browser-lit:
         specifier: 1.0.1
         version: 1.0.1(lit@3.3.2)(vitest@4.1.2)
@@ -2169,14 +2169,14 @@ packages:
     peerDependencies:
       vite: '>=3.0.0'
 
-  vite@8.0.3:
-    resolution: {integrity: sha512-B9ifbFudT1TFhfltfaIPgjo9Z3mDynBTJSUYxTjOQruf/zHH+ezCQKcoqO+h7a9Pw9Nm/OtlXAiGT1axBgwqrQ==}
+  vite@8.0.5:
+    resolution: {integrity: sha512-nmu43Qvq9UopTRfMx2jOYW5l16pb3iDC1JH6yMuPkpVbzK0k+L7dfsEDH4jRgYFmsg0sTAqkojoZgzLMlwHsCQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
       '@types/node': ^20.19.0 || >=22.12.0
       '@vitejs/devtools': ^0.1.0
-      esbuild: ^0.27.0
+      esbuild: ^0.27.0 || ^0.28.0
       jiti: '>=1.21.0'
       less: ^4.0.0
       sass: ^1.70.0
@@ -3087,41 +3087,41 @@ snapshots:
       '@typescript-eslint/types': 8.58.0
       eslint-visitor-keys: 5.0.1
 
-  '@vitest/browser-playwright@4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(playwright@1.59.1)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)':
+  '@vitest/browser-playwright@4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(playwright@1.59.1)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)':
     dependencies:
-      '@vitest/browser': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
-      '@vitest/mocker': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+      '@vitest/browser': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
+      '@vitest/mocker': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
       playwright: 1.59.1
       tinyrainbow: 3.1.0
-      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
     transitivePeerDependencies:
       - bufferutil
       - msw
       - utf-8-validate
       - vite
 
-  '@vitest/browser-preview@4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)':
+  '@vitest/browser-preview@4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)':
     dependencies:
       '@testing-library/dom': 10.4.1
       '@testing-library/user-event': 14.6.1(@testing-library/dom@10.4.1)
-      '@vitest/browser': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
-      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+      '@vitest/browser': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
+      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
     transitivePeerDependencies:
       - bufferutil
       - msw
       - utf-8-validate
       - vite
 
-  '@vitest/browser@4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)':
+  '@vitest/browser@4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)':
     dependencies:
       '@blazediff/core': 1.9.1
-      '@vitest/mocker': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+      '@vitest/mocker': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
       '@vitest/utils': 4.1.2
       magic-string: 0.30.21
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.1.0
-      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
       ws: 8.20.0
     transitivePeerDependencies:
       - bufferutil
@@ -3141,7 +3141,7 @@ snapshots:
       magicast: 0.5.2
       obug: 2.1.1
       tinyrainbow: 3.1.0
-      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
     transitivePeerDependencies:
       - supports-color
 
@@ -3154,14 +3154,14 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
-  '@vitest/mocker@4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))':
+  '@vitest/mocker@4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))':
     dependencies:
       '@vitest/spy': 4.1.2
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
       msw: 2.12.14(@types/node@22.0.0)(typescript@6.0.3)
-      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)
+      vite: 8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)
 
   '@vitest/pretty-format@4.1.2':
     dependencies:
@@ -3190,7 +3190,7 @@ snapshots:
       sirv: 3.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.1.0
-      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
 
   '@vitest/utils@4.1.2':
     dependencies:
@@ -4384,23 +4384,23 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  vite-plugin-babel@1.6.0(@babel/core@7.29.0)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)):
+  vite-plugin-babel@1.6.0(@babel/core@7.29.0)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)):
     dependencies:
       '@babel/core': 7.29.0
-      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)
+      vite: 8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)
 
-  vite-plugin-svgr@5.2.0(typescript@6.0.3)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)):
+  vite-plugin-svgr@5.2.0(typescript@6.0.3)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)):
     dependencies:
       '@rollup/pluginutils': 5.3.0
       '@svgr/core': 8.1.0(typescript@6.0.3)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@6.0.3))
-      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)
+      vite: 8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)
     transitivePeerDependencies:
       - rollup
       - supports-color
       - typescript
 
-  vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0):
+  vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0):
     dependencies:
       lightningcss: 1.32.0
       picomatch: 4.0.4
@@ -4417,12 +4417,12 @@ snapshots:
   vitest-browser-lit@1.0.1(lit@3.3.2)(vitest@4.1.2):
     dependencies:
       lit: 3.3.2
-      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+      vitest: 4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
 
-  vitest@4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)):
+  vitest@4.1.2(@types/node@22.0.0)(@vitest/browser-playwright@4.1.2)(@vitest/browser-preview@4.1.2)(@vitest/ui@4.1.2)(jsdom@29.1.0)(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)):
     dependencies:
       '@vitest/expect': 4.1.2
-      '@vitest/mocker': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
+      '@vitest/mocker': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))
       '@vitest/pretty-format': 4.1.2
       '@vitest/runner': 4.1.2
       '@vitest/snapshot': 4.1.2
@@ -4439,12 +4439,12 @@ snapshots:
       tinyexec: 1.0.4
       tinyglobby: 0.2.15
       tinyrainbow: 3.1.0
-      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)
+      vite: 8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.0.0
-      '@vitest/browser-playwright': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(playwright@1.59.1)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
-      '@vitest/browser-preview': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
+      '@vitest/browser-playwright': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(playwright@1.59.1)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
+      '@vitest/browser-preview': 4.1.2(msw@2.12.14(@types/node@22.0.0)(typescript@6.0.3))(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@22.0.0))(vitest@4.1.2)
       '@vitest/ui': 4.1.2(vitest@4.1.2)
       jsdom: 29.1.0
     transitivePeerDependencies:
