@@ -77,7 +77,7 @@ export class V2LoginManager extends LitElement {
   private accessor otpId = '';
 
   @state()
-  private accessor otpMethodEnabled = true;
+  private accessor otpMethodDisabled = false;
 
   @state()
   private accessor otpSubmissionLocked = false;
@@ -125,7 +125,7 @@ export class V2LoginManager extends LitElement {
 
                 this.otpList = otpItems;
                 this.otpId = otpItems[0]?.value ?? '';
-                this.otpMethodEnabled = otpItems[0]?.enabled ?? true;
+                this.otpMethodDisabled = !(otpItems[0]?.enabled ?? true);
                 this.otpSubmissionLocked = false;
                 this.progress = FORM_STATE.twoFactor;
                 this.loadingCredentials = false;
@@ -167,7 +167,7 @@ export class V2LoginManager extends LitElement {
 
   private readonly handleSubmitOtp = (e: Event): void => {
     e.preventDefault();
-    if (this.disableInputs || !this.otpMethodEnabled || this.otpSubmissionLocked) {
+    if (this.disableInputs || this.otpMethodDisabled || this.otpSubmissionLocked) {
       return;
     }
 
@@ -207,7 +207,7 @@ export class V2LoginManager extends LitElement {
     const { value } = (e as CustomEvent<{ value: string; label: string }>).detail;
     this.otpId = value;
     const selected = this.otpList.find((item) => item.value === value);
-    this.otpMethodEnabled = selected?.enabled ?? true;
+    this.otpMethodDisabled = !(selected?.enabled ?? true);
   };
 
   private readonly handleTrustDeviceChange = (e: Event): void => {
@@ -285,11 +285,11 @@ export class V2LoginManager extends LitElement {
             .items=${this.otpList}
             label=${i18next.t('choose_otp', 'Choose the OTP Method')}
             .defaultSelection=${this.otpList[0]}
-            ?has-error=${!this.otpMethodEnabled}
+            ?has-error=${this.otpMethodDisabled}
             @change=${this.handleOtpMethodChange}
           ></ds-select>
         </div>
-        ${!this.otpMethodEnabled
+        ${this.otpMethodDisabled
           ? html`
               <div
                 style="display: flex; align-items: center; justify-content: flex-start; padding: var(--padding-size-extrasmall) 0 0 0; box-sizing: border-box"
@@ -309,7 +309,7 @@ export class V2LoginManager extends LitElement {
           <ds-input
             default-value=${this.otp}
             ?has-error=${this.showOtpError}
-            ?disabled=${this.disableInputs || !this.otpMethodEnabled}
+            ?disabled=${this.disableInputs || this.otpMethodDisabled}
             @change=${this.handleOtpChange}
             label=${i18next.t('type_otp', 'Type here One-Time-Password')}
           ></ds-input>
@@ -326,7 +326,7 @@ export class V2LoginManager extends LitElement {
         >
           <ds-button
             @click=${this.handleSubmitOtp}
-            ?disabled=${this.disableInputs || !this.otpMethodEnabled || this.otpSubmissionLocked}
+            ?disabled=${this.disableInputs || this.otpMethodDisabled || this.otpSubmissionLocked}
             label=${i18next.t('login', 'Login')}
             width="fill"
             ?loading=${this.loadingOtp}
