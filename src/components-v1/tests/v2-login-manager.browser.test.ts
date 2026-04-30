@@ -7,7 +7,7 @@ import '../v2-login-manager';
 
 import { HttpResponse } from 'msw';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { page } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 import { createBrowserAPIInterceptor } from '../../../tests-setup/browser/server';
 import type { V2LoginManager } from '../v2-login-manager';
@@ -21,8 +21,17 @@ const DESTINATION_URL = 'https://example.com/admin';
 const loginSuccessResponseWith2FA = {
   '2FA': true,
   otp: [
-    { id: 'otp-id-1', label: 'OTP Method 1' },
-    { id: 'otp-id-2', label: 'OTP Method 2' },
+    { id: 'otp-id-1', label: 'OTP Method 1', enabled: true },
+    { id: 'otp-id-2', label: 'OTP Method 2', enabled: true },
+  ],
+  user: { displayName: DEFAULT_USERNAME },
+};
+
+const loginSuccessResponseWith2FADisabledFirstOtp = {
+  '2FA': true,
+  otp: [
+    { id: 'otp-id-1', label: 'OTP Method 1', enabled: false },
+    { id: 'otp-id-2', label: 'OTP Method 2', enabled: true },
   ],
   user: { displayName: DEFAULT_USERNAME },
 };
@@ -87,6 +96,51 @@ describe('V2LoginManager', () => {
     await expect
       .element(page.getByRole('heading', { name: 'Two-Step-Authentication' }))
       .toBeVisible();
+  });
+
+  it('should show disabled OTP warning when the selected OTP method is disabled', async () => {
+    await createBrowserAPIInterceptor('post', LOGIN_URL, () =>
+      HttpResponse.json(loginSuccessResponseWith2FADisabledFirstOtp, { status: 200 }),
+    );
+
+    const el = createV2LoginManager();
+    await el.updateComplete;
+
+    submitCredentials(el);
+
+    await expect
+      .element(
+        page.getByText(
+          'This OTP method is disabled. To restore it, please contact your system administrator.',
+        ),
+      )
+      .toBeVisible();
+
+    await expect
+      .element(page.getByRole('textbox', { name: 'Type here One-Time-Password' }))
+      .toBeDisabled();
+
+    await expect.element(page.getByRole('button', { name: 'Login' })).toBeDisabled();
+  });
+
+  it('should not show disabled OTP warning when the selected OTP method is enabled', async () => {
+    await createBrowserAPIInterceptor('post', LOGIN_URL, () =>
+      HttpResponse.json(loginSuccessResponseWith2FA, { status: 200 }),
+    );
+
+    const el = createV2LoginManager();
+    await el.updateComplete;
+
+    submitCredentials(el);
+
+    await expect.element(page.getByRole('heading', { name: 'Two-Step-Authentication' })).toBeVisible();
+    await expect
+      .element(
+        page.getByText(
+          'This OTP method is disabled. To restore it, please contact your system administrator.',
+        ),
+      )
+      .not.toBeInTheDocument();
   });
 
   it('should show 2FA not configured message when otp-wizard is true and otp list is empty', async () => {
@@ -268,6 +322,38 @@ describe('V2LoginManager', () => {
     await expect
       .element(page.getByText('Wrong password, please check data and try again'))
       .toBeVisible();
+  });
+
+  it('should show max attempts error on 403 OTP validation response', async () => {
+    await createBrowserAPIInterceptor('post', LOGIN_URL, () =>
+      HttpResponse.json(loginSuccessResponseWith2FA, { status: 200 }),
+    );
+    await createBrowserAPIInterceptor('post', OTP_URL, () =>
+      HttpResponse.json({}, { status: 403 }),
+    );
+
+    const el = createV2LoginManager();
+    await el.updateComplete;
+
+    submitCredentials(el);
+
+    const loginButton = page.getByRole('button', { name: 'Login' });
+    await expect.element(loginButton).toBeVisible();
+    await loginButton.click();
+
+    await expect
+      .element(
+        page.getByText('Invalid OTP. You have reached the maximum number of attempts.'),
+      )
+      .toBeVisible();
+
+    await expect.element(loginButton).toBeDisabled();
+
+    const combobox = page.getByRole('combobox');
+    await userEvent.click(combobox);
+    await userEvent.click(page.getByText('OTP Method 2'));
+
+    await expect.element(loginButton).toBeDisabled();
   });
 
   it('should show trust device checkbox in 2FA form', async () => {

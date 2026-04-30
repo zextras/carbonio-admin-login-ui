@@ -9,7 +9,7 @@ function errorMessage() {
 }
 
 export const getAdvancedSupported = () =>
-  fetch('/services/catalog/services')
+  fetch('/services/catalog/services', { redirect: 'manual' })
     .then(async (res) => {
       if (res.ok) {
         const data = await res.json();

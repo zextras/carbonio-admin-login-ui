@@ -31,13 +31,14 @@ const FORM_STATE = {
 
 type FormState = (typeof FORM_STATE)[keyof typeof FORM_STATE];
 
-type OtpItemProp = { label: string; id: string };
-type OtpItem = { label: string; value: string };
+type OtpItemProp = { label: string; id: string; enabled: boolean };
+type OtpItem = { label: string; value: string; enabled: boolean };
 
 const mapOtpItems = (otpArray: Array<OtpItemProp>): Array<OtpItem> =>
   (otpArray ?? []).map((obj) => ({
     label: obj.label,
     value: obj.id,
+    enabled: obj.enabled ?? true,
   }));
 
 @customElement('v2-login-manager')
@@ -67,10 +68,19 @@ export class V2LoginManager extends LitElement {
   private accessor showOtpError = false;
 
   @state()
+  private accessor otpErrorMessage = '';
+
+  @state()
   private accessor otpList: Array<OtpItem> = [];
 
   @state()
   private accessor otpId = '';
+
+  @state()
+  private accessor otpMethodEnabled = true;
+
+  @state()
+  private accessor otpSubmissionLocked = false;
 
   @state()
   private accessor otp = '';
@@ -115,6 +125,8 @@ export class V2LoginManager extends LitElement {
 
                 this.otpList = otpItems;
                 this.otpId = otpItems[0]?.value ?? '';
+                this.otpMethodEnabled = otpItems[0]?.enabled ?? true;
+                this.otpSubmissionLocked = false;
                 this.progress = FORM_STATE.twoFactor;
                 this.loadingCredentials = false;
               } else {
@@ -155,6 +167,10 @@ export class V2LoginManager extends LitElement {
 
   private readonly handleSubmitOtp = (e: Event): void => {
     e.preventDefault();
+    if (this.disableInputs || !this.otpMethodEnabled || this.otpSubmissionLocked) {
+      return;
+    }
+
     this.loadingOtp = true;
     submitOtp(this.otpId, this.otp, this.trustDevice)
       .then((res) => {
@@ -167,6 +183,14 @@ export class V2LoginManager extends LitElement {
         } else {
           this.loadingOtp = false;
           this.showOtpError = true;
+          this.otpSubmissionLocked = res.status === 403;
+          this.otpErrorMessage =
+            res.status === 403
+              ? i18next.t(
+                  'otp_max_attempts',
+                  'Invalid OTP. You have reached the maximum number of attempts.',
+                )
+              : i18next.t('wrong_password', 'Wrong password, please check data and try again');
         }
       })
       .catch(() => {
@@ -182,6 +206,8 @@ export class V2LoginManager extends LitElement {
   private readonly handleOtpMethodChange = (e: Event): void => {
     const { value } = (e as CustomEvent<{ value: string; label: string }>).detail;
     this.otpId = value;
+    const selected = this.otpList.find((item) => item.value === value);
+    this.otpMethodEnabled = selected?.enabled ?? true;
   };
 
   private readonly handleTrustDeviceChange = (e: Event): void => {
@@ -203,6 +229,8 @@ export class V2LoginManager extends LitElement {
 
   private readonly handleBackToLogin = (): void => {
     this.showOtpError = false;
+    this.otpErrorMessage = '';
+    this.otpSubmissionLocked = false;
     this.otp = '';
     this.progress = FORM_STATE.credentials;
   };
@@ -257,16 +285,31 @@ export class V2LoginManager extends LitElement {
             .items=${this.otpList}
             label=${i18next.t('choose_otp', 'Choose the OTP Method')}
             .defaultSelection=${this.otpList[0]}
+            ?has-error=${!this.otpMethodEnabled}
             @change=${this.handleOtpMethodChange}
           ></ds-select>
         </div>
+        ${!this.otpMethodEnabled
+          ? html`
+              <div
+                style="display: flex; align-items: center; justify-content: flex-start; padding: var(--padding-size-extrasmall) 0 0 0; box-sizing: border-box"
+              >
+                <ds-text as="span" color="error" size="small" overflow="break-word">
+                  ${i18next.t(
+                    'otp_method_disabled',
+                    'This OTP method is disabled. To restore it, please contact your system administrator.',
+                  )}
+                </ds-text>
+              </div>
+            `
+          : html``}
         <div
           style="display: flex; align-items: center; justify-content: center; padding: var(--padding-size-large) 0 0 0; box-sizing: border-box"
         >
           <ds-input
             default-value=${this.otp}
             ?has-error=${this.showOtpError}
-            ?disabled=${this.disableInputs}
+            ?disabled=${this.disableInputs || !this.otpMethodEnabled}
             @change=${this.handleOtpChange}
             label=${i18next.t('type_otp', 'Type here One-Time-Password')}
           ></ds-input>
@@ -275,9 +318,7 @@ export class V2LoginManager extends LitElement {
           style="display: flex; align-items: center; justify-content: flex-start; padding: var(--padding-size-extrasmall) 0 0 0; box-sizing: border-box"
         >
           <ds-text as="span" color="error" size="small" overflow="break-word">
-            ${this.showOtpError
-              ? i18next.t('wrong_password', 'Wrong password, please check data and try again')
-              : html`<br />`}
+            ${this.showOtpError ? this.otpErrorMessage : html`<br />`}
           </ds-text>
         </div>
         <div
@@ -285,7 +326,7 @@ export class V2LoginManager extends LitElement {
         >
           <ds-button
             @click=${this.handleSubmitOtp}
-            ?disabled=${this.disableInputs}
+            ?disabled=${this.disableInputs || !this.otpMethodEnabled || this.otpSubmissionLocked}
             label=${i18next.t('login', 'Login')}
             width="fill"
             ?loading=${this.loadingOtp}
