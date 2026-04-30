@@ -32,6 +32,13 @@ const loginSuccessResponseWithout2FA = {
   user: { displayName: DEFAULT_USERNAME },
 };
 
+const loginSuccessResponseWithOtpWizardAndNoOtp = {
+  '2FA': true,
+  'otp-wizard': true,
+  otp: [],
+  user: { displayName: DEFAULT_USERNAME },
+};
+
 function createV2LoginManager(): V2LoginManager {
   const el = document.createElement('v2-login-manager') as V2LoginManager;
   el.setAttribute('destination-url', DESTINATION_URL);
@@ -80,6 +87,34 @@ describe('V2LoginManager', () => {
     await expect
       .element(page.getByRole('heading', { name: 'Two-Step-Authentication' }))
       .toBeVisible();
+  });
+
+  it('should show 2FA not configured message when otp-wizard is true and otp list is empty', async () => {
+    await createBrowserAPIInterceptor('post', LOGIN_URL, () =>
+      HttpResponse.json(loginSuccessResponseWithOtpWizardAndNoOtp, { status: 200 }),
+    );
+
+    const el = createV2LoginManager();
+    await el.updateComplete;
+
+    submitCredentials(el);
+
+    await expect
+      .element(page.getByRole('heading', { name: 'You have no longer the 2FA configured' }))
+      .toBeVisible();
+    await expect
+      .element(
+        page.getByText(
+          'There is no active OTP token configured in your account. In order to login from your account you have to connect from a trusted network.',
+        ),
+      )
+      .toBeVisible();
+
+    const backToLoginButton = page.getByRole('button', { name: /Back to login/i });
+    await expect.element(backToLoginButton).toBeVisible();
+    await backToLoginButton.click();
+
+    await expect.element(page.getByRole('textbox', { name: 'Username' })).toBeVisible();
   });
 
   it('should redirect to destinationUrl on successful login without 2FA', async () => {
