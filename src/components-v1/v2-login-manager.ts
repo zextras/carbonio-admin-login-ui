@@ -25,6 +25,7 @@ const FORM_STATE = {
   credentials: 'credentials',
   waiting: 'waiting',
   twoFactor: 'two-factor',
+  twoFactorNotConfigured: 'two-factor-not-configured',
   changePassword: 'change-password',
 } as const;
 
@@ -102,8 +103,18 @@ export class V2LoginManager extends LitElement {
             res.json().then(async (response) => {
               await saveCredentials(username, password);
               if (response?.['2FA'] === true) {
-                this.otpList = mapOtpItems(response?.otp);
-                this.otpId = response?.otp?.[0]?.id ?? '';
+                const otpItems = mapOtpItems(response?.otp);
+                const showTwoFactorNotConfigured =
+                  response?.['otp-wizard'] === true && otpItems.length === 0;
+
+                if (showTwoFactorNotConfigured) {
+                  this.progress = FORM_STATE.twoFactorNotConfigured;
+                  this.loadingCredentials = false;
+                  return;
+                }
+
+                this.otpList = otpItems;
+                this.otpId = otpItems[0]?.value ?? '';
                 this.progress = FORM_STATE.twoFactor;
                 this.loadingCredentials = false;
               } else {
@@ -188,6 +199,12 @@ export class V2LoginManager extends LitElement {
 
   private readonly handleOfflineModalClose = (): void => {
     this.detailNetworkModal = false;
+  };
+
+  private readonly handleBackToLogin = (): void => {
+    this.showOtpError = false;
+    this.otp = '';
+    this.progress = FORM_STATE.credentials;
   };
 
   override connectedCallback(): void {
@@ -287,6 +304,40 @@ export class V2LoginManager extends LitElement {
     `;
   }
 
+  private renderTwoFactorNotConfigured(): TemplateResult {
+    return html`
+      <div style="width: 100%">
+        <div
+          style="display: flex; align-items: center; justify-content: flex-start; padding: 0 0 var(--padding-size-small) 0; box-sizing: border-box"
+        >
+          <ds-text as="h1" size="large" color="text" weight="bold">
+            ${i18next.t('two_factor_not_configured_title', 'You have no longer the 2FA configured')}
+          </ds-text>
+        </div>
+        <div
+          style="display: flex; align-items: center; justify-content: flex-start; padding: 0 0 var(--padding-size-extralarge) 0; box-sizing: border-box"
+        >
+          <ds-text as="p" color="secondary" overflow="break-word">
+            ${i18next.t(
+              'two_factor_not_configured_description',
+              'There is no active OTP token configured in your account. In order to login from your account you have to connect from a trusted network.',
+            )}
+          </ds-text>
+        </div>
+        <div
+          style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: var(--padding-size-small) 0 var(--padding-size-large) 0; box-sizing: border-box"
+        >
+          <ds-button
+            @click=${this.handleBackToLogin}
+            ?disabled=${this.disableInputs}
+            label=${i18next.t('back_to_login', 'Back to login')}
+            width="fill"
+          ></ds-button>
+        </div>
+      </div>
+    `;
+  }
+
   private renderChangePasswordForm(): TemplateResult {
     return html`
       <change-password-form
@@ -332,6 +383,9 @@ export class V2LoginManager extends LitElement {
         break;
       case FORM_STATE.twoFactor:
         content = this.renderTwoFactorForm();
+        break;
+      case FORM_STATE.twoFactorNotConfigured:
+        content = this.renderTwoFactorNotConfigured();
         break;
       case FORM_STATE.changePassword:
         content = this.renderChangePasswordForm();
