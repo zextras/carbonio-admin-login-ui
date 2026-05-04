@@ -1,0 +1,4 @@
+allowBuilds:
+  '@swc/core': false
+  msw: false
+  sonar-scanner: true

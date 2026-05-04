@@ -9,15 +9,14 @@ import * as i18next from 'i18next';
 // import all namespaces (for the default language, only)
 import en from '../translations/en.json';
 
+type DefaultNs = i18next.TypeOptions['defaultNS'];
+
 declare module 'i18next' {
-	// Extend CustomTypeOptions
-	interface CustomTypeOptions {
-		// custom resources type
-		resources: {
-			[defaultNs: i18next.TypeOptions['defaultNS']]: typeof en;
-		};
-		returnNull: false;
-		jsonFormat: 'v4';
-		allowObjectInHTMLChildren: true;
-	}
+  interface TypeOptions {
+    resources: Record<DefaultNs, typeof en>;
+    returnNull: false;
+    returnType: 'string';
+    jsonFormat: 'v4';
+    allowObjectInHTMLChildren: true;
+  }
 }

@@ -1,0 +1,87 @@
+/*
+ * SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+import { css } from 'lit';
+
+export const pageLayoutStyles = css`
+  :host {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .loginContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    padding: 0 100px;
+    background: var(--background-image) no-repeat 75% center/cover;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    .loginContainer.retina {
+      background: var(--background-image-retina) no-repeat 75% center/cover;
+    }
+  }
+
+  .formWrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    width: 436px;
+    max-width: 100%;
+    max-height: 100vh;
+    min-height: 620px;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 48px 48px 0;
+    box-shadow: 0px 0px 20px -7px rgba(0, 0, 0, 0.3);
+  }
+
+  .logoSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 28px 0 28px;
+  }
+
+  .logoImage {
+    max-width: 100%;
+    max-height: 150px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bottomSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    width: 100%;
+    padding-top: var(--padding-size-extralarge);
+    padding-bottom: var(--padding-size-extralarge);
+  }
+
+  .browserSupportRow {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-top: var(--padding-size-large);
+    padding-bottom: var(--padding-size-large);
+  }
+
+  .iconPadding {
+    padding-right: var(--padding-size-extrasmall);
+  }
+`;
