@@ -1,3 +1,14 @@
+## [0.9.30](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.9.29...v0.9.30) (2026-05-14)
+
+### Bug Fixes
+
+* **ci:** migrate Jenkinsfile to jenkins-lib-common ([#147](https://github.com/zextras/carbonio-admin-login-ui/issues/147)) ([4f78bcf](https://github.com/zextras/carbonio-admin-login-ui/commit/4f78bcfe1ed195808493613c0526f91c096eb9be))
+
+### Other changes
+
+* **release:** migrate to semantic-release ([#136](https://github.com/zextras/carbonio-admin-login-ui/issues/136)) ([b55c0e6](https://github.com/zextras/carbonio-admin-login-ui/commit/b55c0e6067e07e9db2e962235f8128b94d34bbdd))
+* **release:** update jenkins-lib-ui to 1.0.13 ([5bf5434](https://github.com/zextras/carbonio-admin-login-ui/commit/5bf54340cc8133f17eb53a46397101f8ad7158d5))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
