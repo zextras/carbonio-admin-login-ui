@@ -1,6 +1,9 @@
 {
   "name": "carbonio-admin-login-ui",
   "version": "0.9.29",
+  "engines": {
+    "node": ">=22"
+  },
   "description": "Zextras authentication App",
   "type": "module",
   "main": "src/index.html",
