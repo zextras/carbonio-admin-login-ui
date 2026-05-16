@@ -1,3 +1,9 @@
+## [0.10.0](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.9.30...v0.10.0) (2026-05-16)
+
+### Features
+
+* **packaging:** use arch=('any') for architecture-independent package ([#149](https://github.com/zextras/carbonio-admin-login-ui/issues/149)) ([d91b502](https://github.com/zextras/carbonio-admin-login-ui/commit/d91b502e411780212efa7a1eca87b413a6be03d4))
+
 ## [0.9.30](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.9.29...v0.9.30) (2026-05-14)
 
 ### Bug Fixes
