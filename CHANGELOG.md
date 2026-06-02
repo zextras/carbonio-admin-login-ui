@@ -1,3 +1,9 @@
+## [0.10.1](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.10.0...v0.10.1) (2026-06-02)
+
+### Other changes
+
+* migrate to buildah (FQDN images + jenkins-lib-common@2.10.0) ([#152](https://github.com/zextras/carbonio-admin-login-ui/issues/152)) ([a42ed04](https://github.com/zextras/carbonio-admin-login-ui/commit/a42ed04eccb996e68148ad17cdb367fdb7b941f0))
+
 ## [0.10.0](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.9.30...v0.10.0) (2026-05-16)
 
 ### Features
