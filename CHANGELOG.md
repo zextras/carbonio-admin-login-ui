@@ -1,3 +1,9 @@
+## [0.10.2](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.10.1...v0.10.2) (2026-07-30)
+
+### Other changes
+
+* **jenkinsfile:** bump jenkins-lib-common to v3.4.1 ([2a9534a](https://github.com/zextras/carbonio-admin-login-ui/commit/2a9534a3dec227ba9f07a8ab8e51e49e6fc739fb))
+
 ## [0.10.1](https://github.com/zextras/carbonio-admin-login-ui/compare/v0.10.0...v0.10.1) (2026-06-02)
 
 ### Other changes
