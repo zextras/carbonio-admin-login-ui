@@ -24,3 +24,4 @@ package/src/
 /.vitest-attachments
 *__screenshots__*
 .worktrees/
+/gitleaks-report.json

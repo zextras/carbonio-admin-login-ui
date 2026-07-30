@@ -1,0 +1,123 @@
+version = 1
+SPDX-PackageName = "carbonio-admin-login-ui"
+SPDX-PackageSupplier = "Zextras <https://www.zextras.com>"
+
+[[annotations]]
+path = "translations/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = ".idea/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "Dockerfile"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = ".vscode/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ".nvmrc"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "package.json"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "yap.json"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "scripts/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "package-lock.json"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "pnpm**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "tsconfig**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = ".prettierrc"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "tsconfig.json"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "CHANGELOG.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "src/ui-components/fonts/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = "src/assets/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "CC-BY-NC-SA-4.0"
+
+[[annotations]]
+path = "docs/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "commit.template"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "AGPL-3.0-only"
+
+[[annotations]]
+path = ".github/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["REUSE.toml", "gitleaks-report.json"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Zextras <https://www.zextras.com>"
+SPDX-License-Identifier = "CC0-1.0"
