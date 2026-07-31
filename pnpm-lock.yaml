@@ -28,8 +28,8 @@ importers:
         specifier: 7.29.0
         version: 7.29.0(@babel/core@7.29.0)
       '@eslint/compat':
-        specifier: 2.0.5
-        version: 2.0.5(eslint@10.2.1)
+        specifier: 2.1.0
+        version: 2.1.0(eslint@10.2.1)
       '@eslint/js':
         specifier: 10.0.1
         version: 10.0.1(eslint@10.2.1)
@@ -76,8 +76,8 @@ importers:
         specifier: 10.2.1
         version: 10.2.1
       eslint-plugin-lit:
-        specifier: 2.2.1
-        version: 2.2.1(eslint@10.2.1)
+        specifier: 2.3.1
+        version: 2.3.1(eslint@10.2.1)
       eslint-plugin-lit-a11y:
         specifier: 5.1.1
         version: 5.1.1(eslint@10.2.1)
@@ -349,8 +349,8 @@ packages:
     resolution: {integrity: sha512-EriSTlt5OC9/7SXkRSCAhfSxxoSUgBm33OH+IkwbdpgoqsSsUg7y3uh+IICI/Qg4BBWr3U2i39RpmycbxMq4ew==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
 
-  '@eslint/compat@2.0.5':
-    resolution: {integrity: sha512-IbHDbHJfkVNv6xjlET8AIVo/K1NQt7YT4Rp6ok/clyBGcpRx1l6gv0Rq3vBvYfPJIZt6ODf66Zq08FJNDpnzgg==}
+  '@eslint/compat@2.1.0':
+    resolution: {integrity: sha512-LgaSCymEpw7tF53xvDw9SNsraPb1IBHxpdABIOM0hW8UAlP8znrjYtuxfR58FSJ3L9BhwD+FaPRFQpZq84Nh6g==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: ^8.40 || 9 || 10
@@ -1468,6 +1468,14 @@ packages:
   dom5@3.0.1:
     resolution: {integrity: sha512-JPFiouQIr16VQ4dX6i0+Hpbg3H2bMKPmZ+WZgBOSSvOPx9QHwwY8sPzeM2baUtViESYto6wC2nuZOMC/6gulcA==}
 
+  domelementtype@3.0.0:
+    resolution: {integrity: sha512-umCQid3jKbDmVjx8jGaW7uUykm4DEUeyV21hPxNMo2nV955DhUThwqyOIDtreepP31hl84X7G5U9ZfsWvIB3Pg==}
+    engines: {node: '>=20.19.0'}
+
+  domhandler@6.0.1:
+    resolution: {integrity: sha512-gYzvtM72ZtxQO0T048kd6HWSbbGCNOUwcnfQ01cqIJ4X2IYKFFHZ5mKvrQETcFXxsRObZulDaKmy//R7TPtsBg==}
+    engines: {node: '>=20.19.0'}
+
   dot-case@3.0.4:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
 
@@ -1561,8 +1569,8 @@ packages:
     peerDependencies:
       eslint: '>= 5'
 
-  eslint-plugin-lit@2.2.1:
-    resolution: {integrity: sha512-mnqqwpWF4PBF/YjlGt9mbHwrWCGMtaqdpnqISv3nGcTl8iStaAt9UGieMY3i8vwKfSSWtkEfBZUcRKFGys6yiw==}
+  eslint-plugin-lit@2.3.1:
+    resolution: {integrity: sha512-wAqDOOWQzUoY5uK124ZR+h7Snx0+KdZd3Knv6133gRHEcu03jbqnouK4GBwVl6PkGOkNy40zSchOp9VbBh4yHg==}
     engines: {node: '>= 18'}
     peerDependencies:
       eslint: '>= 8'
@@ -2592,6 +2600,9 @@ packages:
 
   parse5-htmlparser2-tree-adapter@6.0.1:
     resolution: {integrity: sha512-qPuWvbLgvDGilKc5BoicRovlT4MtYT6JfJyBOMDsKoiT+GiuP5qyrPCnR9HcPECIJJmZh5jRndyNThnhhb/vlA==}
+
+  parse5-htmlparser2-tree-adapter@8.0.1:
+    resolution: {integrity: sha512-aqkH+xQxX+QGZtP5GIMmqqp16Y0v9muEf2VVeypv35kFsD5bqP1UeBanSshdfjMY+RTh2vN4mmK6nEOVRMEvHg==}
 
   parse5@4.0.0:
     resolution: {integrity: sha512-VrZ7eOd3T1Fk4XWNXMgiGBK/z0MG48BWG2uQNU4I72fkQuKUTZpl+u9k+CxEG0twMVzSmXEEz12z5Fnw1jIQFA==}
@@ -3655,7 +3666,7 @@ snapshots:
 
   '@eslint-community/regexpp@4.12.2': {}
 
-  '@eslint/compat@2.0.5(eslint@10.2.1)':
+  '@eslint/compat@2.1.0(eslint@10.2.1)':
     dependencies:
       '@eslint/core': 1.2.1
     optionalDependencies:
@@ -4789,6 +4800,12 @@ snapshots:
       clone: 2.1.2
       parse5: 4.0.0
 
+  domelementtype@3.0.0: {}
+
+  domhandler@6.0.1:
+    dependencies:
+      domelementtype: 3.0.0
+
   dot-case@3.0.4:
     dependencies:
       no-case: 3.0.4
@@ -4868,17 +4885,17 @@ snapshots:
       dom5: 3.0.1
       emoji-regex: 10.6.0
       eslint: 10.2.1
-      eslint-plugin-lit: 2.2.1(eslint@10.2.1)
+      eslint-plugin-lit: 2.3.1(eslint@10.2.1)
       eslint-rule-extender: 0.0.1
       language-tags: 1.0.9
       parse5: 7.3.0
       parse5-htmlparser2-tree-adapter: 6.0.1
 
-  eslint-plugin-lit@2.2.1(eslint@10.2.1):
+  eslint-plugin-lit@2.3.1(eslint@10.2.1):
     dependencies:
       eslint: 10.2.1
-      parse5: 6.0.1
-      parse5-htmlparser2-tree-adapter: 6.0.1
+      parse5: 8.0.1
+      parse5-htmlparser2-tree-adapter: 8.0.1
 
   eslint-plugin-notice@1.0.0(eslint@10.2.1):
     dependencies:
@@ -5809,6 +5826,11 @@ snapshots:
   parse5-htmlparser2-tree-adapter@6.0.1:
     dependencies:
       parse5: 6.0.1
+
+  parse5-htmlparser2-tree-adapter@8.0.1:
+    dependencies:
+      domhandler: 6.0.1
+      parse5: 8.0.1
 
   parse5@4.0.0: {}
 
