@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { playwright } from '@vitest/browser-playwright';
-import babel from 'vite-plugin-babel';
 import svgr from 'vite-plugin-svgr';
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
@@ -12,26 +11,6 @@ import { defineConfig } from 'vitest/config';
 const isCi = process?.env?.['CI'];
 
 function getPlugins() {
-  return [
-    svgr({
-      svgrOptions: {
-        ref: true,
-        svgo: false,
-        titleProp: true,
-        exportType: 'default',
-      },
-      include: '**/*.svg',
-      exclude: '**/src/assets/**/*.svg',
-    }),
-    babel({
-      babelConfig: {
-        plugins: [['@babel/plugin-proposal-decorators', { version: '2023-11' }]],
-      },
-    }),
-  ];
-}
-
-function getBrowserPlugins() {
   return [
     swc.vite({
       jsc: {
@@ -44,7 +23,16 @@ function getBrowserPlugins() {
         },
       },
     }),
-    ...getPlugins(),
+    svgr({
+      svgrOptions: {
+        ref: true,
+        svgo: false,
+        titleProp: true,
+        exportType: 'default',
+      },
+      include: '**/*.svg',
+      exclude: '**/src/assets/**/*.svg',
+    }),
   ];
 }
 
@@ -108,7 +96,7 @@ function browserProjectConfig() {
       testTimeout: isCi ? 20_000 : 10_000,
       hookTimeout: 15_000,
     },
-    plugins: getBrowserPlugins(),
+    plugins: getPlugins(),
   };
 }
 
